@@ -19,17 +19,16 @@ package walkingkooka.text.pretty;
 
 import walkingkooka.reflect.PublicStaticHelper;
 
-import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 final public class TextPretty implements PublicStaticHelper {
 
 
     /**
-     * {@see TaglessCharSequenceUnaryOperator}
+     * {@see TaglessPlainTextCharSequenceUnaryOperator}
      */
-    public static UnaryOperator<CharSequence> tagless() {
-        return TaglessCharSequenceUnaryOperator.INSTANCE;
+    public static UnaryOperator<CharSequence> taglessPlainText() {
+        return TaglessPlainTextCharSequenceUnaryOperator.INSTANCE;
     }
 
     /**

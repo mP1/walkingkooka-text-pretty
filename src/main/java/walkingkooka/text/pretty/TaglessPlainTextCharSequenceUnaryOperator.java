@@ -18,22 +18,22 @@
 package walkingkooka.text.pretty;
 
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 /**
- * A {@link UnaryOperator} that returns another {@link CharSequence} removing tags and comments.
+ * A {@link UnaryOperator} that returns another {@link CharSequence} removing tags and comments. This is equivalent of
+ * HTML ELEMENT.plainText
  */
-final class TaglessCharSequenceUnaryOperator implements UnaryOperator<CharSequence> {
+final class TaglessPlainTextCharSequenceUnaryOperator implements UnaryOperator<CharSequence> {
     /**
      * Singleton
      */
-    final static TaglessCharSequenceUnaryOperator INSTANCE = new TaglessCharSequenceUnaryOperator();
+    final static TaglessPlainTextCharSequenceUnaryOperator INSTANCE = new TaglessPlainTextCharSequenceUnaryOperator();
 
     /**
      * Private ctor use singleton
      */
-    private TaglessCharSequenceUnaryOperator() {
+    private TaglessPlainTextCharSequenceUnaryOperator() {
         super();
     }
 
@@ -48,10 +48,10 @@ final class TaglessCharSequenceUnaryOperator implements UnaryOperator<CharSequen
 
     private CharSequence nonEmpty(final CharSequence chars) {
         final int length = chars.length();
-
-        TaglessCharSequenceUnaryOperatorMode mode = TaglessCharSequenceUnaryOperatorMode.TEXT;
-        int i = 0;
         final StringBuilder builder = new StringBuilder();
+
+        TaglessPlainTextCharSequenceUnaryOperatorMode mode = TaglessPlainTextCharSequenceUnaryOperatorMode.TEXT;
+        int i = 0;
         char lastTextCharacter = 0;
 
         Loop:
@@ -62,7 +62,7 @@ final class TaglessCharSequenceUnaryOperator implements UnaryOperator<CharSequen
                     final char c = chars.charAt(i);
                     i++;
                     if ('<' == c) {
-                        mode = TaglessCharSequenceUnaryOperatorMode.TAG_NAME_COMMENT_ETC;
+                        mode = TaglessPlainTextCharSequenceUnaryOperatorMode.TAG_NAME_COMMENT_ETC;
                         break;
                     }
                     if (Character.isWhitespace(c)) {
@@ -77,18 +77,15 @@ final class TaglessCharSequenceUnaryOperator implements UnaryOperator<CharSequen
                     }
                     lastTextCharacter = c;
                     mode.addChar(c, builder);
-                    mode = TaglessCharSequenceUnaryOperatorMode.TEXT;
+                    mode = TaglessPlainTextCharSequenceUnaryOperatorMode.TEXT;
                     if (length == i) {
                         break Loop;
                     }
                 } while (true);
             }
-            while ((i < length) && (false == mode.isText())) {
-                mode = mode.process(chars.charAt(i), builder);
+            while (i < length && false == mode.isText()) {
+                mode = mode.handle(chars.charAt(i), builder);
                 i++;
-            }
-            if (mode.isText() && (false == Character.isWhitespace(lastTextCharacter))) {
-                mode = TaglessCharSequenceUnaryOperatorMode.INSERT_SPACE_BEFORE_TEXT;
             }
         } while (i < length);
 
@@ -97,6 +94,6 @@ final class TaglessCharSequenceUnaryOperator implements UnaryOperator<CharSequen
 
     @Override
     public String toString() {
-        return "Tagless";
+        return "TaglessPlainText";
     }
 }
