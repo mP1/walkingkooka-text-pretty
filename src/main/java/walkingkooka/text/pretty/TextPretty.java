@@ -20,13 +20,14 @@ package walkingkooka.text.pretty;
 import walkingkooka.reflect.PublicStaticHelper;
 
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 final public class TextPretty implements PublicStaticHelper {
 
     /**
      * {@see WhitespaceNormalizingCharSequenceUnaryOperator}
      */
-    public static Function<CharSequence, CharSequence> whitespaceNormalizing() {
+    public static UnaryOperator<CharSequence> whitespaceNormalizing() {
         return WhitespaceNormalizingCharSequenceUnaryOperator.INSTANCE;
     }
 
