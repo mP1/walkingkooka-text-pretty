@@ -19,12 +19,13 @@ package walkingkooka.text.pretty;
 
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 /**
  * A {@link Function} that returns another {@link CharSequence} removing multiple or redundant whitespace, carriage
  * return and new lines.
  */
-final class WhitespaceNormalizingCharSequenceUnaryOperator implements Function<CharSequence, CharSequence> {
+final class WhitespaceNormalizingCharSequenceUnaryOperator implements UnaryOperator<CharSequence> {
     /**
      * Singleton
      */
