@@ -24,6 +24,14 @@ import java.util.function.UnaryOperator;
 
 final public class TextPretty implements PublicStaticHelper {
 
+
+    /**
+     * {@see TaglessCharSequenceUnaryOperator}
+     */
+    public static UnaryOperator<CharSequence> tagless() {
+        return TaglessCharSequenceUnaryOperator.INSTANCE;
+    }
+
     /**
      * {@see WhitespaceNormalizingCharSequenceUnaryOperator}
      */
