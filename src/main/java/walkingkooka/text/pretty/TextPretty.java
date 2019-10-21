@@ -25,10 +25,10 @@ final public class TextPretty implements PublicStaticHelper {
 
 
     /**
-     * {@see TaglessPlainTextCharSequenceUnaryOperator}
+     * {@see TagStrippingCharSequenceUnaryOperator}
      */
-    public static UnaryOperator<CharSequence> taglessPlainText() {
-        return TaglessPlainTextCharSequenceUnaryOperator.INSTANCE;
+    public static UnaryOperator<CharSequence> tagStripping() {
+        return TagStrippingCharSequenceUnaryOperator.INSTANCE;
     }
 
     /**
