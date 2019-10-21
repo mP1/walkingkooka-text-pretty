@@ -19,10 +19,18 @@ package walkingkooka.text.pretty;
 
 import walkingkooka.reflect.PublicStaticHelper;
 
+import java.util.List;
+import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 final public class TextPretty implements PublicStaticHelper {
 
+    /**
+     * {@see ColumnsExtractorCharSequenceFunction}
+     */
+    public static <T> Function<T, List<CharSequence>> columnsExtractor(final List<Function<T, CharSequence>> transformers) {
+         return ColumnsExtractorCharSequenceFunction.with(transformers);
+    }
 
     /**
      * {@see TagStrippingCharSequenceUnaryOperator}
