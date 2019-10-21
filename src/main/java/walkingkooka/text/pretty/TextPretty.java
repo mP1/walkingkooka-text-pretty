@@ -18,9 +18,11 @@
 package walkingkooka.text.pretty;
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.text.LineEnding;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.IntUnaryOperator;
 import java.util.function.UnaryOperator;
 
 final public class TextPretty implements PublicStaticHelper {
@@ -30,6 +32,14 @@ final public class TextPretty implements PublicStaticHelper {
      */
     public static <T> Function<T, List<CharSequence>> columnsExtractor(final List<Function<T, CharSequence>> transformers) {
          return ColumnsExtractorCharSequenceFunction.with(transformers);
+    }
+
+    /**
+     * {@see CharSequenceColumnsToLinesFunction}
+     */
+    public static Function<List<CharSequence>, CharSequence> columnsToLines(final IntUnaryOperator rightPaddings,
+                                                                            final LineEnding lineEnding) {
+        return CharSequenceColumnsToLinesFunction.with(rightPaddings, lineEnding);
     }
 
     /**
