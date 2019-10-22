@@ -56,48 +56,48 @@ public final class CharSequenceColumnsToLinesFunctionTest implements FunctionTes
 
     @Test
     public void testOneLineColumns() {
-        this.applyAndCheck2(Lists.of("a1", "b2", "c3"), "a1 b2  c3");
+        this.applyAndCheck2(Lists.of("a1", "b2", "c3"), "a1 b2  c3\n");
     }
 
     @Test
     public void testOneLineColumnsIncludesEmptyColumn() {
-        this.applyAndCheck2(Lists.of("", "b2", "c3"), " b2  c3");
+        this.applyAndCheck2(Lists.of("", "b2", "c3"), " b2  c3\n");
     }
 
     @Test
     public void testOneLineColumnsTrailingCr() {
-        this.applyAndCheck2(Lists.of("a1\r", "b2", "c3"), "a1 b2  c3");
+        this.applyAndCheck2(Lists.of("a1\r", "b2", "c3"), "a1 b2  c3\n");
     }
 
     @Test
     public void testOneLineColumnsTrailingNl() {
-        this.applyAndCheck2(Lists.of("a1\n", "b2", "c3"), "a1 b2  c3");
+        this.applyAndCheck2(Lists.of("a1\n", "b2", "c3"), "a1 b2  c3\n");
     }
 
     @Test
     public void testOneLineColumnsTrailingCrNl() {
-        this.applyAndCheck2(Lists.of("a1\r\n", "b2", "c3"), "a1 b2  c3");
+        this.applyAndCheck2(Lists.of("a1\r\n", "b2", "c3"), "a1 b2  c3\n");
     }
 
     @Test
     public void testMultiLineColumnsNl() {
         this.applyAndCheck2(Lists.of("a1", "b2", "c3\nd4"),
                 "a1 b2  c3\n" +
-                        "       d4");
+                        "       d4\n");
     }
 
     @Test
     public void testMultiLineColumnsCr() {
         this.applyAndCheck2(Lists.of("a1", "b2", "c3\rd4"),
                 "a1 b2  c3\n" +
-                        "       d4");
+                        "       d4\n");
     }
 
     @Test
     public void testMultiLineColumnsCrNl() {
         this.applyAndCheck2(Lists.of("a1", "b2", "c3\r\nd4"),
                 "a1 b2  c3\n" +
-                        "       d4");
+                        "       d4\n");
     }
 
     @Test
@@ -105,28 +105,28 @@ public final class CharSequenceColumnsToLinesFunctionTest implements FunctionTes
         this.applyAndCheck2(Lists.of("a1\n\na13", "b21\nb22", "c3\nd4"),
                 "a1  b21  c3\n" +
                         "    b22  d4\n" +
-                        "a13");
+                        "a13\n");
     }
 
     @Test
     public void testMultiLineColumnsPadded() {
         this.applyAndCheck2(Lists.of("a11\na1", "b2", "c3\nd4"),
                 "a11 b2  c3\n" +
-                        "a1      d4");
+                        "a1      d4\n");
     }
 
     @Test
     public void testMultiLineLastColumnDifferentWidths() {
         this.applyAndCheck2(Lists.of("a1", "b2", "c33\nd4"),
                 "a1 b2  c33\n" +
-                        "       d4");
+                        "       d4\n");
     }
 
     @Test
     public void testMultiLineLastColumnDifferentWidths2() {
         this.applyAndCheck2(Lists.of("a1", "b2", "c3\nd4"),
                 "a1 b2  c3\n" +
-                        "       d4");
+                        "       d4\n");
     }
 
     @Test
@@ -134,7 +134,7 @@ public final class CharSequenceColumnsToLinesFunctionTest implements FunctionTes
         this.applyAndCheck2(Lists.of("a123\n\na23", "b234\rb3\rb456", "c3"),
                 "a123 b234  c3\n" +
                         "     b3\n" +
-                        "a23  b456");
+                        "a23  b456\n");
     }
 
     // toString.........................................................................................................
