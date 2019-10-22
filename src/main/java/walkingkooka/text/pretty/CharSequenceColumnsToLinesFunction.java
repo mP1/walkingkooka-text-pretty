@@ -117,7 +117,6 @@ final class CharSequenceColumnsToLinesFunction implements Function<List<CharSequ
 
         final int columnCount = columnToLines.size();
         final int lastColumn = columnCount -1;
-        final int lastRow = maxRows - 1;
 
         final StringBuilder all = new StringBuilder();
 
@@ -142,11 +141,8 @@ final class CharSequenceColumnsToLinesFunction implements Function<List<CharSequ
                 }
             }
 
-            all.append(CharSequences.trimRight(text));
-
-            if(r < lastRow) {
-                all.append(this.lineEnding);
-            }
+            all.append(CharSequences.trimRight(text))
+                    .append(this.lineEnding);
         }
 
         return ImmutableCharSequence.with(all);
