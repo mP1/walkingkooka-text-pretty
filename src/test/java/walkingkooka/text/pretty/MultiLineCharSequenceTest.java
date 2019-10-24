@@ -24,6 +24,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -402,36 +403,110 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
 
     // subSequence.......................................................................................................
 
-    @Override
-    public void testNegativeSubSequenceFromIndexFails() {
+    @Test
+    public void testSubSequenceEmpty() {
+        final MultiLineCharSequence chars = this.createCharSequence();
+        IntStream.range(0, chars.length())
+                .forEach(at -> this.subSequenceAndCheckSame(at, at, ""));
     }
 
-    @Override
-    public void testNegativeSubSequenceToFails() {
+    @Test
+    public void testSubSequenceFirstLine() {
+        this.subSequenceAndCheckSame(0,
+                LINE1.length(),
+                LINE1);
     }
 
-    @Override
-    public void testEmptySubSequence() {
+    @Test
+    public void testSubSequenceFirstEol() {
+        this.subSequenceAndCheckSame(LINE1,
+                LINE1 + EOL,
+                EOL);
     }
 
-    @Override
-    public void testEmptySubSequence2() {
+    @Test
+    public void testSubSequenceSecondLine() {
+        this.subSequenceAndCheckSame(LINE1 + EOL,
+                LINE1 + EOL + LINE2,
+                LINE2);
     }
 
-    @Override
-    public void testInvalidSubSequenceFromIndexFails() {
+    @Test
+    public void testSubSequenceSecondEol() {
+        this.subSequenceAndCheckSame(LINE1 + EOL + LINE2,
+                LINE1 + EOL + LINE2 + EOL,
+                EOL);
     }
 
-    @Override
-    public void testSubSequenceWithSameFromAndToReturnsThis() {
+    @Test
+    public void testSubSequenceLastLine() {
+        this.subSequenceAndCheckSame(LINE1 + EOL + LINE2 + EOL,
+                LINE1 + EOL + LINE2 + EOL + LINE3,
+                LINE3);
     }
 
-    @Override
-    public void testSubSequenceFromAfterToFails() {
+    @Test
+    public void testSubSequenceLastEol() {
+        this.subSequenceAndCheckSame(LINE1 + EOL + LINE2 + EOL + LINE3,
+                LINE1 + EOL + LINE2 + EOL + LINE3 + EOL,
+                EOL);
     }
 
-    @Override
-    public void testSubsequenceInvalidToIndexFails() {
+    private void subSequenceAndCheckSame(final CharSequence start,
+                                         final CharSequence end,
+                                         final CharSequence expected) {
+        this.subSequenceAndCheckSame(start.length(),
+                end.length(),
+                expected);
+    }
+
+    private void subSequenceAndCheckSame(final int start,
+                                         final int end,
+                                         final CharSequence expected) {
+        this.subSequenceAndCheckSame(this.createCharSequence(),
+                start,
+                end,
+                expected);
+    }
+
+    private void subSequenceAndCheckSame(final MultiLineCharSequence chars,
+                                         final int start,
+                                         final int end,
+                                         final CharSequence expected) {
+        assertSame(expected,
+                chars.subSequence(start, end),
+                () -> CharSequences.quoteAndEscape(chars) + " subSequence " + start + "," + end);
+    }
+
+    @Test
+    public void testSubSequence() {
+        this.checkEquals("1", this.createCharSequence().subSequence(0, 1));
+    }
+
+    @Test
+    public void testSubSequence2() {
+        this.checkEquals("a", this.createCharSequence().subSequence(1, 2));
+    }
+
+    @Test
+    public void testSubSequence3() {
+        this.checkEquals("a" + EOL, this.createCharSequence().subSequence(1, (LINE1 + EOL).length()));
+    }
+
+    @Test
+    public void testSubSequence4() {
+        this.checkEquals("a" + EOL + "2", this.createCharSequence().subSequence(1, (LINE1 + EOL).length() + 1));
+    }
+
+    @Test
+    public void testSubSequence5() {
+        final MultiLineCharSequence chars = this.createCharSequence();
+
+        for(int i = 0; i < chars.length() -2; i++) {
+            final int start = i;
+            final int end = i + 2;
+            this.checkEquals(TOSTRING.substring(start, end), chars.subSequence(start, end));
+        }
     }
 
     // equals...........................................................................................................
