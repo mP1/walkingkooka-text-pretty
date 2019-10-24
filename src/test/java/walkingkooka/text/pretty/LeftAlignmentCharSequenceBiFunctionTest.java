@@ -18,12 +18,8 @@
 package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.ToStringTesting;
-import walkingkooka.util.BiFunctionTesting;
 
-public class LeftAlignmentCharSequenceBiFunctionTest extends TextPrettyTestCase<LeftAlignmentCharSequenceBiFunction>
-        implements BiFunctionTesting<LeftAlignmentCharSequenceBiFunction, CharSequence, Integer, CharSequence>,
-        ToStringTesting<LeftAlignmentCharSequenceBiFunction> {
+public class LeftAlignmentCharSequenceBiFunctionTest extends AlignmentCharSequenceBiFunctionTestCase<LeftAlignmentCharSequenceBiFunction> {
 
     @Test
     public void testApplyEmpty() {
