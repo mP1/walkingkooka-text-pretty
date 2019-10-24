@@ -36,7 +36,12 @@ public abstract class AlignmentCharSequenceBiFunctionTestCase<A extends Alignmen
     }
 
     @Test
-    public final void testApplyTextGreaterThanWidthFails() {
+    public void testEmpty() {
+        this.applyAndCheck("", 10, "");
+    }
+
+    @Test
+    public final void testGreaterThanWidthFails() {
         assertThrows(IllegalArgumentException.class, () -> this.createBiFunction().apply("abc123", 5));
     }
 
