@@ -21,7 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.util.FunctionTesting;
 
-public class LeftAlignmentUnaryOperatorTest implements FunctionTesting<LeftAlignmentUnaryOperator, CharSequence, CharSequence>,
+public class LeftAlignmentUnaryOperatorTest extends TextPrettyTestCase<LeftAlignmentUnaryOperator>
+        implements FunctionTesting<LeftAlignmentUnaryOperator, CharSequence, CharSequence>,
         ToStringTesting<LeftAlignmentUnaryOperator> {
 
     @Test

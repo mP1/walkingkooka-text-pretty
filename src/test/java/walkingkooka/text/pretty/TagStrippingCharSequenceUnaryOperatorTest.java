@@ -25,7 +25,8 @@ import java.util.function.UnaryOperator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class TagStrippingCharSequenceUnaryOperatorTest implements FunctionTesting<TagStrippingCharSequenceUnaryOperator, CharSequence, CharSequence>,
+public final class TagStrippingCharSequenceUnaryOperatorTest extends TextPrettyTestCase<TagStrippingCharSequenceUnaryOperator>
+        implements FunctionTesting<TagStrippingCharSequenceUnaryOperator, CharSequence, CharSequence>,
         ToStringTesting<TagStrippingCharSequenceUnaryOperator> {
 
     @Test
