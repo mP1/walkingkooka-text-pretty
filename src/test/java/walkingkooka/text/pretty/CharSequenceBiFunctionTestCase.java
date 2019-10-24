@@ -26,33 +26,27 @@ import walkingkooka.util.BiFunctionTesting;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class CharSequenceBiFunctionAlignTestCase<A extends CharSequenceBiFunctionAlign> extends CharSequenceBiFunctionTestCase<A> {
+public abstract class CharSequenceBiFunctionTestCase<A extends CharSequenceBiFunction> extends TextPrettyTestCase<A>
+        implements BiFunctionTesting<A, CharSequence, Integer, CharSequence>,
+        ToStringTesting<A>,
+        TypeNameTesting<A> {
 
-    CharSequenceBiFunctionAlignTestCase() {
+    CharSequenceBiFunctionTestCase() {
         super();
     }
 
-    @Test
-    public void testEmpty() {
-        this.applyAndCheck("", 10, "");
-    }
-
-    @Test
-    public final void testGreaterThanWidthFails() {
-        assertThrows(IllegalArgumentException.class, () -> this.createBiFunction().apply("abc123", 5));
-    }
-
-    @Test
-    public final void testToString() {
-        this.toStringAndCheck(this.createBiFunction(), this.align());
+    final void applyAndCheck2(final CharSequence text,
+                              final int width,
+                              final CharSequence expected) {
+        assertEquals(expected.toString(),
+                this.createBiFunction().apply(text, width).toString(),
+                () -> " apply " + CharSequences.quoteAndEscape(text) + " width " + width);
     }
 
     // TypeNameTesting..................................................................................................
 
     @Override
-    public final String typeNameSuffix() {
-        return "Align" + this.align();
+    public final String typeNamePrefix() {
+        return CharSequenceBiFunction.class.getSimpleName();
     }
-
-    abstract String align();
 }

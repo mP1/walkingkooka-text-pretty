@@ -17,33 +17,10 @@
 
 package walkingkooka.text.pretty;
 
-import java.util.function.BiFunction;
-
-/**
- * A {@link BiFunction} that simply returns the given {@link CharSequence}.
- */
-final class CharSequenceBiFunctionAlignLeft extends CharSequenceBiFunctionAlign {
-
-    /**
-     * Singleton
-     */
-    final static CharSequenceBiFunctionAlignLeft INSTANCE = new CharSequenceBiFunctionAlignLeft();
-
-    /**
-     * Private ctor
-     */
-    private CharSequenceBiFunctionAlignLeft() {
-        super();
-    }
+public class CharSequenceBiFunctionTest extends TextPrettyTestCase<CharSequenceBiFunction> {
 
     @Override
-    CharSequence notEmpty(final CharSequence chars,
-                          final int width) {
-        return chars;
-    }
-
-    @Override
-    public String toString() {
-        return "Left";
+    public Class<CharSequenceBiFunction> type() {
+        return CharSequenceBiFunction.class;
     }
 }
