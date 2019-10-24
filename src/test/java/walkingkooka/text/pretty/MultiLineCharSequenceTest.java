@@ -528,10 +528,6 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
         this.toStringAndCheck(this.createCharSequence(), TOSTRING);
     }
 
-    @Override
-    public void testToStringCached() {
-    }
-
     // CharSequenceTesting..............................................................................................
 
     @Override

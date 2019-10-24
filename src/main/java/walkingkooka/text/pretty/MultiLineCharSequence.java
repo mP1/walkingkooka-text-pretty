@@ -300,6 +300,12 @@ final class MultiLineCharSequence implements CharSequence {
 
     @Override
     public String toString() {
-        return String.join(this.lineEnding, this.lines).concat(this.lineEnding.toString());
+        if (null == this.toString) {
+            this.toString = String.join(this.lineEnding, this.lines)
+                    .concat(this.lineEnding.toString());
+        }
+        return this.toString;
     }
+
+    private String toString;
 }
