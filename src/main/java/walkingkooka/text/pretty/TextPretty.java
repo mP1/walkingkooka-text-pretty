@@ -43,6 +43,13 @@ final public class TextPretty implements PublicStaticHelper {
     }
 
     /**
+     * {@see LeftAlignmentUnaryOperator}
+     */
+    public static Function<CharSequence, CharSequence> leftAlignment() {
+        return LeftAlignmentUnaryOperator.INSTANCE;
+    }
+
+    /**
      * {@see TagStrippingCharSequenceUnaryOperator}
      */
     public static UnaryOperator<CharSequence> tagStripping() {
