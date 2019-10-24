@@ -22,12 +22,12 @@ import java.util.function.BiFunction;
 /**
  * Base class for all alignment {@link BiFunction} that complains if the text is greater than the width.
  */
-abstract class AlignmentCharSequenceBiFunction implements BiFunction<CharSequence, Integer, CharSequence> {
+abstract class CharSequenceBiFunctionAlign implements BiFunction<CharSequence, Integer, CharSequence> {
 
     /**
      * Package private ctor to limit sub classing.
      */
-    AlignmentCharSequenceBiFunction() {
+    CharSequenceBiFunctionAlign() {
         super();
     }
 

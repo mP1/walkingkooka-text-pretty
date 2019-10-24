@@ -17,32 +17,33 @@
 
 package walkingkooka.text.pretty;
 
-import org.junit.jupiter.api.Test;
+import java.util.function.BiFunction;
 
-public class AlignmentCharSequenceBiFunctionRightTest extends AlignmentCharSequenceBiFunctionTestCase<AlignmentCharSequenceBiFunctionRight> {
+/**
+ * A {@link BiFunction} that simply returns the given {@link CharSequence}.
+ */
+final class CharSequenceBiFunctionAlignLeft extends CharSequenceBiFunctionAlign {
 
-    @Test
-    public void testApplyNotEmpty() {
-        this.applyAndCheck2("abc123", 10, "    abc123");
-    }
+    /**
+     * Singleton
+     */
+    final static CharSequenceBiFunctionAlignLeft INSTANCE = new CharSequenceBiFunctionAlignLeft();
 
-    @Test
-    public void testApplyFullWidth() {
-        this.applyAndCheck2("abc123", 6, "abc123");
-    }
-
-    @Override
-    public AlignmentCharSequenceBiFunctionRight createBiFunction() {
-        return AlignmentCharSequenceBiFunctionRight.INSTANCE;
-    }
-
-    @Override
-    public Class<AlignmentCharSequenceBiFunctionRight> type() {
-        return AlignmentCharSequenceBiFunctionRight.class;
+    /**
+     * Private ctor
+     */
+    private CharSequenceBiFunctionAlignLeft() {
+        super();
     }
 
     @Override
-    String align() {
-        return "Right";
+    CharSequence alignNotEmpty(final CharSequence chars,
+                               final int width) {
+        return chars;
+    }
+
+    @Override
+    public String toString() {
+        return "Left";
     }
 }

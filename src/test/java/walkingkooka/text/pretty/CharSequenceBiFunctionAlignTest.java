@@ -17,10 +17,10 @@
 
 package walkingkooka.text.pretty;
 
-public class AlignmentCharSequenceBiFunctionTest extends TextPrettyTestCase<AlignmentCharSequenceBiFunction> {
+public class CharSequenceBiFunctionAlignTest extends TextPrettyTestCase<CharSequenceBiFunctionAlign> {
 
     @Override
-    public Class<AlignmentCharSequenceBiFunction> type() {
-        return AlignmentCharSequenceBiFunction.class;
+    public Class<CharSequenceBiFunctionAlign> type() {
+        return CharSequenceBiFunctionAlign.class;
     }
 }

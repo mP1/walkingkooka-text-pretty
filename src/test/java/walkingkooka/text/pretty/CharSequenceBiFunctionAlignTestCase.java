@@ -26,12 +26,12 @@ import walkingkooka.util.BiFunctionTesting;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class AlignmentCharSequenceBiFunctionTestCase<A extends AlignmentCharSequenceBiFunction> extends TextPrettyTestCase<A>
+public abstract class CharSequenceBiFunctionAlignTestCase<A extends CharSequenceBiFunctionAlign> extends TextPrettyTestCase<A>
         implements BiFunctionTesting<A, CharSequence, Integer, CharSequence>,
         ToStringTesting<A>,
         TypeNameTesting<A> {
 
-    AlignmentCharSequenceBiFunctionTestCase() {
+    CharSequenceBiFunctionAlignTestCase() {
         super();
     }
 
@@ -62,7 +62,7 @@ public abstract class AlignmentCharSequenceBiFunctionTestCase<A extends Alignmen
 
     @Override
     public final String typeNamePrefix() {
-        return AlignmentCharSequenceBiFunction.class.getSimpleName();
+        return CharSequenceBiFunctionAlign.class.getSimpleName();
     }
 
     @Override
