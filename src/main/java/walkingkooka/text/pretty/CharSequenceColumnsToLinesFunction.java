@@ -56,56 +56,15 @@ final class CharSequenceColumnsToLinesFunction implements Function<List<CharSequ
         Objects.requireNonNull(columns, "columns");
 
         // break up each column's CharSequence into individual lines,.
-        final List<List<CharSequence>> columnToLines = Lists.array();
-        final List<Integer> maxColumnWidths = Lists.array();
+        final List<MultiLineCharSequence> columnToLines = Lists.array();
 
         for(final CharSequence column : columns) {
-            final List<CharSequence> lines = Lists.array();
-            final int length = column.length();
-            char previous = 0;
-            int start = 0;
-            int i = 0;
-
-            for(;;) {
-                if(length == i) {
-                    if(length != start) {
-                        lines.add(column.subSequence(start, length));
-                    }
-                    break;
-                }
-                final char c = column.charAt(i);
-                switch(c){
-                    case '\n': // NL
-                        if('\r' != previous) {
-                            lines.add(column.subSequence(start, i)); // without the NL
-                        } // else was CRNL
-
-                        i++;
-                        start = i; // after the NL
-
-                        previous = c;
-                        break;
-                    case '\r': // CR
-                        lines.add(column.subSequence(start, i)); // without the CR
-                        i++;
-                        start = i; // after the CR
-
-                        previous = '\r';
-                        break;
-                    default:
-                        previous = c;
-                        i++;
-                        break;
-                }
-            }
-
-            columnToLines.add(lines);
-            maxColumnWidths.add(lines.stream().mapToInt(CharSequence::length).max().orElse(0));
+            columnToLines.add(MultiLineCharSequence.parse(column, this.lineEnding));
         }
 
         // join line by line from each column..........
         final int maxRows = columnToLines.stream()
-                .mapToInt(List::size)
+                .mapToInt(MultiLineCharSequence::lineCount)
                 .max()
                 .orElse(0);
 
@@ -119,14 +78,14 @@ final class CharSequenceColumnsToLinesFunction implements Function<List<CharSequ
             final StringBuilder text = new StringBuilder();
 
             for(int c = 0; c < columnCount; c++) {
-                final List<CharSequence> rows = columnToLines.get(c);
-                final CharSequence columnText = r < rows.size() ?
-                        rows.get(r) :
+                final MultiLineCharSequence rows = columnToLines.get(c);
+                final CharSequence columnText = r < rows.lineCount() ?
+                        rows.line(r) :
                         "";
                 // only add padding to columns that are not the last.
                 if(c < lastColumn) {
                     final CharSequence padded = CharSequences.padRight(columnText,
-                            maxColumnWidths.get(c),
+                            rows.maxWidth(),
                             ' ');
                     text.append(padded);
                     text.append(this.pad(c));
