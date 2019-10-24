@@ -228,7 +228,51 @@ final class MultiLineCharSequence implements CharSequence {
     @Override
     public CharSequence subSequence(final int start,
                                     final int end) {
-        throw new UnsupportedOperationException();
+        if (start < 0) {
+            throw new StringIndexOutOfBoundsException("Start " + start + " < 0");
+        }
+        if (start > end) {
+            throw new StringIndexOutOfBoundsException("Start " + start + " > end " + end);
+        }
+
+        final int length = this.length();
+        if (end > length) {
+            throw new StringIndexOutOfBoundsException("End " + end + "> " + length);
+        }
+
+        return start == end ?
+                "" :
+                0 == start && length == end ?
+                        this :
+                        subSequence0(start, end);
+    }
+
+    private CharSequence subSequence0(final int start,
+                                      final int end) {
+        CharSequence sub = null;
+
+        int at = 0;
+
+        for (final CharSequence line : this.lines) {
+            final int lineLength = line.length();
+            if (start >= at && end <= at + lineLength) {
+                sub = line.subSequence(start - at, end - at);
+                break;
+            }
+            at += lineLength;
+
+            final int eolLength = this.lineEnding.length();
+            if (start >= at && end <= at + eolLength) {
+                sub = this.lineEnding.subSequence(start - at, end - at);
+                break;
+            }
+
+            at += eolLength;
+        }
+
+        return null == sub ?
+                this.toString().substring(start, end) :
+                sub;
     }
 
     // Object ..........................................................................................................
