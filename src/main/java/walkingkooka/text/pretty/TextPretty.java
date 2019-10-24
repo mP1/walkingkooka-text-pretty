@@ -21,6 +21,7 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.text.LineEnding;
 
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.IntUnaryOperator;
 import java.util.function.UnaryOperator;
@@ -43,10 +44,10 @@ final public class TextPretty implements PublicStaticHelper {
     }
 
     /**
-     * {@see LeftAlignmentUnaryOperator}
+     * {@see LeftAlignmentCharSequenceBiFunction}
      */
-    public static Function<CharSequence, CharSequence> leftAlignment() {
-        return LeftAlignmentUnaryOperator.INSTANCE;
+    public static BiFunction<CharSequence, Integer, CharSequence> leftAlignment() {
+        return LeftAlignmentCharSequenceBiFunction.INSTANCE;
     }
 
     /**

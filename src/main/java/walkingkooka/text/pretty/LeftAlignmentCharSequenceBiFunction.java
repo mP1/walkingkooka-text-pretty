@@ -17,27 +17,28 @@
 
 package walkingkooka.text.pretty;
 
-import java.util.function.UnaryOperator;
+import java.util.function.BiFunction;
 
 /**
- * A {@link UnaryOperator} that simply returns the given {@link CharSequence}.
+ * A {@link BiFunction} that simply returns the given {@link CharSequence}.
  */
-final class LeftAlignmentUnaryOperator implements UnaryOperator<CharSequence> {
+final class LeftAlignmentCharSequenceBiFunction implements BiFunction<CharSequence, Integer, CharSequence> {
 
     /**
      * Singleton
      */
-    final static LeftAlignmentUnaryOperator INSTANCE = new LeftAlignmentUnaryOperator();
+    final static LeftAlignmentCharSequenceBiFunction INSTANCE = new LeftAlignmentCharSequenceBiFunction();
 
     /**
      * Private ctor
      */
-    private LeftAlignmentUnaryOperator() {
+    private LeftAlignmentCharSequenceBiFunction() {
         super();
     }
 
     @Override
-    public CharSequence apply(final CharSequence chars) {
+    public CharSequence apply(final CharSequence chars,
+                              final Integer width) {
         return chars;
     }
 
