@@ -51,6 +51,13 @@ final public class TextPretty implements PublicStaticHelper {
     }
 
     /**
+     * {@see RightAlignmentCharSequenceBiFunction}
+     */
+    public static BiFunction<CharSequence, Integer, CharSequence> rightAlignment() {
+        return RightAlignmentCharSequenceBiFunction.INSTANCE;
+    }
+
+    /**
      * {@see TagStrippingCharSequenceUnaryOperator}
      */
     public static UnaryOperator<CharSequence> tagStripping() {
