@@ -24,17 +24,17 @@ import java.util.function.BiFunction;
 /**
  * A {@link BiFunction} that adds padding {@link CharSequence} so it is centered.
  */
-final class CenterAlignmentCharSequenceBiFunction extends AlignmentCharSequenceBiFunction {
+final class AlignmentCharSequenceBiFunctionCenter extends AlignmentCharSequenceBiFunction {
 
     /**
      * Singleton
      */
-    final static CenterAlignmentCharSequenceBiFunction INSTANCE = new CenterAlignmentCharSequenceBiFunction();
+    final static AlignmentCharSequenceBiFunctionCenter INSTANCE = new AlignmentCharSequenceBiFunctionCenter();
 
     /**
      * Private ctor
      */
-    private CenterAlignmentCharSequenceBiFunction() {
+    private AlignmentCharSequenceBiFunctionCenter() {
         super();
     }
 
@@ -54,6 +54,6 @@ final class CenterAlignmentCharSequenceBiFunction extends AlignmentCharSequenceB
 
     @Override
     public String toString() {
-        return "CenterAlignment";
+        return "Center";
     }
 }
