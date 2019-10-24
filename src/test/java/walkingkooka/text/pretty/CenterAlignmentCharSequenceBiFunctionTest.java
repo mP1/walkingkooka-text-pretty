@@ -18,9 +18,8 @@
 package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.text.CharSequences;
 
-public class RightAlignmentCharSequenceBiFunctionTest extends AlignmentCharSequenceBiFunctionTestCase<RightAlignmentCharSequenceBiFunction> {
+public class CenterAlignmentCharSequenceBiFunctionTest extends AlignmentCharSequenceBiFunctionTestCase<CenterAlignmentCharSequenceBiFunction> {
 
     @Test
     public void testApplyEmpty() {
@@ -28,8 +27,18 @@ public class RightAlignmentCharSequenceBiFunctionTest extends AlignmentCharSeque
     }
 
     @Test
-    public void testApplyNotEmpty() {
-        this.applyAndCheck2("abc123", 10, "    abc123");
+    public void testApplyNotEmptyOnlyRightPadding() {
+        this.applyAndCheck2("abc123", 7, "abc123 ");
+    }
+
+    @Test
+    public void testApplyNotEmptyDifferentLeftAndRightPadding() {
+        this.applyAndCheck2("abc123", 9, " abc123  ");
+    }
+
+    @Test
+    public void testApplyNotEmptyEqualLeftAndRightPadding() {
+        this.applyAndCheck2("abc123", 10, "  abc123  ");
     }
 
     @Test
@@ -39,16 +48,16 @@ public class RightAlignmentCharSequenceBiFunctionTest extends AlignmentCharSeque
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(RightAlignmentCharSequenceBiFunction.INSTANCE, "RightAlignment");
+        this.toStringAndCheck(CenterAlignmentCharSequenceBiFunction.INSTANCE, "CenterAlignment");
     }
 
     @Override
-    public RightAlignmentCharSequenceBiFunction createBiFunction() {
-        return RightAlignmentCharSequenceBiFunction.INSTANCE;
+    public CenterAlignmentCharSequenceBiFunction createBiFunction() {
+        return CenterAlignmentCharSequenceBiFunction.INSTANCE;
     }
 
     @Override
-    public Class<RightAlignmentCharSequenceBiFunction> type() {
-        return RightAlignmentCharSequenceBiFunction.class;
+    public Class<CenterAlignmentCharSequenceBiFunction> type() {
+        return CenterAlignmentCharSequenceBiFunction.class;
     }
 }

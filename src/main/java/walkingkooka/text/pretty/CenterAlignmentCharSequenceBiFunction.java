@@ -17,33 +17,43 @@
 
 package walkingkooka.text.pretty;
 
+import walkingkooka.text.CharSequences;
+
 import java.util.function.BiFunction;
 
 /**
- * A {@link BiFunction} that simply returns the given {@link CharSequence}.
+ * A {@link BiFunction} that adds padding {@link CharSequence} so it is centered.
  */
-final class LeftAlignmentCharSequenceBiFunction extends AlignmentCharSequenceBiFunction {
+final class CenterAlignmentCharSequenceBiFunction extends AlignmentCharSequenceBiFunction {
 
     /**
      * Singleton
      */
-    final static LeftAlignmentCharSequenceBiFunction INSTANCE = new LeftAlignmentCharSequenceBiFunction();
+    final static CenterAlignmentCharSequenceBiFunction INSTANCE = new CenterAlignmentCharSequenceBiFunction();
 
     /**
      * Private ctor
      */
-    private LeftAlignmentCharSequenceBiFunction() {
+    private CenterAlignmentCharSequenceBiFunction() {
         super();
     }
 
     @Override
-    CharSequence alignNotEmpty(final CharSequence chars,
+    CharSequence alignNotEmpty(final CharSequence text,
                                final int width) {
-        return chars;
+        final int beforeTextWidth = text.length();
+        final int left = (width - beforeTextWidth) / 2;
+        final int right = width - (beforeTextWidth + left);
+
+        return CharSequences.concat(
+                CharSequences.repeating(' ', left),
+                CharSequences.concat(
+                        text,
+                        CharSequences.repeating(' ', right)));
     }
 
     @Override
     public String toString() {
-        return "LeftAlignment";
+        return "CenterAlignment";
     }
 }

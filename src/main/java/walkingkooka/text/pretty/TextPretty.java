@@ -29,6 +29,13 @@ import java.util.function.UnaryOperator;
 final public class TextPretty implements PublicStaticHelper {
 
     /**
+     * {@see CenterAlignmentCharSequenceBiFunction}
+     */
+    public static BiFunction<CharSequence, Integer, CharSequence> centerAlignment() {
+        return CenterAlignmentCharSequenceBiFunction.INSTANCE;
+    }
+
+    /**
      * {@see ColumnsExtractorCharSequenceFunction}
      */
     public static <T> Function<T, List<CharSequence>> columnsExtractor(final List<Function<T, CharSequence>> transformers) {

@@ -40,8 +40,8 @@ final class RightAlignmentCharSequenceBiFunction extends AlignmentCharSequenceBi
     }
 
     @Override
-    CharSequence align(final CharSequence chars,
-                       final int width) {
+    CharSequence alignNotEmpty(final CharSequence chars,
+                               final int width) {
         return CharSequences.padLeft(chars,
                 width,
                 ' ');
