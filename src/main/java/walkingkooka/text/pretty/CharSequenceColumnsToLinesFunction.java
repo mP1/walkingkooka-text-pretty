@@ -103,12 +103,6 @@ final class CharSequenceColumnsToLinesFunction implements Function<List<CharSequ
             maxColumnWidths.add(lines.stream().mapToInt(CharSequence::length).max().orElse(0));
         }
 
-        System.out.println("COLUMNS");
-        columnToLines.forEach(System.out::println);
-
-        System.out.println("MAX COL");
-        maxColumnWidths.forEach(System.out::println);
-
         // join line by line from each column..........
         final int maxRows = columnToLines.stream()
                 .mapToInt(List::size)
