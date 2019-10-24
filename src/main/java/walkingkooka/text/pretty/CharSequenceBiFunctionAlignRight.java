@@ -22,38 +22,33 @@ import walkingkooka.text.CharSequences;
 import java.util.function.BiFunction;
 
 /**
- * A {@link BiFunction} that adds padding {@link CharSequence} so it is centered.
+ * A {@link BiFunction} that adds padding {@link CharSequence} so it is right aligned. If the text is too wide
+ * an exception will be thrown.
  */
-final class AlignmentCharSequenceBiFunctionCenter extends AlignmentCharSequenceBiFunction {
+final class CharSequenceBiFunctionAlignRight extends CharSequenceBiFunctionAlign {
 
     /**
      * Singleton
      */
-    final static AlignmentCharSequenceBiFunctionCenter INSTANCE = new AlignmentCharSequenceBiFunctionCenter();
+    final static CharSequenceBiFunctionAlignRight INSTANCE = new CharSequenceBiFunctionAlignRight();
 
     /**
      * Private ctor
      */
-    private AlignmentCharSequenceBiFunctionCenter() {
+    private CharSequenceBiFunctionAlignRight() {
         super();
     }
 
     @Override
-    CharSequence alignNotEmpty(final CharSequence text,
+    CharSequence alignNotEmpty(final CharSequence chars,
                                final int width) {
-        final int beforeTextWidth = text.length();
-        final int left = (width - beforeTextWidth) / 2;
-        final int right = width - (beforeTextWidth + left);
-
-        return CharSequences.concat(
-                CharSequences.repeating(' ', left),
-                CharSequences.concat(
-                        text,
-                        CharSequences.repeating(' ', right)));
+        return CharSequences.padLeft(chars,
+                width,
+                ' ');
     }
 
     @Override
     public String toString() {
-        return "Center";
+        return "Right";
     }
 }
