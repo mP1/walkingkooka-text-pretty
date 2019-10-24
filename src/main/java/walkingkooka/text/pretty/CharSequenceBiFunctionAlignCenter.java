@@ -39,8 +39,8 @@ final class CharSequenceBiFunctionAlignCenter extends CharSequenceBiFunctionAlig
     }
 
     @Override
-    CharSequence alignNotEmpty(final CharSequence text,
-                               final int width) {
+    CharSequence notEmpty(final CharSequence text,
+                          final int width) {
         final int beforeTextWidth = text.length();
         final int left = (width - beforeTextWidth) / 2;
         final int right = width - (beforeTextWidth + left);

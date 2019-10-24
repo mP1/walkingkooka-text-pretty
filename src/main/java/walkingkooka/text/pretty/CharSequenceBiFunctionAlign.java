@@ -22,7 +22,7 @@ import java.util.function.BiFunction;
 /**
  * Base class for all alignment {@link BiFunction} that complains if the text is greater than the width.
  */
-abstract class CharSequenceBiFunctionAlign implements BiFunction<CharSequence, Integer, CharSequence> {
+abstract class CharSequenceBiFunctionAlign extends CharSequenceBiFunction {
 
     /**
      * Package private ctor to limit sub classing.
@@ -32,17 +32,19 @@ abstract class CharSequenceBiFunctionAlign implements BiFunction<CharSequence, I
     }
 
     @Override
-    public final CharSequence apply(final CharSequence chars,
-                                    final Integer width) {
-        final int length = chars.length();
-        if (chars.length() > width) {
-            throw new IllegalArgumentException("Text length " + length + " > " + width);
-        }
-        return length == 0 ?
-                "" :
-                alignNotEmpty(chars, width);
+    final CharSequence empty(final int width) {
+        return "";
     }
 
-    abstract CharSequence alignNotEmpty(final CharSequence text,
-                                        final int width);
+    @Override
+    final CharSequence full(final CharSequence text,
+                            final int width) {
+        return text;
+    }
+
+    @Override
+    final CharSequence overflowed(final CharSequence text,
+                                  final int width) {
+        throw new IllegalArgumentException("Text length " + text.length() + " > " + width);
+    }
 }
