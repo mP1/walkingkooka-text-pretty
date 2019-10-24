@@ -126,6 +126,10 @@ final class MultiLineCharSequence implements CharSequence {
 
     private int maxWidth = -1;
 
+    int lineCount() {
+        return this.lines.size();
+    }
+
     /**
      * Getter that retrieves the line at the requested line number.
      */
