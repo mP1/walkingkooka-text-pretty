@@ -19,38 +19,34 @@ package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
-import walkingkooka.util.FunctionTesting;
+import walkingkooka.util.BiFunctionTesting;
 
-public class LeftAlignmentUnaryOperatorTest extends TextPrettyTestCase<LeftAlignmentUnaryOperator>
-        implements FunctionTesting<LeftAlignmentUnaryOperator, CharSequence, CharSequence>,
-        ToStringTesting<LeftAlignmentUnaryOperator> {
+public class LeftAlignmentCharSequenceBiFunctionTest extends TextPrettyTestCase<LeftAlignmentCharSequenceBiFunction>
+        implements BiFunctionTesting<LeftAlignmentCharSequenceBiFunction, CharSequence, Integer, CharSequence>,
+        ToStringTesting<LeftAlignmentCharSequenceBiFunction> {
 
     @Test
     public void testApplyEmpty() {
-        this.applyAndCheck("", "");
+        this.applyAndCheck("", 10, "");
     }
 
     @Test
     public void testApplyNotEmpty() {
-        this.applyAndCheck("abc123", "abc123");
+        this.applyAndCheck("abc123", 10, "abc123");
     }
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(LeftAlignmentUnaryOperator.INSTANCE, "LeftAlignment");
+        this.toStringAndCheck(LeftAlignmentCharSequenceBiFunction.INSTANCE, "LeftAlignment");
     }
 
     @Override
-    public void testTypeNaming() {
+    public LeftAlignmentCharSequenceBiFunction createBiFunction() {
+        return LeftAlignmentCharSequenceBiFunction.INSTANCE;
     }
 
     @Override
-    public LeftAlignmentUnaryOperator createFunction() {
-        return LeftAlignmentUnaryOperator.INSTANCE;
-    }
-
-    @Override
-    public Class<LeftAlignmentUnaryOperator> type() {
-        return LeftAlignmentUnaryOperator.class;
+    public Class<LeftAlignmentCharSequenceBiFunction> type() {
+        return LeftAlignmentCharSequenceBiFunction.class;
     }
 }
