@@ -20,30 +20,27 @@ package walkingkooka.text.pretty;
 import java.util.function.BiFunction;
 
 /**
- * A {@link BiFunction} that simply returns the given {@link CharSequence}.
+ * Base class for all alignment {@link BiFunction} that complains if the text is greater than the width.
  */
-final class LeftAlignmentCharSequenceBiFunction extends AlignmentCharSequenceBiFunction {
+abstract class AlignmentCharSequenceBiFunction implements BiFunction<CharSequence, Integer, CharSequence> {
 
     /**
-     * Singleton
+     * Package private ctor to limit sub classing.
      */
-    final static LeftAlignmentCharSequenceBiFunction INSTANCE = new LeftAlignmentCharSequenceBiFunction();
-
-    /**
-     * Private ctor
-     */
-    private LeftAlignmentCharSequenceBiFunction() {
+    AlignmentCharSequenceBiFunction() {
         super();
     }
 
     @Override
-    CharSequence align(final CharSequence chars,
-                       final int width) {
-        return chars;
+    public final CharSequence apply(final CharSequence chars,
+                                    final Integer width) {
+        final int length = chars.length();
+        if (chars.length() > width) {
+            throw new IllegalArgumentException("Text length " + length + " > " + width);
+        }
+        return align(chars, width);
     }
 
-    @Override
-    public String toString() {
-        return "LeftAlignment";
-    }
+    abstract CharSequence align(final CharSequence text,
+                                final int width);
 }

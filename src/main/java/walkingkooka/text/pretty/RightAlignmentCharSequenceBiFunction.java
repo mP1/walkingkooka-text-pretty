@@ -25,7 +25,7 @@ import java.util.function.BiFunction;
  * A {@link BiFunction} that adds padding {@link CharSequence} so it is right aligned. If the text is too wide
  * an exception will be thrown.
  */
-final class RightAlignmentCharSequenceBiFunction implements BiFunction<CharSequence, Integer, CharSequence> {
+final class RightAlignmentCharSequenceBiFunction extends AlignmentCharSequenceBiFunction {
 
     /**
      * Singleton
@@ -40,8 +40,8 @@ final class RightAlignmentCharSequenceBiFunction implements BiFunction<CharSeque
     }
 
     @Override
-    public CharSequence apply(final CharSequence chars,
-                              final Integer width) {
+    CharSequence align(final CharSequence chars,
+                       final int width) {
         return CharSequences.padLeft(chars,
                 width,
                 ' ');
