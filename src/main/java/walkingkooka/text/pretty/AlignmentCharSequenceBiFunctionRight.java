@@ -17,33 +17,38 @@
 
 package walkingkooka.text.pretty;
 
+import walkingkooka.text.CharSequences;
+
 import java.util.function.BiFunction;
 
 /**
- * A {@link BiFunction} that simply returns the given {@link CharSequence}.
+ * A {@link BiFunction} that adds padding {@link CharSequence} so it is right aligned. If the text is too wide
+ * an exception will be thrown.
  */
-final class LeftAlignmentCharSequenceBiFunction extends AlignmentCharSequenceBiFunction {
+final class AlignmentCharSequenceBiFunctionRight extends AlignmentCharSequenceBiFunction {
 
     /**
      * Singleton
      */
-    final static LeftAlignmentCharSequenceBiFunction INSTANCE = new LeftAlignmentCharSequenceBiFunction();
+    final static AlignmentCharSequenceBiFunctionRight INSTANCE = new AlignmentCharSequenceBiFunctionRight();
 
     /**
      * Private ctor
      */
-    private LeftAlignmentCharSequenceBiFunction() {
+    private AlignmentCharSequenceBiFunctionRight() {
         super();
     }
 
     @Override
     CharSequence alignNotEmpty(final CharSequence chars,
                                final int width) {
-        return chars;
+        return CharSequences.padLeft(chars,
+                width,
+                ' ');
     }
 
     @Override
     public String toString() {
-        return "LeftAlignment";
+        return "Right";
     }
 }

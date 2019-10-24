@@ -19,7 +19,7 @@ package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
 
-public class LeftAlignmentCharSequenceBiFunctionTest extends AlignmentCharSequenceBiFunctionTestCase<LeftAlignmentCharSequenceBiFunction> {
+public class AlignmentCharSequenceBiFunctionLeftTest extends AlignmentCharSequenceBiFunctionTestCase<AlignmentCharSequenceBiFunctionLeft> {
 
     @Test
     public void testApplyEmpty() {
@@ -31,18 +31,18 @@ public class LeftAlignmentCharSequenceBiFunctionTest extends AlignmentCharSequen
         this.applyAndCheck("abc123", 10, "abc123");
     }
 
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(LeftAlignmentCharSequenceBiFunction.INSTANCE, "LeftAlignment");
+    @Override
+    public AlignmentCharSequenceBiFunctionLeft createBiFunction() {
+        return AlignmentCharSequenceBiFunctionLeft.INSTANCE;
     }
 
     @Override
-    public LeftAlignmentCharSequenceBiFunction createBiFunction() {
-        return LeftAlignmentCharSequenceBiFunction.INSTANCE;
+    public Class<AlignmentCharSequenceBiFunctionLeft> type() {
+        return AlignmentCharSequenceBiFunctionLeft.class;
     }
 
     @Override
-    public Class<LeftAlignmentCharSequenceBiFunction> type() {
-        return LeftAlignmentCharSequenceBiFunction.class;
+    String align() {
+        return "Left";
     }
 }

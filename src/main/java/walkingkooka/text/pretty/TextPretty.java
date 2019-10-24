@@ -29,10 +29,10 @@ import java.util.function.UnaryOperator;
 final public class TextPretty implements PublicStaticHelper {
 
     /**
-     * {@see CenterAlignmentCharSequenceBiFunction}
+     * {@see AlignmentCharSequenceBiFunctionCenter}
      */
     public static BiFunction<CharSequence, Integer, CharSequence> centerAlignment() {
-        return CenterAlignmentCharSequenceBiFunction.INSTANCE;
+        return AlignmentCharSequenceBiFunctionCenter.INSTANCE;
     }
 
     /**
@@ -51,17 +51,17 @@ final public class TextPretty implements PublicStaticHelper {
     }
 
     /**
-     * {@see LeftAlignmentCharSequenceBiFunction}
+     * {@see AlignmentCharSequenceBiFunctionLeft}
      */
     public static BiFunction<CharSequence, Integer, CharSequence> leftAlignment() {
-        return LeftAlignmentCharSequenceBiFunction.INSTANCE;
+        return AlignmentCharSequenceBiFunctionLeft.INSTANCE;
     }
 
     /**
-     * {@see RightAlignmentCharSequenceBiFunction}
+     * {@see AlignmentCharSequenceBiFunctionRight}
      */
     public static BiFunction<CharSequence, Integer, CharSequence> rightAlignment() {
-        return RightAlignmentCharSequenceBiFunction.INSTANCE;
+        return AlignmentCharSequenceBiFunctionRight.INSTANCE;
     }
 
     /**
