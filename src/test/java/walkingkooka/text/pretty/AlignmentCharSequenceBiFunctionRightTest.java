@@ -22,11 +22,6 @@ import org.junit.jupiter.api.Test;
 public class AlignmentCharSequenceBiFunctionRightTest extends AlignmentCharSequenceBiFunctionTestCase<AlignmentCharSequenceBiFunctionRight> {
 
     @Test
-    public void testApplyEmpty() {
-        this.applyAndCheck2("", 10, "");
-    }
-
-    @Test
     public void testApplyNotEmpty() {
         this.applyAndCheck2("abc123", 10, "    abc123");
     }
