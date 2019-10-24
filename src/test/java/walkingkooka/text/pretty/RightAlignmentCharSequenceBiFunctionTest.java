@@ -18,16 +18,9 @@
 package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.ToStringTesting;
 import walkingkooka.text.CharSequences;
-import walkingkooka.util.BiFunctionTesting;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-public class RightAlignmentCharSequenceBiFunctionTest extends TextPrettyTestCase<RightAlignmentCharSequenceBiFunction>
-        implements BiFunctionTesting<RightAlignmentCharSequenceBiFunction, CharSequence, Integer, CharSequence>,
-        ToStringTesting<RightAlignmentCharSequenceBiFunction> {
+public class RightAlignmentCharSequenceBiFunctionTest extends AlignmentCharSequenceBiFunctionTestCase<RightAlignmentCharSequenceBiFunction> {
 
     @Test
     public void testApplyEmpty() {
@@ -42,19 +35,6 @@ public class RightAlignmentCharSequenceBiFunctionTest extends TextPrettyTestCase
     @Test
     public void testApplyFullWidth() {
         this.applyAndCheck2("abc123", 6, "abc123");
-    }
-
-    private void applyAndCheck2(final CharSequence text,
-                                final int width,
-                                final CharSequence expected) {
-        assertEquals(expected.toString(),
-                RightAlignmentCharSequenceBiFunction.INSTANCE.apply(text, width).toString(),
-                () -> " apply " + CharSequences.quoteAndEscape(text) + " width " + width);
-    }
-
-    @Test
-    public void testApplyTextGreaterThanWidthFails() {
-        assertThrows(IllegalArgumentException.class, () -> RightAlignmentCharSequenceBiFunction.INSTANCE.apply("abc123", 5));
     }
 
     @Test
