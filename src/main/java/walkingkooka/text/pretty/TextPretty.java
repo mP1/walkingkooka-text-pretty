@@ -72,6 +72,13 @@ final public class TextPretty implements PublicStaticHelper {
     }
 
     /**
+     * {@see CharSequenceBiFunctionOverflowTruncate}
+     */
+    public static BiFunction<CharSequence, Integer, CharSequence> truncate() {
+        return CharSequenceBiFunctionOverflowTruncate.INSTANCE;
+    }
+
+    /**
      * {@see WhitespaceNormalizingCharSequenceUnaryOperator}
      */
     public static UnaryOperator<CharSequence> whitespaceNormalizing() {
