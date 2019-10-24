@@ -42,7 +42,7 @@ public abstract class AlignmentCharSequenceBiFunctionTestCase<A extends Alignmen
                               final int width,
                               final CharSequence expected) {
         assertEquals(expected.toString(),
-                RightAlignmentCharSequenceBiFunction.INSTANCE.apply(text, width).toString(),
+                this.createBiFunction().apply(text, width).toString(),
                 () -> " apply " + CharSequences.quoteAndEscape(text) + " width " + width);
     }
 }
