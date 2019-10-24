@@ -23,7 +23,8 @@ import walkingkooka.text.CharSequenceTesting;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class ImmutableCharSequenceTest implements CharSequenceTesting<ImmutableCharSequence> {
+public final class ImmutableCharSequenceTest extends TextPrettyTestCase<ImmutableCharSequence>
+        implements CharSequenceTesting<ImmutableCharSequence> {
 
     private final static String TOSTRING = "abc123";
 

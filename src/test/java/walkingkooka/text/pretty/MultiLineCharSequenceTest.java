@@ -29,7 +29,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class MultiLineCharSequenceTest implements CharSequenceTesting<MultiLineCharSequence> {
+public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLineCharSequence>
+        implements CharSequenceTesting<MultiLineCharSequence> {
 
     private final static String LINE1 = "1a";
     private final static String LINE2 = "2bb";

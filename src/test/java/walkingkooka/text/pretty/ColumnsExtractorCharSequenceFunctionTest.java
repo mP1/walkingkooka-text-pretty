@@ -29,7 +29,8 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ColumnsExtractorCharSequenceFunctionTest implements FunctionTesting<ColumnsExtractorCharSequenceFunction<BigInteger>,
+public final class ColumnsExtractorCharSequenceFunctionTest extends TextPrettyTestCase<ColumnsExtractorCharSequenceFunction<BigInteger>>
+        implements FunctionTesting<ColumnsExtractorCharSequenceFunction<BigInteger>,
         BigInteger,
         List<CharSequence>>,
         ToStringTesting<ColumnsExtractorCharSequenceFunction<BigInteger>> {

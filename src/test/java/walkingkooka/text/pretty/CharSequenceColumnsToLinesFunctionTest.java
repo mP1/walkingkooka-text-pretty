@@ -29,7 +29,8 @@ import java.util.function.IntUnaryOperator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class CharSequenceColumnsToLinesFunctionTest implements FunctionTesting<CharSequenceColumnsToLinesFunction, List<CharSequence>, CharSequence>,
+public final class CharSequenceColumnsToLinesFunctionTest extends TextPrettyTestCase<CharSequenceColumnsToLinesFunction>
+        implements FunctionTesting<CharSequenceColumnsToLinesFunction, List<CharSequence>, CharSequence>,
         ToStringTesting<CharSequenceColumnsToLinesFunction> {
 
     private final static LineEnding LINE_ENDING = LineEnding.NL;
