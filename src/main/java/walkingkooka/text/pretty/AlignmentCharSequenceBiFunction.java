@@ -38,9 +38,11 @@ abstract class AlignmentCharSequenceBiFunction implements BiFunction<CharSequenc
         if (chars.length() > width) {
             throw new IllegalArgumentException("Text length " + length + " > " + width);
         }
-        return align(chars, width);
+        return length == 0 ?
+                "" :
+                alignNotEmpty(chars, width);
     }
 
-    abstract CharSequence align(final CharSequence text,
-                                final int width);
+    abstract CharSequence alignNotEmpty(final CharSequence text,
+                                        final int width);
 }
