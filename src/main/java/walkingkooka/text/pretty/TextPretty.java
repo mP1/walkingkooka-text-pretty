@@ -36,6 +36,13 @@ final public class TextPretty implements PublicStaticHelper {
     }
 
     /**
+     * {@see Column}
+     */
+    public static Column column() {
+        return Column.empty();
+    }
+
+    /**
      * {@see ColumnsExtractorCharSequenceFunction}
      */
     public static <T> Function<T, List<CharSequence>> columnsExtractor(final List<Function<T, CharSequence>> transformers) {
