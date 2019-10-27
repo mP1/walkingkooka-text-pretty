@@ -47,4 +47,11 @@ abstract class CharSequenceBiFunctionAlign extends CharSequenceBiFunction {
                                   final int width) {
         throw new IllegalArgumentException("Text length " + text.length() + " > " + width);
     }
+
+    /**
+     * Any {@link CharSequenceBiFunctionAlign} replaces any other {@link CharSequenceBiFunctionAlign}.
+     */
+    final boolean isColumnReplace(final BiFunction<CharSequence, Integer, CharSequence> function) {
+        return function instanceof CharSequenceBiFunctionAlign;
+    }
 }

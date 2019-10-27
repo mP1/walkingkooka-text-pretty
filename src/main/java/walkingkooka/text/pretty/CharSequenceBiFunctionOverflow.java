@@ -17,6 +17,8 @@
 
 package walkingkooka.text.pretty;
 
+import java.util.function.BiFunction;
+
 /**
  * Base class for overflow handling functions.
  */
@@ -41,5 +43,12 @@ abstract class CharSequenceBiFunctionOverflow extends CharSequenceBiFunction {
     final CharSequence full(final CharSequence text,
                             final int width) {
         return text;
+    }
+
+    /**
+     * Any {@link CharSequenceBiFunctionOverflow} replaces any other {@link CharSequenceBiFunctionOverflow}.
+     */
+    final boolean isColumnReplace(final BiFunction<CharSequence, Integer, CharSequence> function) {
+        return function instanceof CharSequenceBiFunctionOverflow;
     }
 }
