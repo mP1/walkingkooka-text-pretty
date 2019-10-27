@@ -81,6 +81,13 @@ final public class TextPretty implements PublicStaticHelper {
     }
 
     /**
+     * {@see TabExpandingCharSequenceUnaryOperator}
+     */
+    public static UnaryOperator<CharSequence> tabExpanding(final IntUnaryOperator tabStops) {
+        return TabExpandingCharSequenceUnaryOperator.with(tabStops);
+    }
+
+    /**
      * {@see TagStrippingCharSequenceUnaryOperator}
      */
     public static UnaryOperator<CharSequence> tagStripping() {
