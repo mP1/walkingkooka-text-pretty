@@ -17,14 +17,12 @@
 
 package walkingkooka.text.pretty;
 
-import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.util.BiFunctionTesting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class CharSequenceBiFunctionTestCase<A extends CharSequenceBiFunction> extends TextPrettyTestCase<A>
         implements BiFunctionTesting<A, CharSequence, Integer, CharSequence>,
@@ -36,11 +34,21 @@ public abstract class CharSequenceBiFunctionTestCase<A extends CharSequenceBiFun
     }
 
     final void applyAndCheck2(final CharSequence text,
+                              final int width) {
+        this.applyAndCheck2(text, width, text);
+    }
+
+    final void applyAndCheck2(final CharSequence text,
                               final int width,
                               final CharSequence expected) {
+        final String actual = this.createBiFunction().apply(text, width).toString();
         assertEquals(expected.toString(),
-                this.createBiFunction().apply(text, width).toString(),
+                actual,
                 () -> " apply " + CharSequences.quoteAndEscape(text) + " width " + width);
+
+        assertEquals(true,
+                actual.length() <= width,
+                () -> " apply " + CharSequences.quoteAndEscape(text) + " width " + width + " actual: " + actual.length() + "=" + CharSequences.quoteAndEscape(actual));
     }
 
     // TypeNameTesting..................................................................................................

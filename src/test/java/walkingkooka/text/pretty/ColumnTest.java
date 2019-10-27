@@ -20,6 +20,8 @@ package walkingkooka.text.pretty;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.predicate.character.CharPredicate;
+import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.util.FunctionTesting;
@@ -34,6 +36,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class ColumnTest implements FunctionTesting<Column, List<CharSequence>, List<CharSequence>>,
         ClassTesting<Column>,
         ToStringTesting<Column> {
+
+    private final static CharPredicate CHARACTER = CharPredicates.is('.');
+    private final static int CHARACTER_COLUMN = 5;
 
     @Test
     public void testMaxWidthInvalidFails() {
@@ -58,6 +63,15 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
         this.check(Column.empty()
                         .maxWidth(width),
                 123);
+    }
+
+    @Test
+    public void testCharacter() {
+        this.check(Column.empty()
+                        .maxWidth(80)
+                        .character(CHARACTER, CHARACTER_COLUMN),
+                80,
+                TextPretty.character(CHARACTER, CHARACTER_COLUMN));
     }
 
     @Test
@@ -127,6 +141,26 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
     }
 
     @Test
+    public void testCenterCharacter() {
+        this.check(Column.empty()
+                        .maxWidth(90)
+                        .center()
+                        .character(CHARACTER, CHARACTER_COLUMN),
+                90,
+                TextPretty.character(CHARACTER, CHARACTER_COLUMN));
+    }
+
+    @Test
+    public void testCharacterCharacter() {
+        this.check(Column.empty()
+                        .maxWidth(90)
+                        .character(CHARACTER, CHARACTER_COLUMN -1)
+                        .character(CHARACTER, CHARACTER_COLUMN),
+                90,
+                TextPretty.character(CHARACTER, CHARACTER_COLUMN));
+    }
+
+    @Test
     public void testSetLeftMaxWidth() {
         final int width = 120;
 
@@ -177,6 +211,15 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
                         .maxWidth(80)
                         .left(),
                 Lists.of("line 1", "  line 2"));
+    }
+
+    @Test
+    public void testCharacterApply() {
+        this.apply2(Column.empty()
+                        .maxWidth(80)
+                        .character(CHARACTER, CHARACTER_COLUMN),
+                Lists.of("1.23", "12.34", "ignored"),
+                Lists.of("    1.23", "   12.34", "ignored"));
     }
 
     @Test

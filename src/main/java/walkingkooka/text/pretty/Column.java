@@ -20,6 +20,7 @@ package walkingkooka.text.pretty;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.predicate.character.CharPredicate;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -71,6 +72,15 @@ public final class Column implements UnaryOperator<List<CharSequence>> {
     public Column center() {
         this.checkMaxWidth();
         return this.add(TextPretty.centerAlignment());
+    }
+
+    /**
+     * Aligns a column at the give column using the {@link CharPredicate} to find the character.
+     */
+    public Column character(final CharPredicate chars,
+                            final int column) {
+        this.checkMaxWidth();
+        return this.add(TextPretty.character(chars, column));
     }
 
     /**
