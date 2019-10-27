@@ -19,7 +19,7 @@ package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
 
-public class CharSequenceBiFunctionAlignCenterTest extends CharSequenceBiFunctionAlignTestCase<CharSequenceBiFunctionAlignCenter> {
+public class CharSequenceBiFunctionAlignCenterTest extends CharSequenceBiFunctionAlignTestCase2<CharSequenceBiFunctionAlignCenter> {
 
     @Test
     public void testApplyNotEmptyOnlyRightPadding() {
