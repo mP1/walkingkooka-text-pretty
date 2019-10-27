@@ -17,6 +17,7 @@
 
 package walkingkooka.text.pretty;
 
+import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.text.LineEnding;
 
@@ -33,6 +34,14 @@ final public class TextPretty implements PublicStaticHelper {
      */
     public static BiFunction<CharSequence, Integer, CharSequence> centerAlignment() {
         return CharSequenceBiFunctionAlignCenter.INSTANCE;
+    }
+
+    /**
+     * {@see CharSequenceBiFunctionAlignCharacter}
+     */
+    public static BiFunction<CharSequence, Integer, CharSequence> character(final CharPredicate chars,
+                                                                            final int column) {
+        return CharSequenceBiFunctionAlignCharacter.with(chars, column);
     }
 
     /**

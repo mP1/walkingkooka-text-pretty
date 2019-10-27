@@ -19,31 +19,16 @@ package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class CharSequenceBiFunctionAlignTestCase<A extends CharSequenceBiFunctionAlign> extends CharSequenceBiFunctionTestCase<A> {
+public abstract class CharSequenceBiFunctionAlignTestCase2<A extends CharSequenceBiFunctionAlign> extends CharSequenceBiFunctionAlignTestCase<A> {
 
-    CharSequenceBiFunctionAlignTestCase() {
+    CharSequenceBiFunctionAlignTestCase2() {
         super();
     }
 
     @Test
-    public void testEmpty() {
-        this.applyAndCheck("", 10, "");
+    public final void testToString() {
+        this.toStringAndCheck(this.createBiFunction(), this.align());
     }
-
-    @Test
-    public final void testGreaterThanWidthFails() {
-        assertThrows(IllegalArgumentException.class, () -> this.createBiFunction().apply("abc123", 5));
-    }
-
-    // TypeNameTesting..................................................................................................
-
-    @Override
-    public final String typeNameSuffix() {
-        return "Align" + this.align();
-    }
-
-    abstract String align();
 }
