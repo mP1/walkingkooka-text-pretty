@@ -31,6 +31,7 @@ import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ColumnTest implements FunctionTesting<Column, List<CharSequence>, List<CharSequence>>,
@@ -55,7 +56,6 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
         assertThrows(IllegalArgumentException.class, () -> Column.empty().maxWidth(0));
     }
 
-
     @Test
     public void testMaxWidth() {
         final int width = 123;
@@ -63,6 +63,15 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
         this.check(Column.empty()
                         .maxWidth(width),
                 123);
+    }
+
+    @Test
+    public void testMaxWidthSame() {
+        final int width = 123;
+
+        final Column column = Column.empty()
+                .maxWidth(width);
+        assertSame(column, column.maxWidth(width));
     }
 
     @Test
