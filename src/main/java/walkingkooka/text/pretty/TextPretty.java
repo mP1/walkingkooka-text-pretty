@@ -95,6 +95,27 @@ final public class TextPretty implements PublicStaticHelper {
     }
 
     /**
+     * {@see CharSequenceBiFunctionTrimLeft}
+     */
+    public static BiFunction<CharSequence, Integer, CharSequence> trimLeft() {
+        return CharSequenceBiFunctionTrimLeft.INSTANCE;
+    }
+
+    /**
+     * {@see CharSequenceBiFunctionTrimLeftRight}
+     */
+    public static BiFunction<CharSequence, Integer, CharSequence> trimLeftRight() {
+        return CharSequenceBiFunctionTrimLeftRight.INSTANCE;
+    }
+
+    /**
+     * {@see CharSequenceBiFunctionTrimRight}
+     */
+    public static BiFunction<CharSequence, Integer, CharSequence> trimRight() {
+        return CharSequenceBiFunctionTrimRight.INSTANCE;
+    }
+
+    /**
      * {@see CharSequenceBiFunctionOverflowTruncate}
      */
     public static BiFunction<CharSequence, Integer, CharSequence> truncate() {
