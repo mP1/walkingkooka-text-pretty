@@ -69,7 +69,7 @@ public final class Column implements UnaryOperator<List<CharSequence>> {
     /**
      * Sets the alignment for this {@link Column} to CENTER.
      */
-    public Column center() {
+    public Column centerAlign() {
         this.checkMaxWidth();
         return this.add(TextPretty.centerAlignment());
     }
@@ -77,8 +77,8 @@ public final class Column implements UnaryOperator<List<CharSequence>> {
     /**
      * Aligns a column at the give column using the {@link CharPredicate} to find the character.
      */
-    public Column character(final CharPredicate chars,
-                            final int column) {
+    public Column characterAlign(final CharPredicate chars,
+                                 final int column) {
         this.checkMaxWidth();
         return this.add(TextPretty.character(chars, column));
     }
@@ -86,7 +86,7 @@ public final class Column implements UnaryOperator<List<CharSequence>> {
     /**
      * Sets the alignment for this {@link Column} to LEFT.
      */
-    public Column left() {
+    public Column leftAlign() {
         this.checkMaxWidth();
         return this.add(TextPretty.leftAlignment());
     }
@@ -94,9 +94,30 @@ public final class Column implements UnaryOperator<List<CharSequence>> {
     /**
      * Sets the alignment for this {@link Column} to RIGHT.
      */
-    public Column right() {
+    public Column rightAlign() {
         this.checkMaxWidth();
         return this.add(TextPretty.rightAlignment());
+    }
+
+    /**
+     * Sets the trim LEFT operation for this column, replacing any previous.
+     */
+    public Column trimLeft() {
+        return this.add(TextPretty.trimLeft());
+    }
+
+    /**
+     * Sets the trim RIGHT operation for this column, replacing any previous.
+     */
+    public Column trimLeftRight() {
+        return this.add(TextPretty.trimLeftRight());
+    }
+
+    /**
+     * Sets the trim RIGHT operation for this column, replacing any previous.
+     */
+    public Column trimRight() {
+        return this.add(TextPretty.trimRight());
     }
 
     /**
