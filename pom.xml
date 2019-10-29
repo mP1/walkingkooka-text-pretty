@@ -47,10 +47,9 @@
 
         <dependency>
             <groupId>com.github.mP1</groupId>
-            <artifactId>walkingkooka</artifactId>
+            <artifactId>walkingkooka-text-printer</artifactId>
             <version>master-SNAPSHOT</version>
         </dependency>
-
     </dependencies>
 
     <build>
