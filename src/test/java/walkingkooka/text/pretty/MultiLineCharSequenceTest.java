@@ -320,83 +320,107 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
         assertEquals(expected.toString(), chars.line(lineNumber), () -> chars + " line " + lineNumber);
     }
 
-    // setLine.............................................................................................................
+    // setText.............................................................................................................
 
     @Test
-    public void testSetLineNegativeLineNumberFails() {
-        assertThrows(IllegalArgumentException.class, () -> this.createCharSequence().setLine(-1, DIFFERENT));
-    }
-
-    @Test
-    public void testSetLineInvalidLineNumberFails() {
-        assertThrows(IllegalArgumentException.class, () -> this.createCharSequence().setLine(this.lines().size(), DIFFERENT));
+    public void testSetTextNegativeLineNumberFails() {
+        assertThrows(IllegalArgumentException.class, () -> this.createCharSequence().setText(-1, DIFFERENT));
     }
 
     @Test
-    public void testSetLineWithNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createCharSequence().setLine(0, null));
+    public void testSetTextInvalidLineNumberFails() {
+        assertThrows(IllegalArgumentException.class, () -> this.createCharSequence().setText(this.lines().size(), DIFFERENT));
     }
 
     @Test
-    public void testSetLineIncludesCrFails() {
-        this.setLineFails("line\r");
+    public void testSetTextWithNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createCharSequence().setText(0, null));
     }
 
     @Test
-    public void testSetLineIncludesCrNlFails() {
-        this.setLineFails("line\r\n");
+    public void testSetTextSame() {
+        this.setTextAndCheckSame(0, LINE1);
     }
 
     @Test
-    public void testSetLineIncludesNlFails() {
-        this.setLineFails("line\n");
-    }
-
-    private void setLineFails(final String line) {
-        assertThrows(IllegalArgumentException.class, () -> this.createCharSequence().setLine(0, line));
+    public void testSetTextSame2() {
+        this.setTextAndCheckSame(1, LINE2);
     }
 
     @Test
-    public void testSetLineSame() {
-        this.setLineAndCheckSame(0, LINE1);
+    public void testSetTextSame3() {
+        this.setTextAndCheckSame(2, LINE3);
     }
 
     @Test
-    public void testSetLineSame2() {
-        this.setLineAndCheckSame(1, LINE2);
+    public void testSetTextSameIgnoresCr() {
+        this.setTextAndCheckSame(0, LINE1 + LineEnding.CR);
     }
 
     @Test
-    public void testSetLineSame3() {
-        this.setLineAndCheckSame(2, LINE3);
+    public void testSetTextSameIgnoresCrLf() {
+        this.setTextAndCheckSame(1, LINE2 + LineEnding.CRNL);
     }
 
-    private void setLineAndCheckSame(final int lineNumber, final String line) {
+    @Test
+    public void testSetTextSameIgnoresNl() {
+        this.setTextAndCheckSame(2, LINE3 + LineEnding.NL);
+    }
+
+    private void setTextAndCheckSame(final int lineNumber, final String line) {
         final MultiLineCharSequence chars = this.createCharSequence();
-        assertSame(chars, chars.setLine(lineNumber, line), () -> chars + " setLine " + lineNumber + " line " + CharSequences.quoteIfChars(line));
+        assertSame(chars, chars.setText(lineNumber, line), () -> chars + " setText " + lineNumber + " line " + CharSequences.quoteIfChars(line));
     }
 
     @Test
-    public void testSetLineDifferentFirstLine() {
-        this.setLineDifferentAndCheck(0);
+    public void testSetTextDifferentFirstLine() {
+        this.setTextDifferentAndCheck(0);
     }
 
     @Test
-    public void testSetLineDifferentMiddleLine() {
-        this.setLineDifferentAndCheck(1);
+    public void testSetTextDifferentMiddleLine() {
+        this.setTextDifferentAndCheck(1);
     }
 
     @Test
-    public void testSetLineDifferentLastLine() {
-        this.setLineDifferentAndCheck(2);
+    public void testSetTextDifferentLastLine() {
+        this.setTextDifferentAndCheck(2);
     }
 
-    private void setLineDifferentAndCheck(final int lineNumber) {
-        final MultiLineCharSequence chars = this.createCharSequence();
-        final MultiLineCharSequence different = chars.setLine(lineNumber, DIFFERENT);
+    private void setTextDifferentAndCheck(final int lineNumber) {
         final List<CharSequence> expected = Lists.array();
         expected.addAll(this.lines());
         expected.set(lineNumber, DIFFERENT);
+
+        this.setTextDifferentAndCheck(lineNumber, DIFFERENT, expected);
+    }
+
+    @Test
+    public void testSetTextMultiLineFirstLine() {
+        this.setTextDifferentAndCheck(0, "x\ry", "x", "y", LINE2, LINE3);
+    }
+
+    @Test
+    public void testSetTextMultiLineMiddleLine() {
+        this.setTextDifferentAndCheck(1, "x\ry", LINE1, "x", "y", LINE3);
+    }
+
+    @Test
+    public void testSetTextMultiLineLastLine() {
+        this.setTextDifferentAndCheck(2, "x\ry", LINE1, LINE2, "x", "y");
+    }
+
+    private void setTextDifferentAndCheck(final int lineNumber,
+                                          final CharSequence line,
+                                          final CharSequence... expected) {
+        this.setTextDifferentAndCheck(lineNumber, line, Lists.of(expected));
+    }
+
+    private void setTextDifferentAndCheck(final int lineNumber,
+                                          final CharSequence line,
+                                          final List<CharSequence> expected) {
+        final MultiLineCharSequence chars = this.createCharSequence();
+        final MultiLineCharSequence different = chars.setText(lineNumber, line);
 
         this.checkEquals(different, MultiLineCharSequence.with(expected, EOL));
     }

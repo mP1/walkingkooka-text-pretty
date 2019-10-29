@@ -88,8 +88,15 @@ final class MultiLineCharSequence implements CharSequence {
         Objects.requireNonNull(lines, "lines");
         Objects.requireNonNull(lineEnding, "lineEnding");
 
+        int i = 0;
         for (final CharSequence line : lines) {
-            checkLine(line);
+            if (CharSequences.indexOf(line, "\n") != -1) {
+                throw new IllegalArgumentException("Line " + i + " " + CharSequences.quoteAndEscape(line) + " contains '\\n'");
+            }
+            if (CharSequences.indexOf(line, "\r") != -1) {
+                throw new IllegalArgumentException("Line " + i + " " + CharSequences.quoteAndEscape(line) + " contains '\\r'");
+            }
+            i++;
         }
 
         return new MultiLineCharSequence(Lists.immutable(lines),
@@ -134,40 +141,35 @@ final class MultiLineCharSequence implements CharSequence {
      * Getter that retrieves the line at the requested line number.
      */
     CharSequence line(final int lineNumber) {
-        final int lineCount = this.lines.size();
-        if (lineNumber < 0 || lineNumber >= lineCount) {
-            throw new IllegalArgumentException("Line number " + lineNumber + " not between 0 and " + lineCount);
-        }
+        this.checkLineNumber(lineNumber);
         return this.lines.get(lineNumber);
     }
 
     /**
-     * Would be setter that returns a {@link MultiLineCharSequence} with the line, creating a new instance if necessary.
+     * Would be setter that returns a {@link MultiLineCharSequence} with the text inserting at the given line, creating
+     * a new instance if necessary.
      */
-    MultiLineCharSequence setLine(final int lineNumber,
-                                  final CharSequence line) {
-        return this.line(lineNumber).equals(line) ?
-                this :
-                this.replace(lineNumber, line);
-    }
+    MultiLineCharSequence setText(final int lineNumber,
+                                  final CharSequence text) {
+        this.checkLineNumber(lineNumber);
+        Objects.requireNonNull(text, "text");
 
-    private MultiLineCharSequence replace(final int lineNumber,
-                                          final CharSequence line) {
-        checkLine(line);
-
+        final List<CharSequence> previous = this.lines;
         final List<CharSequence> replaced = Lists.array();
-        replaced.addAll(this.lines);
-        replaced.set(lineNumber, line);
 
-        return new MultiLineCharSequence(replaced, this.lineEnding);
+        replaced.addAll(previous.subList(0, lineNumber));
+        replaced.addAll(parse(text, this.lineEnding).lines);
+        replaced.addAll(previous.subList(1 + lineNumber, previous.size()));
+
+        return previous.equals(replaced) ?
+                this :
+                new MultiLineCharSequence(replaced, this.lineEnding);
     }
 
-    private static void checkLine(final CharSequence line) {
-        if (CharSequences.indexOf(line, "\n") != -1) {
-            throw new IllegalArgumentException("Line " + CharSequences.quoteAndEscape(line) + " contains '\\n'");
-        }
-        if (CharSequences.indexOf(line, "\r") != -1) {
-            throw new IllegalArgumentException("Line " + CharSequences.quoteAndEscape(line) + " contains '\\r'");
+    private void checkLineNumber(final int lineNumber) {
+        final int lineCount = this.lines.size();
+        if (lineNumber < 0 || lineNumber >= lineCount) {
+            throw new IllegalArgumentException("Line number " + lineNumber + " not between 0 and " + lineCount);
         }
     }
 
