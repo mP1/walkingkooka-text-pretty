@@ -81,6 +81,13 @@ final public class TextPretty implements PublicStaticHelper {
     }
 
     /**
+     * {@see CharSequenceBiFunctionOverflowWordBreak}
+     */
+    public static BiFunction<CharSequence, Integer, CharSequence> overflowWordBreak() {
+        return CharSequenceBiFunctionOverflowWordBreak.INSTANCE;
+    }
+
+    /**
      * {@see CharSequenceBiFunctionAlignRight}
      */
     public static BiFunction<CharSequence, Integer, CharSequence> rightAlignment() {

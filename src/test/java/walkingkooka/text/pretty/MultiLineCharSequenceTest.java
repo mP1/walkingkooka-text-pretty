@@ -526,7 +526,7 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
     public void testSubSequence5() {
         final MultiLineCharSequence chars = this.createCharSequence();
 
-        for(int i = 0; i < chars.length() -2; i++) {
+        for (int i = 0; i < chars.length() - 2; i++) {
             final int start = i;
             final int end = i + 2;
             this.checkEquals(TOSTRING.substring(start, end), chars.subSequence(start, end));
