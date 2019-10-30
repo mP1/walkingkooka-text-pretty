@@ -63,7 +63,7 @@ abstract class CharSequenceBiFunction implements BiFunction<CharSequence, Intege
         for (int i = 0; i < lineCount; i++) {
             final int lineNumber = lineCount - i - 1;
             final CharSequence line = result.line(lineNumber);
-            result = result.setLine(lineNumber, this.handleLine(line, width));
+            result = result.setText(lineNumber, this.handleLine(line, width));
         }
 
         // if result is the same object return the original different then it must have changes
