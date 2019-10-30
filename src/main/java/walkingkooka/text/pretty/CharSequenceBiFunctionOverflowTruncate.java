@@ -39,6 +39,6 @@ final class CharSequenceBiFunctionOverflowTruncate extends CharSequenceBiFunctio
 
     @Override
     public String toString() {
-        return "Truncate";
+        return "OverflowTruncate";
     }
 }

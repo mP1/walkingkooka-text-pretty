@@ -17,6 +17,9 @@
 
 package walkingkooka.text.pretty;
 
+import walkingkooka.text.LineEnding;
+
+import java.util.List;
 import java.util.function.BiFunction;
 
 /**
@@ -34,8 +37,45 @@ abstract class CharSequenceBiFunction implements BiFunction<CharSequence, Intege
     @Override
     public final CharSequence apply(final CharSequence text,
                                     final Integer width) {
+        // an empty text is a special case, to avoid returning an empty line with a line ending.
+        return text.length() == 0 ?
+                text :
+                handleNotEmpty(text, width);
+    }
+
+    private CharSequence handleNotEmpty(final CharSequence text,
+                                        final int width) {
+        final MultiLineCharSequence multi = MultiLineCharSequence.parse(text, LineEnding.NL);
+        return multi.lines.size() == 1 ?
+                this.handleLine(text, width) :
+                this.handleMultiLine(text, multi, width);
+    }
+
+    /**
+     * Process lines from bottom to top, because some lines might be replaced by multiple lines.
+     */
+    private CharSequence handleMultiLine(final CharSequence text,
+                                         final MultiLineCharSequence multi,
+                                         final int width) {
+        MultiLineCharSequence result = multi;
+        final List<CharSequence> lines = result.lines;
+        int lineCount = lines.size();
+        for (int i = 0; i < lineCount; i++) {
+            final int lineNumber = lineCount - i - 1;
+            final CharSequence line = result.line(lineNumber);
+            result = result.setLine(lineNumber, this.handleLine(line, width));
+        }
+
+        // if result is the same object return the original different then it must have changes
+        return result == text ?
+                text :
+                result;
+    }
+
+    private CharSequence handleLine(final CharSequence text,
+                                    final int width) {
         final int length = text.length();
-        return length == 0 ?
+        return 0 == length ?
                 this.empty(width) :
                 length <= width ?
                         length == width ?
@@ -44,14 +84,26 @@ abstract class CharSequenceBiFunction implements BiFunction<CharSequence, Intege
                         this.overflowed(text, width);
     }
 
+    /**
+     * The individual line is empty.
+     */
     abstract CharSequence empty(final int width);
 
+    /**
+     * A line is not empty but less than the width
+     */
     abstract CharSequence notEmpty(final CharSequence text,
                                    final int width);
 
+    /**
+     * A line width matches the desired width exactly
+     */
     abstract CharSequence full(final CharSequence text,
                                final int width);
 
+    /**
+     * The line length is greater than the width.
+     */
     abstract CharSequence overflowed(final CharSequence text,
                                      final int width);
 

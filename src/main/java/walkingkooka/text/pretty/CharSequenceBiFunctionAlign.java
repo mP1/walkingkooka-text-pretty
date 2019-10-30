@@ -45,7 +45,7 @@ abstract class CharSequenceBiFunctionAlign extends CharSequenceBiFunction {
     @Override
     final CharSequence overflowed(final CharSequence text,
                                   final int width) {
-        throw new IllegalArgumentException("Text length " + text.length() + " > " + width);
+        throw new IllegalArgumentException("Text length " + text.length() + " > " + width + " while " + this);
     }
 
     /**
