@@ -24,6 +24,7 @@ import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CharSequences;
 import walkingkooka.util.FunctionTesting;
 
 import java.util.List;
@@ -328,17 +329,56 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
                 Lists.of("  line1   ", "line2====="));
     }
 
+    @Test
+    public void testMaxWidthOverflowMaxWidthBreakLeftAlign() {
+        this.apply2(Column.empty()
+                        .maxWidth(10)
+                        .overflowMaxWidthBreak()
+                        .leftAlign(),
+                Lists.of("line1", "line2"));
+    }
+
+    @Test
+    public void testMaxWidthOverflowMaxWidthBreakRightAlignLinesBroken() {
+        this.apply2(Column.empty()
+                        .maxWidth(10)
+                        .overflowMaxWidthBreak()
+                        .rightAlign(),
+                Lists.of("line1=====line2=====line3"),
+                Lists.of("line1=====\nline2=====\n     line3\n"));
+    }
+
+    @Test
+    public void testMaxWidthOverflowMaxWidthBreakRightAlignLinesBroken2() {
+        this.apply2(Column.empty()
+                        .maxWidth(8)
+                        .overflowMaxWidthBreak()
+                        .rightAlign(),
+                Lists.of("line1", "line2===line3===line4", "line5"),
+                Lists.of("   line1", "line2===\nline3===\n   line4\n", "   line5"));
+    }
+
+    @Test
+    public void testMaxWidthOverflowMaxWidthBreakRightAlignLinesBroken3() {
+        this.apply2(Column.empty()
+                        .maxWidth(8)
+                        .overflowMaxWidthBreak()
+                        .rightAlign(),
+                Lists.of("line1", "line2===line3===line4", "", "line6"),
+                Lists.of("   line1", "line2===\nline3===\n   line4\n", "", "   line6"));
+    }
+
     private void apply2(final Column column,
                         final List<CharSequence> rows) {
         this.apply2(column, rows, rows);
     }
 
     private void apply2(final Column column,
-                        final List<CharSequence> rows,
+                        final List<CharSequence> before,
                         final List<CharSequence> expected) {
         assertEquals(strings(expected),
-                strings(column.apply(rows)),
-                () -> column + " " + rows);
+                strings(column.apply(before)),
+                () -> column + " " + before);
     }
 
     private List<CharSequence> strings(final List<? super CharSequence> lines) {
@@ -363,7 +403,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
                         .maxWidth(90)
                         .truncate()
                         .rightAlign(),
-                "maxWidth=90 Truncate Right");
+                "maxWidth=90 OverflowTruncate Right");
     }
 
     // disabled.........................................................................................................

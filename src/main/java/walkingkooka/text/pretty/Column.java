@@ -92,6 +92,14 @@ public final class Column implements UnaryOperator<List<CharSequence>> {
     }
 
     /**
+     * Sets the overflow for this {@link Column} to BREAK on the max width boundary.
+     */
+    public Column overflowMaxWidthBreak() {
+        this.checkMaxWidth();
+        return this.add(TextPretty.overflowMaxWidthBreak());
+    }
+
+    /**
      * Sets the alignment for this {@link Column} to RIGHT.
      */
     public Column rightAlign() {

@@ -42,7 +42,7 @@ public abstract class CharSequenceBiFunctionOverflowTestCase<O extends CharSeque
 
     @Test
     public final void testToString() {
-        this.toStringAndCheck(this.createBiFunction(), this.overflow());
+        this.toStringAndCheck(this.createBiFunction(), "Overflow" + this.overflow());
     }
 
     // TypeNameTesting..................................................................................................
