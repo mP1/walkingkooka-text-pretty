@@ -24,7 +24,6 @@ import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.text.CharSequences;
 import walkingkooka.util.FunctionTesting;
 
 import java.util.List;
@@ -185,7 +184,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
     public void testCharacterAlignCharacterAlign() {
         this.check(Column.empty()
                         .maxWidth(90)
-                        .characterAlign(CHARACTER, CHARACTER_COLUMN -1)
+                        .characterAlign(CHARACTER, CHARACTER_COLUMN - 1)
                         .characterAlign(CHARACTER, CHARACTER_COLUMN),
                 90,
                 TextPretty.character(CHARACTER, CHARACTER_COLUMN));

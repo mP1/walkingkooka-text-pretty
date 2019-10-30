@@ -19,8 +19,6 @@ package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 public abstract class CharSequenceBiFunctionAlignTestCase2<A extends CharSequenceBiFunctionAlign> extends CharSequenceBiFunctionAlignTestCase<A> {
 
     CharSequenceBiFunctionAlignTestCase2() {
