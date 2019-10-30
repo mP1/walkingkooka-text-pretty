@@ -24,6 +24,7 @@ import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CharSequences;
 import walkingkooka.util.FunctionTesting;
 
 import java.util.List;
@@ -367,6 +368,36 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
                 Lists.of("   line1", "line2===\nline3===\n   line4\n", "", "   line6"));
     }
 
+    @Test
+    public void testMaxWidthOverflowWordBreakRightAlign() {
+        this.apply2(Column.empty()
+                        .maxWidth(8)
+                        .overflowWordBreak()
+                        .rightAlign(),
+                Lists.of("line1", "line2", "line3"),
+                Lists.of("   line1", "   line2", "   line3"));
+    }
+
+    @Test
+    public void testMaxWidthOverflowWordBreakRightAlign2() {
+        this.apply2(Column.empty()
+                        .maxWidth(8)
+                        .overflowWordBreak()
+                        .rightAlign(),
+                Lists.of("line1", "", "line3"),
+                Lists.of("   line1", "", "   line3"));
+    }
+
+    @Test
+    public void testMaxWidthOverflowWordBreakRightAlign3() {
+        this.apply2(Column.empty()
+                        .maxWidth(8)
+                        .overflowWordBreak()
+                        .rightAlign(),
+                Lists.of("line1", "line2 line3", "line4"),
+                Lists.of("   line1", "   line2\n   line3\n", "   line4"));
+    }
+
     private void apply2(final Column column,
                         final List<CharSequence> rows) {
         this.apply2(column, rows, rows);
@@ -383,6 +414,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
     private List<CharSequence> strings(final List<? super CharSequence> lines) {
         return lines.stream()
                 .map(Object::toString)
+                .map(CharSequences::quoteAndEscape)
                 .collect(Collectors.toList());
     }
 

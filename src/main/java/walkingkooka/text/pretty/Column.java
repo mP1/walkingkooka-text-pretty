@@ -100,6 +100,14 @@ public final class Column implements UnaryOperator<List<CharSequence>> {
     }
 
     /**
+     * Sets the overflow for this {@link Column} to WORD BREAK.
+     */
+    public Column overflowWordBreak() {
+        this.checkMaxWidth();
+        return this.add(TextPretty.overflowWordBreak());
+    }
+
+    /**
      * Sets the alignment for this {@link Column} to RIGHT.
      */
     public Column rightAlign() {
