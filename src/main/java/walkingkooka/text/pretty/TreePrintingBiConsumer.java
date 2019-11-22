@@ -26,7 +26,7 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 
 /**
- * A {@link BiConsumer} that accepts paths and prints a tree with indentation and relative paths.
+ * A {@link BiConsumer} that accepts paths and a {@link IndentingPrinter} that prints a tree with indentation and relative paths.
  */
 final class TreePrintingBiConsumer<P extends Path<P, N> & Comparable<P>,
         N extends Name & Comparable<N>>

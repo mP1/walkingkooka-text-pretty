@@ -33,7 +33,6 @@ import walkingkooka.text.printer.Printers;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -53,7 +52,7 @@ public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrint
     public void testLeaf2() {
         this.printTreeAndCheck(Sets.of("/branch/leaf"),
                 "branch\n" +
-                ">leaf\n");
+                        ">leaf\n");
     }
 
     @Test
@@ -61,7 +60,7 @@ public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrint
         this.printTreeAndCheck(Sets.of("/branch",
                 "/branch/leaf"),
                 "branch\n" +
-                ">leaf\n");
+                        ">leaf\n");
     }
 
     @Test
@@ -77,7 +76,7 @@ public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrint
         this.printTreeAndCheck(Sets.of("/branch", "/branch/leaf1", "/a-leaf2"),
                 "branch\n" +
                         ">leaf1\n" +
-                "a-leaf2\n");
+                        "a-leaf2\n");
     }
 
     @Test
@@ -100,7 +99,7 @@ public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrint
         this.printTreeAndCheck(Sets.of("/branch1/branch2/branch3/leaf1", "/leaf2"),
                 "branch1/branch2/branch3\n" +
                         ">leaf1\n" +
-                "leaf2\n");
+                        "leaf2\n");
     }
 
     @Test
@@ -128,7 +127,7 @@ public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrint
                         ">branch2/branch3\n" +
                         ">>leaf1\n" +
                         ">leaf2\n" +
-                ">leaf3\n");
+                        ">leaf3\n");
     }
 
     @Test
@@ -144,7 +143,7 @@ public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrint
     private void printTreeAndCheck(final Set<String> paths,
                                    final String expected) {
         final StringBuilder text = new StringBuilder();
-        try(final Printer printer = Printers.sysOut().uncloseable().tee(Printers.stringBuilder(text, LineEnding.NL))) {
+        try (final Printer printer = Printers.stringBuilder(text, LineEnding.NL)) {
             new TestTreePrinting()
                     .biConsumer()
                     .accept(paths.stream().map(StringPath::parse).collect(Collectors.toSet()), printer.indenting(Indentation.with(">")));
@@ -162,7 +161,7 @@ public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrint
                     .filter(n -> false == n.value().isEmpty())
                     .map(StringName::toString)
                     .collect(Collectors.joining("/"));
-            if(false == path.isEmpty()) {
+            if (false == path.isEmpty()) {
                 printer.print(path + "\n");
                 printer.indent();
             }
@@ -174,7 +173,7 @@ public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrint
                     .filter(n -> false == n.value().isEmpty())
                     .map(StringName::toString)
                     .collect(Collectors.joining("/"));
-            if(false == path.isEmpty()) {
+            if (false == path.isEmpty()) {
                 printer.outdent();
             }
         }

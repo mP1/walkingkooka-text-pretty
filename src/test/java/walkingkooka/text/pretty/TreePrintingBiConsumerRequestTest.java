@@ -27,7 +27,6 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.IndentingPrinters;
 
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -60,7 +59,7 @@ public final class TreePrintingBiConsumerRequestTest implements ClassTesting2<Tr
     private TreePrinting<StringPath, StringName> treePrinting() {
         return new FakeTreePrinting<>();
     }
-    
+
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;
