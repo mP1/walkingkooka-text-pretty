@@ -1,16 +1,37 @@
-[![Build Status](https://travis-ci.com/mP1/walkingkooka-text-pretty.svg?branch=master)](https://travis-ci.com/mP1/walkingkooka-text-pretty.svg?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/mP1/walkingkooka-text-pretty/badge.svg?branch=master)](https://coveralls.io/github/mP1/walkingkooka-text-pretty?branch=master)
+/*
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
 
-A collection of utilties to help format and beautify printed text into tables with column alignment formatting and more.
+package walkingkooka.text.pretty.sample;
 
+import walkingkooka.collect.set.Sets;
+import walkingkooka.naming.StringName;
+import walkingkooka.naming.StringPath;
+import walkingkooka.text.Indentation;
+import walkingkooka.text.pretty.TreePrinting;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.Printers;
 
-# TreePrinting Sample
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-The sample below gives an example to print to the console many paths in a tidy, tree with indentation without overwhelming
-the user with very long path names.
+public final class TreePrintingSample {
 
-```java
-   /**
+    /**
      * Prints...
      * <pre>
      * ~/github/project
@@ -84,4 +105,4 @@ the user with very long path names.
         }.biConsumer()
                 .accept(paths, printer);
     }
-```
+}
