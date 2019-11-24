@@ -45,10 +45,10 @@ final public class TextPretty implements PublicStaticHelper {
     }
 
     /**
-     * {@see Column}
+     * {@see ColumnConfig}
      */
-    public static Column column() {
-        return Column.empty();
+    public static ColumnConfig column() {
+        return ColumnConfig.empty();
     }
 
     /**

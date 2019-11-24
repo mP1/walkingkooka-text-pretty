@@ -30,17 +30,17 @@ import java.util.stream.Collectors;
 /**
  * A {@link UnaryOperator} that supports assembling transformation upon a columns of text.
  */
-public final class Column implements UnaryOperator<List<CharSequence>> {
+public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
 
     /**
-     * An empty {@link Column}
+     * An empty {@link ColumnConfig}
      */
-    static Column empty() {
-        return new Column(Integer.MAX_VALUE, Lists.empty());
+    static ColumnConfig empty() {
+        return new ColumnConfig(Integer.MAX_VALUE, Lists.empty());
     }
 
-    private Column(final int maxWidth,
-                   final List<BiFunction<CharSequence, Integer, CharSequence>> functions) {
+    private ColumnConfig(final int maxWidth,
+                         final List<BiFunction<CharSequence, Integer, CharSequence>> functions) {
         super();
         this.maxWidth = maxWidth;
         this.functions = functions;
@@ -49,13 +49,13 @@ public final class Column implements UnaryOperator<List<CharSequence>> {
     /**
      * Sets the max width of this column.
      */
-    public Column maxWidth(final int maxWidth) {
+    public ColumnConfig maxWidth(final int maxWidth) {
         if (maxWidth <= 0) {
             throw new IllegalArgumentException("Invalid maxWidth " + maxWidth + " < 0");
         }
         return this.maxWidth == maxWidth ?
                 this :
-                new Column(maxWidth, this.functions);
+                new ColumnConfig(maxWidth, this.functions);
     }
 
     private void checkMaxWidth() {
@@ -67,9 +67,9 @@ public final class Column implements UnaryOperator<List<CharSequence>> {
     final int maxWidth;
 
     /**
-     * Sets the alignment for this {@link Column} to CENTER.
+     * Sets the alignment for this {@link ColumnConfig} to CENTER.
      */
-    public Column centerAlign() {
+    public ColumnConfig centerAlign() {
         this.checkMaxWidth();
         return this.add(TextPretty.centerAlignment());
     }
@@ -77,40 +77,40 @@ public final class Column implements UnaryOperator<List<CharSequence>> {
     /**
      * Aligns a column at the give column using the {@link CharPredicate} to find the character.
      */
-    public Column characterAlign(final CharPredicate chars,
-                                 final int column) {
+    public ColumnConfig characterAlign(final CharPredicate chars,
+                                       final int column) {
         this.checkMaxWidth();
         return this.add(TextPretty.character(chars, column));
     }
 
     /**
-     * Sets the alignment for this {@link Column} to LEFT.
+     * Sets the alignment for this {@link ColumnConfig} to LEFT.
      */
-    public Column leftAlign() {
+    public ColumnConfig leftAlign() {
         this.checkMaxWidth();
         return this.add(TextPretty.leftAlignment());
     }
 
     /**
-     * Sets the overflow for this {@link Column} to BREAK on the max width boundary.
+     * Sets the overflow for this {@link ColumnConfig} to BREAK on the max width boundary.
      */
-    public Column overflowMaxWidthBreak() {
+    public ColumnConfig overflowMaxWidthBreak() {
         this.checkMaxWidth();
         return this.add(TextPretty.overflowMaxWidthBreak());
     }
 
     /**
-     * Sets the overflow for this {@link Column} to WORD BREAK.
+     * Sets the overflow for this {@link ColumnConfig} to WORD BREAK.
      */
-    public Column overflowWordBreak() {
+    public ColumnConfig overflowWordBreak() {
         this.checkMaxWidth();
         return this.add(TextPretty.overflowWordBreak());
     }
 
     /**
-     * Sets the alignment for this {@link Column} to RIGHT.
+     * Sets the alignment for this {@link ColumnConfig} to RIGHT.
      */
-    public Column rightAlign() {
+    public ColumnConfig rightAlign() {
         this.checkMaxWidth();
         return this.add(TextPretty.rightAlignment());
     }
@@ -118,38 +118,38 @@ public final class Column implements UnaryOperator<List<CharSequence>> {
     /**
      * Sets the trim LEFT operation for this column, replacing any previous.
      */
-    public Column trimLeft() {
+    public ColumnConfig trimLeft() {
         return this.add(TextPretty.trimLeft());
     }
 
     /**
      * Sets the trim RIGHT operation for this column, replacing any previous.
      */
-    public Column trimLeftRight() {
+    public ColumnConfig trimLeftRight() {
         return this.add(TextPretty.trimLeftRight());
     }
 
     /**
      * Sets the trim RIGHT operation for this column, replacing any previous.
      */
-    public Column trimRight() {
+    public ColumnConfig trimRight() {
         return this.add(TextPretty.trimRight());
     }
 
     /**
-     * Sets the overflow for this {@link Column} to TRUNCATE.
+     * Sets the overflow for this {@link ColumnConfig} to TRUNCATE.
      */
-    public Column truncate() {
+    public ColumnConfig truncate() {
         this.checkMaxWidth();
         return this.add(TextPretty.truncate());
     }
 
     /**
-     * Assembles this {@link Column} adding another transformer, replacing previous if possible, eg setting RIGHT replaces
+     * Assembles this {@link ColumnConfig} adding another transformer, replacing previous if possible, eg setting RIGHT replaces
      * LEFT.
      */
-    Column add(final BiFunction<CharSequence, Integer, CharSequence> function) {
-        Column result = null;
+    ColumnConfig add(final BiFunction<CharSequence, Integer, CharSequence> function) {
+        ColumnConfig result = null;
 
         for (final BiFunction<CharSequence, Integer, CharSequence> possible : this.functions) {
             if (possible.equals(function)) {
@@ -190,8 +190,8 @@ public final class Column implements UnaryOperator<List<CharSequence>> {
         return result;
     }
 
-    private Column replaceFunctions(final List<BiFunction<CharSequence, Integer, CharSequence>> functions) {
-        return new Column(this.maxWidth, functions);
+    private ColumnConfig replaceFunctions(final List<BiFunction<CharSequence, Integer, CharSequence>> functions) {
+        return new ColumnConfig(this.maxWidth, functions);
     }
 
     // UnaryOperator....................................................................................................
