@@ -102,6 +102,13 @@ final public class TextPretty implements PublicStaticHelper {
     }
 
     /**
+     * {@see Table}
+     */
+    public static Table table() {
+        return Table.empty();
+    }
+
+    /**
      * {@see TagStrippingCharSequenceUnaryOperator}
      */
     public static UnaryOperator<CharSequence> tagStripping() {
