@@ -35,33 +35,33 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ColumnTest implements FunctionTesting<Column, List<CharSequence>, List<CharSequence>>,
-        ClassTesting<Column>,
-        ToStringTesting<Column> {
+public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, List<CharSequence>, List<CharSequence>>,
+        ClassTesting<ColumnConfig>,
+        ToStringTesting<ColumnConfig> {
 
     private final static CharPredicate CHARACTER = CharPredicates.is('.');
     private final static int CHARACTER_COLUMN = 5;
 
     @Test
     public void testMaxWidthInvalidFails() {
-        assertThrows(IllegalArgumentException.class, () -> Column.empty().maxWidth(-1));
+        assertThrows(IllegalArgumentException.class, () -> ColumnConfig.empty().maxWidth(-1));
     }
 
     @Test
     public void testMaxWidthInvalidFails2() {
-        assertThrows(IllegalArgumentException.class, () -> Column.empty().maxWidth(0));
+        assertThrows(IllegalArgumentException.class, () -> ColumnConfig.empty().maxWidth(0));
     }
 
     @Test
     public void testCenterAlignWithoutMaxWidthFails() {
-        assertThrows(IllegalStateException.class, () -> Column.empty().centerAlign());
+        assertThrows(IllegalStateException.class, () -> ColumnConfig.empty().centerAlign());
     }
 
     @Test
     public void testMaxWidth() {
         final int width = 123;
 
-        this.check(Column.empty()
+        this.check(ColumnConfig.empty()
                         .maxWidth(width),
                 123);
     }
@@ -70,14 +70,14 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
     public void testMaxWidthSame() {
         final int width = 123;
 
-        final Column column = Column.empty()
+        final ColumnConfig column = ColumnConfig.empty()
                 .maxWidth(width);
         assertSame(column, column.maxWidth(width));
     }
 
     @Test
     public void testCharacterAlign() {
-        this.check(Column.empty()
+        this.check(ColumnConfig.empty()
                         .maxWidth(80)
                         .characterAlign(CHARACTER, CHARACTER_COLUMN),
                 80,
@@ -86,7 +86,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testCenterAlign() {
-        this.check(Column.empty()
+        this.check(ColumnConfig.empty()
                         .maxWidth(80)
                         .centerAlign(),
                 80,
@@ -95,7 +95,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testLeftAlign() {
-        this.check(Column.empty()
+        this.check(ColumnConfig.empty()
                         .maxWidth(81)
                         .leftAlign(),
                 81,
@@ -104,7 +104,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testRightAlign() {
-        this.check(Column.empty()
+        this.check(ColumnConfig.empty()
                         .maxWidth(82)
                         .rightAlign(),
                 82,
@@ -113,28 +113,28 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testTrimLeft() {
-        this.check(Column.empty()
+        this.check(ColumnConfig.empty()
                         .trimLeft(),
                 TextPretty.trimLeft());
     }
 
     @Test
     public void testTrimLeftRight() {
-        this.check(Column.empty()
+        this.check(ColumnConfig.empty()
                         .trimLeftRight(),
                 TextPretty.trimLeftRight());
     }
 
     @Test
     public void testTrimRight() {
-        this.check(Column.empty()
+        this.check(ColumnConfig.empty()
                         .trimRight(),
                 TextPretty.trimRight());
     }
 
     @Test
     public void testTruncate() {
-        this.check(Column.empty()
+        this.check(ColumnConfig.empty()
                         .maxWidth(83)
                         .truncate(),
                 83,
@@ -143,7 +143,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testLeftAlignLeftAlignReplacedAlign() {
-        this.check(Column.empty()
+        this.check(ColumnConfig.empty()
                         .maxWidth(84)
                         .leftAlign()
                         .leftAlign(),
@@ -153,7 +153,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testLeftAlignRightAlignReplacedAlign() {
-        this.check(Column.empty()
+        this.check(ColumnConfig.empty()
                         .maxWidth(85)
                         .leftAlign()
                         .rightAlign(),
@@ -163,7 +163,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testCenterAlignRightAlignReplacedAlign() {
-        this.check(Column.empty()
+        this.check(ColumnConfig.empty()
                         .maxWidth(90)
                         .centerAlign()
                         .rightAlign(),
@@ -173,7 +173,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testCenterAlignCharacterAlign() {
-        this.check(Column.empty()
+        this.check(ColumnConfig.empty()
                         .maxWidth(90)
                         .centerAlign()
                         .characterAlign(CHARACTER, CHARACTER_COLUMN),
@@ -183,7 +183,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testCharacterAlignCharacterAlign() {
-        this.check(Column.empty()
+        this.check(ColumnConfig.empty()
                         .maxWidth(90)
                         .characterAlign(CHARACTER, CHARACTER_COLUMN - 1)
                         .characterAlign(CHARACTER, CHARACTER_COLUMN),
@@ -195,7 +195,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
     public void testSetLeftMaxWidth() {
         final int width = 120;
 
-        this.check(Column.empty()
+        this.check(ColumnConfig.empty()
                         .maxWidth(80)
                         .leftAlign()
                         .maxWidth(width),
@@ -207,7 +207,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
     public void testSetMaxWidthCenterAlign() {
         final int width = 132;
 
-        this.check(Column.empty()
+        this.check(ColumnConfig.empty()
                         .maxWidth(80)
                         .rightAlign()
                         .maxWidth(width)
@@ -220,7 +220,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
     public void testSetMaxWidthTrimLeftTrimRight() {
         final int width = 132;
 
-        this.check(Column.empty()
+        this.check(ColumnConfig.empty()
                         .maxWidth(width)
                         .trimLeft()
                         .trimRight()
@@ -233,7 +233,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
     public void testSetMaxWidthTrimLeftRightTrimLeft() {
         final int width = 132;
 
-        this.check(Column.empty()
+        this.check(ColumnConfig.empty()
                         .maxWidth(width)
                         .trimLeftRight()
                         .trimLeft()
@@ -242,12 +242,12 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
                 TextPretty.trimLeft(), TextPretty.centerAlignment());
     }
 
-    private void check(final Column column,
+    private void check(final ColumnConfig column,
                        final BiFunction<CharSequence, Integer, CharSequence>... functions) {
         this.check(column, Integer.MAX_VALUE, functions);
     }
 
-    private void check(final Column column,
+    private void check(final ColumnConfig column,
                        final int maxWidth,
                        final BiFunction<CharSequence, Integer, CharSequence>... functions) {
         assertEquals(Lists.of(functions),
@@ -262,14 +262,14 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
     public void testEmptyApply() {
         final List<CharSequence> lines = Lists.of("line1", "line2");
 
-        this.apply2(Column.empty(),
+        this.apply2(ColumnConfig.empty(),
                 lines,
                 lines);
     }
 
     @Test
     public void testLeftAlignApply() {
-        this.apply2(Column.empty()
+        this.apply2(ColumnConfig.empty()
                         .maxWidth(80)
                         .leftAlign(),
                 Lists.of("line 1", "  line 2"));
@@ -277,7 +277,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testCharacterAlignApply() {
-        this.apply2(Column.empty()
+        this.apply2(ColumnConfig.empty()
                         .maxWidth(80)
                         .characterAlign(CHARACTER, CHARACTER_COLUMN),
                 Lists.of("1.23", "12.34", "ignored"),
@@ -286,7 +286,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testRightAlignApply() {
-        this.apply2(Column.empty()
+        this.apply2(ColumnConfig.empty()
                         .maxWidth(10)
                         .rightAlign(),
                 Lists.of("line1", "line 2"),
@@ -295,7 +295,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testTrimLeftRightLeftAlignApply() {
-        this.apply2(Column.empty()
+        this.apply2(ColumnConfig.empty()
                         .maxWidth(20)
                         .trimLeftRight()
                         .leftAlign(),
@@ -305,7 +305,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testTrimLeftApply() {
-        this.apply2(Column.empty()
+        this.apply2(ColumnConfig.empty()
                         .trimLeft(),
                 Lists.of("  line1  ", "  line 2  "),
                 Lists.of("line1  ", "line 2  "));
@@ -313,7 +313,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testTrimRightApply() {
-        this.apply2(Column.empty()
+        this.apply2(ColumnConfig.empty()
                         .trimRight(),
                 Lists.of("  line1  ", "  line 2  "),
                 Lists.of("  line1", "  line 2"));
@@ -321,7 +321,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testMaxWidthTruncateCenterApply() {
-        this.apply2(Column.empty()
+        this.apply2(ColumnConfig.empty()
                         .maxWidth(10)
                         .truncate()
                         .centerAlign(),
@@ -331,7 +331,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testMaxWidthOverflowMaxWidthBreakLeftAlign() {
-        this.apply2(Column.empty()
+        this.apply2(ColumnConfig.empty()
                         .maxWidth(10)
                         .overflowMaxWidthBreak()
                         .leftAlign(),
@@ -340,7 +340,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testMaxWidthOverflowMaxWidthBreakRightAlignLinesBroken() {
-        this.apply2(Column.empty()
+        this.apply2(ColumnConfig.empty()
                         .maxWidth(10)
                         .overflowMaxWidthBreak()
                         .rightAlign(),
@@ -350,7 +350,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testMaxWidthOverflowMaxWidthBreakRightAlignLinesBroken2() {
-        this.apply2(Column.empty()
+        this.apply2(ColumnConfig.empty()
                         .maxWidth(8)
                         .overflowMaxWidthBreak()
                         .rightAlign(),
@@ -360,7 +360,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testMaxWidthOverflowMaxWidthBreakRightAlignLinesBroken3() {
-        this.apply2(Column.empty()
+        this.apply2(ColumnConfig.empty()
                         .maxWidth(8)
                         .overflowMaxWidthBreak()
                         .rightAlign(),
@@ -370,7 +370,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testMaxWidthOverflowWordBreakRightAlign() {
-        this.apply2(Column.empty()
+        this.apply2(ColumnConfig.empty()
                         .maxWidth(8)
                         .overflowWordBreak()
                         .rightAlign(),
@@ -380,7 +380,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testMaxWidthOverflowWordBreakRightAlign2() {
-        this.apply2(Column.empty()
+        this.apply2(ColumnConfig.empty()
                         .maxWidth(8)
                         .overflowWordBreak()
                         .rightAlign(),
@@ -390,7 +390,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testMaxWidthOverflowWordBreakRightAlign3() {
-        this.apply2(Column.empty()
+        this.apply2(ColumnConfig.empty()
                         .maxWidth(8)
                         .overflowWordBreak()
                         .rightAlign(),
@@ -398,12 +398,12 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
                 Lists.of("   line1", "   line2\n   line3\n", "   line4"));
     }
 
-    private void apply2(final Column column,
+    private void apply2(final ColumnConfig column,
                         final List<CharSequence> rows) {
         this.apply2(column, rows, rows);
     }
 
-    private void apply2(final Column column,
+    private void apply2(final ColumnConfig column,
                         final List<CharSequence> before,
                         final List<CharSequence> expected) {
         assertEquals(strings(expected),
@@ -422,7 +422,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testToStringWidthLeft() {
-        this.toStringAndCheck(Column.empty()
+        this.toStringAndCheck(ColumnConfig.empty()
                         .maxWidth(80)
                         .leftAlign(),
                 "maxWidth=80 Left");
@@ -430,7 +430,7 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
 
     @Test
     public void testToStringWidthTruncateRight() {
-        this.toStringAndCheck(Column.empty()
+        this.toStringAndCheck(ColumnConfig.empty()
                         .maxWidth(90)
                         .truncate()
                         .rightAlign(),
@@ -446,15 +446,15 @@ public final class ColumnTest implements FunctionTesting<Column, List<CharSequen
     // FunctionTesting..................................................................................................
 
     @Override
-    public Column createFunction() {
-        return Column.empty();
+    public ColumnConfig createFunction() {
+        return ColumnConfig.empty();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<Column> type() {
-        return Column.class;
+    public Class<ColumnConfig> type() {
+        return ColumnConfig.class;
     }
 
     @Override

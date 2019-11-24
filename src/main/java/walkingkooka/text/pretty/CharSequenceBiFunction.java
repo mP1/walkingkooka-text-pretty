@@ -107,10 +107,10 @@ abstract class CharSequenceBiFunction implements BiFunction<CharSequence, Intege
     abstract CharSequence overflowed(final CharSequence text,
                                      final int width);
 
-    // Column...........................................................................................................
+    // ColumnConfig...........................................................................................................
 
     /**
-     * Helper used by {@link Column#add(BiFunction)} that helps overwrite a function already present in {@link Column#functions}.
+     * Helper used by {@link ColumnConfig#add(BiFunction)} that helps overwrite a function already present in {@link ColumnConfig#functions}.
      */
     abstract boolean isColumnReplace(final BiFunction<CharSequence, Integer, CharSequence> function);
 }
