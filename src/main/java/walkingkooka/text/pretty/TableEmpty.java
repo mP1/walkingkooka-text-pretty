@@ -49,6 +49,18 @@ final class TableEmpty extends Table {
         throw new UnsupportedOperationException();
     }
 
+    // setCell..........................................................................................................
+
+    /**
+     * Creates a new {@link TableNotEmpty} with one cell.
+     */
+    @Override
+    Table setCell0(final int column,
+                   final int row,
+                   final CharSequence text) {
+        return TableNotEmpty.withCell(column, row, text);
+    }
+
     // column...........................................................................................................
 
     @Override

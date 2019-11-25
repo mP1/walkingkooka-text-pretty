@@ -68,6 +68,94 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty> {
                 CharSequences.empty());
     }
 
+    // setCell..........................................................................................................
+
+    @Test
+    public void testSetSameCell() {
+        final TableNotEmpty table = this.createTable();
+        assertSame(table, table.setCell(0, 0, R0C0));
+    }
+
+    @Test
+    public void testSetSameCell2() {
+        final TableNotEmpty table = this.createTable();
+        assertSame(table, table.setCell(1, 2, R2C1));
+    }
+
+    @Test
+    public void testSetSameCell3() {
+        final TableNotEmpty table = this.createTable();
+
+        for(int c = 0; c < table.maxColumn(); c++) {
+            for(int r = 0; r < table.maxRow(); r++) {
+                assertSame(table, table.setCell(c, r, table.cell(c, r)));
+            }
+        }
+    }
+
+    @Test
+    public void testSetDifferentCell() {
+        this.setCellAndCheck2(0, 0, "x");
+    }
+
+    @Test
+    public void testSetDifferentCell2() {
+        this.setCellAndCheck2(1, 2, "x");
+    }
+
+    @Test
+    public void testSetDifferentCell3() {
+        this.setCellAndCheck2(2, 0, "x");
+    }
+
+    private void setCellAndCheck2(final int column,
+                                  final int row,
+                                  final CharSequence text) {
+        final NavigableMap<TableCellCoordinates, CharSequence> map = this.map();
+        map.put(TableCellCoordinates.with(column, row), text);
+
+        this.checkMap(this.setCellAndCheck(this.createTable(), column, row, text), map);
+    }
+
+    @Test
+    public void testSetAllDifferentCell() {
+        final NavigableMap<TableCellCoordinates, CharSequence> map = this.map();
+
+        Table table = this.createTable();
+
+        for (int c = 0; c < table.maxColumn(); c++) {
+            for (int r = 0; r < table.maxRow(); r++) {
+                final String text = "new" + c + "," + r;
+                table = this.setCellAndCheck(table, c, r, text);
+                map.put(TableCellCoordinates.with(c, r), text);
+            }
+        }
+
+        this.checkMap(table, map);
+    }
+
+    @Test
+    public void testSetCellEmpty() {
+        final NavigableMap<TableCellCoordinates, CharSequence> map = this.map();
+
+        final Table table = this.createTable().setCell(1, 2, "");
+        map.remove(TableCellCoordinates.with(1, 2));
+        this.checkMap(table, map);
+    }
+
+    @Test
+    public void testSetCellAllEmpty() {
+        Table table = this.createTable();
+
+        for (int c = 0; c < table.maxColumn(); c++) {
+            for (int r = 0; r < table.maxRow(); r++) {
+                table = this.setCellAndCheck(table, c, r, "");
+            }
+        }
+
+        assertSame(Table.empty(), table);
+    }
+
     // column...........................................................................................................
 
     @Test
@@ -262,21 +350,6 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty> {
         assertEquals(Lists.of(text),
                 table.row(row),
                 () -> "row " + row + " from " + table);
-    }
-
-    private void checkMap(final Table table,
-                          final Map<TableCellCoordinates, CharSequence> map) {
-        if (map.isEmpty()) {
-            assertSame(TableEmpty.empty(), table);
-        } else {
-            this.checkMap((TableNotEmpty) table, map);
-        }
-    }
-
-    private void checkMap(final TableNotEmpty table,
-                          final Map<TableCellCoordinates, CharSequence> map) {
-        assertEquals(map, table.table, () -> table + " map");
-        this.check(table);
     }
 
     @Override

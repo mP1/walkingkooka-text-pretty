@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CharSequences;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -62,6 +63,16 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
     @Test
     public final void testColumnMaxColumn() {
         assertEquals(Lists.empty(), this.createTable().column(this.maxColumn()));
+    }
+
+    @Test
+    public final void testSetCellInvalidColumnFails() {
+        assertThrows(IllegalArgumentException.class, () -> this.createTable().setCell(-1, 0, "invalid"));
+    }
+
+    @Test
+    public final void testSetCellInvalidRowFails() {
+        assertThrows(IllegalArgumentException.class, () -> this.createTable().setCell(0, -1, "invalid"));
     }
 
     @Test
@@ -116,6 +127,26 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         assertEquals(expected,
                 table.maxColumn(),
                 () -> "maxColumn of " + table);
+    }
+
+    final Table setCellAndCheck(final int column,
+                                final int row,
+                                final CharSequence text) {
+        return this.setCellAndCheck(this.createTable(), column, row, text);
+    }
+
+    final Table setCellAndCheck(final Table table,
+                                final int column,
+                                final int row,
+                                final CharSequence text) {
+        final Table different = table.setCell(column, row, text);
+        if (text.equals(table.cell(column, row))) {
+            assertSame(different, table, () -> "table setCell " + column + "," + row + " in " + table);
+        } else {
+            assertNotSame(different, table, () -> "table setCell " + column + "," + row + " in " + table);
+        }
+
+        return different;
     }
 
     final Table setColumnAndCheck(final int column,
@@ -197,6 +228,21 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         }
         this.maxColumnAndCheck(table, maxColumn);
         this.maxRowAndCheck(table, maxRow);
+    }
+
+    final void checkMap(final Table table,
+                        final Map<TableCellCoordinates, CharSequence> map) {
+        if (map.isEmpty()) {
+            assertSame(TableEmpty.empty(), table);
+        } else {
+            this.checkMap((TableNotEmpty) table, map);
+        }
+    }
+
+    final void checkMap(final TableNotEmpty table,
+                        final Map<TableCellCoordinates, CharSequence> map) {
+        assertEquals(map, table.table, () -> table + " map");
+        this.check(table);
     }
 
     @Override
