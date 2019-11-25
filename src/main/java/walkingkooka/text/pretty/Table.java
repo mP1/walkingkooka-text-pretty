@@ -21,6 +21,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CharSequences;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A {link Table} is a two dimensional grid holding cells. Note that fetches for non existent rows or columns will return
@@ -45,6 +46,8 @@ public abstract class Table {
         super();
     }
 
+    // cell.............................................................................................................
+
     /**
      * Fetches the cell at the given coordinates. Coordinates out of bounds will return an empty {@link CharSequence}.
      */
@@ -61,6 +64,30 @@ public abstract class Table {
 
     abstract CharSequence cell0(final int column,
                                 final int row);
+
+    // setCell..........................................................................................................
+
+    /**
+     * Sets or replaces the cell at the given coordinates.
+     */
+    public final Table setCell(final int column,
+                               final int row,
+                               final CharSequence text) {
+        checkColumn(column);
+        checkRow(row);
+        Objects.requireNonNull(text, "text");
+
+        return column >= this.maxColumn() && row >= this.maxRow() && text.length() == 0 ?
+                this :
+                this.setCell0(column, row, text);
+    }
+
+    /**
+     * Sets a cell to the given coordinates.
+     */
+    abstract Table setCell0(final int column,
+                            final int row,
+                            final CharSequence text);
 
     // column...........................................................................................................
 

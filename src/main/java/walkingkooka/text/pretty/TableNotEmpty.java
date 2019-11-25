@@ -29,6 +29,19 @@ final class TableNotEmpty extends Table {
     /**
      * Factory called by {@link TableEmpty#setColumn1(int, List)}.
      */
+    static TableNotEmpty withCell(final int column,
+                                  final int row,
+                                  final CharSequence text) {
+        final NavigableMap<TableCellCoordinates, CharSequence> table = map();
+        table.put(TableCellCoordinates.with(column, row), text);
+        return with(table,
+                column + 1,
+                row + 1);
+    }
+
+    /**
+     * Factory called by {@link TableEmpty#setColumn1(int, List)}.
+     */
     static TableNotEmpty withColumn(final int column,
                                     final List<CharSequence> text) {
         final NavigableMap<TableCellCoordinates, CharSequence> table = map();
@@ -107,6 +120,47 @@ final class TableNotEmpty extends Table {
 
     final CharSequence cell1(final TableCellCoordinates cell) {
         return this.table.getOrDefault(cell, CharSequences.empty());
+    }
+
+    // setCell..........................................................................................................
+
+    @Override
+    Table setCell0(final int column,
+                   final int row,
+                   final CharSequence text) {
+        final TableCellCoordinates coordinates = TableCellCoordinates.with(column, row);
+        final CharSequence previous = this.table.get(coordinates);
+        return text.equals(previous) ?
+                this :
+                this.replaceCell(coordinates, text);
+    }
+
+    /**
+     * Replaces the cell at the given coordinates, if the new cell is empty and the current table is empty a
+     * {@link #empty()} will be returned. This assumes that the new cell is different from the old.
+     */
+    private Table replaceCell(final TableCellCoordinates coordinates,
+                              final CharSequence text) {
+        final NavigableMap<TableCellCoordinates, CharSequence> table = map();
+        if (text.length() > 0) {
+            table.put(coordinates, text);
+        }
+
+        int maximumRow = coordinates.row + 1;
+
+        for (final Entry<TableCellCoordinates, CharSequence> cellAndText : this.table.entrySet()) {
+            final TableCellCoordinates cellCoordinates = cellAndText.getKey();
+            if (false == coordinates.equals(cellCoordinates)) {
+                table.put(cellCoordinates, cellAndText.getValue());
+                maximumRow = Math.max(maximumRow, cellCoordinates.row + 1);
+            }
+        }
+
+        return table.isEmpty() ?
+                empty() :
+                with(table,
+                        table.lastEntry().getKey().column + 1,
+                        maximumRow);
     }
 
     // column...........................................................................................................
