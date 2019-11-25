@@ -17,8 +17,6 @@
 
 package walkingkooka.text.pretty;
 
-import walkingkooka.text.CharSequences;
-
 import java.util.AbstractList;
 
 /**
@@ -36,7 +34,7 @@ abstract class TableNotEmptyList extends AbstractList<CharSequence> {
         if (index < 0) {
             throw new IndexOutOfBoundsException("Invalid " + this.columnOrRow() + " < 0");
         }
-        return this.table.table.getOrDefault(this.coordinates(index), CharSequences.empty());
+        return this.table.cell1(this.coordinates(index));
     }
 
     /**

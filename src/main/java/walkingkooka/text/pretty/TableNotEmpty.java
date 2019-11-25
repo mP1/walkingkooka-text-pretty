@@ -18,6 +18,7 @@
 package walkingkooka.text.pretty;
 
 import walkingkooka.collect.map.Maps;
+import walkingkooka.text.CharSequences;
 
 import java.util.List;
 import java.util.Map.Entry;
@@ -91,6 +92,21 @@ final class TableNotEmpty extends Table {
         this.table = table;
         this.maxColumn = maxColumn;
         this.maxRow = maxRow;
+    }
+
+    // cell.............................................................................................................
+
+    /**
+     * Attempts to locate the cell at the given coords or returns {@link CharSequences#empty()}.
+     */
+    @Override
+    final CharSequence cell0(final int column,
+                                       final int row) {
+        return this.cell1(TableCellCoordinates.with(column, row));
+    }
+
+    final CharSequence cell1(final TableCellCoordinates cell) {
+        return this.table.getOrDefault(cell, CharSequences.empty());
     }
 
     // column...........................................................................................................
