@@ -26,12 +26,6 @@ final class TableCellCoordinates implements Comparable<TableCellCoordinates> {
 
     static TableCellCoordinates with(final int column,
                                      final int row) {
-        if (column < 0) {
-            throw new IllegalArgumentException("Invalid column " + column + " must be >= 0");
-        }
-        if (row < 0) {
-            throw new IllegalArgumentException("Invalid row " + column + " must be >= 0");
-        }
         return new TableCellCoordinates(column, row);
     }
 

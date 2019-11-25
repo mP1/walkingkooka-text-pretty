@@ -29,16 +29,6 @@ public final class TableCellCoordinatesTest extends TableTestCase2<TableCellCoor
     private final static int ROW = 3;
 
     @Test
-    public void testWithNegativeColumnFails() {
-        assertThrows(IllegalArgumentException.class, () -> TableCellCoordinates.with(-1, 0));
-    }
-
-    @Test
-    public void testWithNegativeRowFails() {
-        assertThrows(IllegalArgumentException.class, () -> TableCellCoordinates.with(0, -1));
-    }
-
-    @Test
     public void testDifferentColumn() {
         this.checkNotEquals(TableCellCoordinates.with(99, 3));
     }
