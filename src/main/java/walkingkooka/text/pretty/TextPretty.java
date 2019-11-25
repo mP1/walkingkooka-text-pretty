@@ -109,6 +109,13 @@ final public class TextPretty implements PublicStaticHelper {
     }
 
     /**
+     * {@see TableTransformerUnaryOperator}
+     */
+    public static UnaryOperator<Table> tableTransformer(final List<ColumnConfig> columns) {
+        return TableTransformerUnaryOperator.with(columns);
+    }
+
+    /**
      * {@see TagStrippingCharSequenceUnaryOperator}
      */
     public static UnaryOperator<CharSequence> tagStripping() {
