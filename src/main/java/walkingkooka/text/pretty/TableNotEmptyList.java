@@ -17,12 +17,19 @@
 
 package walkingkooka.text.pretty;
 
+import walkingkooka.collect.list.Lists;
+
 import java.util.AbstractList;
 
 /**
  * An immutable {@link java.util.List} for a single row or column.
  */
 abstract class TableNotEmptyList extends AbstractList<CharSequence> {
+
+    static {
+        Lists.registerImmutableType(TableNotEmptyListColumn.class);
+        Lists.registerImmutableType(TableNotEmptyListRow.class);
+    }
 
     TableNotEmptyList(final TableNotEmpty table) {
         super();

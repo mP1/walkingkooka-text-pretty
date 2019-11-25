@@ -19,11 +19,13 @@ package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.ListTesting2;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.text.CharSequences;
 
 import java.util.NavigableMap;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class TableNotEmptyListTestCase<T extends TableNotEmptyList> extends TableTestCase2<T> implements ListTesting2<T, CharSequence> {
@@ -33,6 +35,12 @@ public abstract class TableNotEmptyListTestCase<T extends TableNotEmptyList> ext
 
     TableNotEmptyListTestCase() {
         super();
+    }
+
+    @Test
+    public final void testImmutableList() {
+        final T list = this.createList();
+        assertSame(list, Lists.immutable(list));
     }
 
     @Test
