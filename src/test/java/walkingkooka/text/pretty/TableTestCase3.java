@@ -19,6 +19,7 @@ package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.text.CharSequences;
 
 import java.util.List;
 
@@ -31,6 +32,26 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
 
     TableTestCase3() {
         super();
+    }
+
+    @Test
+    public final void testCellInvalidColumnFails() {
+        assertThrows(IllegalArgumentException.class, () -> this.createTable().cell(-1, 0));
+    }
+
+    @Test
+    public final void testCellInvalidRowFails() {
+        assertThrows(IllegalArgumentException.class, () -> this.createTable().cell(0, -1));
+    }
+
+    @Test
+    public final void testCellOutOfBounds() {
+        this.cellAndCheck(this.maxColumn(), this.maxRow(), CharSequences.empty());
+    }
+
+    @Test
+    public final void testCellOutOfBounds2() {
+        this.cellAndCheck(this.maxColumn() + 1, this.maxRow() + 1, CharSequences.empty());
     }
 
     @Test
@@ -121,6 +142,24 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         assertEquals(expected,
                 table.maxRow(),
                 () -> "maxRow of " + table);
+    }
+
+    final void cellAndCheck(final int column,
+                            final int row,
+                            final CharSequence text) {
+        this.cellAndCheck(this.createTable(),
+                column,
+                row,
+                text);
+    }
+
+    final void cellAndCheck(final Table table,
+                            final int column,
+                            final int row,
+                            final CharSequence text) {
+        assertEquals(text,
+                table.cell(column, row),
+                () -> "cell at " + column + "," + row + " in " + table);
     }
 
     final Table setRowAndCheck(final int row,

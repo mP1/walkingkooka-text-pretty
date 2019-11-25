@@ -44,6 +44,30 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty> {
         assertEquals(3, this.createObject().maxColumn());
     }
 
+    // cell.............................................................................................................
+
+    @Test
+    public void testCell() {
+        this.cellAndCheck(1, 1, R1C1);
+    }
+
+    @Test
+    public void testCell2() {
+        this.cellAndCheck(0, 2, R2C0);
+    }
+
+    @Test
+    public void testCellAbsent() {
+        final NavigableMap<TableCellCoordinates, CharSequence> map = Maps.navigable();
+
+        map.put(TableCellCoordinates.with(3, 2), "x");
+
+        this.cellAndCheck(TableNotEmpty.with(map, 4, 3),
+                2,
+                1,
+                CharSequences.empty());
+    }
+
     // column...........................................................................................................
 
     @Test

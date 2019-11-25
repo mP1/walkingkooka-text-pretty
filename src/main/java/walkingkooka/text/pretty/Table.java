@@ -18,6 +18,7 @@
 package walkingkooka.text.pretty;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.text.CharSequences;
 
 import java.util.List;
 
@@ -43,6 +44,23 @@ public abstract class Table {
     Table() {
         super();
     }
+
+    /**
+     * Fetches the cell at the given coordinates. Coordinates out of bounds will return an empty {@link CharSequence}.
+     */
+    public final CharSequence cell(final int column,
+                                   final int row) {
+        checkColumn(column);
+        checkRow(row);
+
+        return column >= this.maxColumn() ||
+                row >= this.maxRow() ?
+                CharSequences.empty() :
+                this.cell0(column, row);
+    }
+
+    abstract CharSequence cell0(final int column,
+                                final int row);
 
     // column...........................................................................................................
 
