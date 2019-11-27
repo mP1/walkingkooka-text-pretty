@@ -22,6 +22,7 @@ import walkingkooka.text.CharSequences;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collector;
 
 /**
  * A {link Table} is a two dimensional grid holding cells. Note that fetches for non existent rows or columns will return
@@ -174,4 +175,20 @@ public abstract class Table {
      * The first invalid row number. 0 indicates an empty table
      */
     public abstract int maxRow();
+
+    // Collector........................................................................................................
+
+    /**
+     * Returns a {@link Collector} that adds columns to this {@link Table} starting at the given column.
+     */
+    public final Collector<List<CharSequence>, Table, Table> collectColumn(final int column) {
+        return TableCollectorColumn.with(this, column);
+    }
+
+    /**
+     * Returns a {@link Collector} that adds rows to this {@link Table} starting at the given row.
+     */
+    public final Collector<List<CharSequence>, Table, Table> collectRow(final int row) {
+        return TableCollectorRow.with(this, row);
+    }
 }
