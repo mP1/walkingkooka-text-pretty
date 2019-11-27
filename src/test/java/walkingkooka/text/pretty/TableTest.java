@@ -22,6 +22,8 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
@@ -169,6 +171,38 @@ public final class TableTest implements ClassTesting2<Table> {
                 .setRow(1, Lists.of("x", "y", "z"))
                 .setRow(2, Lists.of("a"));
         this.check(table);
+    }
+
+    // Collector........................................................................................................
+
+    @Test
+    public void testCollectColumn() {
+        final List<CharSequence> column1 = Lists.of("c1a", "c1b", "c1c");
+        final List<CharSequence> column2 = Lists.of("c2a", "c2b", "c2z");
+
+        final Table table = Table.empty()
+                .setColumn(1, column1)
+                .setColumn(2, column2);
+
+        assertEquals(table,
+                Lists.of(column1, column2)
+                        .stream()
+                        .collect(Table.empty().collectColumn(1)));
+    }
+
+    @Test
+    public void testCollectRow() {
+        final List<CharSequence> row1 = Lists.of("r1a", "y", "z");
+        final List<CharSequence> row2 = Lists.of("q", "r", "s");
+
+        final Table table = Table.empty()
+                .setRow(1, row1)
+                .setRow(2, row2);
+
+        assertEquals(table,
+                Lists.of(row1, row2)
+                .stream()
+                .collect(Table.empty().collectRow(1)));
     }
 
     // helpers..........................................................................................................
