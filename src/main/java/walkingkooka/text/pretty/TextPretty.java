@@ -67,6 +67,13 @@ final public class TextPretty implements PublicStaticHelper {
     }
 
     /**
+     * {@see CsvListCharSequenceFunction}
+     */
+    public static Function<CharSequence, List<CharSequence>> csv(final char delimiter) {
+        return CsvListCharSequenceFunction.with(delimiter);
+    }
+
+    /**
      * {@see CharSequenceBiFunctionAlignLeft}
      */
     public static BiFunction<CharSequence, Integer, CharSequence> leftAlignment() {
