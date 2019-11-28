@@ -59,7 +59,11 @@ final class TableNotEmpty extends Table {
                                   final NavigableMap<TableCellCoordinates, CharSequence> table) {
         int r = 0;
         for (final CharSequence t : text) {
-            table.put(TableCellCoordinates.with(column, r), t);
+
+            // skip saving/copying empty cells.
+            if(t.length() > 0) {
+                table.put(TableCellCoordinates.with(column, r), t);
+            }
             r++;
         }
     }
@@ -81,7 +85,10 @@ final class TableNotEmpty extends Table {
                                final NavigableMap<TableCellCoordinates, CharSequence> table) {
         int c = 0;
         for (final CharSequence t : text) {
-            table.put(TableCellCoordinates.with(c, row), t);
+            // skip "saving" empty rows.
+            if(t.length() > 0) {
+                table.put(TableCellCoordinates.with(c, row), t);
+            }
             c++;
         }
     }
