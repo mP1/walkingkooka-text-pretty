@@ -59,11 +59,11 @@ final public class TextPretty implements PublicStaticHelper {
     }
 
     /**
-     * {@see CharSequenceColumnsToLinesFunction}
+     * {@see RowColumnsToLineCharSequenceFunction}
      */
-    public static Function<List<CharSequence>, CharSequence> columnsToLines(final IntUnaryOperator rightPaddings,
-                                                                            final LineEnding lineEnding) {
-        return CharSequenceColumnsToLinesFunction.with(rightPaddings, lineEnding);
+    public static Function<List<CharSequence>, CharSequence> rowColumnsToLine(final IntUnaryOperator rightPaddings,
+                                                                              final LineEnding lineEnding) {
+        return RowColumnsToLineCharSequenceFunction.with(rightPaddings, lineEnding);
     }
 
     /**

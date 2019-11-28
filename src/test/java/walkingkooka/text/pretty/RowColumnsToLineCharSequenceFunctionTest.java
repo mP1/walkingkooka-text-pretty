@@ -29,20 +29,20 @@ import java.util.function.IntUnaryOperator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class CharSequenceColumnsToLinesFunctionTest extends TextPrettyTestCase<CharSequenceColumnsToLinesFunction>
-        implements FunctionTesting<CharSequenceColumnsToLinesFunction, List<CharSequence>, CharSequence>,
-        ToStringTesting<CharSequenceColumnsToLinesFunction> {
+public final class RowColumnsToLineCharSequenceFunctionTest extends TextPrettyTestCase<RowColumnsToLineCharSequenceFunction>
+        implements FunctionTesting<RowColumnsToLineCharSequenceFunction, List<CharSequence>, CharSequence>,
+        ToStringTesting<RowColumnsToLineCharSequenceFunction> {
 
     private final static LineEnding LINE_ENDING = LineEnding.NL;
 
     @Test
     public void testWithNullRightPaddingsFails() {
-        assertThrows(NullPointerException.class, () -> CharSequenceColumnsToLinesFunction.with(null, LINE_ENDING));
+        assertThrows(NullPointerException.class, () -> RowColumnsToLineCharSequenceFunction.with(null, LINE_ENDING));
     }
 
     @Test
     public void testWithNullLineEndingFails() {
-        assertThrows(NullPointerException.class, () -> CharSequenceColumnsToLinesFunction.with(this.rightPaddings(), null));
+        assertThrows(NullPointerException.class, () -> RowColumnsToLineCharSequenceFunction.with(this.rightPaddings(), null));
     }
 
     @Test
@@ -148,8 +148,8 @@ public final class CharSequenceColumnsToLinesFunctionTest extends TextPrettyTest
     // helpers..........................................................................................................
 
     @Override
-    public CharSequenceColumnsToLinesFunction createFunction() {
-        return CharSequenceColumnsToLinesFunction.with(this.rightPaddings(), LINE_ENDING);
+    public RowColumnsToLineCharSequenceFunction createFunction() {
+        return RowColumnsToLineCharSequenceFunction.with(this.rightPaddings(), LINE_ENDING);
     }
 
     private IntUnaryOperator rightPaddings() {
@@ -163,7 +163,7 @@ public final class CharSequenceColumnsToLinesFunctionTest extends TextPrettyTest
     }
 
     @Override
-    public Class<CharSequenceColumnsToLinesFunction> type() {
-        return CharSequenceColumnsToLinesFunction.class;
+    public Class<RowColumnsToLineCharSequenceFunction> type() {
+        return RowColumnsToLineCharSequenceFunction.class;
     }
 }
