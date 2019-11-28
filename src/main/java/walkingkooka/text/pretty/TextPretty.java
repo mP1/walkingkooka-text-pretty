@@ -47,7 +47,7 @@ final public class TextPretty implements PublicStaticHelper {
     /**
      * {@see ColumnConfig}
      */
-    public static ColumnConfig column() {
+    public static ColumnConfig columnConfig() {
         return ColumnConfig.empty();
     }
 
