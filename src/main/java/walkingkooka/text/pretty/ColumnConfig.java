@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.character.CharPredicate;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
@@ -214,6 +215,22 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
     }
 
     final List<BiFunction<CharSequence, Integer, CharSequence>> functions;
+
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.maxWidth, this.functions);
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other || other instanceof ColumnConfig && this.equals0((ColumnConfig) other);
+    }
+
+    private boolean equals0(final ColumnConfig other) {
+        return this.maxWidth == other.maxWidth && this.functions.equals(other.functions);
+    }
 
     // toString.........................................................................................................
 
