@@ -27,25 +27,25 @@ import java.util.function.Function;
 import java.util.function.IntUnaryOperator;
 
 /**
- * A {@link Function} that accepts a {@link List} of columns text which may include line breaks of any kind,
- * and combines each column line into the final text. All columns text have extra padding added so they are the same
- * width, and right-padding is added for each column except the last.
+ * A {@link Function} that accepts the columns of a row and combines them into a single line adding right padding to each
+ * column. Columns may have line breaks.
+ *
  * <br>
  * Support is included for columns of varying height, and lines are right trimmed so they wont have any extra trailing
  * space.
  */
-final class CharSequenceColumnsToLinesFunction implements Function<List<CharSequence>, CharSequence> {
+final class RowColumnsToLineCharSequenceFunction implements Function<List<CharSequence>, CharSequence> {
 
-    static CharSequenceColumnsToLinesFunction with(final IntUnaryOperator rightPaddings,
-                                                   final LineEnding lineEnding) {
+    static RowColumnsToLineCharSequenceFunction with(final IntUnaryOperator rightPaddings,
+                                                     final LineEnding lineEnding) {
         Objects.requireNonNull(rightPaddings, "rightPaddings");
         Objects.requireNonNull(lineEnding, "lineEnding");
 
-        return new CharSequenceColumnsToLinesFunction(rightPaddings, lineEnding);
+        return new RowColumnsToLineCharSequenceFunction(rightPaddings, lineEnding);
     }
 
-    private CharSequenceColumnsToLinesFunction(final IntUnaryOperator rightPaddings,
-                                               final LineEnding lineEnding) {
+    private RowColumnsToLineCharSequenceFunction(final IntUnaryOperator rightPaddings,
+                                                 final LineEnding lineEnding) {
         super();
         this.rightPaddings = rightPaddings;
         this.lineEnding = lineEnding;
@@ -117,6 +117,6 @@ final class CharSequenceColumnsToLinesFunction implements Function<List<CharSequ
 
     @Override
     public String toString() {
-        return "CharSequenceColumnsToLine";
+        return "RowColumn(s)->Line";
     }
 }
