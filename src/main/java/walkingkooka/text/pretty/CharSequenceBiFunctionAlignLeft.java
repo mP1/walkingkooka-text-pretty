@@ -17,10 +17,12 @@
 
 package walkingkooka.text.pretty;
 
+import walkingkooka.text.CharSequences;
+
 import java.util.function.BiFunction;
 
 /**
- * A {@link BiFunction} that simply returns the given {@link CharSequence}.
+ * A {@link BiFunction} that adds padding after a {@link CharSequence}.
  */
 final class CharSequenceBiFunctionAlignLeft extends CharSequenceBiFunctionAlign {
 
@@ -39,7 +41,7 @@ final class CharSequenceBiFunctionAlignLeft extends CharSequenceBiFunctionAlign 
     @Override
     CharSequence notEmpty(final CharSequence chars,
                           final int width) {
-        return chars;
+        return CharSequences.padRight(chars, width, ' ');
     }
 
     @Override

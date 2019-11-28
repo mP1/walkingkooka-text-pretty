@@ -272,9 +272,10 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     @Test
     public void testLeftAlignApply() {
         this.apply2(ColumnConfig.empty()
-                        .maxWidth(80)
+                        .maxWidth(10)
                         .leftAlign(),
-                Lists.of("line 1", "  line 2"));
+                Lists.of("line 1", "  line 2"),
+                Lists.of("line 1    ", "  line 2  "));
     }
 
     @Test
@@ -302,7 +303,7 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
                         .trimLeftRight()
                         .leftAlign(),
                 Lists.of("  line1  ", "  line 2  "),
-                Lists.of("line1", "line 2"));
+                Lists.of("line1               ", "line 2              "));
     }
 
     @Test
@@ -337,7 +338,8 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
                         .maxWidth(10)
                         .overflowMaxWidthBreak()
                         .leftAlign(),
-                Lists.of("line1", "line2"));
+                Lists.of("line1", "line2"),
+                Lists.of("line1     ", "line2     "));
     }
 
     @Test
