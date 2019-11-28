@@ -18,6 +18,7 @@
 package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.character.CharPredicate;
@@ -37,6 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, List<CharSequence>, List<CharSequence>>,
         ClassTesting<ColumnConfig>,
+        HashCodeEqualsDefinedTesting2<ColumnConfig>,
         ToStringTesting<ColumnConfig> {
 
     private final static CharPredicate CHARACTER = CharPredicates.is('.');
@@ -418,6 +420,24 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
                 .collect(Collectors.toList());
     }
 
+    // equals...........................................................................................................
+
+    @Test
+    public void testEmptyEquals() {
+        this.checkEquals(ColumnConfig.empty(), ColumnConfig.empty());
+    }
+
+    @Test
+    public void testDifferentMaxWidth() {
+        this.checkNotEquals(ColumnConfig.empty().maxWidth(12345));
+    }
+
+    @Test
+    public void testDifferentFunction() {
+        final ColumnConfig column = ColumnConfig.empty().maxWidth(123);
+        this.checkNotEquals(column.leftAlign(), column.rightAlign());
+    }
+
     // toString.........................................................................................................
 
     @Test
@@ -441,6 +461,13 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
 
     @Override
     public void testTypeNaming() {
+    }
+
+    // HashCodeEqualsTesting............................................................................................
+
+    @Override
+    public ColumnConfig createObject() {
+        return this.createFunction();
     }
 
     // FunctionTesting..................................................................................................
