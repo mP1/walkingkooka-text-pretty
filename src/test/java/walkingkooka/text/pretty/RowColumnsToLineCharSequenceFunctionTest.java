@@ -142,7 +142,7 @@ public final class RowColumnsToLineCharSequenceFunctionTest extends TextPrettyTe
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createFunction(), "CharSequenceColumnsToLine");
+        this.toStringAndCheck(this.createFunction(), "RowColumn(s)->Line");
     }
 
     // helpers..........................................................................................................
