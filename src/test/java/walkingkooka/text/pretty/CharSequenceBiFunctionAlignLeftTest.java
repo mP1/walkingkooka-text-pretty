@@ -23,7 +23,9 @@ public class CharSequenceBiFunctionAlignLeftTest extends CharSequenceBiFunctionA
 
     @Test
     public void testApplyNotEmpty() {
-        this.applyAndCheck("abc123", 10, "abc123");
+        this.applyAndCheck2("abc123",
+                10,
+                "abc123    ");
     }
 
     @Override

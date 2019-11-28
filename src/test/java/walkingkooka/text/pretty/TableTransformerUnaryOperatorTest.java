@@ -47,7 +47,7 @@ public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<
         this.applyAndCheck2(Table.empty()
                         .setRow(0, Lists.of("A", "B", "1")),
                 Table.empty()
-                        .setRow(0, Lists.of("A", "       B", "1")));
+                        .setRow(0, Lists.of("A     ", "       B", "1")));
     }
 
     @Test
@@ -55,7 +55,7 @@ public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<
         this.applyAndCheck2(Table.empty()
                         .setRow(0, Lists.of("A", "B")),
                 Table.empty()
-                        .setRow(0, Lists.of("A", "       B")));
+                        .setRow(0, Lists.of("A     ", "       B")));
     }
 
     @Test
@@ -65,7 +65,7 @@ public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<
         this.applyAndCheck2(Table.empty()
                         .setRow(0, Lists.of("A", "B", "1", extra)),
                 Table.empty()
-                        .setRow(0, Lists.of("A", "       B", "1", extra)));
+                        .setRow(0, Lists.of("A     ", "       B", "1", extra)));
     }
 
     @Test
@@ -74,8 +74,8 @@ public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<
                         .setRow(0, Lists.of("A", "B", "1"))
                         .setRow(1, Lists.of("C", "D", "2.0")),
                 Table.empty()
-                        .setRow(0, Lists.of("A", "       B", "1"))
-                        .setRow(1, Lists.of("C", "       D", "    2.0")));
+                        .setRow(0, Lists.of("A     ", "       B", "1"))
+                        .setRow(1, Lists.of("C     ", "       D", "    2.0")));
     }
 
     @Test
@@ -85,9 +85,9 @@ public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<
                         .setRow(1, Lists.of("C", "D", "2.0"))
                         .setRow(2, Lists.of("E", "FF", "3.50")),
                 Table.empty()
-                        .setRow(0, Lists.of("A", "       B", "1"))
-                        .setRow(1, Lists.of("C", "       D", "    2.0"))
-                        .setRow(2, Lists.of("E", "      FF", "    3.50")));
+                        .setRow(0, Lists.of("A     ", "       B", "1"))
+                        .setRow(1, Lists.of("C     ", "       D", "    2.0"))
+                        .setRow(2, Lists.of("E     ", "      FF", "    3.50")));
     }
 
     private void applyAndCheck2(final Table input,
