@@ -116,6 +116,13 @@ final public class TextPretty implements PublicStaticHelper {
     }
 
     /**
+     * {@see TableConfig#empty}
+     */
+    public static TableConfig tableConfig() {
+        return TableConfig.empty();
+    }
+
+    /**
      * {@see TableTransformerUnaryOperator}
      */
     public static UnaryOperator<Table> tableTransformer(final List<ColumnConfig> columns) {
