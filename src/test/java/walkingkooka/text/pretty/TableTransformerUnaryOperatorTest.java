@@ -39,7 +39,7 @@ public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<
 
     @Test
     public void testWithIncludesColumnsFails() {
-        assertThrows(NullPointerException.class, () -> TableTransformerUnaryOperator.with(Lists.of(TextPretty.column().maxWidth(8).rightAlign(), null)));
+        assertThrows(NullPointerException.class, () -> TableTransformerUnaryOperator.with(Lists.of(TextPretty.columnConfig().maxWidth(8).rightAlign(), null)));
     }
 
     @Test
@@ -110,9 +110,9 @@ public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<
 
     @Override
     public TableTransformerUnaryOperator createFunction() {
-        return this.createFunction0(TextPretty.column().maxWidth(6).leftAlign(),
-                TextPretty.column().maxWidth(8).rightAlign(),
-                TextPretty.column().maxWidth(10).characterAlign(CharPredicates.is('.'), 5));
+        return this.createFunction0(TextPretty.columnConfig().maxWidth(6).leftAlign(),
+                TextPretty.columnConfig().maxWidth(8).rightAlign(),
+                TextPretty.columnConfig().maxWidth(10).characterAlign(CharPredicates.is('.'), 5));
     }
 
     private TableTransformerUnaryOperator createFunction0(final ColumnConfig... columns) {
