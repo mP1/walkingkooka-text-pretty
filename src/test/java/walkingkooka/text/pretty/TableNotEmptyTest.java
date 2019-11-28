@@ -18,6 +18,7 @@
 package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.text.CharSequences;
@@ -28,7 +29,8 @@ import java.util.NavigableMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty> {
+public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
+        implements HashCodeEqualsDefinedTesting2<TableNotEmpty> {
 
     private final static CharSequence X = "x";
     private final static CharSequence Y = "y";
@@ -352,6 +354,41 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty> {
         map.put(TableCellCoordinates.with(2, row), Z);
 
         this.checkMap(this.createTable().setRow(row, Lists.of(X, "", Z)), map);
+    }
+
+    // equals...........................................................................................................
+
+    @Test
+    public void testDifferentCellCount() {
+        final NavigableMap<TableCellCoordinates, CharSequence> map = Maps.navigable();
+
+        map.put(TableCellCoordinates.with(99, 88), "77");
+
+        this.checkNotEquals(TableNotEmpty.with(map, 3, 3));
+    }
+
+    @Test
+    public void testDifferentCells() {
+        final NavigableMap<TableCellCoordinates, CharSequence> map = Maps.navigable();
+        map.put(TableCellCoordinates.with(99, 88), "77");
+
+        final NavigableMap<TableCellCoordinates, CharSequence> different = Maps.navigable();
+        map.put(TableCellCoordinates.with(11, 22), "33");
+
+        this.checkNotEquals(TableNotEmpty.with(map, 99, 88),
+                TableNotEmpty.with(different, 11, 22));
+    }
+
+    @Test
+    public void testDifferentCellTextTypeSameContent() {
+        final NavigableMap<TableCellCoordinates, CharSequence> map = Maps.navigable();
+        map.put(TableCellCoordinates.with(1, 2), "abc123");
+
+        final NavigableMap<TableCellCoordinates, CharSequence> different = Maps.navigable();
+        different.put(TableCellCoordinates.with(1, 2), new StringBuilder("abc123"));
+
+        this.checkEquals(TableNotEmpty.with(map, 1, 2),
+                TableNotEmpty.with(different, 1, 2));
     }
 
     // toString.........................................................................................................
