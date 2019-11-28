@@ -19,10 +19,13 @@ package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.text.CharSequences;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -226,6 +229,17 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
             maxColumn = Math.max(maxColumn, 1+ coords.column);
             maxRow = Math.max(maxRow, 1+ coords.row);
         }
+
+        final Set<TableCellCoordinates> emptyText = Sets.sorted();
+        for (final Entry<TableCellCoordinates, CharSequence> cell : table.table.entrySet()) {
+            if(cell.getValue().length() == 0) {
+                emptyText.add(cell.getKey());
+            }
+        }
+        assertEquals(Sets.empty(),
+                emptyText,
+                () -> "Table contains cells with empty text " + table);
+
         this.maxColumnAndCheck(table, maxColumn);
         this.maxRowAndCheck(table, maxRow);
     }
