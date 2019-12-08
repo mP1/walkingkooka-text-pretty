@@ -86,7 +86,7 @@ final class CharSequenceBiFunctionAlignCharacter extends CharSequenceBiFunctionA
     private void checkWidth(final int width) {
         final int column  = this.column;
         if(column >= width) {
-            throw new IllegalArgumentException("Column " + column + " >= width " + width);
+            throw new IllegalArgumentException("Column width " + column + " >= width " + width);
         }
     }
 

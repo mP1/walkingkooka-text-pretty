@@ -32,14 +32,17 @@ public final class TableColumnPrintSample {
     public static void main(final String[] ignored) {
         // create three columns with different widths and alignments.
         final ColumnConfig states = TextPretty.columnConfig()
+                .minWidth(20)
                 .maxWidth(20)
                 .leftAlign();
 
         final ColumnConfig population = TextPretty.columnConfig()
+                .minWidth(10)
                 .maxWidth(10)
                 .rightAlign();
 
         final ColumnConfig money = TextPretty.columnConfig()
+                .minWidth(12)
                 .maxWidth(12)
                 .characterAlign(CharPredicates.is('.'), 7);
 

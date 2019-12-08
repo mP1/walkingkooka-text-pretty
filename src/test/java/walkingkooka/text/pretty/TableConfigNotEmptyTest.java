@@ -61,8 +61,8 @@ public final class TableConfigNotEmptyTest extends TableConfigTestCase<TableConf
 
     @Test
     public void testApplyNotEmptyTable3() {
-        final TableConfigNotEmpty config = TableConfigNotEmpty.with(Lists.of(ColumnConfig.empty().maxWidth(12).rightAlign(),
-                ColumnConfig.empty().maxWidth(10).centerAlign()));
+        final TableConfigNotEmpty config = TableConfigNotEmpty.with(Lists.of(ColumnConfig.empty().maxWidth(12).minWidth(12).rightAlign(),
+                ColumnConfig.empty().maxWidth(10).minWidth(10).centerAlign()));
 
         final Table table = Table.empty()
                 .setCell(0, 1, "cell 0-1")
@@ -80,8 +80,8 @@ public final class TableConfigNotEmptyTest extends TableConfigTestCase<TableConf
 
     @Test
     public void testApplyExtraColumns() {
-        final TableConfigNotEmpty config = TableConfigNotEmpty.with(Lists.of(ColumnConfig.empty().maxWidth(12).rightAlign(),
-                ColumnConfig.empty().maxWidth(10).centerAlign()));
+        final TableConfigNotEmpty config = TableConfigNotEmpty.with(Lists.of(ColumnConfig.empty().maxWidth(12).minWidth(12).rightAlign(),
+                ColumnConfig.empty().maxWidth(10).minWidth(10).centerAlign()));
 
         final Table table = Table.empty()
                 .setCell(0, 1, "cell 0-1");
@@ -106,7 +106,10 @@ public final class TableConfigNotEmptyTest extends TableConfigTestCase<TableConf
     }
 
     private List<ColumnConfig> columns() {
-        return Lists.of(ColumnConfig.empty().maxWidth(12).rightAlign());
+        return Lists.of(ColumnConfig.empty()
+            .maxWidth(12)
+            .minWidth(12)
+            .rightAlign());
     }
 
     private void applyAndCheck2(final Table input,
