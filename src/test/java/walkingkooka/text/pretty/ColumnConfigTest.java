@@ -274,6 +274,16 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
         this.apply2(ColumnConfig.empty()
                         .maxWidth(10)
                         .leftAlign(),
+                Lists.of("line 1"),
+                Lists.of("line 1"));
+    }
+
+    @Test
+    public void testLeftAlignApply2() {
+        this.apply2(ColumnConfig.empty()
+                        .maxWidth(10)
+                        .minWidth(10)
+                        .leftAlign(),
                 Lists.of("line 1", "  line 2"),
                 Lists.of("line 1    ", "  line 2  "));
     }
@@ -281,6 +291,7 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     @Test
     public void testCharacterAlignApply() {
         this.apply2(ColumnConfig.empty()
+                        .minWidth(10)
                         .maxWidth(80)
                         .characterAlign(CHARACTER, CHARACTER_COLUMN),
                 Lists.of("1.23", "12.34", "ignored"),
@@ -290,6 +301,7 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     @Test
     public void testRightAlignApply() {
         this.apply2(ColumnConfig.empty()
+                        .minWidth(10)
                         .maxWidth(10)
                         .rightAlign(),
                 Lists.of("line1", "line 2"),
@@ -299,6 +311,7 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     @Test
     public void testTrimLeftRightLeftAlignApply() {
         this.apply2(ColumnConfig.empty()
+                        .minWidth(20)
                         .maxWidth(20)
                         .trimLeftRight()
                         .leftAlign(),
@@ -333,9 +346,10 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     }
 
     @Test
-    public void testMaxWidthOverflowMaxWidthBreakLeftAlign() {
+    public void testMaxWidthMaxWidthOverflowMaxWidthBreakLeftAlign() {
         this.apply2(ColumnConfig.empty()
                         .maxWidth(10)
+                        .minWidth(10)
                         .overflowMaxWidthBreak()
                         .leftAlign(),
                 Lists.of("line1", "line2"),
@@ -343,9 +357,10 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     }
 
     @Test
-    public void testMaxWidthOverflowMaxWidthBreakRightAlignLinesBroken() {
+    public void testMinWidthMaxWidthOverflowMaxWidthBreakRightAlignLinesBroken() {
         this.apply2(ColumnConfig.empty()
                         .maxWidth(10)
+                        .minWidth(10)
                         .overflowMaxWidthBreak()
                         .rightAlign(),
                 Lists.of("line1=====line2=====line3"),
@@ -353,9 +368,10 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     }
 
     @Test
-    public void testMaxWidthOverflowMaxWidthBreakRightAlignLinesBroken2() {
+    public void testMinWidthMaxWidthOverflowMaxWidthBreakRightAlignLinesBroken2() {
         this.apply2(ColumnConfig.empty()
                         .maxWidth(8)
+                        .minWidth(8)
                         .overflowMaxWidthBreak()
                         .rightAlign(),
                 Lists.of("line1", "line2===line3===line4", "line5"),
@@ -363,8 +379,9 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     }
 
     @Test
-    public void testMaxWidthOverflowMaxWidthBreakRightAlignLinesBroken3() {
+    public void testMinWidthMaxWidthOverflowMaxWidthBreakRightAlignLinesBroken3() {
         this.apply2(ColumnConfig.empty()
+                        .minWidth(8)
                         .maxWidth(8)
                         .overflowMaxWidthBreak()
                         .rightAlign(),
@@ -373,8 +390,9 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     }
 
     @Test
-    public void testMaxWidthOverflowWordBreakRightAlign() {
+    public void testMinWidthMaxWidthOverflowWordBreakRightAlign() {
         this.apply2(ColumnConfig.empty()
+                        .minWidth(8)
                         .maxWidth(8)
                         .overflowWordBreak()
                         .rightAlign(),
@@ -383,8 +401,9 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     }
 
     @Test
-    public void testMaxWidthOverflowWordBreakRightAlign2() {
+    public void testMinWidthMaxWidthOverflowWordBreakRightAlign2() {
         this.apply2(ColumnConfig.empty()
+                        .minWidth(8)
                         .maxWidth(8)
                         .overflowWordBreak()
                         .rightAlign(),
@@ -393,18 +412,13 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     }
 
     @Test
-    public void testMaxWidthOverflowWordBreakRightAlign3() {
+    public void testMinMaxWidthOverflowWordBreakRightAlign3() {
         this.apply2(ColumnConfig.empty()
                         .maxWidth(8)
                         .overflowWordBreak()
                         .rightAlign(),
                 Lists.of("line1", "line2 line3", "line4"),
                 Lists.of("   line1", "   line2\n   line3\n", "   line4"));
-    }
-
-    private void apply2(final ColumnConfig column,
-                        final List<CharSequence> rows) {
-        this.apply2(column, rows, rows);
     }
 
     private void apply2(final ColumnConfig column,
@@ -447,7 +461,7 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
         this.toStringAndCheck(ColumnConfig.empty()
                         .maxWidth(80)
                         .leftAlign(),
-                "maxWidth=80 Left");
+                "width<=80 Left");
     }
 
     @Test
@@ -456,7 +470,25 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
                         .maxWidth(90)
                         .truncate()
                         .rightAlign(),
-                "maxWidth=90 OverflowTruncate Right");
+                "width<=90 OverflowTruncate Right");
+    }
+
+    @Test
+    public void testToStringMaxWidthMinWidthLeft() {
+        this.toStringAndCheck(ColumnConfig.empty()
+                        .maxWidth(80)
+                        .minWidth(12)
+                        .leftAlign(),
+                "12<=width<=80 Left");
+    }
+
+    @Test
+    public void testToStringMaxWidthMinWidthSameLeft() {
+        this.toStringAndCheck(ColumnConfig.empty()
+                        .maxWidth(12)
+                        .minWidth(12)
+                        .leftAlign(),
+                "width=12 Left");
     }
 
     // disabled.........................................................................................................

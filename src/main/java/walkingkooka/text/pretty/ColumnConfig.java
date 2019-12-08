@@ -19,6 +19,7 @@ package walkingkooka.text.pretty;
 
 
 import walkingkooka.ToStringBuilder;
+import walkingkooka.ToStringBuilderOption;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.character.CharPredicate;
 
@@ -26,7 +27,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.UnaryOperator;
-import java.util.stream.Collectors;
 
 /**
  * A {@link UnaryOperator} that supports assembling transformation upon a columns of text.
@@ -37,26 +37,51 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
      * An empty {@link ColumnConfig}
      */
     static ColumnConfig empty() {
-        return new ColumnConfig(Integer.MAX_VALUE, Lists.empty());
+        return new ColumnConfig(0, Integer.MAX_VALUE, Lists.empty());
     }
 
-    private ColumnConfig(final int maxWidth,
+    private ColumnConfig(final int minWidth,
+                         final int maxWidth,
                          final List<BiFunction<CharSequence, Integer, CharSequence>> functions) {
         super();
+        this.minWidth = minWidth;
         this.maxWidth = maxWidth;
         this.functions = functions;
     }
+
+    /**
+     * Sets the min width of this column.
+     */
+    public ColumnConfig minWidth(final int minWidth) {
+        if (minWidth <= 0) {
+            throw new IllegalArgumentException("Invalid minWidth " + minWidth + " < 0");
+        }
+        final int maxWidth = this.maxWidth;
+        if(minWidth > maxWidth) {
+            throw new IllegalArgumentException("MinWidth " + minWidth + " > maxWidth " + maxWidth);
+        }
+        return this.minWidth == minWidth ?
+                this :
+                new ColumnConfig(minWidth, maxWidth, this.functions);
+    }
+
+    final int minWidth;
 
     /**
      * Sets the max width of this column.
      */
     public ColumnConfig maxWidth(final int maxWidth) {
         if (maxWidth <= 0) {
-            throw new IllegalArgumentException("Invalid maxWidth " + maxWidth + " < 0");
+            throw new IllegalArgumentException("Invalid maxWidth " + maxWidth + " <= 0");
+        }
+
+        final int minWidth = this.minWidth;
+        if (maxWidth < minWidth) {
+            throw new IllegalArgumentException("Invalid maxWidth " + maxWidth + " < " + minWidth);
         }
         return this.maxWidth == maxWidth ?
                 this :
-                new ColumnConfig(maxWidth, this.functions);
+                new ColumnConfig(minWidth, maxWidth, this.functions);
     }
 
     private void checkMaxWidth() {
@@ -192,26 +217,14 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
     }
 
     private ColumnConfig replaceFunctions(final List<BiFunction<CharSequence, Integer, CharSequence>> functions) {
-        return new ColumnConfig(this.maxWidth, functions);
+        return new ColumnConfig(this.minWidth, this.maxWidth, functions);
     }
 
     // UnaryOperator....................................................................................................
 
     @Override
     public List<CharSequence> apply(final List<CharSequence> rows) {
-        return rows.stream()
-                .map(this::applyColumn)
-                .collect(Collectors.toList());
-    }
-
-    private CharSequence applyColumn(final CharSequence row) {
-        CharSequence out = row;
-
-        for (final BiFunction<CharSequence, Integer, CharSequence> function : this.functions) {
-            out = function.apply(out, this.maxWidth);
-        }
-
-        return out;
+        return ColumnConfigRequest.with(this).apply(rows);
     }
 
     final List<BiFunction<CharSequence, Integer, CharSequence>> functions;
@@ -220,7 +233,7 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.maxWidth, this.functions);
+        return Objects.hash(this.minWidth, this.maxWidth, this.functions);
     }
 
     @Override
@@ -229,16 +242,28 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
     }
 
     private boolean equals0(final ColumnConfig other) {
-        return this.maxWidth == other.maxWidth && this.functions.equals(other.functions);
+        return this.minWidth == other.minWidth &&
+            this.maxWidth == other.maxWidth &&
+            this.functions.equals(other.functions);
     }
 
     // toString.........................................................................................................
 
     @Override
     public String toString() {
+        final int minWidth = this.minWidth;
+        final int maxWidth = this.maxWidth;
+        final String width = Integer.MAX_VALUE == maxWidth ?
+                "" :
+                minWidth == maxWidth ?
+                        "width=" + minWidth :
+                        0 == minWidth ?
+                                "width<=" + maxWidth :
+                                minWidth + "<=width<=" + maxWidth;
+
         return ToStringBuilder.empty()
-                .labelSeparator("=")
-                .label("maxWidth").value(this.maxWidth)
+                .disable(ToStringBuilderOption.QUOTE)
+                .value(width)
                 .valueSeparator(" ")
                 .value(this.functions)
                 .build();

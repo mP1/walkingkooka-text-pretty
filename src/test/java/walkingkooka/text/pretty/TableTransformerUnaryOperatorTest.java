@@ -105,14 +105,14 @@ public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createFunction(), "[maxWidth=6 Left, maxWidth=8 Right, maxWidth=10 '.' at 5]");
+        this.toStringAndCheck(this.createFunction(), "[width=6 Left, width=8 Right, width=10 '.' at 5]");
     }
 
     @Override
     public TableTransformerUnaryOperator createFunction() {
-        return this.createFunction0(TextPretty.columnConfig().maxWidth(6).leftAlign(),
-                TextPretty.columnConfig().maxWidth(8).rightAlign(),
-                TextPretty.columnConfig().maxWidth(10).characterAlign(CharPredicates.is('.'), 5));
+        return this.createFunction0(TextPretty.columnConfig().minWidth(6).maxWidth(6).leftAlign(),
+                TextPretty.columnConfig().minWidth(8).maxWidth(8).rightAlign(),
+                TextPretty.columnConfig().minWidth(10).maxWidth(10).characterAlign(CharPredicates.is('.'), 5));
     }
 
     private TableTransformerUnaryOperator createFunction0(final ColumnConfig... columns) {
