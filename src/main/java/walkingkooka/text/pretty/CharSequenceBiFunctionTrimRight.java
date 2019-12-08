@@ -31,8 +31,7 @@ final class CharSequenceBiFunctionTrimRight extends CharSequenceBiFunctionTrim {
     }
 
     @Override
-    CharSequence notEmpty(final CharSequence text,
-                          final int width) {
+    CharSequence trim(final CharSequence text) {
         return CharSequences.trimRight(text);
     }
 

@@ -36,15 +36,25 @@ abstract class CharSequenceBiFunctionTrim extends CharSequenceBiFunction {
     @Override
     final CharSequence full(final CharSequence text,
                             final int width) {
-        return text;
+        return this.trim(text);
     }
 
+    @Override
+    final CharSequence notEmpty(final CharSequence text,
+                                final int width) {
+        return this.trim(text);
+    }
 
     @Override
     final CharSequence overflowed(final CharSequence text,
                                   final int width) {
-        return this.notEmpty(text, width);
+        return this.trim(text);
     }
+
+    /**
+     * Handles trimming the given text ignoring the width.
+     */
+    abstract CharSequence trim(final CharSequence text);
 
     /**
      * Any {@link CharSequenceBiFunctionTrim} replaces any other {@link CharSequenceBiFunctionTrim}.
