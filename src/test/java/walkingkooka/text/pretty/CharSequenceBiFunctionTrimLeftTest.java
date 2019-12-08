@@ -36,6 +36,11 @@ public class CharSequenceBiFunctionTrimLeftTest extends CharSequenceBiFunctionTr
         this.applyAndCheck2("abc123  ", 10);
     }
 
+    @Test
+    public void testWithTrailingWhitespaceFull() {
+        this.applyAndCheck2("abc123 ", 7);
+    }
+
     @Override
     public CharSequenceBiFunctionTrimLeft createBiFunction() {
         return CharSequenceBiFunctionTrimLeft.INSTANCE;
