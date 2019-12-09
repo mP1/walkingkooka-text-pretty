@@ -92,10 +92,7 @@ public final class TreePrintingSample {
             }
 
             private String toPath(final List<StringName> names) {
-                return names.stream()
-                        .filter(n -> false == n.value().isEmpty())
-                        .map(StringName::toString)
-                        .collect(Collectors.joining("/"));
+                return this.toPath(names, StringPath.SEPARATOR);
             }
 
             @Override
