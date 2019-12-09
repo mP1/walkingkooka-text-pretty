@@ -19,11 +19,13 @@ package walkingkooka.text.pretty;
 
 import walkingkooka.naming.Name;
 import walkingkooka.naming.Path;
+import walkingkooka.naming.PathSeparator;
 import walkingkooka.text.printer.IndentingPrinter;
 
 import java.util.List;
 import java.util.Set;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 /**
  * Handles printing a tree of {@link Path paths} with support for grouping children for each branch or path.
@@ -53,5 +55,16 @@ public interface TreePrinting<P extends Path<P, N> & Comparable<P>, N extends Na
      */
     default BiConsumer<Set<P>, IndentingPrinter> biConsumer() {
         return TreePrintingBiConsumer.with(this);
+    }
+
+    /**
+     * Builds a path from the given {@link Name}.
+     */
+    default String toPath(final List<? extends Name> names,
+                          final PathSeparator separator) {
+        return names.stream()
+                .filter(n -> false == n.value().isEmpty())
+                .map(Name::toString)
+                .collect(Collectors.joining(separator.string()));
     }
 }
