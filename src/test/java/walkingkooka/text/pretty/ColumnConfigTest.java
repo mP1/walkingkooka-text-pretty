@@ -55,11 +55,6 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     }
 
     @Test
-    public void testCenterAlignWithoutMaxWidthFails() {
-        assertThrows(IllegalStateException.class, () -> ColumnConfig.empty().centerAlign());
-    }
-
-    @Test
     public void testMaxWidth() {
         final int width = 123;
 
@@ -270,6 +265,15 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     }
 
     @Test
+    public void testMinWidth() {
+        final List<CharSequence> lines = Lists.of("line1", "line2");
+
+        this.apply2(ColumnConfig.empty().minWidth(7),
+                lines,
+                lines);
+    }
+
+    @Test
     public void testLeftAlignApply() {
         this.apply2(ColumnConfig.empty()
                         .maxWidth(10)
@@ -457,7 +461,7 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     // toString.........................................................................................................
 
     @Test
-    public void testToStringWidthLeft() {
+    public void testToStringMaxWidthLeft() {
         this.toStringAndCheck(ColumnConfig.empty()
                         .maxWidth(80)
                         .leftAlign(),
@@ -465,7 +469,7 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     }
 
     @Test
-    public void testToStringWidthTruncateRight() {
+    public void testToStringMaxWidthTruncateRight() {
         this.toStringAndCheck(ColumnConfig.empty()
                         .maxWidth(90)
                         .truncate()
@@ -489,6 +493,14 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
                         .minWidth(12)
                         .leftAlign(),
                 "width=12 Left");
+    }
+
+    @Test
+    public void testToStringMinWidthLeft() {
+        this.toStringAndCheck(ColumnConfig.empty()
+                        .minWidth(80)
+                        .leftAlign(),
+                "80<=width Left");
     }
 
     // disabled.........................................................................................................

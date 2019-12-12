@@ -43,6 +43,17 @@ public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<
     }
 
     @Test
+    public void testEmptyColumnConfig() {
+        final ColumnConfig column = TextPretty.columnConfig();
+
+        this.applyAndCheck2(TableTransformerUnaryOperator.with(Lists.of(column, column)),
+                Table.empty()
+                        .setRow(0, Lists.of("A", "BC")),
+                Table.empty()
+                        .setRow(0, Lists.of("A", "BC")));
+    }
+
+    @Test
     public void testOneRowAllColumnsPresent() {
         this.applyAndCheck2(Table.empty()
                         .setRow(0, Lists.of("A", "B", "1")),
