@@ -51,6 +51,7 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
 
     /**
      * Sets the min width of this column.
+     * When transforming a column, any align such as {@link #leftAlign()}, must also be set for the min width of a column to be honoured.
      */
     public ColumnConfig minWidth(final int minWidth) {
         if (minWidth <= 0) {
