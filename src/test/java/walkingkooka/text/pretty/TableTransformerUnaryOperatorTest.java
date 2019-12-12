@@ -54,6 +54,19 @@ public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<
     }
 
     @Test
+    public void testColumnMinWidth() {
+        final ColumnConfig column = TextPretty.columnConfig()
+                .minWidth(5)
+                .leftAlign();
+
+        this.applyAndCheck2(TableTransformerUnaryOperator.with(Lists.of(column, column)),
+                Table.empty()
+                        .setRow(0, Lists.of("A", "B")),
+                Table.empty()
+                        .setRow(0, Lists.of("A    ", "B    ")));
+    }
+
+    @Test
     public void testOneRowAllColumnsPresent() {
         this.applyAndCheck2(Table.empty()
                         .setRow(0, Lists.of("A", "B", "1")),
