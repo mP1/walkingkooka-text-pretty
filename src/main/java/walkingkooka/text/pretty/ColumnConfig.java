@@ -84,19 +84,12 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
                 new ColumnConfig(minWidth, maxWidth, this.functions);
     }
 
-    private void checkMaxWidth() {
-        if (Integer.MAX_VALUE == this.maxWidth) {
-            throw new IllegalStateException("Max width required");
-        }
-    }
-
     final int maxWidth;
 
     /**
      * Sets the alignment for this {@link ColumnConfig} to CENTER.
      */
     public ColumnConfig centerAlign() {
-        this.checkMaxWidth();
         return this.add(TextPretty.centerAlignment());
     }
 
@@ -105,7 +98,6 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
      */
     public ColumnConfig characterAlign(final CharPredicate chars,
                                        final int column) {
-        this.checkMaxWidth();
         return this.add(TextPretty.character(chars, column));
     }
 
@@ -113,7 +105,6 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
      * Sets the alignment for this {@link ColumnConfig} to LEFT.
      */
     public ColumnConfig leftAlign() {
-        this.checkMaxWidth();
         return this.add(TextPretty.leftAlignment());
     }
 
@@ -121,7 +112,6 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
      * Sets the overflow for this {@link ColumnConfig} to BREAK on the max width boundary.
      */
     public ColumnConfig overflowMaxWidthBreak() {
-        this.checkMaxWidth();
         return this.add(TextPretty.overflowMaxWidthBreak());
     }
 
@@ -129,7 +119,6 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
      * Sets the overflow for this {@link ColumnConfig} to WORD BREAK.
      */
     public ColumnConfig overflowWordBreak() {
-        this.checkMaxWidth();
         return this.add(TextPretty.overflowWordBreak());
     }
 
@@ -137,7 +126,6 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
      * Sets the alignment for this {@link ColumnConfig} to RIGHT.
      */
     public ColumnConfig rightAlign() {
-        this.checkMaxWidth();
         return this.add(TextPretty.rightAlignment());
     }
 
@@ -166,7 +154,6 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
      * Sets the overflow for this {@link ColumnConfig} to TRUNCATE.
      */
     public ColumnConfig truncate() {
-        this.checkMaxWidth();
         return this.add(TextPretty.truncate());
     }
 
@@ -253,13 +240,25 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
     public String toString() {
         final int minWidth = this.minWidth;
         final int maxWidth = this.maxWidth;
-        final String width = Integer.MAX_VALUE == maxWidth ?
-                "" :
-                minWidth == maxWidth ?
-                        "width=" + minWidth :
-                        0 == minWidth ?
-                                "width<=" + maxWidth :
-                                minWidth + "<=width<=" + maxWidth;
+
+        final String width;
+        if (0 == minWidth) {
+            if (Integer.MAX_VALUE == maxWidth) {
+                width = "";
+            } else {
+                width = "width<=" + maxWidth;
+            }
+        } else {
+            if (Integer.MAX_VALUE == maxWidth) {
+                width = minWidth + "<=width";
+            } else {
+                if (maxWidth == minWidth) {
+                    width = "width=" + minWidth;
+                } else {
+                    width = minWidth + "<=width<=" + maxWidth;
+                }
+            }
+        }
 
         return ToStringBuilder.empty()
                 .disable(ToStringBuilderOption.QUOTE)
