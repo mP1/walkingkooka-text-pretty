@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.com/mP1/walkingkooka-text-pretty.svg?branch=master)](https://travis-ci.com/mP1/walkingkooka-text-pretty.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/mP1/walkingkooka-text-pretty/badge.svg?branch=master)](https://coveralls.io/github/mP1/walkingkooka-text-pretty?branch=master)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 A collection of utilties to help format and beautify printed text into tables with column alignment formatting and more.
 
