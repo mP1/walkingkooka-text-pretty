@@ -23,12 +23,15 @@ import walkingkooka.collect.list.ListTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.naming.Names;
 import walkingkooka.naming.StringName;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.JavaVisibility;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class TreePrintingBiConsumerRequestListTest implements ListTesting2<TreePrintingBiConsumerRequestList<StringName>, StringName> {
+public final class TreePrintingBiConsumerRequestListTest implements ClassTesting2<TreePrintingBiConsumerRequestList<StringName>>,
+    ListTesting2<TreePrintingBiConsumerRequestList<StringName>, StringName> {
 
     @Test
     public void testAddFails() {
@@ -103,5 +106,10 @@ public final class TreePrintingBiConsumerRequestListTest implements ListTesting2
     @Override
     public Class<TreePrintingBiConsumerRequestList<StringName>> type() {
         return Cast.to(TreePrintingBiConsumerRequestList.class);
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
