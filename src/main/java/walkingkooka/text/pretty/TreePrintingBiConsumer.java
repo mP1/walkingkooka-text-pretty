@@ -37,29 +37,29 @@ final class TreePrintingBiConsumer<P extends Path<P, N> & Comparable<P>,
      */
     static <P extends Path<P, N> & Comparable<P>,
             N extends Name & Comparable<N>>
-    TreePrintingBiConsumer<P, N> with(final TreePrinting<P, N> grouping) {
-        Objects.requireNonNull(grouping, "grouping");
+    TreePrintingBiConsumer<P, N> with(final TreePrinting<P, N> printing) {
+        Objects.requireNonNull(printing, "printing");
 
-        return new TreePrintingBiConsumer(grouping);
+        return new TreePrintingBiConsumer(printing);
     }
 
-    private TreePrintingBiConsumer(final TreePrinting<P, N> grouping) {
+    private TreePrintingBiConsumer(final TreePrinting<P, N> printing) {
         super();
-        this.grouping = grouping;
+        this.printing = printing;
     }
 
     @Override
     public void accept(final Set<P> paths,
                        final IndentingPrinter printer) {
-        TreePrintingBiConsumerRequest.handle(paths, printer, this.grouping);
+        TreePrintingBiConsumerRequest.handle(paths, printer, this.printing);
     }
 
-    private TreePrinting<P, N> grouping;
+    private TreePrinting<P, N> printing;
 
     // Object...........................................................................................................
 
     @Override
     public String toString() {
-        return this.grouping.toString();
+        return this.printing.toString();
     }
 }
