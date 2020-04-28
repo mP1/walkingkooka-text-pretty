@@ -29,6 +29,11 @@ import java.util.Set;
 public class FakeTreePrinting<P extends Path<P, N> & Comparable<P>, N extends Name & Comparable<N>> implements TreePrinting<P, N>, Fake {
 
     @Override
+    public TreePrintingBranches branches(final P parent) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void branchBegin(final List<N> names, final IndentingPrinter printer) {
         throw new UnsupportedOperationException();
     }

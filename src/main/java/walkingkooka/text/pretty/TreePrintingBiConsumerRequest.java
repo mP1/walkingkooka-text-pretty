@@ -17,17 +17,14 @@
 
 package walkingkooka.text.pretty;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.naming.Name;
 import walkingkooka.naming.Path;
 import walkingkooka.text.printer.IndentingPrinter;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -69,7 +66,7 @@ final class TreePrintingBiConsumerRequest<P extends Path<P, N> & Comparable<P>,
             {
                 Set<P> children = parentToChildren.get(parent);
                 if (null == children) {
-                    children = this.emptySet();
+                    children = this.emptySet(parent);
                     parentToChildren.put(parent, children);
                 }
                 children.add(path);
@@ -83,7 +80,7 @@ final class TreePrintingBiConsumerRequest<P extends Path<P, N> & Comparable<P>,
                 final P parentOfParent = parent.parent().get();
                 Set<P> children = parentToChildren.get(parentOfParent);
                 if (null == children) {
-                    children = this.emptySet();
+                    children = this.emptySet(parentOfParent);
                     parentToChildren.put(parentOfParent, children);
                 }
                 children.add(parent);
@@ -104,12 +101,12 @@ final class TreePrintingBiConsumerRequest<P extends Path<P, N> & Comparable<P>,
     /**
      * Handles printing a branch printing branches first then children.
      */
-    private void printBranch(final P path,
+    private void printBranch(final P parent,
                              final TreePrintingBiConsumerRequestList<N> names) {
-        final Set<P> children = this.parentToChildren.get(path);
-        names.append(path.name());
+        final Set<P> children = this.parentToChildren.get(parent);
+        names.append(parent.name());
 
-        final Set<P> leaves = this.emptySet();
+        final Set<P> leaves = this.emptySet(parent);
         for(final P child : children) {
             if(false == this.isBranch(child)) {
                 leaves.add(child);
@@ -165,8 +162,8 @@ final class TreePrintingBiConsumerRequest<P extends Path<P, N> & Comparable<P>,
     /**
      * Creates an empty {@link Set}.
      */
-    private Set<P> emptySet() {
-        return Sets.sorted();
+    private Set<P> emptySet(final P parent) {
+        return this.printing.branches(parent).emptyChildrenSet();
     }
 
     private TreePrintingBiConsumerRequestList<N> namesList() {
