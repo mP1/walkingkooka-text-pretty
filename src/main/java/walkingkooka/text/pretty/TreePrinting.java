@@ -33,6 +33,11 @@ import java.util.stream.Collectors;
 public interface TreePrinting<P extends Path<P, N> & Comparable<P>, N extends Name & Comparable<N>> {
 
     /**
+     * {@see TreePrintingBranches}
+     */
+    TreePrintingBranches branches(final P parent);
+
+    /**
      * Called for each parent before handling children, performing an action like printing the names and then {@link IndentingPrinter#indent()}
      */
     void branchBegin(final List<N> names,

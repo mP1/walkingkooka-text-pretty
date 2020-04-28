@@ -32,6 +32,7 @@ import walkingkooka.text.printer.Printers;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -140,13 +141,48 @@ public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrint
                         ">>leaf2\n");
     }
 
+    @Test
+    public void testBranchTwoBranchLeafVisit() {
+        this.printTreeAndCheck2((p) -> TreePrintingBranches.VISITED,
+                Sets.of("/branch1/branch3/leaf2", "/branch1/branch2/leaf1"),
+                "branch1\n" +
+                        ">branch3\n" +
+                        ">>leaf2\n" +
+                        ">branch2\n" +
+                        ">>leaf1\n");
+    }
+
+    @Test
+    public void testMixedTreePrintingBranches() {
+        this.printTreeAndCheck2((p) -> p.toString().equals("/branch1/branch3") ? TreePrintingBranches.SORTED : TreePrintingBranches.VISITED,
+                Sets.of("/branch1/branch3/leaf3", "/branch1/branch3/leaf2", "/branch1/branch2/leaf1", "/771", "/992", "/883", "/004"),
+                "branch1\n" +
+                        ">branch3\n" +
+                        ">>leaf2\n" +
+                        ">>leaf3\n" +
+                        ">branch2\n" +
+                        ">>leaf1\n" +
+                        "771\n" +
+                        "992\n" +
+                        "883\n" +
+                        "004\n");
+    }
+
     private void printTreeAndCheck(final Set<String> paths,
+                                   final String expected) {
+        this.printTreeAndCheck2((p) -> TreePrintingBranches.SORTED,
+                paths,
+                expected);
+    }
+
+    private void printTreeAndCheck2(final Function<StringPath, TreePrintingBranches> branches,
+                                    final Set<String> paths,
                                    final String expected) {
         final StringBuilder text = new StringBuilder();
         try (final Printer printer = Printers.stringBuilder(text, LineEnding.NL)) {
-            new TestTreePrinting()
+            new TestTreePrinting(branches)
                     .biConsumer()
-                    .accept(paths.stream().map(StringPath::parse).collect(Collectors.toSet()), printer.indenting(Indentation.with(">")));
+                    .accept(paths.stream().map(StringPath::parse).collect(Collectors.toCollection(Sets::ordered)), printer.indenting(Indentation.with(">")));
         }
 
         assertEquals(expected,
@@ -155,6 +191,18 @@ public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrint
     }
 
     private static class TestTreePrinting implements TreePrinting<StringPath, StringName> {
+
+        private TestTreePrinting(Function<StringPath, TreePrintingBranches> branches) {
+            this.branches = branches;
+        }
+
+        @Override
+        public TreePrintingBranches branches(final StringPath parent) {
+            return this.branches.apply(parent);
+        }
+
+        private final Function<StringPath, TreePrintingBranches> branches;
+
         @Override
         public void branchBegin(final List<StringName> names, final IndentingPrinter printer) {
             final String path = names.stream()

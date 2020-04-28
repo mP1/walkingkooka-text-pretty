@@ -22,6 +22,7 @@ import walkingkooka.naming.StringName;
 import walkingkooka.naming.StringPath;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.pretty.TreePrinting;
+import walkingkooka.text.pretty.TreePrintingBranches;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.Printers;
 
@@ -73,6 +74,11 @@ public final class TreePrintingSample {
                 .collect(Collectors.toSet());
 
         new TreePrinting<StringPath, StringName>() {
+
+            @Override
+            public TreePrintingBranches branches(final StringPath parent) {
+                return TreePrintingBranches.SORTED;
+            }
 
             @Override
             public void branchBegin(final List<StringName> names, final IndentingPrinter printer) {
