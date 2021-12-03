@@ -105,7 +105,7 @@ public final class TabExpandingCharSequenceUnaryOperatorTest extends TextPrettyT
 
     private void applyAndCheck2(final CharSequence chars,
                                 final CharSequence expected) {
-        assertEquals(expected.toString(),
+        this.checkEquals(expected.toString(),
                 this.createFunction().apply(chars).toString(),
                 () -> " apply " + CharSequences.quoteAndEscape(chars) + " expected " + CharSequences.quoteAndEscape(expected));
     }

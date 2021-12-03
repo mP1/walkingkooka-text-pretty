@@ -72,7 +72,7 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
 
     private void parseAndCheck(final MultiLineCharSequence chars,
                                final LineEnding eol) {
-        assertEquals(MultiLineCharSequence.with(chars.lines, eol),
+        this.checkEquals(MultiLineCharSequence.with(chars.lines, eol),
                 MultiLineCharSequence.parse(chars, eol),
                 () -> "parse " + CharSequences.quoteAndEscape(chars) + " lineEnding " + CharSequences.quoteAndEscape(eol));
     }
@@ -140,7 +140,7 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
     private void parseAndCheck(final CharSequence text,
                                final LineEnding lineEnding,
                                final CharSequence... lines) {
-        assertEquals(MultiLineCharSequence.with(Lists.of(lines), lineEnding),
+        this.checkEquals(MultiLineCharSequence.with(Lists.of(lines), lineEnding),
                 MultiLineCharSequence.parse(text, lineEnding),
                 () -> "parse " + CharSequences.quoteAndEscape(text) + " lineEnding: " + CharSequences.quoteAndEscape(lineEnding));
     }
@@ -277,7 +277,7 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
 
     private void maxWidthAndCheck(final MultiLineCharSequence chars,
                                   final int maxWidth) {
-        assertEquals(maxWidth, chars.maxWidth(), () -> chars + " maxWidth");
+        this.checkEquals(maxWidth, chars.maxWidth(), () -> chars + " maxWidth");
     }
 
     // length...........................................................................................................
@@ -317,7 +317,7 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
     private void lineAndCheck(final MultiLineCharSequence chars,
                               final int lineNumber,
                               final CharSequence expected) {
-        assertEquals(expected.toString(), chars.line(lineNumber), () -> chars + " line " + lineNumber);
+        this.checkEquals(expected.toString(), chars.line(lineNumber), () -> chars + " line " + lineNumber);
     }
 
     // setText.............................................................................................................

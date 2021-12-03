@@ -247,10 +247,10 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     private void check(final ColumnConfig column,
                        final int maxWidth,
                        final BiFunction<CharSequence, Integer, CharSequence>... functions) {
-        assertEquals(Lists.of(functions),
+        this.checkEquals(Lists.of(functions),
                 column.functions,
                 () -> "functions: " + column);
-        assertEquals(maxWidth, column.maxWidth, "maxWidth");
+        this.checkEquals(maxWidth, column.maxWidth, "maxWidth");
     }
 
     // apply............................................................................................................
@@ -428,7 +428,7 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     private void apply2(final ColumnConfig column,
                         final List<CharSequence> before,
                         final List<CharSequence> expected) {
-        assertEquals(strings(expected),
+        this.checkEquals(strings(expected),
                 strings(column.apply(before)),
                 () -> column + " " + before);
     }

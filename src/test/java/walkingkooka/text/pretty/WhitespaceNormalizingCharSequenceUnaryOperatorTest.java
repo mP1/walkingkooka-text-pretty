@@ -90,7 +90,7 @@ public final class WhitespaceNormalizingCharSequenceUnaryOperatorTest extends Te
 
     private void applyAndCheck2(final CharSequence chars,
                                 final CharSequence expected) {
-        assertEquals(expected.toString(), WhitespaceNormalizingCharSequenceUnaryOperator.INSTANCE.apply(chars).toString());
+        this.checkEquals(expected.toString(), WhitespaceNormalizingCharSequenceUnaryOperator.INSTANCE.apply(chars).toString());
     }
 
     @Test

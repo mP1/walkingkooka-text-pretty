@@ -26,7 +26,7 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
 
     @Test
     public void testMaxColumns() {
-        assertEquals(0, this.createObject().maxColumn());
+        this.checkEquals(0, this.createObject().maxColumn());
     }
 
     @Test
@@ -51,7 +51,7 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
 
     @Test
     public void testMaxRows() {
-        assertEquals(0, this.createObject().maxColumn());
+        this.checkEquals(0, this.createObject().maxColumn());
     }
 
     @Test

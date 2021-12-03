@@ -122,7 +122,7 @@ public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<
     private void applyAndCheck2(final TableTransformerUnaryOperator transformer,
                                 final Table input,
                                 final Table result) {
-        assertEquals(result.toString(),
+        this.checkEquals(result.toString(),
                 transformer.apply(input).toString(),
                 () -> "Wrong result for " + transformer + " for params: " + input);
     }

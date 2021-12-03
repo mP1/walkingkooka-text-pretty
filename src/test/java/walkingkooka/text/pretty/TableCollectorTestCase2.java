@@ -92,7 +92,7 @@ public abstract class TableCollectorTestCase2<C extends TableCollector> extends 
     final void collectAndCheck(final Table table,
                                final int start,
                                final List<CharSequence>... data) {
-        assertEquals(this.add(table, start, data),
+        this.checkEquals(this.add(table, start, data),
                 Lists.of(data)
                         .stream()
                         .collect(this.createCollector(table, start)));

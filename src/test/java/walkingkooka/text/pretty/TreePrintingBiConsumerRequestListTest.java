@@ -83,7 +83,7 @@ public final class TreePrintingBiConsumerRequestListTest implements ClassTesting
             this.getAndCheck(list, i, name);
         }
 
-        assertEquals(arrayList, list);
+        this.checkEquals(arrayList, list);
     }
 
     @Test

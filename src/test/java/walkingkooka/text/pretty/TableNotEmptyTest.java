@@ -38,12 +38,12 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
 
     @Test
     public void testMaxColumns() {
-        assertEquals(3, this.createObject().maxColumn());
+        this.checkEquals(3, this.createObject().maxColumn());
     }
 
     @Test
     public void testMaxRows() {
-        assertEquals(3, this.createObject().maxColumn());
+        this.checkEquals(3, this.createObject().maxColumn());
     }
 
     // cell.............................................................................................................
@@ -424,7 +424,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     private void columnAndCheck(final Table table,
                                 final int column,
                                 final CharSequence... text) {
-        assertEquals(Lists.of(text),
+        this.checkEquals(Lists.of(text),
                 table.column(column),
                 () -> "column " + column + " from " + table);
     }
@@ -432,7 +432,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     private void rowAndCheck(final Table table,
                              final int row,
                              final CharSequence... text) {
-        assertEquals(Lists.of(text),
+        this.checkEquals(Lists.of(text),
                 table.row(row),
                 () -> "row " + row + " from " + table);
     }

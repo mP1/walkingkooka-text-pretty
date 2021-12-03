@@ -157,7 +157,7 @@ public final class RowColumnsToLineCharSequenceFunctionTest extends TextPrettyTe
     }
 
     private void applyAndCheck2(final List<CharSequence> columns, final CharSequence text) {
-        assertEquals(text.toString(),
+        this.checkEquals(text.toString(),
                 this.createFunction().apply(columns).toString(),
                 () -> columns.toString());
     }

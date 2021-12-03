@@ -185,7 +185,7 @@ public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrint
                     .accept(paths.stream().map(StringPath::parse).collect(Collectors.toCollection(Sets::ordered)), printer.indenting(Indentation.with(">")));
         }
 
-        assertEquals(expected,
+        this.checkEquals(expected,
                 text.toString(),
                 () -> paths.toString());
     }

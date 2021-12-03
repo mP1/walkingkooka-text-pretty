@@ -79,7 +79,7 @@ public final class CharSequenceBiFunctionOverflowWordBreakTest extends CharSeque
     private void applyAndCheck3(final String text,
                                 final int maxWidth,
                                 final String... expected) {
-        assertEquals(MultiLineCharSequence.with(Lists.of(expected), LineEnding.NL).toString(),
+        this.checkEquals(MultiLineCharSequence.with(Lists.of(expected), LineEnding.NL).toString(),
                 this.createBiFunction().apply(text, maxWidth).toString(),
                 () -> "apply " + CharSequences.quoteAndEscape(text) + " " + maxWidth);
     }
