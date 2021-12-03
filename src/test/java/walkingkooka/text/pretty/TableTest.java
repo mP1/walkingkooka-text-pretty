@@ -184,7 +184,7 @@ public final class TableTest implements ClassTesting2<Table> {
                 .setColumn(1, column1)
                 .setColumn(2, column2);
 
-        assertEquals(table,
+        this.checkEquals(table,
                 Lists.of(column1, column2)
                         .stream()
                         .collect(Table.empty().collectColumn(1)));
@@ -199,7 +199,7 @@ public final class TableTest implements ClassTesting2<Table> {
                 .setRow(1, row1)
                 .setRow(2, row2);
 
-        assertEquals(table,
+        this.checkEquals(table,
                 Lists.of(row1, row2)
                 .stream()
                 .collect(Table.empty().collectRow(1)));
@@ -226,13 +226,13 @@ public final class TableTest implements ClassTesting2<Table> {
     }
 
     final void maxColumnAndCheck(final Table table, final int expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 table.maxColumn(),
                 () -> "maxColumn of " + table);
     }
 
     final void maxRowAndCheck(final Table table, final int expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 table.maxRow(),
                 () -> "maxRow of " + table);
     }
@@ -241,7 +241,7 @@ public final class TableTest implements ClassTesting2<Table> {
     private void columnAndCheck(final Table table,
                                 final int column,
                                 final CharSequence... text) {
-        assertEquals(Lists.of(text),
+        this.checkEquals(Lists.of(text),
                 table.column(column),
                 () -> "column " + column + " from " + table);
     }
@@ -249,7 +249,7 @@ public final class TableTest implements ClassTesting2<Table> {
     private void rowAndCheck(final Table table,
                              final int row,
                              final CharSequence... text) {
-        assertEquals(Lists.of(text),
+        this.checkEquals(Lists.of(text),
                 table.row(row),
                 () -> "row " + row + " from " + table);
     }

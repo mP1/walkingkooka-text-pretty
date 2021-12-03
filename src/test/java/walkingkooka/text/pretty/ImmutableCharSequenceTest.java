@@ -38,7 +38,7 @@ public final class ImmutableCharSequenceTest extends TextPrettyTestCase<Immutabl
     public void testSubSequenceCreated() {
         final ImmutableCharSequence chars = this.createCharSequence();
         final CharSequence chars2 = chars.subSequence(1, 5);
-        assertEquals(ImmutableCharSequence.class, chars2.getClass(), chars2.toString());
+        this.checkEquals(ImmutableCharSequence.class, chars2.getClass(), chars2.toString());
         this.toStringAndCheck(chars2, "bc12");
     }
 

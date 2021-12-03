@@ -42,7 +42,7 @@ public abstract class TableConfigTestCase<T extends TableConfig> extends TextPre
                                  final ColumnConfig column,
                                  final ColumnConfig...expected) {
         final TableConfigNotEmpty not = (TableConfigNotEmpty)table.add(column);
-        assertEquals(Lists.of(expected), not.columns, table + "  add column " + column);
+        this.checkEquals(Lists.of(expected), not.columns, table + "  add column " + column);
     }
 
     @Test

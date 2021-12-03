@@ -118,7 +118,7 @@ public class CharSequenceBiFunctionAlignCharacterTest extends CharSequenceBiFunc
 
     @Test
     public void testDifferentColumn() {
-        assertEquals(this.character(), this.character(), "CharPredicate doesnt implement equals");
+        this.checkEquals(this.character(), this.character(), "CharPredicate doesnt implement equals");
 
         this.checkNotEquals(CharSequenceBiFunctionAlignCharacter.with(this.character(), COLUMN + 1));
     }

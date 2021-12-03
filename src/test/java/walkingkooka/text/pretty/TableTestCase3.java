@@ -65,7 +65,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
 
     @Test
     public final void testColumnMaxColumn() {
-        assertEquals(Lists.empty(), this.createTable().column(this.maxColumn()));
+        this.checkEquals(Lists.empty(), this.createTable().column(this.maxColumn()));
     }
 
     @Test
@@ -101,7 +101,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
 
     @Test
     public final void testRowMaxRow() {
-        assertEquals(Lists.empty(), this.createTable().row(this.maxRow()));
+        this.checkEquals(Lists.empty(), this.createTable().row(this.maxRow()));
     }
 
     @Test
@@ -127,7 +127,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
     abstract int maxRow();
 
     final void maxColumnAndCheck(final Table table, final int expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 table.maxColumn(),
                 () -> "maxColumn of " + table);
     }
@@ -173,7 +173,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
     }
 
     final void maxRowAndCheck(final Table table, final int expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 table.maxRow(),
                 () -> "maxRow of " + table);
     }
@@ -191,7 +191,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
                             final int column,
                             final int row,
                             final CharSequence text) {
-        assertEquals(text,
+        this.checkEquals(text,
                 table.cell(column, row),
                 () -> "cell at " + column + "," + row + " in " + table);
     }
@@ -236,7 +236,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
                 emptyText.add(cell.getKey());
             }
         }
-        assertEquals(Sets.empty(),
+        this.checkEquals(Sets.empty(),
                 emptyText,
                 () -> "Table contains cells with empty text " + table);
 
@@ -255,7 +255,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
 
     final void checkMap(final TableNotEmpty table,
                         final Map<TableCellCoordinates, CharSequence> map) {
-        assertEquals(map, table.table, () -> table + " map");
+        this.checkEquals(map, table.table, () -> table + " map");
         this.check(table);
     }
 

@@ -266,7 +266,7 @@ public final class TagStrippingCharSequenceUnaryOperatorTest extends TextPrettyT
 
     private void applyAndCheck2(final CharSequence chars,
                                 final CharSequence expected) {
-        assertEquals(expected.toString(), TagStrippingCharSequenceUnaryOperator.INSTANCE.apply(chars).toString());
+        this.checkEquals(expected.toString(), TagStrippingCharSequenceUnaryOperator.INSTANCE.apply(chars).toString());
     }
 
     @Test

@@ -42,11 +42,11 @@ public abstract class CharSequenceBiFunctionTestCase<A extends CharSequenceBiFun
                               final int width,
                               final CharSequence expected) {
         final String actual = this.createBiFunction().apply(text, width).toString();
-        assertEquals(expected.toString(),
+        this.checkEquals(expected.toString(),
                 actual,
                 () -> " apply " + CharSequences.quoteAndEscape(text) + " width " + width);
 
-        assertEquals(true,
+        this.checkEquals(true,
                 actual.length() <= width,
                 () -> " apply " + CharSequences.quoteAndEscape(text) + " width " + width + " actual: " + actual.length() + "=" + CharSequences.quoteAndEscape(actual));
     }
