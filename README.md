@@ -16,7 +16,7 @@ The sample below gives an example to print to the console many paths in a tidy, 
 the user with very long path names.
 
 ```java
-final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.with("  "));
+final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.SPACES2);
 
 // over simplified sample of this projects target directory.
 final Set<StringPath> paths = Sets.of(
@@ -130,7 +130,7 @@ final Table table123 = Lists.of(TextPretty.csv('/').apply("Queensland/4000000/$1
 final Table formattedTable = tableConfig.apply(table123);
 
 // print row by row
-try (final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.with("  "))) {
+try (final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.SPACES2)) {
     for (int i = 0; i < formattedTable.maxRow(); i++) {
         printer.print(TextPretty.rowColumnsToLine((column -> 2), LineEnding.SYSTEM)
                 .apply(formattedTable.row(i)));

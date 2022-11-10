@@ -55,7 +55,7 @@ public final class TreePrintingSample {
      * </pre>
      */
     public static void main(final String[] ignored) {
-        final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.with("  "));
+        final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.SPACES2);
 
         // over simplified sample of this projects target directory.
         final Set<StringPath> paths = Sets.of(
