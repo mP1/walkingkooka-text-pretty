@@ -48,7 +48,7 @@ public class JunitTest {
     public void testTreePrinting() {
         final StringBuilder printed = new StringBuilder();
         final IndentingPrinter printer = Printers.stringBuilder(printed, LineEnding.NL)
-                .indenting(Indentation.with("  "));
+                .indenting(Indentation.SPACES2);
 
         // over simplified sample of this projects target directory.
         final Set<StringPath> paths = Sets.of(
@@ -162,7 +162,7 @@ public class JunitTest {
 
         // print row by row
         try (final IndentingPrinter printer =  Printers.stringBuilder(printed, LineEnding.NL)
-                .indenting(Indentation.with("  "))) {
+                .indenting(Indentation.SPACES2)) {
             for (int i = 0; i < formattedTable.maxRow(); i++) {
                 printer.print(TextPretty.rowColumnsToLine((column -> 2), LineEnding.SYSTEM)
                         .apply(formattedTable.row(i)));
