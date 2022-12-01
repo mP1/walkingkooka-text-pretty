@@ -241,7 +241,10 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                 .setColumn(1, Lists.empty())
                 .setColumn(2, Lists.empty());
 
-        this.checkMap(table, Maps.empty());
+        this.checkMap(
+                table,
+                Maps.empty()
+        );
     }
 
     @Test
@@ -253,7 +256,25 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         map.remove(TableCellCoordinates.with(column, 1));
         map.put(TableCellCoordinates.with(column, 2), Z);
 
-        this.checkMap(this.setColumnAndCheck(column, X, "", Z), map);
+        this.checkMap(
+                this.setColumnAndCheck(column, X, "", Z),
+                map
+        );
+    }
+
+    @Test
+    public void testSetColumnReplaceWithIncludesEmptyCellWithNull() {
+        final int column = 1;
+
+        final Map<TableCellCoordinates, CharSequence> map = this.map();
+        map.put(TableCellCoordinates.with(column, 0), X);
+        map.remove(TableCellCoordinates.with(column, 1));
+        map.put(TableCellCoordinates.with(column, 2), Z);
+
+        this.checkMap(
+                this.setColumnAndCheck(column, X, null, Z),
+                map
+        );
     }
 
     // row..............................................................................................................
@@ -294,7 +315,10 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         map.put(TableCellCoordinates.with(1, row), Y);
         map.put(TableCellCoordinates.with(2, row), Z);
 
-        this.checkMap(this.setRowAndCheck(row, X, Y, Z), map);
+        this.checkMap(
+                this.setRowAndCheck(row, X, Y, Z),
+                map
+        );
     }
 
     @Test
@@ -306,7 +330,10 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         map.put(TableCellCoordinates.with(1, row), Y);
         map.put(TableCellCoordinates.with(2, row), Z);
 
-        this.checkMap(this.setRowAndCheck(row, X, Y, Z), map);
+        this.checkMap(
+                this.setRowAndCheck(row, X, Y, Z),
+                map
+        );
     }
 
     @Test
@@ -318,7 +345,10 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         map.remove(TableCellCoordinates.with(1, row));
         map.put(TableCellCoordinates.with(2, row), Z);
 
-        this.checkMap(this.setRowAndCheck(row, X, "", Z), map);
+        this.checkMap(
+                this.setRowAndCheck(row, X, "", Z),
+                map
+        );
     }
 
     @Test
@@ -330,7 +360,10 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         map.remove(TableCellCoordinates.with(1, row));
         map.remove(TableCellCoordinates.with(2, row));
 
-        this.checkMap(this.createTable().setRow(row, Lists.empty()), map);
+        this.checkMap(
+                this.createTable().setRow(row, Lists.empty()),
+                map
+        );
     }
 
     @Test
@@ -340,11 +373,14 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                 .setRow(1, Lists.empty())
                 .setRow(2, Lists.empty());
 
-        this.checkMap(table, Maps.empty());
+        this.checkMap(
+                table,
+                Maps.empty()
+        );
     }
 
     @Test
-    public void testSetRowReplaceInclcudesEmptyCell() {
+    public void testSetRowReplaceIncludesNullCell() {
         final int row = 2;
 
         final Map<TableCellCoordinates, CharSequence> map = this.map();
@@ -352,7 +388,25 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         map.remove(TableCellCoordinates.with(1, row));
         map.put(TableCellCoordinates.with(2, row), Z);
 
-        this.checkMap(this.createTable().setRow(row, Lists.of(X, "", Z)), map);
+        this.checkMap(
+                this.createTable().setRow(row, Lists.of(X, null, Z)),
+                map
+        );
+    }
+
+    @Test
+    public void testSetRowReplaceIncludesEmptyCell() {
+        final int row = 2;
+
+        final Map<TableCellCoordinates, CharSequence> map = this.map();
+        map.put(TableCellCoordinates.with(0, row), X);
+        map.remove(TableCellCoordinates.with(1, row));
+        map.put(TableCellCoordinates.with(2, row), Z);
+
+        this.checkMap(
+                this.createTable().setRow(row, Lists.of(X, "", Z)),
+                map
+        );
     }
 
     // equals...........................................................................................................

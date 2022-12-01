@@ -79,7 +79,6 @@ final class TableEmpty extends Table {
                 TableNotEmpty.withColumn(column, text);
     }
 
-
     @Override
     public int maxColumn() {
         return 0;

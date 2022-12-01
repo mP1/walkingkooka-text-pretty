@@ -29,12 +29,18 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
 
     @Test
     public void testSetCell() {
-        this.checkMap(this.setCellAndCheck(0, 0, R0C0), Maps.of(TableCellCoordinates.with(0, 0), R0C0));
+        this.checkMap(
+                this.setCellAndCheck(0, 0, R0C0),
+                Maps.of(TableCellCoordinates.with(0, 0), R0C0)
+        );
     }
 
     @Test
     public void testSetCell2() {
-        this.checkMap(this.setCellAndCheck(1, 2, R2C1), Maps.of(TableCellCoordinates.with(1, 2), R2C1));
+        this.checkMap(
+                this.setCellAndCheck(1, 2, R2C1),
+                Maps.of(TableCellCoordinates.with(1, 2), R2C1)
+        );
     }
 
     @Test
