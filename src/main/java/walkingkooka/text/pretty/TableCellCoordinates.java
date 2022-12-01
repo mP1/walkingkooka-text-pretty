@@ -64,9 +64,9 @@ final class TableCellCoordinates implements Comparable<TableCellCoordinates> {
 
     @Override
     public int compareTo(final TableCellCoordinates other) {
-        final int result = this.column - other.column;
+        final int result = this.row - other.row;
         return 0 != result ?
                 result :
-                this.row - other.row;
+                this.column - other.column;
     }
 }

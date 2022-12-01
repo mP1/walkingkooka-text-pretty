@@ -211,22 +211,39 @@ final class TableNotEmpty extends Table {
                                 final List<CharSequence> text) {
         final NavigableMap<TableCellCoordinates, CharSequence> table = map();
 
-        int maximumRow = 0;
+        int maximumColumn = -1;
 
         for (final Entry<TableCellCoordinates, CharSequence> cellAndText : this.table.entrySet()) {
             final TableCellCoordinates cellCoordinates = cellAndText.getKey();
             if (cellCoordinates.column != column) {
                 table.put(cellCoordinates, cellAndText.getValue());
-                maximumRow = Math.max(maximumRow, cellCoordinates.row + 1);
+                maximumColumn = Math.max(maximumColumn, cellCoordinates.column + 1);
             }
         }
         setColumn(column, text, table);
 
-        return table.isEmpty() ?
-                empty() :
-                with(table,
-                        table.lastEntry().getKey().column + 1,
-                        Math.max(maximumRow, text.size()));
+        final Table result;
+
+        if(table.isEmpty()) {
+            result = empty();
+        } else {
+            if(maximumColumn <= column) {
+                for(final CharSequence t : text) {
+                    if(isNotEmpty(t)) {
+                        maximumColumn = column + 1;
+                        break;
+                    }
+                }
+            }
+
+            result = with(
+                    table,
+                    maximumColumn,
+                    table.lastEntry().getKey().row + 1
+            );
+        }
+
+        return result;
     }
 
     @Override
@@ -254,24 +271,25 @@ final class TableNotEmpty extends Table {
                              final List<CharSequence> text) {
         final NavigableMap<TableCellCoordinates, CharSequence> table = map();
 
-        int maximumRow = text.isEmpty() ?
-                0 :
-                row + 1;
+        int maxColumn = -1;
 
+        // need to find maxColumn for all other cells
         for (final Entry<TableCellCoordinates, CharSequence> cellAndText : this.table.entrySet()) {
             final TableCellCoordinates cellCoordinates = cellAndText.getKey();
             if (cellCoordinates.row != row) {
                 table.put(cellCoordinates, cellAndText.getValue());
-                maximumRow = Math.max(maximumRow, cellCoordinates.row + 1);
+                maxColumn = Math.max(maxColumn, cellCoordinates.column + 1);
             }
         }
         setRow(row, text, table);
 
         return table.isEmpty() ?
                 empty() :
-                with(table,
-                        table.lastEntry().getKey().column + 1,
-                        maximumRow);
+                with(
+                        table,
+                        Math.max(maxColumn, text.size()),
+                        table.lastEntry().getKey().row + 1
+                );
     }
 
     @Override
