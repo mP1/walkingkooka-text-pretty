@@ -18,12 +18,12 @@
 package walkingkooka.text.pretty;
 
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.text.CharSequences;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.NavigableMap;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collector;
 
@@ -173,7 +173,7 @@ public abstract class Table {
             throw new IllegalArgumentException("Invalid row " + row);
         }
     }
-    
+
     /**
      * The first invalid row number. 0 indicates an empty table
      */
@@ -198,4 +198,23 @@ public abstract class Table {
     // internal.........................................................................................................
 
     abstract Map<TableCellCoordinates, CharSequence> asMap();
+
+    static boolean equalsMap(final Map<TableCellCoordinates, CharSequence> left,
+                             final Map<TableCellCoordinates, CharSequence> right) {
+        boolean equals = false;
+
+        if (left.size() == right.size()) {
+            final Iterator<Entry<TableCellCoordinates, CharSequence>> iterator = right.entrySet().iterator();
+            for (final Entry<TableCellCoordinates, CharSequence> coordAndText : left.entrySet()) {
+                final Entry<TableCellCoordinates, CharSequence> otherCoordAndText = iterator.next();
+                equals = coordAndText.getKey().equals(otherCoordAndText.getKey()) &&
+                        CharSequences.equals(coordAndText.getValue(), otherCoordAndText.getValue());
+                if (false == equals) {
+                    break;
+                }
+            }
+        }
+
+        return equals;
+    }
 }
