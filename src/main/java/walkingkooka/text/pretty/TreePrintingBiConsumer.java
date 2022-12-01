@@ -40,7 +40,7 @@ final class TreePrintingBiConsumer<P extends Path<P, N> & Comparable<P>,
     TreePrintingBiConsumer<P, N> with(final TreePrinting<P, N> printing) {
         Objects.requireNonNull(printing, "printing");
 
-        return new TreePrintingBiConsumer(printing);
+        return new TreePrintingBiConsumer<>(printing);
     }
 
     private TreePrintingBiConsumer(final TreePrinting<P, N> printing) {

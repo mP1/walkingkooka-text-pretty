@@ -35,6 +35,7 @@ final class TreePrintingBiConsumerRequestList<N extends Name> extends AbstractLi
         super();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public N get(final int index) {
         final int size = this.size();
