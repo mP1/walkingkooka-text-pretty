@@ -298,7 +298,10 @@ final class TableNotEmpty extends Table {
     }
 
     private boolean equals0(final Table other) {
-        return this.table.equals(other.asMap());
+        return equalsMap(
+                this.table,
+                other.asMap()
+        );
     }
 
     @Override
