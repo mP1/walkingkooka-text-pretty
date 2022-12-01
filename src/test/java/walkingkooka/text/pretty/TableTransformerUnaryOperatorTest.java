@@ -25,7 +25,6 @@ import walkingkooka.util.FunctionTesting;
 
 import java.util.function.UnaryOperator;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<TableTransformerUnaryOperator>

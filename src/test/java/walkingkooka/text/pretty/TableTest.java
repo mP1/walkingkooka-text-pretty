@@ -24,7 +24,6 @@ import walkingkooka.reflect.JavaVisibility;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class TableTest implements ClassTesting2<Table> {

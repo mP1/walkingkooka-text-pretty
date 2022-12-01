@@ -26,7 +26,6 @@ import walkingkooka.text.CharSequences;
 import java.util.Map;
 import java.util.NavigableMap;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>

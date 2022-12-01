@@ -22,8 +22,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class CharSequenceBiFunctionOverflowWordBreakTest extends CharSequenceBiFunctionOverflowTestCase<CharSequenceBiFunctionOverflowWordBreak> {
 
     @Test

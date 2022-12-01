@@ -23,8 +23,6 @@ import walkingkooka.util.FunctionTesting;
 
 import java.util.function.UnaryOperator;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class WhitespaceNormalizingCharSequenceUnaryOperatorTest extends TextPrettyTestCase<WhitespaceNormalizingCharSequenceUnaryOperator>
         implements FunctionTesting<WhitespaceNormalizingCharSequenceUnaryOperator, CharSequence, CharSequence>,
         ToStringTesting<WhitespaceNormalizingCharSequenceUnaryOperator> {

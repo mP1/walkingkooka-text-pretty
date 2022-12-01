@@ -22,8 +22,6 @@ import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.util.BiFunctionTesting;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public abstract class CharSequenceBiFunctionTestCase<A extends CharSequenceBiFunction> extends TextPrettyTestCase<A>
         implements BiFunctionTesting<A, CharSequence, Integer, CharSequence>,
         ToStringTesting<A>,

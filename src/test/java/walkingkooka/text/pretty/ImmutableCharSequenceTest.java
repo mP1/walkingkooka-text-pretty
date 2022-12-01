@@ -20,7 +20,6 @@ package walkingkooka.text.pretty;
 import org.junit.jupiter.api.Test;
 import walkingkooka.text.CharSequenceTesting;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class ImmutableCharSequenceTest extends TextPrettyTestCase<ImmutableCharSequence>
