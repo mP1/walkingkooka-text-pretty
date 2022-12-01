@@ -67,7 +67,7 @@ public final class TableColumnPrintSample {
 
         // print row by row
         try (final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.SPACES2)) {
-            for (int i = 0; i < formattedTable.maxRow(); i++) {
+            for (int i = 0; i < formattedTable.height(); i++) {
                 printer.print(TextPretty.rowColumnsToLine((column -> 2), LineEnding.SYSTEM)
                         .apply(formattedTable.row(i)));
             }

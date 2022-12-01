@@ -20,53 +20,173 @@ package walkingkooka.text.pretty;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.text.CharSequences;
 
-import java.util.Map;
-import java.util.NavigableMap;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         implements HashCodeEqualsDefinedTesting2<TableNotEmpty> {
 
-    private final static CharSequence X = "x";
-    private final static CharSequence Y = "y";
-    private final static CharSequence Z = "z";
-
     @Test
-    public void testMaxColumns() {
-        this.checkEquals(3, this.createObject().maxColumn());
+    public void testSetWithAutoExpandShrinkSame() {
+        setWithAutoExpandShrinkAndCheck(
+                arrayList(10, 20, 30),
+                0,
+                99,
+                list(99, 20, 30)
+        );
     }
 
     @Test
-    public void testMaxRows() {
-        this.checkEquals(3, this.createObject().maxColumn());
+    public void testSetWithAutoExpandShrinkSame2() {
+        setWithAutoExpandShrinkAndCheck(
+                arrayList(10, 20, 30),
+                0,
+                null,
+                list(null, 20, 30)
+        );
+    }
+
+    @Test
+    public void testSetWithAutoExpandShrinkExpanded() {
+        setWithAutoExpandShrinkAndCheck(
+                arrayList(10, 20, 30),
+                3,
+                99,
+                list(10, 20, 30, 99)
+        );
+    }
+
+    @Test
+    public void testSetWithAutoExpandShrinkExpanded2() {
+        setWithAutoExpandShrinkAndCheck(
+                arrayList(10, 20, 30),
+                4,
+                99,
+                list(10, 20, 30, null, 99)
+        );
+    }
+
+    @Test
+    public void testSetWithAutoExpandShrinkExpanded3() {
+        setWithAutoExpandShrinkAndCheck(
+                arrayList(10, 20, 30),
+                5,
+                99,
+                list(10, 20, 30, null, null, 99)
+        );
+    }
+
+    @Test
+    public void testSetWithAutoExpandShrinkShrunk() {
+        setWithAutoExpandShrinkAndCheck(
+                arrayList(10, 20, 30),
+                2,
+                null,
+                list(10, 20)
+        );
+    }
+
+    private List<Integer> arrayList(final Integer...values) {
+        final List<Integer> list = Lists.array();
+        list.addAll(this.list(values));
+        return list;
+    }
+
+    private void setWithAutoExpandShrinkAndCheck(final List<Integer> list,
+                                                 final int index,
+                                                 final Integer element,
+                                                 final List<Integer> expected) {
+        final List<Integer> before = Lists.array();
+        before.addAll(list);
+
+        TableNotEmpty.setWithAutoExpandShrink(
+                list,
+                index,
+                element
+        );
+
+        this.checkEquals(
+                expected,
+                list,
+                () -> before + " index=" + index + " element=" + element
+        );
+    }
+
+
+    private final static CharSequence X = "x";
+    private final static CharSequence Y = "y";
+    private final static CharSequence Z = "z";
+    private final static CharSequence A = "A";
+
+    @Test
+    public void testHeight() {
+        this.heightAndCheck(
+                this.createObject(),
+                3
+        );
+    }
+
+    @Test
+    public void testWidth() {
+        this.widthAndCheck(
+                this.createObject(),
+                3
+        );
     }
 
     // cell.............................................................................................................
 
     @Test
     public void testCell() {
-        this.cellAndCheck(1, 1, R1C1);
+        this.cellAndCheck(
+                1,
+                1,
+                R1C1
+        );
     }
 
     @Test
     public void testCell2() {
-        this.cellAndCheck(0, 2, R2C0);
+        this.cellAndCheck(
+                0,
+                2,
+                R2C0
+        );
     }
 
     @Test
-    public void testCellAbsent() {
-        final NavigableMap<TableCellCoordinates, CharSequence> map = Maps.navigable();
+    public void testCellAbsentRowMissing() {
+        this.cellAndCheck(
+                TableNotEmpty.with(
+                        list(
+                                list(R0C0, R0C0),
+                                list(R0C1, R1C1)
+                        ),
+                        2
+                ),
+                1,
+                2,
+                CharSequences.empty()
+        );
+    }
 
-        map.put(TableCellCoordinates.with(3, 2), "x");
-
-        this.cellAndCheck(TableNotEmpty.with(map, 4, 3),
+    @Test
+    public void testCellAbsentColumnOob() {
+        this.cellAndCheck(
+                TableNotEmpty.with(
+                        list(
+                                list(R0C0, R0C0),
+                                list(R0C1, R1C1)
+                        ),
+                        2
+                ),
                 2,
                 1,
-                CharSequences.empty());
+                CharSequences.empty()
+        );
     }
 
     // setCell..........................................................................................................
@@ -87,69 +207,273 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     public void testSetSameCell3() {
         final TableNotEmpty table = this.createTable();
 
-        for(int c = 0; c < table.maxColumn(); c++) {
-            for(int r = 0; r < table.maxRow(); r++) {
+        for(int c = 0; c < table.width(); c++) {
+            for(int r = 0; r < table.height(); r++) {
                 assertSame(table, table.setCell(c, r, table.cell(c, r)));
             }
         }
     }
 
     @Test
-    public void testSetDifferentCell() {
-        this.setCellAndCheck2(0, 0, "x");
+    public void testSetCellDifferent() {
+        this.check(
+                this.setCellAndCheck(
+                        0,
+                        0,
+                        "x"
+                ),
+                list(
+                        list(
+                                "x", R0C1, R0C2
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
+        );
     }
 
     @Test
-    public void testSetDifferentCell2() {
-        this.setCellAndCheck2(1, 2, "x");
+    public void testSetCellDifferent2() {
+            this.check(
+                    this.setCellAndCheck(
+                            1,
+                            1,
+                            "x"
+                    ),
+                    list(
+                            list(
+                                    R0C0, R0C1, R0C2
+                            ),
+                            list(
+                                    R1C0, "x", R1C2
+                            ),
+                            list(
+                                    R2C0, R2C1, R2C2
+                            )
+                    )
+            );
     }
 
     @Test
-    public void testSetDifferentCell3() {
-        this.setCellAndCheck2(2, 0, "x");
-    }
-
-    private void setCellAndCheck2(final int column,
-                                  final int row,
-                                  final CharSequence text) {
-        final NavigableMap<TableCellCoordinates, CharSequence> map = this.map();
-        map.put(TableCellCoordinates.with(column, row), text);
-
-        this.checkMap(this.setCellAndCheck(this.createTable(), column, row, text), map);
+    public void testSetCellDifferent3() {
+            this.check(
+                    this.setCellAndCheck(
+                            2,
+                            2,
+                            "x"
+                    ),
+                    list(
+                            list(
+                                    R0C0, R0C1, R0C2
+                            ),
+                            list(
+                                    R1C0, R1C1, R1C2
+                            ),
+                            list(
+                                    R2C0, R2C1, "x"
+                            )
+                    )
+            );
     }
 
     @Test
-    public void testSetAllDifferentCell() {
-        final NavigableMap<TableCellCoordinates, CharSequence> map = this.map();
+    public void testSetCellDifferentNull() {
+        this.check(
+                this.setCellAndCheck(
+                        2,
+                        2,
+                        null
+                ),
+                list(
+                        list(
+                                R0C0, R0C1, R0C2
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1
+                        )
+                )
+        );
+    }
 
+    @Test
+    public void testSetCellDifferentEmpty() {
+        this.check(
+                this.setCellAndCheck(
+                        2,
+                        2,
+                        ""
+                ),
+                list(
+                        list(
+                                R0C0, R0C1, R0C2
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetCellAllDifferent() {
         Table table = this.createTable();
 
-        for (int c = 0; c < table.maxColumn(); c++) {
-            for (int r = 0; r < table.maxRow(); r++) {
-                final String text = "new" + c + "," + r;
-                table = this.setCellAndCheck(table, c, r, text);
-                map.put(TableCellCoordinates.with(c, r), text);
+        final List<List<CharSequence>> allRows = Lists.array();
+
+        for (int r = 0; r < table.height(); r++) {
+
+            final List<CharSequence> newRow = Lists.array();
+
+            for (int c = 0; c < table.width(); c++) {
+                final String text = "new" + r + "," + c;
+                table = this.setCellAndCheck(
+                        table,
+                        c,
+                        r,
+                        text
+                );
+
+                newRow.add(text);
             }
+
+            allRows.add(newRow);
         }
 
-        this.checkMap(table, map);
+        this.check(
+                table,
+                allRows
+        );
+    }
+
+    @Test
+    public void testSetCellNull() {
+        this.check(
+                this.createTable().setCell(0, 0, null),
+                list(
+                        list(
+                                null, R0C1, R0C2
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
+        );
     }
 
     @Test
     public void testSetCellEmpty() {
-        final NavigableMap<TableCellCoordinates, CharSequence> map = this.map();
+        this.check(
+                this.createTable().setCell(0, 0, ""),
+                list(
+                        list(
+                                null, R0C1, R0C2
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
+        );
+    }
 
-        final Table table = this.createTable().setCell(1, 2, "");
-        map.remove(TableCellCoordinates.with(1, 2));
-        this.checkMap(table, map);
+    @Test
+    public void testSetCellLastNull() {
+        this.check(
+                this.createTable().setCell(2, 0, null),
+                list(
+                        list(
+                                R0C0, R0C1
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetCellLastEmpty() {
+        this.check(
+                this.createTable().setCell(2, 0, ""),
+                list(
+                        list(
+                                R0C0, R0C1
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetCellAllNull() {
+        Table table = TableNotEmpty.with(
+                list(
+                        list( A)
+                ),
+                1
+        );
+        assertSame(
+                Table.empty(),
+                table.setCell(0, 0, null)
+        );
+    }
+
+    @Test
+    public void testSetCellAllNull2() {
+        Table table = this.createTable();
+
+        for (int c = 0; c < table.width(); c++) {
+            for (int r = 0; r < table.height(); r++) {
+                table = this.setCellAndCheck(table, c, r, null);
+            }
+        }
+
+        assertSame(Table.empty(), table);
     }
 
     @Test
     public void testSetCellAllEmpty() {
+        Table table = TableNotEmpty.with(
+                list(
+                       list( A)
+                ),
+                1
+        );
+        assertSame(
+                Table.empty(),
+                table.setCell(0, 0, "")
+        );
+    }
+
+    @Test
+    public void testSetCellAllEmpty2() {
         Table table = this.createTable();
 
-        for (int c = 0; c < table.maxColumn(); c++) {
-            for (int r = 0; r < table.maxRow(); r++) {
+        for (int c = 0; c < table.width(); c++) {
+            for (int r = 0; r < table.height(); r++) {
                 table = this.setCellAndCheck(table, c, r, "");
             }
         }
@@ -161,21 +485,35 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
 
     @Test
     public void testColumn() {
-        this.columnAndCheck(this.createTable(), 1, R0C1, R1C1, R2C1);
+        this.columnAndCheck(
+                this.createTable(),
+                1,
+                R0C1,
+                R1C1,
+                R2C1
+        );
     }
 
     @Test
     public void testColumnMissing() {
-        this.columnAndCheck(this.createTable(), 4);
+        this.columnAndCheck(
+                this.createTable(),
+                4
+        );
     }
 
     @Test
     public void testSetColumnColumn() {
         final int column = 1;
-        this.columnAndCheck(this.createTable()
-                        .setColumn(column, Lists.of(R0C1)),
+
+        this.columnAndCheck(
+                this.createTable()
+                        .setColumn(column, list(R0C1)),
                 column,
-                R0C1, CharSequences.empty(), CharSequences.empty());
+                R0C1,
+                CharSequences.empty(),
+                CharSequences.empty()
+        );
     }
 
     // setColumn........................................................................................................
@@ -183,97 +521,453 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     @Test
     public void testSetSameColumn() {
         final TableNotEmpty table = this.createTable();
-        assertSame(table, table.setColumn(1, Lists.of(R0C1, R1C1, R2C1)));
+        assertSame(table, table.setColumn(1, list(R0C1, R1C1, R2C1)));
     }
 
     @Test
     public void testSetColumn() {
         final int column = 0;
 
-        final Map<TableCellCoordinates, CharSequence> map = this.map();
-        map.put(TableCellCoordinates.with(column, 0), X);
-        map.put(TableCellCoordinates.with(column, 1), Y);
-        map.put(TableCellCoordinates.with(column, 2), Z);
-
-        this.checkMap(this.setColumnAndCheck(column, X, Y, Z), map);
+        this.check(
+                this.setColumnAndCheck(column, X, Y, Z),
+                list(
+                        list(
+                                X, R0C1, R0C2
+                        ),
+                        list(
+                                Y, R1C1, R1C2
+                        ),
+                        list(
+                                Z, R2C1, R2C2
+                        )
+                )
+        );
     }
 
     @Test
-    public void testSetColumn2() {
+    public void testSetColumnEmptyList() {
+        final int column = 0;
+
+        this.check(
+                this.setColumnAndCheck(column),
+                list(
+                        null, R0C1, R0C2
+                ),
+                list(
+                        null, R1C1, R1C2
+                ),
+                list(
+                        null, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnEmptyList2() {
         final int column = 1;
 
-        final Map<TableCellCoordinates, CharSequence> map = this.map();
-        map.put(TableCellCoordinates.with(column, 0), X);
-        map.put(TableCellCoordinates.with(column, 1), Y);
-        map.put(TableCellCoordinates.with(column, 2), Z);
-
-        this.checkMap(this.setColumnAndCheck(column, X, Y, Z), map);
+        this.check(
+                this.setColumnAndCheck(column),
+                list(
+                        R0C0, null, R0C2
+                ),
+                list(
+                        R1C0, null, R1C2
+                ),
+                list(
+                        R2C0, null, R2C2
+                )
+        );
     }
 
     @Test
-    public void testSetColumnIncludesEmptyCell() {
-        final int column = 1;
-
-        final Map<TableCellCoordinates, CharSequence> map = this.map();
-        map.put(TableCellCoordinates.with(column, 0), X);
-        map.remove(TableCellCoordinates.with(column, 1));
-        map.put(TableCellCoordinates.with(column, 2), Z);
-
-        this.checkMap(this.setColumnAndCheck(column, X, "", Z), map);
-    }
-
-    @Test
-    public void testSetColumnEmpty() {
+    public void testSetColumnEmptyList3() {
         final int column = 2;
 
-        final Map<TableCellCoordinates, CharSequence> map = this.map();
-        map.remove(TableCellCoordinates.with(column, 0));
-        map.remove(TableCellCoordinates.with(column, 1));
-        map.remove(TableCellCoordinates.with(column, 2));
-
-        this.checkMap(this.createTable().setColumn(column, Lists.empty()), map);
-    }
-
-    @Test
-    public void testSetAllColumnEmpty() {
-        final Table table = this.createTable()
-                .setColumn(0, Lists.empty())
-                .setColumn(1, Lists.empty())
-                .setColumn(2, Lists.empty());
-
-        this.checkMap(
-                table,
-                Maps.empty()
+        this.check(
+                this.setColumnAndCheck(column),
+                list(
+                        R0C0, R0C1
+                ),
+                list(
+                        R1C0, R1C1
+                ),
+                list(
+                        R2C0, R2C1
+                )
         );
     }
 
     @Test
-    public void testSetColumnReplaceWithIncludesEmptyCell() {
-        final int column = 1;
+    public void testSetColumnWithListWithNulls() {
+        final int column = 0;
 
-        final Map<TableCellCoordinates, CharSequence> map = this.map();
-        map.put(TableCellCoordinates.with(column, 0), X);
-        map.remove(TableCellCoordinates.with(column, 1));
-        map.put(TableCellCoordinates.with(column, 2), Z);
-
-        this.checkMap(
-                this.setColumnAndCheck(column, X, "", Z),
-                map
+        this.check(
+                this.setColumnAndCheck(column, null, null),
+                list(
+                        null, R0C1, R0C2
+                ),
+                list(
+                        null, R1C1, R1C2
+                ),
+                list(
+                        null, R2C1, R2C2
+                )
         );
     }
 
     @Test
-    public void testSetColumnReplaceWithIncludesEmptyCellWithNull() {
+    public void testSetColumnWithListWithNulls2() {
         final int column = 1;
 
-        final Map<TableCellCoordinates, CharSequence> map = this.map();
-        map.put(TableCellCoordinates.with(column, 0), X);
-        map.remove(TableCellCoordinates.with(column, 1));
-        map.put(TableCellCoordinates.with(column, 2), Z);
+        this.check(
+                this.setColumnAndCheck(column, null, null),
+                list(
+                        R0C0, null, R0C2
+                ),
+                list(
+                        R1C0, null, R1C2
+                ),
+                list(
+                        R2C0, null, R2C2
+                )
+        );
+    }
 
-        this.checkMap(
-                this.setColumnAndCheck(column, X, null, Z),
-                map
+    @Test
+    public void testSetColumnWithListWithNulls3() {
+        final int column = 2;
+
+        this.check(
+                this.setColumnAndCheck(column, null, null),
+                list(
+                        R0C0, R0C1
+                ),
+                list(
+                        R1C0, R1C1
+                ),
+                list(
+                        R2C0, R2C1
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnWithListWithEmptyString() {
+        final int column = 0;
+
+        this.check(
+                this.setColumnAndCheck(column, "", ""),
+                list(
+                        null, R0C1, R0C2
+                ),
+                list(
+                        null, R1C1, R1C2
+                ),
+                list(
+                        null, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnWithListWithEmptyString2() {
+        final int column = 1;
+
+        this.check(
+                this.setColumnAndCheck(column, "", ""),
+                list(
+                        R0C0, null, R0C2
+                ),
+                list(
+                        R1C0, null, R1C2
+                ),
+                list(
+                        R2C0, null, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnWithListWithEmptyString3() {
+        final int column = 2;
+
+        this.check(
+                this.setColumnAndCheck(column, "", ""),
+                list(
+                        R0C0, R0C1
+                ),
+                list(
+                        R1C0, R1C1
+                ),
+                list(
+                        R2C0, R2C1
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnWithListWithFewerCells() {
+        final int column = 0;
+
+        this.check(
+                this.setColumnAndCheck(column, X),
+                list(
+                        X, R0C1, R0C2
+                ),
+                list(
+                        null, R1C1, R1C2
+                ),
+                list(
+                        null, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnWithListWithFewerCells2() {
+        final int column = 1;
+
+        this.check(
+                this.setColumnAndCheck(column, X),
+                list(
+                        R0C0, X, R0C2
+                ),
+                list(
+                        R1C0, null, R1C2
+                ),
+                list(
+                        R2C0, null, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnWithListWithFewerCells3() {
+        final int column = 2;
+
+        this.check(
+                this.setColumnAndCheck(column, X),
+                list(
+                        R0C0, R0C1, X
+                ),
+                list(
+                        R1C0, R1C1
+                ),
+                list(
+                        R2C0, R2C1
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnWithListWithFewerCellsTrailingNull() {
+        final int column = 0;
+
+        this.check(
+                this.setColumnAndCheck(column, X, null),
+                list(
+                        X, R0C1, R0C2
+                ),
+                list(
+                        null, R1C1, R1C2
+                ),
+                list(
+                        null, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnWithListWithFewerCellsTrailingEmpty() {
+        final int column = 0;
+
+        this.check(
+                this.setColumnAndCheck(column, X, ""),
+                list(
+                        X, R0C1, R0C2
+                ),
+                list(
+                        null, R1C1, R1C2
+                ),
+                list(
+                        null, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnWithListWithFewerCellsTrailingEmpty2() {
+        final int column = 1;
+
+        this.check(
+                this.setColumnAndCheck(column, X, ""),
+                list(
+                        R0C0, X, R0C2
+                ),
+                list(
+                        R1C0, null, R1C2
+                ),
+                list(
+                        R2C0, null, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnWithListWithFewerCellsIncludesNull() {
+        final int column = 0;
+
+        this.check(
+                this.setColumnAndCheck(column, null, X),
+                list(
+                        null, R0C1, R0C2
+                ),
+                list(
+                        X, R1C1, R1C2
+                ),
+                list(
+                        null, R2C1, R2C2
+                )
+        );
+    }
+
+
+    @Test
+    public void testSetColumnWithListWithFewerCellsIncludesNull2() {
+        final int column = 1;
+
+        this.check(
+                this.setColumnAndCheck(column, null, X),
+                list(
+                        R0C0, null, R0C2
+                ),
+                list(
+                        R1C0, X, R1C2
+                ),
+                list(
+                        R2C0, null, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnWithListWithFewerCellsIncludesEmpty() {
+        final int column = 0;
+
+        this.check(
+                this.setColumnAndCheck(column, "", X),
+                list(
+                        null, R0C1, R0C2
+                ),
+                list(
+                        X, R1C1, R1C2
+                ),
+                list(
+                        null, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnWithListWithMoreCells() {
+        final int column = 0;
+
+        this.check(
+                this.setColumnAndCheck(column, X, Y, Z, A),
+                list(
+                        X, R0C1, R0C2
+                ),
+                list(
+                        Y, R1C1, R1C2
+                ),
+                list(
+                        Z, R2C1, R2C2
+                ),
+                list(
+                        A
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnWithListWithMoreCells2() {
+        final int column = 1;
+
+        this.check(
+                this.setColumnAndCheck(column, X, Y, Z, A),
+                list(
+                        R0C0, X, R0C2
+                ),
+                list(
+                        R1C0, Y, R1C2
+                ),
+                list(
+                        R2C0, Z, R2C2
+                ),
+                list(
+                        null, A
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnWithListWithMoreCellsIncludesNull() {
+        final int column = 1;
+
+        this.check(
+                this.setColumnAndCheck(column, X, Y, null, A),
+                list(
+                        R0C0, X, R0C2
+                ),
+                list(
+                        R1C0, Y, R1C2
+                ),
+                list(
+                        R2C0, null, R2C2
+                ),
+                list(
+                        null, A
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnWithListWithMoreCellsIncludesEmpty() {
+        final int column = 1;
+
+        this.check(
+                this.setColumnAndCheck(column, X, Y, "", A),
+                list(
+                        R0C0, X, R0C2
+                ),
+                list(
+                        R1C0, Y, R1C2
+                ),
+                list(
+                        R2C0, null, R2C2
+                ),
+                list(
+                        null, A
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnWithListWithMoreCellsTrimmed() {
+        final int column = 1;
+
+        this.check(
+                this.setColumnAndCheck(column, X, Y, Z, null, ""),
+                list(
+                        R0C0, X, R0C2
+                ),
+                list(
+                        R1C0, Y, R1C2
+                ),
+                list(
+                        R2C0, Z, R2C2
+                )
         );
     }
 
@@ -281,21 +975,44 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
 
     @Test
     public void testRow() {
-        this.rowAndCheck(this.createTable(), 1, R1C0, R1C1, R1C2);
+        this.rowAndCheck(
+                this.createTable(),
+                1,
+                R1C0, R1C1, R1C2
+        );
+    }
+
+    @Test
+    public void testRowWithMissingCells() {
+        this.rowAndCheck(
+                this.createTable()
+                        .setRow(1, list("A", null, "B")),
+                1,
+                "A",
+                CharSequences.empty(),
+                "B"
+        );
     }
 
     @Test
     public void testRowMissing() {
-        this.rowAndCheck(this.createTable(), 4);
+        this.rowAndCheck(
+                this.createTable(),
+                4
+        );
     }
 
     @Test
     public void testSetRowRow() {
         final int row = 1;
-        this.rowAndCheck(this.createTable()
-                        .setRow(row, Lists.of(R1C0)),
+        this.rowAndCheck(
+                this.createTable()
+                        .setRow(row, list(R1C0)),
                 row,
-                R1C0, CharSequences.empty(), CharSequences.empty());
+                R1C0,
+                CharSequences.empty(),
+                CharSequences.empty()
+        );
     }
 
     // setRow...........................................................................................................
@@ -303,200 +1020,411 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     @Test
     public void testSetSameRow() {
         final TableNotEmpty table = this.createTable();
-        assertSame(table, table.setRow(1, Lists.of(R1C0, R1C1, R1C2)));
+        assertSame(
+                table,
+                table.setRow(0, list(R0C0, R0C1, R0C2))
+        );
+    }
+
+
+    @Test
+    public void testSetSameRow2() {
+        final TableNotEmpty table = this.createTable();
+        assertSame(
+                table,
+                table.setRow(1, list(R1C0, R1C1, R1C2))
+        );
     }
 
     @Test
     public void testSetRow() {
         final int row = 0;
 
-        final Map<TableCellCoordinates, CharSequence> map = this.map();
-        map.put(TableCellCoordinates.with(0, row), X);
-        map.put(TableCellCoordinates.with(1, row), Y);
-        map.put(TableCellCoordinates.with(2, row), Z);
-
-        this.checkMap(
+        this.check(
                 this.setRowAndCheck(row, X, Y, Z),
-                map
+                list(
+                        list(
+                                X, Y, Z
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
         );
     }
 
     @Test
-    public void testSetRow2() {
-        final int row = 1;
+    public void testSetRowEmptyList() {
+        final int row = 0;
 
-        final Map<TableCellCoordinates, CharSequence> map = this.map();
-        map.put(TableCellCoordinates.with(0, row), X);
-        map.put(TableCellCoordinates.with(1, row), Y);
-        map.put(TableCellCoordinates.with(2, row), Z);
-
-        this.checkMap(
-                this.setRowAndCheck(row, X, Y, Z),
-                map
+        this.check(
+                this.setRowAndCheck(row),
+                list(
+                        null,
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
         );
     }
 
     @Test
-    public void testSetRowIncludesEmptyCell() {
-        final int row = 1;
+    public void testSetRowWithListWithNulls() {
+        final int row = 0;
 
-        final Map<TableCellCoordinates, CharSequence> map = this.map();
-        map.put(TableCellCoordinates.with(0, row), X);
-        map.remove(TableCellCoordinates.with(1, row));
-        map.put(TableCellCoordinates.with(2, row), Z);
-
-        this.checkMap(
-                this.setRowAndCheck(row, X, "", Z),
-                map
+        this.check(
+                this.setRowAndCheck(row, null, null),
+                list(
+                        null,
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
         );
     }
 
     @Test
-    public void testSetRowEmpty() {
-        final int row = 2;
+    public void testSetRowWithListWithEmptyString() {
+        final int row = 0;
 
-        final Map<TableCellCoordinates, CharSequence> map = this.map();
-        map.remove(TableCellCoordinates.with(0, row));
-        map.remove(TableCellCoordinates.with(1, row));
-        map.remove(TableCellCoordinates.with(2, row));
-
-        this.checkMap(
-                this.createTable().setRow(row, Lists.empty()),
-                map
+        this.check(
+                this.setRowAndCheck(row, "", ""),
+                list(
+                        null,
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
         );
     }
 
     @Test
-    public void testSetAllRowEmpty() {
-        final Table table = this.createTable()
-                .setRow(0, Lists.empty())
-                .setRow(1, Lists.empty())
-                .setRow(2, Lists.empty());
+    public void testSetRowWithListWithFewerCells() {
+        final int row = 0;
 
-        this.checkMap(
-                table,
-                Maps.empty()
+        this.check(
+                this.setRowAndCheck(row, X),
+                list(
+                        list(
+                                X
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
         );
     }
 
     @Test
-    public void testSetRowReplaceIncludesNullCell() {
-        final int row = 2;
+    public void testSetRowWithListWithFewerCellsTrailingNull() {
+        final int row = 0;
 
-        final Map<TableCellCoordinates, CharSequence> map = this.map();
-        map.put(TableCellCoordinates.with(0, row), X);
-        map.remove(TableCellCoordinates.with(1, row));
-        map.put(TableCellCoordinates.with(2, row), Z);
-
-        this.checkMap(
-                this.createTable().setRow(row, Lists.of(X, null, Z)),
-                map
+        this.check(
+                this.setRowAndCheck(row, X, null),
+                list(
+                        list(
+                                X
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
         );
     }
 
     @Test
-    public void testSetRowReplaceIncludesEmptyCell() {
-        final int row = 2;
+    public void testSetRowWithListWithFewerCellsTrailingEmpty() {
+        final int row = 0;
 
-        final Map<TableCellCoordinates, CharSequence> map = this.map();
-        map.put(TableCellCoordinates.with(0, row), X);
-        map.remove(TableCellCoordinates.with(1, row));
-        map.put(TableCellCoordinates.with(2, row), Z);
+        this.check(
+                this.setRowAndCheck(row, X, ""),
+                list(
+                        list(
+                                X
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
+        );
+    }
 
-        this.checkMap(
-                this.createTable().setRow(row, Lists.of(X, "", Z)),
-                map
+    @Test
+    public void testSetRowWithListWithFewerCellsIncludesNull() {
+        final int row = 0;
+
+        this.check(
+                this.setRowAndCheck(row, null, X),
+                list(
+                        list(
+                                null, X
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithFewerCellsIncludesEmpty() {
+        final int row = 0;
+
+        this.check(
+                this.setRowAndCheck(row, "", X),
+                list(
+                        list(
+                                null, X
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithMoreCells() {
+        final int row = 0;
+
+        this.check(
+                this.setRowAndCheck(row, X, Y, Z, A),
+                list(
+                        list(
+                                X, Y, Z, A
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithMoreCellsIncludesNull() {
+        final int row = 0;
+
+        this.check(
+                this.setRowAndCheck(row, X, Y, null, A),
+                list(
+                        list(
+                                X, Y, null, A
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithMoreCellsIncludesEmpty() {
+        final int row = 0;
+
+        this.check(
+                this.setRowAndCheck(row, X, Y, "", A),
+                list(
+                        list(
+                                X, Y, null, A
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithMoreCellsIncludesNullAndEmpty() {
+        final int row = 0;
+
+        this.check(
+                this.setRowAndCheck(row, X, null, "", A),
+                list(
+                        list(
+                                X, null, null, A
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithMoreCellsIncludesNullAndEmptyAndTrimmed() {
+        final int row = 0;
+
+        this.check(
+                this.setRowAndCheck(row, X, null, "", A, null),
+                list(
+                        list(
+                                X, null, null, A
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithMoreCellsAllNullOrEmpty() {
+        final int row = 0;
+
+        this.check(
+                this.setRowAndCheck(row, null, "", null, ""),
+                list(
+                        null,
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
         );
     }
 
     // equals...........................................................................................................
 
     @Test
-    public void testDifferentCellCount() {
-        final NavigableMap<TableCellCoordinates, CharSequence> map = Maps.navigable();
-
-        map.put(TableCellCoordinates.with(99, 88), "77");
-
-        this.checkNotEquals(TableNotEmpty.with(map, 3, 3));
-    }
-
-    @Test
     public void testDifferentCells() {
-        final NavigableMap<TableCellCoordinates, CharSequence> map = Maps.navigable();
-        map.put(TableCellCoordinates.with(99, 88), "77");
-
-        final NavigableMap<TableCellCoordinates, CharSequence> different = Maps.navigable();
-        map.put(TableCellCoordinates.with(11, 22), "33");
-
-        this.checkNotEquals(TableNotEmpty.with(map, 99, 88),
-                TableNotEmpty.with(different, 11, 22));
+        this.checkNotEquals(
+                TableNotEmpty.with(
+                        list(
+                                list(R0C0, R0C1)
+                        ),
+                        2
+                ),
+                TableNotEmpty.with(
+                        list(
+                                list(R0C0)
+                        ),
+                        1
+                )
+        );
     }
 
     @Test
-    public void testDifferentCellTextTypeSameContent() {
-        final NavigableMap<TableCellCoordinates, CharSequence> map = Maps.navigable();
-        map.put(TableCellCoordinates.with(1, 2), "abc123");
-
-        final NavigableMap<TableCellCoordinates, CharSequence> different = Maps.navigable();
-        different.put(TableCellCoordinates.with(1, 2), new StringBuilder("abc123"));
-
-        this.checkEquals(TableNotEmpty.with(map, 1, 2),
-                TableNotEmpty.with(different, 1, 2));
+    public void testDifferentCellsTypeSameContent() {
+        this.checkNotEquals(
+                TableNotEmpty.with(
+                        list(
+                                list(R0C0)
+                        ),
+                        1
+                ),
+                TableNotEmpty.with(
+                        list(
+                                list(new StringBuilder(R0C0))
+                        ),
+                        1
+                )
+        );
     }
 
     // toString.........................................................................................................
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createTable(), this.map().toString());
+        this.toStringAndCheck(
+                this.createTable(),
+                this.listOrRows().toString()
+        );
     }
 
     @Override
     TableNotEmpty createTable() {
-        return TableNotEmpty.with(this.map(), 3, 3);
+        return TableNotEmpty.with(
+                this.listOrRows(),
+                3
+        );
     }
 
-    private NavigableMap<TableCellCoordinates, CharSequence> map() {
-        final NavigableMap<TableCellCoordinates, CharSequence> map = Maps.navigable();
-
-        map.put(TableCellCoordinates.with(0, 0), R0C0);
-        map.put(TableCellCoordinates.with(0, 1), R1C0);
-        map.put(TableCellCoordinates.with(0, 2), R2C0);
-
-        map.put(TableCellCoordinates.with(1, 0), R0C1);
-        map.put(TableCellCoordinates.with(1, 1), R1C1);
-        map.put(TableCellCoordinates.with(1, 2), R2C1);
-
-        map.put(TableCellCoordinates.with(2, 0), R0C2);
-        map.put(TableCellCoordinates.with(2, 1), R1C2);
-        map.put(TableCellCoordinates.with(2, 2), R2C2);
-
-        return map;
+    private List<List<CharSequence>> listOrRows() {
+        return list(
+                list(
+                        R0C0, R0C1, R0C2
+                ),
+                list(
+                        R1C0, R1C1, R1C2
+                ),
+                list(
+                        R2C0, R2C1, R2C2
+                )
+        );
     }
 
     private void columnAndCheck(final Table table,
                                 final int column,
                                 final CharSequence... text) {
-        this.checkEquals(Lists.of(text),
+        this.checkEquals(
+                list(text),
                 table.column(column),
-                () -> "column " + column + " from " + table);
+                () -> "column " + column + " from " + table
+        );
     }
 
     private void rowAndCheck(final Table table,
                              final int row,
                              final CharSequence... text) {
-        this.checkEquals(Lists.of(text),
+        this.checkEquals(
+                list(text),
                 table.row(row),
-                () -> "row " + row + " from " + table);
+                () -> "row " + row + " from " + table
+        );
     }
 
     @Override
-    int maxColumn() {
+    int width() {
         return 3;
     }
 
     @Override
-    int maxRow() {
+    int height() {
         return 3;
     }
 

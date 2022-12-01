@@ -18,28 +18,59 @@
 package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 
 public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
 
     @Test
-    public void testMaxColumns() {
-        this.checkEquals(0, this.createObject().maxColumn());
+    public void testWidth() {
+        this.widthAndCheck(
+                this.createObject(),
+                0
+        );
     }
 
     @Test
     public void testSetCell() {
-        this.checkMap(
-                this.setCellAndCheck(0, 0, R0C0),
-                Maps.of(TableCellCoordinates.with(0, 0), R0C0)
+        this.check(
+                this.setCellAndCheck(
+                        0,
+                        0,
+                        R0C0
+                ),
+                Lists.of(
+                        list(R0C0)
+                )
         );
     }
 
     @Test
     public void testSetCell2() {
-        this.checkMap(
-                this.setCellAndCheck(1, 2, R2C1),
-                Maps.of(TableCellCoordinates.with(1, 2), R2C1)
+        this.check(
+                this.setCellAndCheck(
+                        2,
+                        0,
+                        R0C2
+                ),
+                Lists.of(
+                        list(null, null, R0C2)
+                )
+        );
+    }
+
+    @Test
+    public void testSetCell3() {
+        this.check(
+                this.setCellAndCheck(
+                        1,
+                        1,
+                        R1C1
+                ),
+                Lists.of(
+                        null, // row 0
+                        list(null, R1C1)
+                )
         );
     }
 
@@ -54,8 +85,11 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
     }
 
     @Test
-    public void testMaxRows() {
-        this.checkEquals(0, this.createObject().maxColumn());
+    public void testHeight() {
+        this.heightAndCheck(
+                this.createObject(),
+                0
+        );
     }
 
     @Test
@@ -79,12 +113,12 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
     }
 
     @Override
-    int maxColumn() {
+    int width() {
         return 0;
     }
 
     @Override
-    int maxRow() {
+    int height() {
         return 0;
     }
 

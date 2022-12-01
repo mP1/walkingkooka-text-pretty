@@ -20,11 +20,7 @@ package walkingkooka.text.pretty;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CharSequences;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.stream.Collector;
 
 /**
@@ -33,6 +29,42 @@ import java.util.stream.Collector;
  * equal lengths.
  */
 public abstract class Table {
+
+    /**
+     * Copies the given row of text, trimming null entries on the end, returning null if all are missing.
+     */
+    static List<CharSequence> copyRowText(final List<CharSequence> rowText) {
+        List<CharSequence> copied = null;
+
+        int column = rowText.size();
+
+        if(0 != column) {
+            // find a non null/empty
+            while(column > 0) {
+                column--;
+
+                final CharSequence lastText = rowText.get(column);
+                if(isNotEmpty(lastText)) {
+                    copied = Lists.array();
+
+                    int c = 0;
+                    while(c <= column) {
+                        final CharSequence text = rowText.get(c);
+                        copied.add(
+                                isEmpty(text) ?
+                                        null :
+                                        text
+                        );
+                        c++;
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        return copied; // could be null
+    }
 
     static boolean isEmpty(final CharSequence text) {
         return null == text || text.length() == 0;
@@ -68,14 +100,29 @@ public abstract class Table {
         checkColumn(column);
         checkRow(row);
 
-        return column >= this.maxColumn() ||
-                row >= this.maxRow() ?
+        return column >= this.width() ||
+                row >= this.height() ?
                 CharSequences.empty() :
                 this.cell0(column, row);
     }
 
-    abstract CharSequence cell0(final int column,
-                                final int row);
+    private CharSequence cell0(final int column,
+                                final int row) {
+        final List<CharSequence> rowText = this.asList().get(row);
+
+        CharSequence text;
+
+        if(null != rowText && column < rowText.size()) {
+            text = rowText.get(column);
+            if(null == text) {
+                text = CharSequences.empty();
+            }
+        } else {
+            text = CharSequences.empty();
+        }
+
+        return text;
+    }
 
     // setCell..........................................................................................................
 
@@ -88,9 +135,11 @@ public abstract class Table {
         checkColumn(column);
         checkRow(row);
 
-        return column >= this.maxColumn() && row >= this.maxRow() && isEmpty(text) ?
-                this :
-                this.setCell0(column, row, text);
+        return this.setCell0(
+                column,
+                row,
+                text
+        );
     }
 
     /**
@@ -108,7 +157,7 @@ public abstract class Table {
     public final List<CharSequence> column(final int column) {
         this.checkColumn(column);
 
-        return column >= this.maxColumn() ?
+        return column >= this.width() ?
                 Lists.empty() :
                 this.column0(column);
     }
@@ -129,7 +178,7 @@ public abstract class Table {
 
     private Table setColumn0(final int column,
                              final List<CharSequence> text) {
-        return text.isEmpty() && column >= this.maxColumn() ?
+        return text.isEmpty() && column >= this.width() ?
                 this :
                 this.setColumn1(column, text);
     }
@@ -143,9 +192,9 @@ public abstract class Table {
     }
 
     /**
-     * The first invalid column number. 0 indicates an empty table
+     * The maximum number of columns
      */
-    public abstract int maxColumn();
+    public abstract int width();
 
     // row..............................................................................................................
 
@@ -155,7 +204,7 @@ public abstract class Table {
     public final List<CharSequence> row(final int row) {
         this.checkRow(row);
 
-        return row >= this.maxRow() ?
+        return row >= this.height() ?
                 Lists.empty() :
                 this.row0(row);
     }
@@ -165,17 +214,19 @@ public abstract class Table {
     /**
      * Would be setter that replaces an existing row.
      */
-    public final Table setRow(final int row, final List<CharSequence> text) {
+    public final Table setRow(final int row,
+                              final List<CharSequence> text) {
         this.checkRow(row);
 
         return this.setRow0(
                 row,
-                Lists.immutable(text)
+                copyRowText(text)
         );
     }
 
-    private Table setRow0(final int row, final List<CharSequence> text) {
-        return text.isEmpty() && row >= this.maxRow() ?
+    private Table setRow0(final int row,
+                          final List<CharSequence> text) {
+        return (null == text || text.isEmpty()) && row >= this.height() ?
                 this :
                 this.setRow1(row, text);
     }
@@ -189,9 +240,11 @@ public abstract class Table {
     }
 
     /**
-     * The first invalid row number. 0 indicates an empty table
+     * The last valid row number. 0 indicates an empty table
      */
-    public abstract int maxRow();
+    public final int height() {
+        return this.asList().size();
+    }
 
     // Collector........................................................................................................
 
@@ -211,24 +264,5 @@ public abstract class Table {
 
     // internal.........................................................................................................
 
-    abstract Map<TableCellCoordinates, CharSequence> asMap();
-
-    static boolean equalsMap(final Map<TableCellCoordinates, CharSequence> left,
-                             final Map<TableCellCoordinates, CharSequence> right) {
-        boolean equals = false;
-
-        if (left.size() == right.size()) {
-            final Iterator<Entry<TableCellCoordinates, CharSequence>> iterator = right.entrySet().iterator();
-            for (final Entry<TableCellCoordinates, CharSequence> coordAndText : left.entrySet()) {
-                final Entry<TableCellCoordinates, CharSequence> otherCoordAndText = iterator.next();
-                equals = coordAndText.getKey().equals(otherCoordAndText.getKey()) &&
-                        CharSequences.equals(coordAndText.getValue(), otherCoordAndText.getValue());
-                if (false == equals) {
-                    break;
-                }
-            }
-        }
-
-        return equals;
-    }
+    abstract List<List<CharSequence>> asList();
 }

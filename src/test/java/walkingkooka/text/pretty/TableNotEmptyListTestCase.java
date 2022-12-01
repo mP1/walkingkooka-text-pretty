@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.text.CharSequences;
 
+import java.util.List;
 import java.util.NavigableMap;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -65,24 +66,36 @@ public abstract class TableNotEmptyListTestCase<T extends TableNotEmptyList> ext
 
     @Override
     public final T createList() {
-        final NavigableMap<TableCellCoordinates, CharSequence> map = Maps.navigable();
+        final List<List<CharSequence>> rows = Lists.array();
 
-        map.put(TableCellCoordinates.with(0, 0), R0C0);
-        map.put(TableCellCoordinates.with(1, 0), R0C1);
-        map.put(TableCellCoordinates.with(2, 0), R0C2);
+        rows.add(
+            Lists.of(
+                    R0C0,
+                    R0C1,
+                    R0C2
+            )
+        );
 
-        map.put(TableCellCoordinates.with(0, 1), R1C0);
-        map.put(TableCellCoordinates.with(1, 1), R1C1);
-        map.put(TableCellCoordinates.with(2, 1), R1C2);
+        rows.add(
+                Lists.of(
+                        R1C0,
+                        R1C1,
+                        R1C2
+                )
+        );
 
-        map.put(TableCellCoordinates.with(0, 2), R2C0);
-        map.put(TableCellCoordinates.with(1, 2), R2C1);
-        map.put(TableCellCoordinates.with(2, 2), R2C2);
+        rows.add(
+                Lists.of(
+                        R2C0,
+                        R2C1,
+                        R2C2
+                )
+        );
 
-        return this.createList(map, COLUMN, ROW);
+        return this.createList(rows, COLUMN, ROW);
     }
 
-    abstract T createList(final NavigableMap<TableCellCoordinates, CharSequence> map,
+    abstract T createList(final List<List<CharSequence>> rows,
                           final int column,
                           final int row);
 

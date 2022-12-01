@@ -20,6 +20,7 @@ package walkingkooka.text.pretty;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 
+import java.util.List;
 import java.util.NavigableMap;
 
 public final class TableNotEmptyListColumnTest extends TableNotEmptyListTestCase<TableNotEmptyListColumn> {
@@ -45,10 +46,10 @@ public final class TableNotEmptyListColumnTest extends TableNotEmptyListTestCase
     }
 
     @Override
-    TableNotEmptyListColumn createList(final NavigableMap<TableCellCoordinates, CharSequence> map,
+    TableNotEmptyListColumn createList(final List<List<CharSequence>> rows,
                                        final int column,
                                        final int row) {
-        return TableNotEmptyListColumn.with(1, TableNotEmpty.with(map, column, row));
+        return TableNotEmptyListColumn.with(1, TableNotEmpty.with(rows, row));
     }
 
     @Override

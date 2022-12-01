@@ -163,9 +163,10 @@ public class JunitTest {
         // print row by row
         try (final IndentingPrinter printer =  Printers.stringBuilder(printed, LineEnding.NL)
                 .indenting(Indentation.SPACES2)) {
-            for (int i = 0; i < formattedTable.maxRow(); i++) {
-                printer.print(TextPretty.rowColumnsToLine((column -> 2), LineEnding.SYSTEM)
-                        .apply(formattedTable.row(i)));
+            for (int i = 0; i < formattedTable.height(); i++) {
+                printer.print(
+                        TextPretty.rowColumnsToLine((column -> 2), LineEnding.SYSTEM)
+                                .apply(formattedTable.row(i)));
             }
         }
 

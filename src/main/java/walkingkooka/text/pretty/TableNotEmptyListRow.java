@@ -36,18 +36,21 @@ final class TableNotEmptyListRow extends TableNotEmptyList {
     }
 
     @Override
+    CharSequence cell(final int column) {
+        return this.table.cell(
+                column,
+                this.row
+        );
+    }
+
+    @Override
     String columnOrRow() {
         return "column";
     }
 
     @Override
-    TableCellCoordinates coordinates(final int index) {
-        return TableCellCoordinates.with(index, this.row);
-    }
-
-    @Override
     public int size() {
-        return this.table.maxColumn();
+        return this.table.width();
     }
 
     private final int row;

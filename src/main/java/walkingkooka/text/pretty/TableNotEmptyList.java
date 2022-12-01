@@ -41,15 +41,15 @@ abstract class TableNotEmptyList extends AbstractList<CharSequence> {
         if (index < 0) {
             throw new IndexOutOfBoundsException("Invalid " + this.columnOrRow() + " < 0");
         }
-        return this.table.cell1(this.coordinates(index));
+        return this.cell(index);
     }
+
+    abstract CharSequence cell(final int columnOrRow);
 
     /**
      * Index corresponds to the coordinate column/row
      */
     abstract String columnOrRow();
-
-    abstract TableCellCoordinates coordinates(final int index);
 
     final TableNotEmpty table;
 }
