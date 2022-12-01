@@ -34,6 +34,14 @@ import java.util.stream.Collector;
  */
 public abstract class Table {
 
+    static boolean isEmpty(final CharSequence text) {
+        return null == text || text.length() == 0;
+    }
+
+    static boolean isNotEmpty(final CharSequence text) {
+        return null != text && text.length() > 0;
+    }
+
     /**
      * Returns an empty {@link Table}.
      */
@@ -79,9 +87,8 @@ public abstract class Table {
                                final CharSequence text) {
         checkColumn(column);
         checkRow(row);
-        Objects.requireNonNull(text, "text");
 
-        return column >= this.maxColumn() && row >= this.maxRow() && text.length() == 0 ?
+        return column >= this.maxColumn() && row >= this.maxRow() && isEmpty(text) ?
                 this :
                 this.setCell0(column, row, text);
     }
@@ -109,15 +116,19 @@ public abstract class Table {
     abstract List<CharSequence> column0(final int column);
 
     /**
-     * Would be setter that replaces an existing column.
+     * Would be setter that replaces an existing column. Any existing cells are replaced
      */
     public final Table setColumn(final int column, final List<CharSequence> text) {
         this.checkColumn(column);
 
-        return this.setColumn0(column, Lists.immutable(text));
+        return this.setColumn0(
+                column,
+                Lists.immutable(text)
+        );
     }
 
-    private Table setColumn0(final int column, final List<CharSequence> text) {
+    private Table setColumn0(final int column,
+                             final List<CharSequence> text) {
         return text.isEmpty() && column >= this.maxColumn() ?
                 this :
                 this.setColumn1(column, text);
@@ -157,11 +168,14 @@ public abstract class Table {
     public final Table setRow(final int row, final List<CharSequence> text) {
         this.checkRow(row);
 
-        return this.setRow0(row, Lists.immutable(text));
+        return this.setRow0(
+                row,
+                Lists.immutable(text)
+        );
     }
 
     private Table setRow0(final int row, final List<CharSequence> text) {
-        return text.isEmpty() && row > this.maxRow() ?
+        return text.isEmpty() && row >= this.maxRow() ?
                 this :
                 this.setRow1(row, text);
     }

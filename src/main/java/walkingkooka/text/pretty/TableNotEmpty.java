@@ -67,14 +67,17 @@ final class TableNotEmpty extends Table {
      * Accepts a table and sets the cells for the given column.
      */
     private static void setColumn(final int column,
-                                  final List<CharSequence> text,
+                                  final List<CharSequence> texts,
                                   final NavigableMap<TableCellCoordinates, CharSequence> table) {
         int r = 0;
-        for (final CharSequence t : text) {
+        for (final CharSequence text : texts) {
 
             // skip saving/copying empty cells.
-            if(t.length() > 0) {
-                table.put(TableCellCoordinates.with(column, r), t);
+            final TableCellCoordinates coord = TableCellCoordinates.with(column, r);
+            if(isNotEmpty(text)) {
+                table.put(coord, text);
+            } else {
+                table.remove(coord);
             }
             r++;
         }
@@ -93,13 +96,16 @@ final class TableNotEmpty extends Table {
      * Accepts a table and sets the cells for the given row.
      */
     private static void setRow(final int row,
-                               final List<CharSequence> text,
+                               final List<CharSequence> texts,
                                final NavigableMap<TableCellCoordinates, CharSequence> table) {
         int c = 0;
-        for (final CharSequence t : text) {
-            // skip "saving" empty rows.
-            if(t.length() > 0) {
-                table.put(TableCellCoordinates.with(c, row), t);
+
+        for (final CharSequence text : texts) {
+            final TableCellCoordinates coord = TableCellCoordinates.with(c, row);
+            if(isNotEmpty(text)) {
+                table.put(coord, text);
+            } else {
+                table.remove(coord);
             }
             c++;
         }
@@ -161,8 +167,10 @@ final class TableNotEmpty extends Table {
     private Table replaceCell(final TableCellCoordinates coordinates,
                               final CharSequence text) {
         final NavigableMap<TableCellCoordinates, CharSequence> table = map();
-        if (text.length() > 0) {
+        if (isNotEmpty(text)) {
             table.put(coordinates, text);
+        } else {
+            table.remove(coordinates);
         }
 
         int maximumRow = coordinates.row + 1;
@@ -177,9 +185,11 @@ final class TableNotEmpty extends Table {
 
         return table.isEmpty() ?
                 empty() :
-                with(table,
+                with(
+                        table,
                         table.lastEntry().getKey().column + 1,
-                        maximumRow);
+                        maximumRow
+                );
     }
 
     // column...........................................................................................................

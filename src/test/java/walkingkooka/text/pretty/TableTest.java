@@ -86,7 +86,6 @@ public final class TableTest implements ClassTesting2<Table> {
         // - z -
         final Table table = Table.empty().setColumn(1, Lists.of("x", "y", "z"));
         this.check(table);
-        assertSame(Table.empty(), table.setColumn(1, Lists.empty()));
     }
 
     @Test
@@ -158,7 +157,6 @@ public final class TableTest implements ClassTesting2<Table> {
         // - - -
         final Table table = Table.empty().setRow(1, Lists.of("x", "y", "z"));
         this.check(table);
-        assertSame(Table.empty(), table.setRow(1, Lists.empty()));
     }
 
     @Test
