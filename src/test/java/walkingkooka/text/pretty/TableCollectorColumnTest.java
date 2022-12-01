@@ -24,27 +24,37 @@ import java.util.List;
 
 public final class TableCollectorColumnTest extends TableCollectorTestCase2<TableCollectorColumn> {
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testEmptyTableAddColumn() {
-        this.collectAndCheck(Table.empty(),
+        this.collectAndCheck(
+                Table.empty(),
                 0,
-                Lists.of("column0-a", "column0-b"));
+                Lists.of("column0-a", "column0-b")
+        );
     }
+
+    @SuppressWarnings("unchecked")
 
     @Test
     public void testEmptyTableAddColumns() {
-        this.collectAndCheck(Table.empty(),
+        this.collectAndCheck(
+                Table.empty(),
                 0,
                 Lists.of("column0-a", "column0-b"),
-                Lists.of("column1-a", "column1-b"));
+                Lists.of("column1-a", "column1-b")
+        );
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testNotEmptyTableAddColumns() {
-        this.collectAndCheck(Table.empty().setCell(2, 2, "cell-2-2"),
+        this.collectAndCheck(
+                Table.empty().setCell(2, 2, "cell-2-2"),
                 0,
                 Lists.of("column0-a", "column0-b"),
-                Lists.of("column1-a", "column1-b"));
+                Lists.of("column1-a", "column1-b")
+        );
     }
 
     @Override

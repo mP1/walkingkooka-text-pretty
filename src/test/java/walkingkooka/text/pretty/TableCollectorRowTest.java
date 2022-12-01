@@ -24,27 +24,36 @@ import java.util.List;
 
 public final class TableCollectorRowTest extends TableCollectorTestCase2<TableCollectorRow> {
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testEmptyTableAddRow() {
-        this.collectAndCheck(Table.empty(),
+        this.collectAndCheck(
+                Table.empty(),
                 0,
-                Lists.of("row0-a", "row0-b"));
+                Lists.of("row0-a", "row0-b")
+        );
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testEmptyTableAddRows() {
-        this.collectAndCheck(Table.empty(),
+        this.collectAndCheck(
+                Table.empty(),
                 0,
                 Lists.of("row0-a", "row0-b"),
-                Lists.of("row1-a", "row1-b"));
+                Lists.of("row1-a", "row1-b")
+        );
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testNotEmptyTableAddRows() {
-        this.collectAndCheck(Table.empty().setCell(2, 2, "cell-2-2"),
+        this.collectAndCheck(
+                Table.empty().setCell(2, 2, "cell-2-2"),
                 0,
                 Lists.of("row0-a", "row0-b"),
-                Lists.of("row1-a", "row1-b"));
+                Lists.of("row1-a", "row1-b")
+        );
     }
 
     @Override

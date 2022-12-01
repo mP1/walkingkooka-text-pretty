@@ -53,6 +53,7 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
         assertThrows(IllegalArgumentException.class, () -> ColumnConfig.empty().maxWidth(0));
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testMaxWidth() {
         final int width = 123;
@@ -71,161 +72,209 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
         assertSame(column, column.maxWidth(width));
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testCharacterAlign() {
-        this.check(ColumnConfig.empty()
+        this.check(
+                ColumnConfig.empty()
                         .maxWidth(80)
                         .characterAlign(CHARACTER, CHARACTER_COLUMN),
                 80,
-                TextPretty.character(CHARACTER, CHARACTER_COLUMN));
+                TextPretty.character(CHARACTER, CHARACTER_COLUMN)
+        );
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testCenterAlign() {
-        this.check(ColumnConfig.empty()
+        this.check(
+                ColumnConfig.empty()
                         .maxWidth(80)
                         .centerAlign(),
                 80,
-                TextPretty.centerAlignment());
+                TextPretty.centerAlignment()
+        );
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testLeftAlign() {
-        this.check(ColumnConfig.empty()
+        this.check(
+                ColumnConfig.empty()
                         .maxWidth(81)
                         .leftAlign(),
                 81,
-                TextPretty.leftAlignment());
+                TextPretty.leftAlignment()
+        );
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testRightAlign() {
-        this.check(ColumnConfig.empty()
+        this.check(
+                ColumnConfig.empty()
                         .maxWidth(82)
                         .rightAlign(),
                 82,
-                TextPretty.rightAlignment());
+                TextPretty.rightAlignment()
+        );
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testTrimLeft() {
-        this.check(ColumnConfig.empty()
+        this.check(
+                ColumnConfig.empty()
                         .trimLeft(),
-                TextPretty.trimLeft());
+                TextPretty.trimLeft()
+        );
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testTrimLeftRight() {
-        this.check(ColumnConfig.empty()
+        this.check(
+                ColumnConfig.empty()
                         .trimLeftRight(),
-                TextPretty.trimLeftRight());
+                TextPretty.trimLeftRight()
+        );
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testTrimRight() {
-        this.check(ColumnConfig.empty()
+        this.check(
+                ColumnConfig.empty()
                         .trimRight(),
-                TextPretty.trimRight());
+                TextPretty.trimRight()
+        );
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testTruncate() {
-        this.check(ColumnConfig.empty()
+        this.check(
+                ColumnConfig.empty()
                         .maxWidth(83)
                         .truncate(),
                 83,
-                TextPretty.truncate());
+                TextPretty.truncate()
+        );
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testLeftAlignLeftAlignReplacedAlign() {
-        this.check(ColumnConfig.empty()
+        this.check(
+                ColumnConfig.empty()
                         .maxWidth(84)
                         .leftAlign()
                         .leftAlign(),
                 84,
-                TextPretty.leftAlignment());
+                TextPretty.leftAlignment()
+        );
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testLeftAlignRightAlignReplacedAlign() {
-        this.check(ColumnConfig.empty()
+        this.check(
+                ColumnConfig.empty()
                         .maxWidth(85)
                         .leftAlign()
                         .rightAlign(),
                 85,
-                TextPretty.rightAlignment());
+                TextPretty.rightAlignment()
+        );
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testCenterAlignRightAlignReplacedAlign() {
-        this.check(ColumnConfig.empty()
+        this.check(
+                ColumnConfig.empty()
                         .maxWidth(90)
                         .centerAlign()
                         .rightAlign(),
                 90,
-                TextPretty.rightAlignment());
+                TextPretty.rightAlignment()
+        );
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testCenterAlignCharacterAlign() {
-        this.check(ColumnConfig.empty()
+        this.check(
+                ColumnConfig.empty()
                         .maxWidth(90)
                         .centerAlign()
                         .characterAlign(CHARACTER, CHARACTER_COLUMN),
                 90,
-                TextPretty.character(CHARACTER, CHARACTER_COLUMN));
+                TextPretty.character(CHARACTER, CHARACTER_COLUMN)
+        );
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testCharacterAlignCharacterAlign() {
-        this.check(ColumnConfig.empty()
+        this.check(
+                ColumnConfig.empty()
                         .maxWidth(90)
                         .characterAlign(CHARACTER, CHARACTER_COLUMN - 1)
                         .characterAlign(CHARACTER, CHARACTER_COLUMN),
                 90,
-                TextPretty.character(CHARACTER, CHARACTER_COLUMN));
+                TextPretty.character(CHARACTER, CHARACTER_COLUMN)
+        );
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testSetLeftMaxWidth() {
         final int width = 120;
 
-        this.check(ColumnConfig.empty()
+        this.check(
+                ColumnConfig.empty()
                         .maxWidth(80)
                         .leftAlign()
                         .maxWidth(width),
                 width,
-                TextPretty.leftAlignment());
+                TextPretty.leftAlignment()
+        );
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testSetMaxWidthCenterAlign() {
         final int width = 132;
 
-        this.check(ColumnConfig.empty()
+        this.check(
+                ColumnConfig.empty()
                         .maxWidth(80)
                         .rightAlign()
                         .maxWidth(width)
                         .centerAlign(),
                 width,
-                TextPretty.centerAlignment());
+                TextPretty.centerAlignment()
+        );
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testSetMaxWidthTrimLeftTrimRight() {
         final int width = 132;
 
-        this.check(ColumnConfig.empty()
+        this.check(
+                ColumnConfig.empty()
                         .maxWidth(width)
                         .trimLeft()
                         .trimRight()
                         .centerAlign(),
                 width,
-                TextPretty.trimRight(), TextPretty.centerAlignment());
+                TextPretty.trimRight(), TextPretty.centerAlignment()
+        );
     }
 
-    @Test
+    @SuppressWarnings("unchecked") @Test
     public void testSetMaxWidthTrimLeftRightTrimLeft() {
         final int width = 132;
 
