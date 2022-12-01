@@ -31,7 +31,7 @@ final class CharSequenceBiFunctionAlignCharacter extends CharSequenceBiFunctionA
     /**
      * Factory that creates a new {@link CharSequenceBiFunctionAlignCharacter}.
      */
-    final static CharSequenceBiFunctionAlignCharacter with(final CharPredicate chars,
+    static CharSequenceBiFunctionAlignCharacter with(final CharPredicate chars,
                                                            final int column) {
         Objects.requireNonNull(chars, "chars");
         if(column < 0) {

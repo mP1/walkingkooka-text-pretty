@@ -125,12 +125,12 @@ final class TableNotEmpty extends Table {
      * Attempts to locate the cell at the given coords or returns {@link CharSequences#empty()}.
      */
     @Override
-    final CharSequence cell0(final int column,
-                                       final int row) {
+    CharSequence cell0(final int column,
+                       final int row) {
         return this.cell1(TableCellCoordinates.with(column, row));
     }
 
-    final CharSequence cell1(final TableCellCoordinates cell) {
+    CharSequence cell1(final TableCellCoordinates cell) {
         return this.table.getOrDefault(cell, CharSequences.empty());
     }
 
@@ -178,7 +178,7 @@ final class TableNotEmpty extends Table {
     // column...........................................................................................................
 
     @Override
-    final List<CharSequence> column0(final int column) {
+    List<CharSequence> column0(final int column) {
         return TableNotEmptyListColumn.with(column, this);
     }
 
@@ -222,7 +222,7 @@ final class TableNotEmpty extends Table {
     // row..............................................................................................................
 
     @Override
-    final List<CharSequence> row0(final int row) {
+    List<CharSequence> row0(final int row) {
         return TableNotEmptyListRow.with(row, this);
     }
 

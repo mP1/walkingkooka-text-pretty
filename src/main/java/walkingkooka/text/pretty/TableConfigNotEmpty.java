@@ -29,7 +29,7 @@ final class TableConfigNotEmpty extends TableConfig {
     /**
      * A singleton
      */
-    final static TableConfigNotEmpty with(final List<ColumnConfig> columns) {
+    static TableConfigNotEmpty with(final List<ColumnConfig> columns) {
         return new TableConfigNotEmpty(columns);
     }
 

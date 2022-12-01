@@ -207,13 +207,13 @@ public final class TableTest implements ClassTesting2<Table> {
 
     // helpers..........................................................................................................
 
-    final void check(final Table table) {
+    void check(final Table table) {
         if (table instanceof TableNotEmpty) {
             this.check((TableNotEmpty) table);
         }
     }
 
-    final void check(final TableNotEmpty table) {
+    void check(final TableNotEmpty table) {
         int maxColumn = 0;
         int maxRow = 0;
 
@@ -225,13 +225,13 @@ public final class TableTest implements ClassTesting2<Table> {
         this.maxRowAndCheck(table, maxRow);
     }
 
-    final void maxColumnAndCheck(final Table table, final int expected) {
+    void maxColumnAndCheck(final Table table, final int expected) {
         this.checkEquals(expected,
                 table.maxColumn(),
                 () -> "maxColumn of " + table);
     }
 
-    final void maxRowAndCheck(final Table table, final int expected) {
+    void maxRowAndCheck(final Table table, final int expected) {
         this.checkEquals(expected,
                 table.maxRow(),
                 () -> "maxRow of " + table);
