@@ -47,6 +47,30 @@ public final class TableCellCoordinatesTest extends TableTestCase2<TableCellCoor
     }
 
     @Test
+    public void testSortedArray() {
+        final TableCellCoordinates cell11 = TableCellCoordinates.with(1, 1);
+        final TableCellCoordinates cell21 = TableCellCoordinates.with(2, 1);
+        final TableCellCoordinates cell12 = TableCellCoordinates.with(1, 2);
+        final TableCellCoordinates cell13 = TableCellCoordinates.with(1, 3);
+        final TableCellCoordinates cell23 = TableCellCoordinates.with(2, 3);
+
+        // rows then columns.
+        this.compareToArraySortAndCheck(
+            cell23,
+                cell12,
+                cell11,
+                cell21,
+                cell13,
+                // sorted
+                cell11,
+                cell21,
+                cell12,
+                cell13,
+                cell23
+        );
+    }
+
+    @Test
     public void testToString() {
         this.toStringAndCheck(TableCellCoordinates.with(2, 3), "2,3");
     }
