@@ -18,9 +18,12 @@
 package walkingkooka.text.pretty;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.text.CharSequences;
 
 import java.util.List;
+import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Objects;
 import java.util.stream.Collector;
 
@@ -191,4 +194,8 @@ public abstract class Table {
     public final Collector<List<CharSequence>, Table, Table> collectRow(final int row) {
         return TableCollectorRow.with(this, row);
     }
+
+    // internal.........................................................................................................
+
+    abstract Map<TableCellCoordinates, CharSequence> asMap();
 }

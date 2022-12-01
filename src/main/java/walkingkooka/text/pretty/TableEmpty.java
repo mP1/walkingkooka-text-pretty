@@ -18,8 +18,11 @@
 package walkingkooka.text.pretty;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.map.Maps;
 
 import java.util.List;
+import java.util.Map;
+import java.util.NavigableMap;
 
 /**
  * An empty {@link Table} all rows and columns are empty.
@@ -99,6 +102,13 @@ final class TableEmpty extends Table {
     @Override
     public int maxRow() {
         return 0;
+    }
+
+    // support..........................................................................................................
+
+    @Override
+    Map<TableCellCoordinates, CharSequence> asMap() {
+        return Maps.empty();
     }
 
     // Object...........................................................................................................
