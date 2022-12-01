@@ -22,6 +22,7 @@ import walkingkooka.text.CharSequences;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NavigableMap;
 
@@ -30,6 +31,12 @@ import java.util.NavigableMap;
  * the same coordinates and same character content, {@link CharSequence} type is not important.
  */
 final class TableNotEmpty extends Table {
+
+    // map..............................................................................................................
+
+    private static NavigableMap<TableCellCoordinates, CharSequence> map() {
+        return Maps.navigable();
+    }
 
     /**
      * Factory called by {@link TableEmpty#setColumn1(int, List)}.
@@ -264,10 +271,11 @@ final class TableNotEmpty extends Table {
 
     private final int maxRow;
 
-    // map..............................................................................................................
+    // internal..............................................................................................................
 
-    private static NavigableMap<TableCellCoordinates, CharSequence> map() {
-        return Maps.navigable();
+    @Override
+    Map<TableCellCoordinates, CharSequence> asMap() {
+        return this.table;
     }
 
     /**
@@ -284,33 +292,13 @@ final class TableNotEmpty extends Table {
 
     @Override
     public boolean equals(final Object other) {
-        return this == other || other instanceof TableNotEmpty && this.equals0((TableNotEmpty) other);
+        return this == other ||
+                other instanceof Table &&
+                        this.equals0((Table) other);
     }
 
-    private boolean equals0(final TableNotEmpty other) {
-        return this.equals1(other.table);
-    }
-
-    // compare values on content so any CharSequence regardless of type with the same chars is equals
-    private boolean equals1(final NavigableMap<TableCellCoordinates, CharSequence> other) {
-        boolean equals = false;
-
-        final NavigableMap<TableCellCoordinates, CharSequence> table = this.table;
-
-        final int size = this.table.size();
-        if (size == other.size()) {
-            final Iterator<Entry<TableCellCoordinates, CharSequence>> iterator = other.entrySet().iterator();
-            for (final Entry<TableCellCoordinates, CharSequence> coordAndText : table.entrySet()) {
-                final Entry<TableCellCoordinates, CharSequence> otherCoordAndText = iterator.next();
-                equals = coordAndText.getKey().equals(otherCoordAndText.getKey()) &&
-                        CharSequences.equals(coordAndText.getValue(), otherCoordAndText.getValue());
-                if (false == equals) {
-                    break;
-                }
-            }
-        }
-
-        return equals;
+    private boolean equals0(final Table other) {
+        return this.table.equals(other.asMap());
     }
 
     @Override
