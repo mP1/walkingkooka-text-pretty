@@ -54,7 +54,7 @@ final class TreePrintingBiConsumer<P extends Path<P, N> & Comparable<P>,
         TreePrintingBiConsumerRequest.handle(paths, printer, this.printing);
     }
 
-    private TreePrinting<P, N> printing;
+    private final TreePrinting<P, N> printing;
 
     // Object...........................................................................................................
 
