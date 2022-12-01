@@ -185,7 +185,7 @@ public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrint
 
         this.checkEquals(expected,
                 text.toString(),
-                () -> paths.toString());
+                paths::toString);
     }
 
     private static class TestTreePrinting implements TreePrinting<StringPath, StringName> {
