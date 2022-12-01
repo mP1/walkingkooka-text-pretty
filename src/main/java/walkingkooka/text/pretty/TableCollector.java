@@ -74,7 +74,7 @@ abstract class TableCollector implements Collector<List<CharSequence>, Table, Ta
         return this::finisher;
     }
 
-    private final Table finisher(final Table table) {
+    private Table finisher(final Table table) {
         return this.table;
     }
 
