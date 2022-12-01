@@ -36,7 +36,7 @@ final class CharSequenceBiFunctionTrimLeftRight extends CharSequenceBiFunctionTr
     }
 
     @Override
-    final String toString0() {
+    String toString0() {
         return "LeftRight";
     }
 }

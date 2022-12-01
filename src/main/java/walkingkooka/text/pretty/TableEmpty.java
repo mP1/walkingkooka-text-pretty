@@ -44,8 +44,8 @@ final class TableEmpty extends Table {
      * Never happens, {@link #cell(int, int)} bounds checks will result in this never being called.
      */
     @Override
-    final CharSequence cell0(final int column,
-                             final int row) {
+    CharSequence cell0(final int column,
+                       final int row) {
         throw new UnsupportedOperationException();
     }
 

@@ -44,9 +44,10 @@ public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<Ta
         this.toStringAndCheck(this.createList(), Lists.of(R1C0, R1C1, R1C2).toString());
     }
 
-    @Override final TableNotEmptyListRow createList(final NavigableMap<TableCellCoordinates, CharSequence> map,
-                                                    final int column,
-                                                    final int row) {
+    @Override
+    TableNotEmptyListRow createList(final NavigableMap<TableCellCoordinates, CharSequence> map,
+                                    final int column,
+                                    final int row) {
         return TableNotEmptyListRow.with(1, TableNotEmpty.with(map, column, row));
     }
 
