@@ -35,8 +35,6 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrintingBiConsumer<StringPath, StringName>> {
 
     @Test

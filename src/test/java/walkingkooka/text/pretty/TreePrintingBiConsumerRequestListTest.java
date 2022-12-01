@@ -28,8 +28,6 @@ import walkingkooka.reflect.JavaVisibility;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class TreePrintingBiConsumerRequestListTest implements ClassTesting2<TreePrintingBiConsumerRequestList<StringName>>,
     ListTesting2<TreePrintingBiConsumerRequestList<StringName>, StringName> {
 

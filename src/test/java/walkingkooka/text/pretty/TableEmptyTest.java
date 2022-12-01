@@ -20,8 +20,6 @@ package walkingkooka.text.pretty;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
 
     @Test

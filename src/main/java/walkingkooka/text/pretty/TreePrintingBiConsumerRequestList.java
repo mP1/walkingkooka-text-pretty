@@ -20,7 +20,6 @@ package walkingkooka.text.pretty;
 import walkingkooka.naming.Name;
 
 import java.util.AbstractList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

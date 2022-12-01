@@ -22,7 +22,6 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.util.FunctionTesting;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class TableConfigTestCase<T extends TableConfig> extends TextPrettyTestCase<T>

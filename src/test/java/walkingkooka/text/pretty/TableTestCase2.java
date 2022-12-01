@@ -19,8 +19,6 @@ package walkingkooka.text.pretty;
 
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
 
 public abstract class TableTestCase2<T> extends TableTestCase<T>
         implements HashCodeEqualsDefinedTesting2<T>,

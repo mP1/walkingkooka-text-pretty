@@ -20,8 +20,6 @@ package walkingkooka.text.pretty;
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting2;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 public final class TableCellCoordinatesTest extends TableTestCase2<TableCellCoordinates>
         implements ComparableTesting2<TableCellCoordinates> {
 
