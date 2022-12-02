@@ -41,17 +41,6 @@ final class TableEmpty extends Table {
         super();
     }
 
-    // cell.............................................................................................................
-
-    /**
-     * Never happens, {@link #cell(int, int)} bounds checks will result in this never being called.
-     */
-    @Override
-    CharSequence cell0(final int column,
-                       final int row) {
-        throw new UnsupportedOperationException();
-    }
-
     // setCell..........................................................................................................
 
     /**
@@ -74,13 +63,11 @@ final class TableEmpty extends Table {
     @Override
     Table setColumn1(final int column,
                      final List<CharSequence> text) {
-        return text.isEmpty() ?
-                this :
-                TableNotEmpty.withColumn(column, text);
+        return TableNotEmpty.withColumn(column, text);
     }
 
     @Override
-    public int maxColumn() {
+    public int width() {
         return 0;
     }
 
@@ -98,16 +85,11 @@ final class TableEmpty extends Table {
                 TableNotEmpty.withRow(row, text);
     }
 
-    @Override
-    public int maxRow() {
-        return 0;
-    }
-
     // support..........................................................................................................
 
     @Override
-    Map<TableCellCoordinates, CharSequence> asMap() {
-        return Maps.empty();
+    List<List<CharSequence>> asList() {
+        return Lists.empty();
     }
 
     // Object...........................................................................................................

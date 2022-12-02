@@ -22,11 +22,127 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class TableTest implements ClassTesting2<Table> {
+
+    // copyRowText......................................................................................................
+
+    private final static String NULL = null;
+    private final static List<CharSequence> NULL_LIST = null;
+
+    @Test
+    public void testCopyRowTextNulls() {
+        this.copyRowTextAndCheck(
+                list(NULL),
+                NULL_LIST
+        );
+    }
+
+    @Test
+    public void testCopyRowTextEmpty() {
+        this.copyRowTextAndCheck(
+                list(""),
+                NULL_LIST
+        );
+    }
+
+    @Test
+    public void testCopyRowTextNulls2() {
+        this.copyRowTextAndCheck(
+                list(null, null),
+                NULL_LIST
+        );
+    }
+
+    @Test
+    public void testCopyRowTextEmpty2() {
+        this.copyRowTextAndCheck(
+                list("", ""),
+                NULL_LIST
+        );
+    }
+
+    @Test
+    public void testCopyRowTextNullAndEmptyString() {
+        this.copyRowTextAndCheck(
+                list("", null, ""),
+                NULL_LIST
+        );
+    }
+
+    @Test
+    public void testCopyRowText() {
+        this.copyRowTextAndCheck(
+                list("A", "B", "C"),
+                list("A", "B", "C")
+        );
+    }
+
+    @Test
+    public void testCopyRowTextIncludesNull() {
+        this.copyRowTextAndCheck(
+                list(null, "B", "C"),
+                list(null, "B", "C")
+        );
+    }
+
+    @Test
+    public void testCopyRowTextIncludesEmpty() {
+        this.copyRowTextAndCheck(
+                list("", "B", "C"),
+                list(null, "B", "C")
+        );
+    }
+
+    @Test
+    public void testCopyRowTextTrimmedNull() {
+        this.copyRowTextAndCheck(
+                list("A", "B", "C", null),
+                list("A", "B", "C")
+        );
+    }
+
+    @Test
+    public void testCopyRowTextTrimmedEmpty() {
+        this.copyRowTextAndCheck(
+                list("A", "B", "C", ""),
+                list("A", "B", "C")
+        );
+    }
+
+    @Test
+    public void testCopyRowTextTrimmedNull2() {
+        this.copyRowTextAndCheck(
+                list("A", "B", "C", null, null),
+                list("A", "B", "C")
+        );
+    }
+
+    @Test
+    public void testCopyRowTextTrimmedEmpty2() {
+        this.copyRowTextAndCheck(
+                list("A", "B", "C", "", ""),
+                list("A", "B", "C")
+        );
+    }
+
+    private <T> List<T> list(final T ... elements) {
+        return Arrays.asList(elements);
+    }
+
+    private void copyRowTextAndCheck(final List<CharSequence> rowText,
+                                     final List<CharSequence> expected) {
+        this.checkEquals(
+                expected,
+                Table.copyRowText(rowText),
+                () -> "rowText " + rowText
+        );
+    }
 
     // column...........................................................................................................
     
@@ -80,11 +196,24 @@ public final class TableTest implements ClassTesting2<Table> {
     }
 
     @Test
-    public void testSetEmptyColumn() {
+    public void testEmptySetColumnEmpty() {
         // - x -
         // - y -
         // - z -
-        final Table table = Table.empty().setColumn(1, Lists.of("x", "y", "z"));
+        assertSame(
+                Table.empty(),
+                Table.empty()
+                        .setColumn(1, Lists.empty())
+        );
+    }
+
+    @Test
+    public void testEmptySetColumn() {
+        // - x -
+        // - y -
+        // - z -
+        final Table table = Table.empty()
+                .setColumn(1, Lists.of("x", "y", "z"));
         this.check(table);
     }
 
@@ -155,7 +284,8 @@ public final class TableTest implements ClassTesting2<Table> {
         // - - -
         // x y z
         // - - -
-        final Table table = Table.empty().setRow(1, Lists.of("x", "y", "z"));
+        final Table table = Table.empty()
+                .setRow(1, Lists.of("x", "y", "z"));
         this.check(table);
     }
 
@@ -211,36 +341,49 @@ public final class TableTest implements ClassTesting2<Table> {
     }
 
     void check(final TableNotEmpty table) {
-        int maxColumn = 0;
-        int maxRow = 0;
+        final int width = table.rows.stream()
+                .filter(Objects::nonNull)
+                .mapToInt(List::size)
+                .max()
+                .orElse(0);
 
-        for (final TableCellCoordinates coords : table.table.keySet()) {
-            maxColumn = Math.max(maxColumn, 1+ coords.column);
-            maxRow = Math.max(maxRow, 1+ coords.row);
-        }
-        this.maxColumnAndCheck(table, maxColumn);
-        this.maxRowAndCheck(table, maxRow);
+        this.widthAndCheck(
+                table,
+                width
+        );
+        this.heightAndCheck(
+                table,
+                table.rows.size()
+        );
     }
 
-    void maxColumnAndCheck(final Table table, final int expected) {
-        this.checkEquals(expected,
-                table.maxColumn(),
-                () -> "maxColumn of " + table);
+    void widthAndCheck(final Table table,
+                       final int expected) {
+        this.checkEquals(
+                expected,
+                table.width(),
+                () -> "width of " + table
+        );
     }
 
-    void maxRowAndCheck(final Table table, final int expected) {
-        this.checkEquals(expected,
-                table.maxRow(),
-                () -> "maxRow of " + table);
+    void heightAndCheck(final Table table,
+                        final int expected) {
+        this.checkEquals(
+                expected,
+                table.height(),
+                () -> "height of " + table
+        );
     }
 
 
     private void columnAndCheck(final Table table,
                                 final int column,
                                 final CharSequence... text) {
-        this.checkEquals(Lists.of(text),
+        this.checkEquals(
+                Lists.of(text),
                 table.column(column),
-                () -> "column " + column + " from " + table);
+                () -> "column " + column + " from " + table
+        );
     }
 
     private void rowAndCheck(final Table table,

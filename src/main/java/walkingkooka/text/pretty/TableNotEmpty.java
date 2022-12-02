@@ -17,14 +17,10 @@
 
 package walkingkooka.text.pretty;
 
-import walkingkooka.collect.map.Maps;
-import walkingkooka.text.CharSequences;
+import walkingkooka.collect.list.Lists;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.NavigableMap;
+import java.util.Objects;
 
 /**
  * A {@link Table} that is not empty and has at least one cell. Note for purposes of equality cells are equal if they have
@@ -32,119 +28,120 @@ import java.util.NavigableMap;
  */
 final class TableNotEmpty extends Table {
 
-    // map..............................................................................................................
-
-    private static NavigableMap<TableCellCoordinates, CharSequence> map() {
-        return Maps.navigable();
-    }
-
     /**
      * Factory called by {@link TableEmpty#setColumn1(int, List)}.
      */
     static TableNotEmpty withCell(final int column,
                                   final int row,
                                   final CharSequence text) {
-        final NavigableMap<TableCellCoordinates, CharSequence> table = map();
-        table.put(TableCellCoordinates.with(column, row), text);
-        return with(table,
-                column + 1,
-                row + 1);
+        final List<CharSequence> columns = Lists.array();
+        setWithAutoExpandShrink(columns, column, text);
+
+        final List<List<CharSequence>> rows = Lists.array();
+        setWithAutoExpandShrink(rows, row, columns);
+
+        return with(
+                rows,
+                column + 1
+        );
     }
 
     /**
      * Factory called by {@link TableEmpty#setColumn1(int, List)}.
      */
     static TableNotEmpty withColumn(final int column,
-                                    final List<CharSequence> text) {
-        final NavigableMap<TableCellCoordinates, CharSequence> table = map();
-        setColumn(column, text, table);
-        return with(table,
-                column + 1,
-                text.size());
-    }
-
-    /**
-     * Accepts a table and sets the cells for the given column.
-     */
-    private static void setColumn(final int column,
-                                  final List<CharSequence> texts,
-                                  final NavigableMap<TableCellCoordinates, CharSequence> table) {
-        int r = 0;
-        for (final CharSequence text : texts) {
-
-            // skip saving/copying empty cells.
-            final TableCellCoordinates coord = TableCellCoordinates.with(column, r);
-            if(isNotEmpty(text)) {
-                table.put(coord, text);
-            } else {
-                table.remove(coord);
+                                    final List<CharSequence> columnText) {
+        int last = columnText.size();
+        while(last > 0) {
+            last--;
+            if(isNotEmpty(columnText.get(last))) {
+                last++;
+                break;
             }
-            r++;
         }
+
+        final List<List<CharSequence>> rows = Lists.array();
+
+        for(int i = 0; i < last; i++) {
+            final CharSequence text = columnText.get(i);
+
+            final List<CharSequence> rowText;
+            if(isEmpty(text)) {
+                rowText = null;
+            } else {
+                rowText = Lists.array();
+
+                for(int j = 0; j < column; j++ ) {
+                    rowText.add(null);
+                }
+
+                rowText.add(text);
+            }
+
+            rows.add(rowText);
+        }
+
+        return with(
+                rows,
+                column + 1
+        );
     }
 
     static TableNotEmpty withRow(final int row,
-                                 final List<CharSequence> text) {
-        final NavigableMap<TableCellCoordinates, CharSequence> table = map();
-        setRow(row, text, table);
-        return with(table,
-                text.size(),
-                row + 1);
-    }
+                                 final List<CharSequence> rowText) {
+        final List<List<CharSequence>> rows = Lists.array();
+        setWithAutoExpandShrink(rows, row, rowText);
 
-    /**
-     * Accepts a table and sets the cells for the given row.
-     */
-    private static void setRow(final int row,
-                               final List<CharSequence> texts,
-                               final NavigableMap<TableCellCoordinates, CharSequence> table) {
-        int c = 0;
-
-        for (final CharSequence text : texts) {
-            final TableCellCoordinates coord = TableCellCoordinates.with(c, row);
-            if(isNotEmpty(text)) {
-                table.put(coord, text);
-            } else {
-                table.remove(coord);
-            }
-            c++;
-        }
+        return with(
+                rows,
+                rowText.size()
+        );
     }
 
     /**
      * Creates a new {@link TableNotEmpty} with the given cells and maximum column/row.
      */
-    static TableNotEmpty with(final NavigableMap<TableCellCoordinates, CharSequence> table,
-                              final int column,
-                              final int row) {
-        return new TableNotEmpty(table, column, row);
+    static TableNotEmpty with(final List<List<CharSequence>> rows,
+                              final int width) {
+        return new TableNotEmpty(rows, width);
+    }
+
+    /**
+     * A helper that auto expands the row with null elements if necessary.
+     */
+    static <T> void setWithAutoExpandShrink(final List<T> list,
+                                            final int index,
+                                            final T element) {
+        final int count = list.size();
+        if (index < count) {
+            list.set(index, element);
+        } else {
+            while (list.size() < index) {
+                list.add(null);
+            }
+            list.add(element);
+        }
+
+        int i = list.size();
+        while (i > 0) {
+            i--;
+            if (null != list.get(i)) {
+                break;
+            }
+            list.remove(i);
+        }
     }
 
     /**
      * Private ctor use factory.
      */
-    private TableNotEmpty(final NavigableMap<TableCellCoordinates, CharSequence> table,
-                          final int maxColumn,
-                          final int maxRow) {
+    private TableNotEmpty(final List<List<CharSequence>> rows,
+                          final int width) {
         super();
-        this.table = table;
-        this.maxColumn = maxColumn;
-        this.maxRow = maxRow;
-    }
+        this.rows = rows;
+        this.width = width;
 
-    // cell.............................................................................................................
-
-    /**
-     * Attempts to locate the cell at the given coords or returns {@link CharSequences#empty()}.
-     */
-    @Override
-    CharSequence cell0(final int column,
-                       final int row) {
-        return this.cell1(TableCellCoordinates.with(column, row));
-    }
-
-    CharSequence cell1(final TableCellCoordinates cell) {
-        return this.table.getOrDefault(cell, CharSequences.empty());
+        Thread.dumpStack();
     }
 
     // setCell..........................................................................................................
@@ -153,169 +150,155 @@ final class TableNotEmpty extends Table {
     Table setCell0(final int column,
                    final int row,
                    final CharSequence text) {
-        final TableCellCoordinates coordinates = TableCellCoordinates.with(column, row);
-        final CharSequence previous = this.table.get(coordinates);
-        return text.equals(previous) ?
-                this :
-                this.replaceCell(coordinates, text);
-    }
+        final Table after;
 
-    /**
-     * Replaces the cell at the given coordinates, if the new cell is empty and the current table is empty a
-     * {@link #empty()} will be returned. This assumes that the new cell is different from the old.
-     */
-    private Table replaceCell(final TableCellCoordinates coordinates,
-                              final CharSequence text) {
-        final NavigableMap<TableCellCoordinates, CharSequence> table = map();
-        if (isNotEmpty(text)) {
-            table.put(coordinates, text);
+        final CharSequence cell = this.cell(column, row);
+        if(Objects.equals(text, cell)) {
+            after = this;
         } else {
-            table.remove(coordinates);
-        }
+            final List<CharSequence> newRowText;
 
-        int maximumRow = coordinates.row + 1;
-
-        for (final Entry<TableCellCoordinates, CharSequence> cellAndText : this.table.entrySet()) {
-            final TableCellCoordinates cellCoordinates = cellAndText.getKey();
-            if (false == coordinates.equals(cellCoordinates)) {
-                table.put(cellCoordinates, cellAndText.getValue());
-                maximumRow = Math.max(maximumRow, cellCoordinates.row + 1);
+            final List<List<CharSequence>> rows = this.rows;
+            if(row < rows.size()) {
+                final List<CharSequence> oldRowText = rows.get(row);
+                // copy old row of text and replace at column
+                newRowText = Lists.array();
+                if(null != oldRowText) {
+                    newRowText.addAll(oldRowText);
+                }
+                setWithAutoExpandShrink(newRowText, column, text);
+            } else {
+                newRowText = Lists.array();
+                setWithAutoExpandShrink(newRowText, column, text);
             }
+
+            after = this.setRow(
+                    row,
+                    newRowText
+            );
         }
 
-        return table.isEmpty() ?
-                empty() :
-                with(
-                        table,
-                        table.lastEntry().getKey().column + 1,
-                        maximumRow
-                );
+        return after;
     }
 
     // column...........................................................................................................
 
     @Override
     List<CharSequence> column0(final int column) {
-        return TableNotEmptyListColumn.with(column, this);
+        return TableNotEmptyListColumn.with(
+            column,
+            this
+        );
     }
 
     @Override
     Table setColumn1(final int column,
-                     final List<CharSequence> text) {
-        return text.equals(this.column(column)) ?
+                     final List<CharSequence> columnText) {
+        return columnText.equals(this.column(column)) ?
                 this :
-                this.replaceColumn(column, text);
+                this.replaceColumn(column, columnText);
     }
 
     private Table replaceColumn(final int column,
-                                final List<CharSequence> text) {
-        final NavigableMap<TableCellCoordinates, CharSequence> table = map();
+                                final List<CharSequence> columnText) {
+        Table after = this;
 
-        int maximumColumn = -1;
+        final int height = Math.max(
+                this.height(),
+                columnText.size()
+        );
+        final int columnTextCount = columnText.size();
 
-        for (final Entry<TableCellCoordinates, CharSequence> cellAndText : this.table.entrySet()) {
-            final TableCellCoordinates cellCoordinates = cellAndText.getKey();
-            if (cellCoordinates.column != column) {
-                table.put(cellCoordinates, cellAndText.getValue());
-                maximumColumn = Math.max(maximumColumn, cellCoordinates.column + 1);
-            }
-        }
-        setColumn(column, text, table);
-
-        final Table result;
-
-        if(table.isEmpty()) {
-            result = empty();
-        } else {
-            if(maximumColumn <= column) {
-                for(final CharSequence t : text) {
-                    if(isNotEmpty(t)) {
-                        maximumColumn = column + 1;
-                        break;
-                    }
-                }
-            }
-
-            result = with(
-                    table,
-                    maximumColumn,
-                    table.lastEntry().getKey().row + 1
+        for(int row = 0; row < height; row++) {
+            after = after.setCell(
+                    column,
+                    row,
+                    row < columnTextCount ?
+                            columnText.get(row) :
+                            null
             );
         }
 
-        return result;
+        return after;
     }
 
     @Override
-    public int maxColumn() {
-        return this.maxColumn;
+    public int width() {
+        if(-1 == this.width) {
+            this.width = this.rows.stream()
+                    .filter(Objects::nonNull)
+                    .mapToInt(List::size)
+                    .max()
+                    .orElse(0);
+        }
+        return this.width;
     }
 
-    private final int maxColumn;
+    private int width;
 
     // row..............................................................................................................
 
     @Override
     List<CharSequence> row0(final int row) {
-        return TableNotEmptyListRow.with(row, this);
+        return TableNotEmptyListRow.with(
+                row,
+                this
+        );
     }
 
     @Override
-    Table setRow1(final int row, final List<CharSequence> text) {
-        return text.equals(this.row(row)) ?
+    Table setRow1(final int row,
+                  final List<CharSequence> rowText) {
+        return Objects.equals(rowText, this.row(row)) ?
                 this :
-                this.replaceRow(row, text);
+                this.replaceRow(row, rowText);
     }
 
     private Table replaceRow(final int row,
-                             final List<CharSequence> text) {
-        final NavigableMap<TableCellCoordinates, CharSequence> table = map();
+                             final List<CharSequence> rowText) {
+        final List<List<CharSequence>> newRows = Lists.array();
+        newRows.addAll(this.rows);
+        setWithAutoExpandShrink(newRows, row, rowText);
 
-        int maxColumn = -1;
+        final Table after;
 
-        // need to find maxColumn for all other cells
-        for (final Entry<TableCellCoordinates, CharSequence> cellAndText : this.table.entrySet()) {
-            final TableCellCoordinates cellCoordinates = cellAndText.getKey();
-            if (cellCoordinates.row != row) {
-                table.put(cellCoordinates, cellAndText.getValue());
-                maxColumn = Math.max(maxColumn, cellCoordinates.column + 1);
+        if (newRows.isEmpty()) {
+            after = empty();
+        } else {
+            int width = -1;
+            if(null != rowText) {
+                width = rowText.size();
+                if(width < this.width) {
+                    width = -1;
+                }
             }
+
+            after = new TableNotEmpty(
+                    newRows,
+                    width
+            );
         }
-        setRow(row, text, table);
 
-        return table.isEmpty() ?
-                empty() :
-                with(
-                        table,
-                        Math.max(maxColumn, text.size()),
-                        table.lastEntry().getKey().row + 1
-                );
+        return after;
     }
 
-    @Override
-    public int maxRow() {
-        return this.maxRow;
-    }
-
-    private final int maxRow;
-
-    // internal..............................................................................................................
+    // internal..............................................................................................................)
 
     @Override
-    Map<TableCellCoordinates, CharSequence> asMap() {
-        return this.table;
+    List<List<CharSequence>> asList() {
+        return this.rows;
     }
 
     /**
-     * A {@link NavigableMap} that is used to hold all cells.
+     * A {@link List} of rows, with empty rows being nulls.
      */
-    final NavigableMap<TableCellCoordinates, CharSequence> table;
+    final List<List<CharSequence>> rows;
 
     // Object...........................................................................................................
 
     @Override
     public int hashCode() {
-        return this.table.keySet().hashCode();
+        return this.rows.hashCode();
     }
 
     @Override
@@ -326,14 +309,11 @@ final class TableNotEmpty extends Table {
     }
 
     private boolean equals0(final Table other) {
-        return equalsMap(
-                this.table,
-                other.asMap()
-        );
+        return this.asList().equals(other.asList());
     }
 
     @Override
     public String toString() {
-        return this.table.toString();
+        return this.rows.toString();
     }
 }
