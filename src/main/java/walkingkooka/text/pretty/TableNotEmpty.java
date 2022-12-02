@@ -140,8 +140,6 @@ final class TableNotEmpty extends Table {
         super();
         this.rows = rows;
         this.width = width;
-
-        Thread.dumpStack();
     }
 
     // setCell..........................................................................................................
