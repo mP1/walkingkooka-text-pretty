@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 
 import java.util.List;
-import java.util.NavigableMap;
 
 public final class TableNotEmptyListColumnTest extends TableNotEmptyListTestCase<TableNotEmptyListColumn> {
 
