@@ -30,6 +30,92 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class TableTest implements ClassTesting2<Table> {
 
+    @Test
+    public void testSetWithAutoExpandShrinkSame() {
+        setWithAutoExpandShrinkAndCheck(
+                arrayList(10, 20, 30),
+                0,
+                99,
+                list(99, 20, 30)
+        );
+    }
+
+    @Test
+    public void testSetWithAutoExpandShrinkSame2() {
+        setWithAutoExpandShrinkAndCheck(
+                arrayList(10, 20, 30),
+                0,
+                null,
+                list(null, 20, 30)
+        );
+    }
+
+    @Test
+    public void testSetWithAutoExpandShrinkExpanded() {
+        setWithAutoExpandShrinkAndCheck(
+                arrayList(10, 20, 30),
+                3,
+                99,
+                list(10, 20, 30, 99)
+        );
+    }
+
+    @Test
+    public void testSetWithAutoExpandShrinkExpanded2() {
+        setWithAutoExpandShrinkAndCheck(
+                arrayList(10, 20, 30),
+                4,
+                99,
+                list(10, 20, 30, null, 99)
+        );
+    }
+
+    @Test
+    public void testSetWithAutoExpandShrinkExpanded3() {
+        setWithAutoExpandShrinkAndCheck(
+                arrayList(10, 20, 30),
+                5,
+                99,
+                list(10, 20, 30, null, null, 99)
+        );
+    }
+
+    @Test
+    public void testSetWithAutoExpandShrinkShrunk() {
+        setWithAutoExpandShrinkAndCheck(
+                arrayList(10, 20, 30),
+                2,
+                null,
+                list(10, 20)
+        );
+    }
+
+    private List<Integer> arrayList(final Integer...values) {
+        final List<Integer> list = Lists.array();
+        list.addAll(this.list(values));
+        return list;
+    }
+
+    private void setWithAutoExpandShrinkAndCheck(final List<Integer> list,
+                                                 final int index,
+                                                 final Integer element,
+                                                 final List<Integer> expected) {
+        final List<Integer> before = Lists.array();
+        before.addAll(list);
+
+        TableNotEmpty.setWithAutoExpandShrink(
+                list,
+                index,
+                element
+        );
+
+        this.checkEquals(
+                expected,
+                list,
+                () -> before + " index=" + index + " element=" + element
+        );
+    }
+
     // copyRowText......................................................................................................
 
     private final static String NULL = null;
