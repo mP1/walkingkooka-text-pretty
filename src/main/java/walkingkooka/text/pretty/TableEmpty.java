@@ -18,11 +18,8 @@
 package walkingkooka.text.pretty;
 
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
 
 import java.util.List;
-import java.util.Map;
-import java.util.NavigableMap;
 
 /**
  * An empty {@link Table} all rows and columns are empty.

@@ -20,11 +20,9 @@ package walkingkooka.text.pretty;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.ListTesting2;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.text.CharSequences;
 
 import java.util.List;
-import java.util.NavigableMap;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
