@@ -106,33 +106,6 @@ final class TableNotEmpty extends Table {
     }
 
     /**
-     * A helper that auto expands the row with null elements if necessary.
-     */
-    static <T> void setWithAutoExpandShrink(final List<T> list,
-                                            final int index,
-                                            final T element) {
-        final int count = list.size();
-        if (index < count) {
-            list.set(index, element);
-        } else {
-            expand(
-                    list,
-                    index - list.size()
-            );
-            list.add(element);
-        }
-
-        int i = list.size();
-        while (i > 0) {
-            i--;
-            if (null != list.get(i)) {
-                break;
-            }
-            list.remove(i);
-        }
-    }
-
-    /**
      * Private ctor use factory.
      */
     private TableNotEmpty(final List<List<CharSequence>> rows,
