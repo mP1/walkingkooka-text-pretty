@@ -31,6 +31,16 @@ import java.util.stream.Collector;
 public abstract class Table {
 
     /**
+     * Helper that may be used to expand a {@link List}
+     */
+    static void expand(final List<?> list,
+                       final int addCount) {
+        for(int i = 0; i < addCount; i++) {
+            list.add(null);
+        }
+    }
+
+    /**
      * Copies the given row of text, trimming null entries on the end, returning null if all are missing.
      */
     static List<CharSequence> copyRowText(final List<CharSequence> rowText) {
