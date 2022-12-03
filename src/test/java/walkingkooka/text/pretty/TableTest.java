@@ -30,102 +30,16 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class TableTest implements ClassTesting2<Table> {
 
-    @Test
-    public void testSetWithAutoExpandShrinkSame() {
-        setWithAutoExpandShrinkAndCheck(
-                arrayList(10, 20, 30),
-                0,
-                99,
-                list(99, 20, 30)
-        );
-    }
-
-    @Test
-    public void testSetWithAutoExpandShrinkSame2() {
-        setWithAutoExpandShrinkAndCheck(
-                arrayList(10, 20, 30),
-                0,
-                null,
-                list(null, 20, 30)
-        );
-    }
-
-    @Test
-    public void testSetWithAutoExpandShrinkExpanded() {
-        setWithAutoExpandShrinkAndCheck(
-                arrayList(10, 20, 30),
-                3,
-                99,
-                list(10, 20, 30, 99)
-        );
-    }
-
-    @Test
-    public void testSetWithAutoExpandShrinkExpanded2() {
-        setWithAutoExpandShrinkAndCheck(
-                arrayList(10, 20, 30),
-                4,
-                99,
-                list(10, 20, 30, null, 99)
-        );
-    }
-
-    @Test
-    public void testSetWithAutoExpandShrinkExpanded3() {
-        setWithAutoExpandShrinkAndCheck(
-                arrayList(10, 20, 30),
-                5,
-                99,
-                list(10, 20, 30, null, null, 99)
-        );
-    }
-
-    @Test
-    public void testSetWithAutoExpandShrinkShrunk() {
-        setWithAutoExpandShrinkAndCheck(
-                arrayList(10, 20, 30),
-                2,
-                null,
-                list(10, 20)
-        );
-    }
-
-    private List<Integer> arrayList(final Integer...values) {
-        final List<Integer> list = Lists.array();
-        list.addAll(this.list(values));
-        return list;
-    }
-
-    private void setWithAutoExpandShrinkAndCheck(final List<Integer> list,
-                                                 final int index,
-                                                 final Integer element,
-                                                 final List<Integer> expected) {
-        final List<Integer> before = Lists.array();
-        before.addAll(list);
-
-        TableNotEmpty.setWithAutoExpandShrink(
-                list,
-                index,
-                element
-        );
-
-        this.checkEquals(
-                expected,
-                list,
-                () -> before + " index=" + index + " element=" + element
-        );
-    }
-
     // copyRowText......................................................................................................
 
     private final static String NULL = null;
-    private final static List<CharSequence> NULL_LIST = null;
+    private final static CharSequence MISSING = Table.MISSING_TEXT;
 
     @Test
     public void testCopyRowTextNulls() {
         this.copyRowTextAndCheck(
                 list(NULL),
-                NULL_LIST
+                list(MISSING)
         );
     }
 
@@ -133,7 +47,7 @@ public final class TableTest implements ClassTesting2<Table> {
     public void testCopyRowTextEmpty() {
         this.copyRowTextAndCheck(
                 list(""),
-                NULL_LIST
+                list(MISSING)
         );
     }
 
@@ -141,7 +55,7 @@ public final class TableTest implements ClassTesting2<Table> {
     public void testCopyRowTextNulls2() {
         this.copyRowTextAndCheck(
                 list(null, null),
-                NULL_LIST
+                list(MISSING, MISSING)
         );
     }
 
@@ -149,7 +63,7 @@ public final class TableTest implements ClassTesting2<Table> {
     public void testCopyRowTextEmpty2() {
         this.copyRowTextAndCheck(
                 list("", ""),
-                NULL_LIST
+                list(MISSING, MISSING)
         );
     }
 
@@ -157,7 +71,7 @@ public final class TableTest implements ClassTesting2<Table> {
     public void testCopyRowTextNullAndEmptyString() {
         this.copyRowTextAndCheck(
                 list("", null, ""),
-                NULL_LIST
+                list(MISSING, MISSING, MISSING)
         );
     }
 
@@ -172,8 +86,8 @@ public final class TableTest implements ClassTesting2<Table> {
     @Test
     public void testCopyRowTextIncludesNull() {
         this.copyRowTextAndCheck(
-                list(null, "B", "C"),
-                list(null, "B", "C")
+                list(MISSING, "B", "C"),
+                list(MISSING, "B", "C")
         );
     }
 
@@ -181,15 +95,15 @@ public final class TableTest implements ClassTesting2<Table> {
     public void testCopyRowTextIncludesEmpty() {
         this.copyRowTextAndCheck(
                 list("", "B", "C"),
-                list(null, "B", "C")
+                list(MISSING, "B", "C")
         );
     }
 
     @Test
     public void testCopyRowTextTrimmedNull() {
         this.copyRowTextAndCheck(
-                list("A", "B", "C", null),
-                list("A", "B", "C")
+                list("A", "B", "C", MISSING),
+                list("A", "B", "C", MISSING)
         );
     }
 
@@ -197,15 +111,15 @@ public final class TableTest implements ClassTesting2<Table> {
     public void testCopyRowTextTrimmedEmpty() {
         this.copyRowTextAndCheck(
                 list("A", "B", "C", ""),
-                list("A", "B", "C")
+                list("A", "B", "C", MISSING)
         );
     }
 
     @Test
     public void testCopyRowTextTrimmedNull2() {
         this.copyRowTextAndCheck(
-                list("A", "B", "C", null, null),
-                list("A", "B", "C")
+                list("A", "B", "C", MISSING, MISSING),
+                list("A", "B", "C", MISSING, MISSING)
         );
     }
 
@@ -213,7 +127,7 @@ public final class TableTest implements ClassTesting2<Table> {
     public void testCopyRowTextTrimmedEmpty2() {
         this.copyRowTextAndCheck(
                 list("A", "B", "C", "", ""),
-                list("A", "B", "C")
+                list("A", "B", "C", MISSING, MISSING)
         );
     }
 
@@ -223,9 +137,12 @@ public final class TableTest implements ClassTesting2<Table> {
 
     private void copyRowTextAndCheck(final List<CharSequence> rowText,
                                      final List<CharSequence> expected) {
+        final TableNotEmptyListRow copied = Table.copyRowText(rowText);
+        copied.setWidth(rowText.size());
+
         this.checkEquals(
                 expected,
-                Table.copyRowText(rowText),
+                copied,
                 () -> "rowText " + rowText
         );
     }
@@ -277,7 +194,13 @@ public final class TableTest implements ClassTesting2<Table> {
         // - - -
         // - - -
         final Table table3 = table2.setColumn(1, Lists.of("x"));
-        this.columnAndCheck(table3, 1, "x");
+        this.columnAndCheck(
+                table3,
+                1,
+                "x",
+                MISSING,
+                MISSING
+        );
         this.check(table3);
     }
 
@@ -309,8 +232,13 @@ public final class TableTest implements ClassTesting2<Table> {
         // - y -
         // - z -
         final Table table = Table.empty()
-                .setColumn(1, Lists.of("x", "y", "z"))
-                .setColumn(2, Lists.of("a"));
+                .setColumn(
+                        1,
+                        Lists.of("x", "y", "z")
+                ).setColumn(
+                        2,
+                        Lists.of("a")
+                );
         this.check(table);
     }
 
@@ -352,8 +280,13 @@ public final class TableTest implements ClassTesting2<Table> {
         // - - -
         // x y z
         // - - -
-        final Table table2 = table.setRow(1, Lists.of("x", "y", "z"))
-                .setRow(0, Lists.of("a"));
+        final Table table2 = table.setRow(
+                1,
+                        Lists.of("x", "y", "z")
+                ).setRow(
+                        0,
+                Lists.of("a")
+        );
         this.rowAndCheck(table2, 1, "x", "y", "z");
         this.check(table2);
 
@@ -361,7 +294,12 @@ public final class TableTest implements ClassTesting2<Table> {
         // x - -
         // - - -
         final Table table3 = table2.setRow(1, Lists.of("x"));
-        this.rowAndCheck(table3, 1, "x");
+        this.rowAndCheck(
+                table3,
+                1,
+                "x",
+                MISSING
+        );
         this.check(table3);
     }
 

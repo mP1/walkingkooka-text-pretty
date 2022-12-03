@@ -54,10 +54,20 @@ final class TableConfigNotEmpty extends TableConfig {
     @Override
     Table apply0(final Table table) {
         Table result = table;
+        final int width = table.width();
 
         int columnCounter = 0;
         for (final ColumnConfig column : this.columns) {
-            result = result.setColumn(columnCounter, column.apply(result.column(columnCounter)));
+            if(columnCounter >= width) {
+                break;
+            }
+
+            result = result.setColumn(
+                    columnCounter,
+                    column.apply(
+                            result.column(columnCounter)
+                    )
+            );
             columnCounter++;
         }
 

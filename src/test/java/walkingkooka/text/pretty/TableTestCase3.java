@@ -19,17 +19,19 @@ package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.text.CharSequences;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> {
+
+    final static CharSequence MISSING = Table.MISSING_TEXT;
 
     TableTestCase3() {
         super();
@@ -38,7 +40,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
     @Test
     public final void testCellInvalidColumnFails() {
         assertThrows(
-                IllegalArgumentException.class,
+                IndexOutOfBoundsException.class,
                 () -> this.createTable().cell(-1, 0)
         );
     }
@@ -46,49 +48,31 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
     @Test
     public final void testCellInvalidRowFails() {
         assertThrows(
-                IllegalArgumentException.class,
+                IndexOutOfBoundsException.class,
                 () -> this.createTable().cell(0, -1)
-        );
-    }
-
-    @Test
-    public final void testCellOutOfBounds() {
-        this.cellAndCheck(
-                this.width(),
-                this.height(),
-                CharSequences.empty()
-        );
-    }
-
-    @Test
-    public final void testCellOutOfBounds2() {
-        this.cellAndCheck(
-                this.width() + 1,
-                this.height() + 1,
-                CharSequences.empty()
         );
     }
 
     @Test
     public final void testColumnInvalidColumnFails() {
         assertThrows(
-                IllegalArgumentException.class,
+                IndexOutOfBoundsException.class,
                 () -> this.createTable().column(-1)
         );
     }
 
     @Test
-    public final void testColumnWidth() {
-        this.checkEquals(
-                Lists.empty(),
-                this.createTable().column(this.width())
+    public final void testColumnWidthFails() {
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> this.createTable().column(this.width())
         );
     }
 
     @Test
     public final void testSetCellInvalidColumnFails() {
         assertThrows(
-                IllegalArgumentException.class,
+                IndexOutOfBoundsException.class,
                 () -> this.createTable().setCell(-1, 0, "invalid")
         );
     }
@@ -96,7 +80,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
     @Test
     public final void testSetCellInvalidRowFails() {
         assertThrows(
-                IllegalArgumentException.class,
+                IndexOutOfBoundsException.class,
                 () -> this.createTable().setCell(0, -1, "invalid")
         );
     }
@@ -104,7 +88,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
     @Test
     public final void testSetColumnInvalidColumnFails() {
         assertThrows(
-                IllegalArgumentException.class,
+                IndexOutOfBoundsException.class,
                 () -> this.createTable().setColumn(-1, Lists.empty())
         );
     }
@@ -126,20 +110,31 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
     @Test
     public final void testRowInvalidRowFails() {
         assertThrows(
-                IllegalArgumentException.class,
+                IndexOutOfBoundsException.class,
                 () -> this.createTable().row(-1)
         );
     }
 
     @Test
-    public final void testRowHeight() {
-        this.checkEquals(Lists.empty(), this.createTable().row(this.height()));
+    public final void testRowHeightFails() {
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> this.createTable().row(this.height())
+        );
+    }
+
+    @Test
+    public final void testRowHeightFails2() {
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> this.createTable().row(1+this.height())
+        );
     }
 
     @Test
     public final void testSetRowInvalidRowFails() {
         assertThrows(
-                IllegalArgumentException.class,
+                IndexOutOfBoundsException.class,
                 () -> this.createTable().setRow(-1, Lists.empty())
         );
     }
@@ -152,12 +147,6 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         );
     }
 
-    @Test
-    public final void testSetNewRowEmpty() {
-        final T table = this.createTable();
-        assertSame(table, table.setRow(99, Lists.empty()));
-    }
-
     abstract T createTable();
 
     abstract int width();
@@ -168,7 +157,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         this.checkEquals(
                 expected,
                 table.width(),
-                () -> "width of " + table
+                () -> "width of " + table.toStringTest()
         );
     }
 
@@ -189,9 +178,17 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
                                 final CharSequence text) {
         final Table different = table.setCell(column, row, text);
         if (Objects.equals(text, table.cell(column, row))) {
-            assertSame(different, table, () -> "table setCell " + column + "," + row + " in " + table);
+            assertSame(
+                    different,
+                    table,
+                    () -> "table setCell " + column + "," + row + " in " + table.toStringTest()
+            );
         } else {
-            assertNotSame(different, table, () -> "table setCell " + column + "," + row + " in " + table);
+            assertNotSame(
+                    different,
+                    table,
+                    () -> "table setCell " + column + "," + row + " in " + table.toStringTest()
+            );
         }
 
         return different;
@@ -225,10 +222,13 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         return after;
     }
 
-    final void heightAndCheck(final Table table, final int expected) {
-        this.checkEquals(expected,
+    final void heightAndCheck(final Table table,
+                              final int expected) {
+        this.checkEquals(
+                expected,
                 table.height(),
-                () -> "height of " + table);
+                () -> "height of " + table.toStringTest()
+        );
     }
 
     final void cellAndCheck(final int column,
@@ -244,32 +244,39 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
                             final int column,
                             final int row,
                             final CharSequence text) {
-        this.checkEquals(text,
+        this.checkEquals(
+                text,
                 table.cell(column, row),
-                () -> "cell at " + column + "," + row + " in " + table);
+                () -> "cell at " + column + "," + row + " in " + table.toStringTest()
+        );
     }
 
-    final Table setRowAndCheck(final int row,
-                               final CharSequence... text) {
-        return this.setRowAndCheck(
+    final Table createAndSetRow(final int row,
+                                final CharSequence... text) {
+        return this.createAndSetRow(
                 this.createTable(),
                 row,
                 text
         );
     }
 
-    final Table setRowAndCheck(final Table table,
-                               final int row,
-                               final CharSequence... text) {
-        return this.setRowAndCheck(table, row, Lists.of(text));
+    final Table createAndSetRow(final Table table,
+                                final int row,
+                                final CharSequence... text) {
+        return this.createAndSetRow(
+                table,
+                row,
+                Lists.of(text)
+        );
     }
 
-    final Table setRowAndCheck(final Table table,
-                               final int row,
-                               final List<CharSequence> text) {
-        final Table after = table.setRow(row, text);
-        assertNotSame(table, after);
-        return after;
+    final Table createAndSetRow(final Table table,
+                                final int row,
+                                final List<CharSequence> text) {
+        return table.setRow(
+                row,
+                text
+        );
     }
 
     final <T> List<T> list(final T...elements) {
@@ -328,9 +335,35 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
 
     final void check(final Table table,
                      final List<List<CharSequence>> rows) {
+        final List<List<CharSequence>> nulls = rows.stream()
+                .filter(row -> row.stream()
+                        .filter(text -> null == text)
+                        .count() > 0
+                ).collect(Collectors.toList());
+
+        this.checkEquals(
+                Lists.empty(),
+                nulls,
+                () -> "expected rows includes null"
+        );
+
+        final int firstWidth = rows.get(0).size();
+
+        final List<List<CharSequence>> differentWidths = rows.stream()
+                .skip(1)
+                .filter(row -> row.size() != firstWidth)
+                .collect(Collectors.toList());
+
+        this.checkEquals(
+                Lists.empty(),
+                differentWidths,
+                () -> "rows with a different width to first width=" + firstWidth
+        );
+
         this.checkEquals(
                 rows,
-                table.asList()
+                table.rows(),
+                () -> "table rows " + table.toStringTest()
         );
     }
 
