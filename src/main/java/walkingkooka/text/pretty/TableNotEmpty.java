@@ -70,11 +70,10 @@ final class TableNotEmpty extends Table {
                 rowText = null;
             } else {
                 rowText = Lists.array();
-
-                for(int j = 0; j < column; j++ ) {
-                    rowText.add(null);
-                }
-
+                expand(
+                        rowText,
+                        column
+                );
                 rowText.add(text);
             }
 
@@ -116,9 +115,10 @@ final class TableNotEmpty extends Table {
         if (index < count) {
             list.set(index, element);
         } else {
-            while (list.size() < index) {
-                list.add(null);
-            }
+            expand(
+                    list,
+                    index - list.size()
+            );
             list.add(element);
         }
 
