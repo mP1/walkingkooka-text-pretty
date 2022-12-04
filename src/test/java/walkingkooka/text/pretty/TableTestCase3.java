@@ -19,6 +19,7 @@ package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> {
+public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> implements TreePrintableTesting {
 
     final static CharSequence MISSING = Table.MISSING_TEXT;
 

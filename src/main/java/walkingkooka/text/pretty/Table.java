@@ -20,6 +20,8 @@ package walkingkooka.text.pretty;
 import javaemul.internal.annotations.GwtIncompatible;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.List;
 import java.util.Objects;
@@ -30,7 +32,7 @@ import java.util.stream.Collector;
  * {@link List empty lists} while columns/rows with less cells will return empty cells so all columns/rows appear to have
  * equal lengths.
  */
-public abstract class Table {
+public abstract class Table implements TreePrintable {
 
     final static CharSequence MISSING_TEXT = CharSequences.empty();
 
@@ -266,4 +268,34 @@ public abstract class Table {
 
     @GwtIncompatible
     abstract String toStringTest();
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public final void printTree(final IndentingPrinter printer) {
+        printer.println("Table");
+
+        printer.indent();
+        {
+            int row = 0;
+            for(final List<CharSequence> rowText : this.rows()) {
+                printer.print("row: ");
+                printer.println(String.valueOf(row));
+
+                printer.indent();
+                {
+                    for(final CharSequence text : rowText) {
+                        printer.println(
+                                CharSequences.quoteAndEscape(text)
+                        );
+                    }
+                }
+
+                printer.outdent();
+
+                row++;
+            }
+        }
+        printer.outdent();
+    }
 }

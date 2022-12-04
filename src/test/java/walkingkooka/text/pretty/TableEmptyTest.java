@@ -119,6 +119,18 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                this.createTable(),
+                "Table\n"
+        );
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     TableEmpty createTable() {
         return TableEmpty.INSTANCE;
