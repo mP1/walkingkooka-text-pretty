@@ -257,6 +257,13 @@ public abstract class Table {
 
     abstract TableNotEmptyListRows rows();
 
+    // Object...........................................................................................................
+
+    @Override
+    public final String toString() {
+        return this.rows().toString();
+    }
+
     @GwtIncompatible
     abstract String toStringTest();
 }

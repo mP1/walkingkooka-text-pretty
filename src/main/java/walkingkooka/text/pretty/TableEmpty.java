@@ -112,14 +112,9 @@ final class TableEmpty extends Table {
 
     // Object...........................................................................................................
 
-    @Override
-    public String toString() {
-        return "{}";
-    }
-
     @GwtIncompatible
     @Override
     String toStringTest() {
-        return "{}";
+        return "[]";
     }
 }
