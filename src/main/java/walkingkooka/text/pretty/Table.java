@@ -391,6 +391,48 @@ public abstract class Table implements TreePrintable {
      */
     abstract public int height();
 
+    /**
+     * Returns a {@link Table} with the given height.
+     */
+    public final Table setHeight(final int height) {
+        if (height < 0) {
+            throw new IllegalArgumentException("Invalid height " + height + " < 0");
+        }
+
+        final int currentHeight = this.height();
+        return height == currentHeight ?
+                this :
+                0 == height ?
+                        empty() :
+                        height < currentHeight ?
+                                this.setHeightDecreased(height) :
+                                this.setHeightIncreased(height);
+    }
+
+    private TableNotEmpty setHeightDecreased(final int height) {
+        final TableNotEmptyListRows rows = this.rows()
+                .copy();
+        rows.size = height;
+
+        final int width = rows.findWidth();
+
+        return TableNotEmpty.with(
+                rows,
+                rows.findWidth() // need to find new width because the longest could have been removed
+        );
+    }
+
+    private TableNotEmpty setHeightIncreased(final int height) {
+        final TableNotEmptyListRows rows = this.rows()
+                .copy();
+        rows.size = height;
+
+        return TableNotEmpty.with(
+                rows,
+                this.width() // width doesnt change
+        );
+    }
+
     // Collector........................................................................................................
 
     /**

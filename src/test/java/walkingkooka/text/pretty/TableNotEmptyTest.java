@@ -2437,6 +2437,137 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         );
     }
 
+    // setHeight........................................................................................................
+
+    // width should also decrease to the max width of row 0 and row 1 which is 2
+    @Test
+    public void testSetHeightDecrease() {
+        this.setHeightAndCheck(
+                Table.empty()
+                        .setCell(
+                                0,
+                                0,
+                                X
+                        ).setCell(
+                                1,
+                                1,
+                                Y
+                        ).setCell(
+                                2,
+                                2,
+                                Z
+                        ),
+                2,
+                Table.empty()
+                        .setCell(
+                                0,
+                                0,
+                                X
+                        ).setCell(
+                                1,
+                                1,
+                                Y
+                        )
+        );
+    }
+
+    @Test
+    public void testSetHeightDecrease2() {
+        this.setHeightAndCheck(
+                Table.empty()
+                        .setCell(
+                                0,
+                                0,
+                                X
+                        ).setCell(
+                                1,
+                                1,
+                                Y
+                        ).setCell(
+                                2,
+                                2,
+                                Z
+                        ),
+                1,
+                Table.empty()
+                        .setCell(
+                                0,
+                                0,
+                                X
+                        )
+        );
+    }
+
+    @Test
+    public void testSetHeightDecreaseBecomes1EmptyRow() {
+        // - - -
+        // - - -
+        // - - Z
+
+        this.setHeightAndCheck(
+                Table.empty()
+                        .setCell(
+                                2,
+                                2,
+                                Z
+                        ),
+                1,
+                Table.empty()
+                        .setRow(
+                                0,
+                                Lists.empty()
+                        )
+        );
+    }
+
+    @Test
+    public void testSetHeightIncreaseRowsAdded() {
+        this.setHeightAndCheck(
+                this.createTable(),
+                5,
+                this.createTable()
+                        .setRow(4, Lists.empty())
+        );
+    }
+
+    @Test
+    public void testSetHeightAndSetCell() {
+        this.checkEquals(
+                this.createTable()
+                        .setHeight(5)
+                        .setCell(4, 4, "X"),
+                this.createTable()
+                        .setCell(4, 4, "X")
+        );
+    }
+
+    @Test
+    public void testSetHeightAndSetCell2() {
+        this.checkEquals(
+                this.createTable()
+                        .setHeight(5)
+                        .setCell(3, 1, "X"),
+                this.createTable(
+                        4,
+                        list(
+                                R0C0, R0C1, R0C2, MISSING
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2, "X"
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2, MISSING
+                        ),
+                        list(
+                                MISSING, MISSING, MISSING, MISSING
+                        ),
+                        list(
+                                MISSING, MISSING, MISSING, MISSING
+                        )
+                )
+        );
+    }
+
     // equals...........................................................................................................
 
     @Test

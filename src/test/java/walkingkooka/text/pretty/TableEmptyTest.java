@@ -176,6 +176,18 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
         );
     }
 
+    // setHeight........................................................................................................
+
+    @Test
+    public void testSetHeightIncreaseFromEmpty() {
+        this.setHeightAndCheck(
+                Table.empty(),
+                3,
+                Table.empty()
+                        .setRow(2, Lists.empty())
+        );
+    }
+
     // toString.........................................................................................................
 
     @Test
