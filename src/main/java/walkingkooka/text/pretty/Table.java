@@ -43,18 +43,18 @@ public abstract class Table implements TreePrintable {
     static TableNotEmptyListRow copyRowText(final List<CharSequence> rowText) {
         TableNotEmptyListRow copy;
 
-        if(rowText instanceof List) {
-            if(rowText instanceof TableNotEmptyListRow) {
-                final TableNotEmptyListRow listRow = (TableNotEmptyListRow)rowText;
+        if (null == rowText) {
+            copy = TableNotEmptyListRow.empty();
+        } else {
+            if (rowText instanceof TableNotEmptyListRow) {
+                final TableNotEmptyListRow listRow = (TableNotEmptyListRow) rowText;
                 copy = listRow.copy();
             } else {
                 copy = TableNotEmptyListRow.with(
-                    TableNotEmptyList.computeCapacity(rowText.size())
+                        TableNotEmptyList.computeCapacity(rowText.size())
                 );
                 copy.copy(rowText);
             }
-        } else {
-            copy = TableNotEmptyListRow.empty();
         }
 
         return copy;
