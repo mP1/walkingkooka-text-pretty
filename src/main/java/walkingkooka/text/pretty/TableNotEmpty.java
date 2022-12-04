@@ -363,11 +363,6 @@ final class TableNotEmpty extends Table {
         return this.rows().equals(other.rows());
     }
 
-    @Override
-    public String toString() {
-        return this.rows.toString();
-    }
-
     @GwtIncompatible
     @Override
     String toStringTest() {

@@ -19,7 +19,6 @@ package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
 
 public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
 
@@ -114,7 +113,10 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(TableEmpty.INSTANCE, Maps.empty().toString());
+        this.toStringAndCheck(
+                TableEmpty.INSTANCE,
+                Lists.empty().toString()
+        );
     }
 
     @Override
