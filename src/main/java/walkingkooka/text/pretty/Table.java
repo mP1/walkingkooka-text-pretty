@@ -121,36 +121,36 @@ public abstract class Table implements TreePrintable {
                             final int row,
                             final CharSequence text);
 
-    // setCells.........................................................................................................
+    // setRows.........................................................................................................
 
     /**
      * A bulk operation that may be used to update a window within this {@link Table}.
      */
-    public final Table setCells(final int startColumn,
-                                final int startRow,
-                                final List<List<CharSequence>> windowText) {
+    public final Table setRows(final int startColumn,
+                               final int startRow,
+                               final List<List<CharSequence>> windowText) {
         // startColumn and startRow must
         checkColumn(startColumn);
         checkRow(startRow);
-        Objects.requireNonNull(windowText, "texts");
+        Objects.requireNonNull(windowText, "windowText");
 
         // #137 if windowText.isEmpty use setWidthAndHeight(startColumn, startRow) etc
         return windowText.isEmpty() ?
                 0 == startColumn && 0 == startRow ?
                         this :
-                        this.setCellsEmpty(
+                        this.setRowsEmpty(
                                 startColumn,
                                 startRow
                         ) :
-                this.setCellsNotEmpty(
+                this.setRowsNotEmty(
                         startColumn,
                         startRow,
                         windowText
                 );
     }
 
-    private Table setCellsEmpty(final int startColumn,
-                                final int startRow) {
+    private Table setRowsEmpty(final int startColumn,
+                               final int startRow) {
         final TableNotEmptyListRows rows = this.rows()
                 .copy();
         rows.size = Math.max(
@@ -167,9 +167,9 @@ public abstract class Table implements TreePrintable {
         );
     }
 
-    private Table setCellsNotEmpty(final int startColumn,
-                                   final int startRow,
-                                   final List<List<CharSequence>> windowText) {
+    private Table setRowsNotEmty(final int startColumn,
+                                 final int startRow,
+                                 final List<List<CharSequence>> windowText) {
         final TableNotEmptyListRows rows = this.rows();
         final TableNotEmptyListRows newRows = TableNotEmptyListRows.with(
                 rows.elements.length

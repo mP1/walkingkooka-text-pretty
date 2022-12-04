@@ -2087,10 +2087,10 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         );
     }
 
-    // setCells.........................................................................................................
+    // setRows.........................................................................................................
 
     @Test
-    public void testSetCellsEmptyNonOrigin() {
+    public void testSetRowsEmptyNonOrigin() {
         final Table expected = this.createTable()
                 .setCell(
                         3,
@@ -2101,7 +2101,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.checkEquals(
                 expected,
                 this.createTable()
-                        .setCells(
+                        .setRows(
                                 4,
                                 4,
                                 Lists.empty()
@@ -2110,7 +2110,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     }
 
     @Test
-    public void testSetCellsAtOrigin() {
+    public void testSetRowsAtOrigin() {
         final Table expected = this.createTable()
                 .setRow(
                         0,
@@ -2130,7 +2130,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.checkEquals(
                 expected,
                 this.createTable()
-                        .setCells(
+                        .setRows(
                                 0,
                                 0,
                                 Lists.of(
@@ -2141,7 +2141,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     }
 
     @Test
-    public void testSetCellsXOffset() {
+    public void testSetRowsXOffset() {
         final Table expected = this.createTable()
                 .setCell(
                         2,
@@ -2160,7 +2160,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.checkEquals(
                 expected,
                 this.createTable()
-                        .setCells(
+                        .setRows(
                                 2,
                                 0,
                                 Lists.of(
@@ -2173,7 +2173,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     }
 
     @Test
-    public void testSetCellsYOffset() {
+    public void testSetRowsYOffset() {
         final Table expected = this.createTable()
                 .setRow(
                         1,
@@ -2183,7 +2183,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.checkEquals(
                 expected,
                 this.createTable()
-                        .setCells(
+                        .setRows(
                                 0,
                                 1,
                                 Lists.of(
@@ -2194,7 +2194,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     }
 
     @Test
-    public void testSetCellsXOffsetAndYOffset() {
+    public void testSetRowsXOffsetAndYOffset() {
         final Table expected = this.createTable()
                 .setCell(
                         1,
@@ -2205,7 +2205,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.checkEquals(
                 expected,
                 this.createTable()
-                        .setCells(
+                        .setRows(
                                 1,
                                 1,
                                 Lists.of(
@@ -2216,7 +2216,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     }
 
     @Test
-    public void testSetCellsXOffsetAndYOffset2() {
+    public void testSetRowsXOffsetAndYOffset2() {
         final Table expected = this.createTable()
                 .setCell(
                         1,
@@ -2239,7 +2239,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.checkEquals(
                 expected,
                 this.createTable()
-                        .setCells(
+                        .setRows(
                                 1,
                                 1,
                                 Lists.of(
@@ -2251,7 +2251,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     }
 
     @Test
-    public void testSetCellsWindowRight() {
+    public void testSetRowsWindowRight() {
         final Table expected = this.createTable()
                 .setCell(
                         3,
@@ -2270,7 +2270,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.checkEquals(
                 expected,
                 this.createTable()
-                        .setCells(
+                        .setRows(
                                 3,
                                 0,
                                 Lists.of(
@@ -2283,7 +2283,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     }
 
     @Test
-    public void testSetCellsWindowRight2() {
+    public void testSetRowsWindowRight2() {
         final Table expected = this.createTable()
                 .setCell(
                         3,
@@ -2314,7 +2314,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.checkEquals(
                 expected,
                 this.createTable()
-                        .setCells(
+                        .setRows(
                                 3,
                                 0,
                                 Lists.of(
@@ -2327,7 +2327,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     }
 
     @Test
-    public void testSetCellsYOffsetBottom() {
+    public void testSetRowsYOffsetBottom() {
         final Table expected = this.createTable()
                 .setRow(
                         3,
@@ -2337,7 +2337,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.checkEquals(
                 expected,
                 this.createTable()
-                        .setCells(
+                        .setRows(
                                 0,
                                 3,
                                 Lists.of(
@@ -2348,7 +2348,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     }
 
     @Test
-    public void testSetCellsXOffsetRightYOffsetBottom() {
+    public void testSetRowsXOffsetRightYOffsetBottom() {
         final Table expected = this.createTable()
                 .setCell(
                         2,
@@ -2371,7 +2371,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.checkEquals(
                 expected,
                 this.createTable()
-                        .setCells(
+                        .setRows(
                                 2,
                                 2,
                                 Lists.of(

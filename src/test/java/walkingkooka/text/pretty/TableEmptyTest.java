@@ -111,10 +111,10 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
         this.createAndSetRow(1, R1C0, R1C1, R1C2);
     }
 
-    // setCells.........................................................................................................
+    // setRows.........................................................................................................
 
     @Test
-    public void testSetCellsAtOrigin() {
+    public void testSetRowsAtOrigin() {
         final Table expected = TableEmpty.INSTANCE.setRow(
                 0,
                 list(R0C0, R0C1, R0C2)
@@ -122,7 +122,7 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
 
         this.checkEquals(
                 expected,
-                TableEmpty.INSTANCE.setCells(
+                TableEmpty.INSTANCE.setRows(
                         0,
                         0,
                         Lists.of(
@@ -133,7 +133,7 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
     }
 
     @Test
-    public void testSetCellsNonOriginEmpty() {
+    public void testSetRowsNonOriginEmpty() {
         final Table expected = TableEmpty.INSTANCE.setCell(
                 2,
                 2,
@@ -142,7 +142,7 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
 
         this.checkEquals(
                 expected,
-                TableEmpty.INSTANCE.setCells(
+                TableEmpty.INSTANCE.setRows(
                         3,
                         3,
                         Lists.empty()
@@ -151,7 +151,7 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
     }
 
     @Test
-    public void testSetCellsNonOrigin() {
+    public void testSetRowsNonOrigin() {
         final Table expected = TableEmpty.INSTANCE.setRow(
                 2,
                 list(MISSING, MISSING, R0C0, R0C1, R0C2)
@@ -159,7 +159,7 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
 
         this.checkEquals(
                 expected,
-                TableEmpty.INSTANCE.setCells(
+                TableEmpty.INSTANCE.setRows(
                         2,
                         2,
                         Lists.of(
