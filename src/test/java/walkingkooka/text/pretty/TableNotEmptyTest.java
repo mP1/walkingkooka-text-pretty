@@ -33,6 +33,8 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     private final static CharSequence Y = "y";
     private final static CharSequence Z = "z";
     private final static CharSequence A = "A";
+    private final static CharSequence B = "B";
+    private final static CharSequence C = "C";
 
     // width...........................................................................................................
 
@@ -1239,7 +1241,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.rowAndCheck(
                 this.createTable(
                         3,
-                        list("A", "B", "C"),
+                        list("A", B, C),
                         null
                 ),
                 1,
@@ -1255,12 +1257,12 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                 this.createTable(
                         3,
                         null, // row 0
-                        list("A", null, "C") // row 1
+                        list("A", null, C) // row 1
                 ),
                 1,
                 "A",
                 MISSING,
-                "C"
+                C
         );
     }
 
@@ -1270,12 +1272,12 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                 this.createTable(
                         3,
                         null,
-                        list("A", "", "C")
+                        list("A", "", C)
                 ),
                 1,
                 "A",
                 MISSING,
-                "C"
+                C
         );
     }
 
@@ -1286,13 +1288,13 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                 this.createTable()
                         .setRow(
                                 row,
-                                list("A", "B", "C")
+                                list("A", B, C)
                         ),
                 list(
                         R0C0, R0C1, R0C2
                 ),
                 list(
-                        "A", "B", "C"
+                        "A", B, C
                 ),
                 list(
                         R2C0, R2C1, R2C2
@@ -1307,13 +1309,13 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                 this.createTable()
                         .setRow(
                                 row,
-                                list(null, "", "C")
+                                list(null, "", C)
                         ),
                 list(
                         R0C0, R0C1, R0C2
                 ),
                 list(
-                        MISSING, MISSING, "C"
+                        MISSING, MISSING, C
                 ),
                 list(
                         R2C0, R2C1, R2C2
@@ -1328,13 +1330,13 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                 this.createTable()
                         .setRow(
                                 row,
-                                list("A", "B", "C", "D")
+                                list("A", B, C, "D")
                         ),
                 list(
                         R0C0, R0C1, R0C2, MISSING
                 ),
                 list(
-                        "A", "B", "C", "D"
+                        "A", B, C, "D"
                 ),
                 list(
                         R2C0, R2C1, R2C2, MISSING
@@ -2082,6 +2084,301 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                 list(
                         R2C0, R2C1, R2C2
                 )
+        );
+    }
+
+    // setCells.........................................................................................................
+
+    @Test
+    public void testSetCellsEmptyNonOrigin() {
+        final Table expected = this.createTable()
+                .setCell(
+                        3,
+                        3,
+                        ""
+                );
+
+        this.checkEquals(
+                expected,
+                this.createTable()
+                        .setCells(
+                                4,
+                                4,
+                                Lists.empty()
+                        )
+        );
+    }
+
+    @Test
+    public void testSetCellsAtOrigin() {
+        final Table expected = this.createTable()
+                .setRow(
+                        0,
+                        list(X, Y, Z)
+                );
+
+        expected.setRow(
+                1,
+                list(R1C0, R1C1, R1C2)
+        );
+
+        expected.setRow(
+                2,
+                list(R2C0, R2C1, R2C2)
+        );
+
+        this.checkEquals(
+                expected,
+                this.createTable()
+                        .setCells(
+                                0,
+                                0,
+                                Lists.of(
+                                        list(X, Y, Z)
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testSetCellsXOffset() {
+        final Table expected = this.createTable()
+                .setCell(
+                        2,
+                        0,
+                        X
+                ).setCell(
+                        2,
+                        1,
+                        Y
+                ).setCell(
+                        2,
+                        2,
+                        Z
+                );
+
+        this.checkEquals(
+                expected,
+                this.createTable()
+                        .setCells(
+                                2,
+                                0,
+                                Lists.of(
+                                        list(X),
+                                        list(Y),
+                                        list(Z)
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testSetCellsYOffset() {
+        final Table expected = this.createTable()
+                .setRow(
+                        1,
+                        list(X, Y, Z)
+                );
+
+        this.checkEquals(
+                expected,
+                this.createTable()
+                        .setCells(
+                                0,
+                                1,
+                                Lists.of(
+                                        list(X, Y, Z)
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testSetCellsXOffsetAndYOffset() {
+        final Table expected = this.createTable()
+                .setCell(
+                        1,
+                        1,
+                        X
+                );
+
+        this.checkEquals(
+                expected,
+                this.createTable()
+                        .setCells(
+                                1,
+                                1,
+                                Lists.of(
+                                        list(X)
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testSetCellsXOffsetAndYOffset2() {
+        final Table expected = this.createTable()
+                .setCell(
+                        1,
+                        1,
+                        X
+                ).setCell(
+                        2,
+                        1,
+                        Y
+                ).setCell(
+                        1,
+                        2,
+                        Z
+                ).setCell(
+                        2,
+                        2,
+                        A
+                );
+
+        this.checkEquals(
+                expected,
+                this.createTable()
+                        .setCells(
+                                1,
+                                1,
+                                Lists.of(
+                                        list(X, Y),
+                                        list(Z, A)
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testSetCellsWindowRight() {
+        final Table expected = this.createTable()
+                .setCell(
+                        3,
+                        0,
+                        X
+                ).setCell(
+                        3,
+                        1,
+                        Y
+                ).setCell(
+                        3,
+                        2,
+                        Z
+                );
+
+        this.checkEquals(
+                expected,
+                this.createTable()
+                        .setCells(
+                                3,
+                                0,
+                                Lists.of(
+                                        list(X),
+                                        list(Y),
+                                        list(Z)
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testSetCellsWindowRight2() {
+        final Table expected = this.createTable()
+                .setCell(
+                        3,
+                        0,
+                        X
+                ).setCell(
+                        4,
+                        0,
+                        Y
+                ).setCell(
+                        3,
+                        1,
+                        Z
+                ).setCell(
+                        4,
+                        1,
+                        A
+                ).setCell(
+                        3,
+                        2,
+                        B
+                ).setCell(
+                        4,
+                        2,
+                        C
+                );
+
+        this.checkEquals(
+                expected,
+                this.createTable()
+                        .setCells(
+                                3,
+                                0,
+                                Lists.of(
+                                        list(X, Y),
+                                        list(Z, A),
+                                        list(B, C)
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testSetCellsYOffsetBottom() {
+        final Table expected = this.createTable()
+                .setRow(
+                        3,
+                        list(X, Y, Z)
+                );
+
+        this.checkEquals(
+                expected,
+                this.createTable()
+                        .setCells(
+                                0,
+                                3,
+                                Lists.of(
+                                        list(X, Y, Z)
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testSetCellsXOffsetRightYOffsetBottom() {
+        final Table expected = this.createTable()
+                .setCell(
+                        2,
+                        2,
+                        X
+                ).setCell(
+                        3,
+                        2,
+                        Y
+                ).setCell(
+                        2,
+                        3,
+                        Z
+                ).setCell(
+                        3,
+                        3,
+                        A
+                );
+
+        this.checkEquals(
+                expected,
+                this.createTable()
+                        .setCells(
+                                2,
+                                2,
+                                Lists.of(
+                                        list(X, Y),
+                                        list(Z, A)
+                                )
+                        )
         );
     }
 

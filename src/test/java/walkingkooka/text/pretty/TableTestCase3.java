@@ -148,6 +148,62 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         );
     }
 
+    // setCells.........................................................................................................
+
+    @Test
+    public final void testSetCellsInvalidStartColumnFails() {
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> this.createTable()
+                        .setCells(
+                                -1,
+                                0,
+                                Lists.empty()
+                        )
+        );
+    }
+
+    @Test
+    public final void testSetCellsInvalidStartRowFails() {
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> this.createTable()
+                        .setCells(
+                                0,
+                                -1,
+                                Lists.empty()
+                        )
+        );
+    }
+
+    @Test
+    public final void testSetCellsNullWindowFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createTable()
+                        .setCells(
+                                0,
+                                0,
+                                null
+                        )
+        );
+    }
+
+    @Test
+    public final void testSetCellsEmptyWindow() {
+        final Table table = this.createTable();
+        assertSame(
+                table,
+                table.setCells(
+                        0,
+                        0,
+                        Lists.empty()
+                )
+        );
+    }
+
+    // helpers.........................................................................................................
+
     abstract T createTable();
 
     abstract int width();

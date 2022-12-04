@@ -121,6 +121,158 @@ public abstract class Table implements TreePrintable {
                             final int row,
                             final CharSequence text);
 
+    // setCells.........................................................................................................
+
+    /**
+     * A bulk operation that may be used to update a window within this {@link Table}.
+     */
+    public final Table setCells(final int startColumn,
+                                final int startRow,
+                                final List<List<CharSequence>> windowText) {
+        // startColumn and startRow must
+        checkColumn(startColumn);
+        checkRow(startRow);
+        Objects.requireNonNull(windowText, "texts");
+
+        // #137 if windowText.isEmpty use setWidthAndHeight(startColumn, startRow) etc
+        return windowText.isEmpty() ?
+                0 == startColumn && 0 == startRow ?
+                        this :
+                        this.setCellsEmpty(
+                                startColumn,
+                                startRow
+                        ) :
+                this.setCellsNotEmpty(
+                        startColumn,
+                        startRow,
+                        windowText
+                );
+    }
+
+    private Table setCellsEmpty(final int startColumn,
+                                final int startRow) {
+        final TableNotEmptyListRows rows = this.rows()
+                .copy();
+        rows.size = Math.max(
+                startRow,
+                rows.size
+        );
+
+        return TableNotEmpty.with(
+                rows,
+                Math.max(
+                        startColumn,
+                        this.width()
+                )
+        );
+    }
+
+    private Table setCellsNotEmpty(final int startColumn,
+                                   final int startRow,
+                                   final List<List<CharSequence>> windowText) {
+        final TableNotEmptyListRows rows = this.rows();
+        final TableNotEmptyListRows newRows = TableNotEmptyListRows.with(
+                rows.elements.length
+        );
+
+        final int height = this.height();
+
+        // copy rows before...
+        int row = 0;
+        int newWidth = this.width();
+
+        while (row < startRow) {
+            TableNotEmptyListRow rowText = null;
+
+            if (row < height) {
+                rowText = rows.get(row)
+                        .copy();
+            }
+
+            newRows.setAuto(
+                    row,
+                    rowText
+            );
+
+            row++;
+        }
+
+        // copy window rows...
+        for (final List<CharSequence> rowText : windowText) {
+            final TableNotEmptyListRow newTableRow = TableNotEmptyListRow.empty();
+
+            int column = 0;
+
+            // copy columns before
+            TableNotEmptyListRow oldTableRow = null;
+            if (row < height) {
+                oldTableRow = rows.get(row);
+
+                while (column < startColumn) {
+                    newTableRow.setAuto(
+                            column,
+                            oldTableRow.get(column)
+                    );
+                    column++;
+                }
+            } else {
+                column = startColumn;
+            }
+
+            // copy window row.
+            for (final CharSequence text : rowText) {
+                newTableRow.setAuto(
+                        column,
+                        text
+                );
+                column++;
+            }
+
+            // copy the columns after window
+            if (null != oldTableRow) {
+                final int endOfRow = oldTableRow.size;
+
+                while (column < endOfRow) {
+                    newTableRow.setAuto(
+                            column,
+                            oldTableRow.get(column)
+                    );
+                    column++;
+                }
+            }
+
+            newWidth = Math.max(
+                    newWidth,
+                    newTableRow.size
+            );
+
+            newRows.setAuto(
+                    row,
+                    newTableRow
+            );
+
+            row++;
+        }
+
+        // copy rows after...
+        while (row < height) {
+            newRows.setAuto(
+                    row,
+                    rows.get(row)
+                            .copy()
+            );
+
+            row++;
+        }
+
+        return rows.isEmpty() ?
+                empty() :
+                TableNotEmpty.with(
+                        newRows,
+                        newWidth
+                );
+    }
+
     // column...........................................................................................................
 
     /**
