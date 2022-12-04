@@ -2125,6 +2125,30 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                this.createTable(),
+                "Table\n" +
+                        "  row: 0\n" +
+                        "    \"r0c0\"\n" +
+                        "    \"r0c1\"\n" +
+                        "    \"r0c2\"\n" +
+                        "  row: 1\n" +
+                        "    \"r1c0\"\n" +
+                        "    \"r1c1\"\n" +
+                        "    \"r1c2\"\n" +
+                        "  row: 2\n" +
+                        "    \"r2c0\"\n" +
+                        "    \"r2c1\"\n" +
+                        "    \"r2c2\"\n"
+        );
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     TableNotEmpty createTable() {
         return createTable(
