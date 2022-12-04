@@ -17,7 +17,8 @@
 
 package walkingkooka.text.pretty;
 
-import walkingkooka.collect.list.Lists;
+import javaemul.internal.annotations.GwtIncompatible;
+import walkingkooka.text.CharSequences;
 
 import java.util.List;
 
@@ -38,6 +39,15 @@ final class TableEmpty extends Table {
         super();
     }
 
+    // cell.............................................................................................................
+    @Override
+    CharSequence cell0(final int column,
+                       final int row) {
+        return MISSING_CELL;
+    }
+
+    private final static CharSequence MISSING_CELL = CharSequences.empty();
+
     // setCell..........................................................................................................
 
     /**
@@ -54,7 +64,7 @@ final class TableEmpty extends Table {
 
     @Override
     List<CharSequence> column0(final int row) {
-        return Lists.empty();
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -71,28 +81,45 @@ final class TableEmpty extends Table {
     // row..............................................................................................................
 
     @Override
-    List<CharSequence> row0(final int row) {
-        return Lists.empty();
-    }
-
-    @Override
-    Table setRow1(final int row, final List<CharSequence> text) {
-        return text.isEmpty() ?
+    Table addRow0(final int row,
+                  final TableNotEmptyListRow rowText) {
+        return null == rowText ?
                 this :
-                TableNotEmpty.withRow(row, text);
+                TableNotEmpty.withRow(row, rowText);
     }
-
-    // support..........................................................................................................
 
     @Override
-    List<List<CharSequence>> asList() {
-        return Lists.empty();
+    Table replaceRow(final int row,
+                              final TableNotEmptyListRow rowText) {
+        throw new UnsupportedOperationException();
     }
+
+    // height...........................................................................................................
+
+    @Override
+    public int height() {
+        return 0;
+    }
+
+    // rows.............................................................................................................
+
+    @Override
+    TableNotEmptyListRows rows() {
+        return EMPTY_ROWS;
+    }
+
+    private final static TableNotEmptyListRows EMPTY_ROWS = TableNotEmptyListRows.with(0);
 
     // Object...........................................................................................................
 
     @Override
     public String toString() {
+        return "{}";
+    }
+
+    @GwtIncompatible
+    @Override
+    String toStringTest() {
         return "{}";
     }
 }

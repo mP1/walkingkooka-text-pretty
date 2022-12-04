@@ -54,7 +54,7 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
                         R0C2
                 ),
                 Lists.of(
-                        list(null, null, R0C2)
+                        list(MISSING, MISSING, R0C2)
                 )
         );
     }
@@ -68,20 +68,30 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
                         R1C1
                 ),
                 Lists.of(
-                        null, // row 0
-                        list(null, R1C1)
+                        list(MISSING, MISSING), // row 0
+                        list(MISSING, R1C1)
                 )
         );
     }
 
     @Test
     public void testSetColumn() {
-        this.setColumnAndCheck(0, R0C0, R1C0, R2C0);
+        this.setColumnAndCheck(
+                0,
+                R0C0,
+                R1C0,
+                R2C0
+        );
     }
 
     @Test
     public void testSetColumn2() {
-        this.setColumnAndCheck(1, R0C1, R1C1, R2C1);
+        this.setColumnAndCheck(
+                1,
+                R0C1,
+                R1C1,
+                R2C1
+        );
     }
 
     @Test
@@ -94,12 +104,12 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
 
     @Test
     public void testSetRow() {
-        this.setRowAndCheck(0, R0C0, R0C1, R0C2);
+        this.createAndSetRow(0, R0C0, R0C1, R0C2);
     }
 
     @Test
     public void testSetRow2() {
-        this.setRowAndCheck(1, R1C0, R1C1, R1C2);
+        this.createAndSetRow(1, R1C0, R1C1, R1C2);
     }
 
     @Test

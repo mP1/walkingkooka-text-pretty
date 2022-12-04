@@ -20,11 +20,11 @@ package walkingkooka.text.pretty;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.text.CharSequences;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         implements HashCodeEqualsDefinedTesting2<TableNotEmpty> {
@@ -33,6 +33,110 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     private final static CharSequence Y = "y";
     private final static CharSequence Z = "z";
     private final static CharSequence A = "A";
+
+    // width...........................................................................................................
+
+    @Test
+    public void testWithOneColumnOneRow() {
+        this.check(
+                this.createTable(
+                        1,
+                        list(X)
+                ),
+                list(
+                        X
+                )
+        );
+    }
+
+    @Test
+    public void testWithOneColumnOneRowMissing() {
+        this.check(
+                this.createTable(
+                        2,
+                        list(null, X)
+                ),
+                list(
+                        MISSING,
+                        X
+                )
+        );
+    }
+
+    @Test
+    public void testWithOneColumnOneRowMissing2() {
+        this.check(
+                this.createTable(
+                        1,
+                        list(X)
+                ),
+                list(
+                        X
+                )
+        );
+    }
+
+    @Test
+    public void testWithOneColumnOneRowMissingRemoved() {
+        this.check(
+                this.createTable(
+                        2,
+                        list(X, null)
+                ),
+                list(
+                        X, MISSING
+                )
+        );
+    }
+
+    @Test
+    public void testWithOneColumnOneRowMissingRemoved2() {
+        this.check(
+                this.createTable(
+                        1,
+                        list(X, "")
+                ),
+                list(
+                        X
+                )
+        );
+    }
+
+    @Test
+    public void testWithTrailingEmptyRow() {
+        this.check(
+                this.createTable(
+                        2,
+                        list(R0C0, R0C1),
+                        null
+                ),
+                list(
+                        R0C0, R0C1
+                ),
+                list(
+                        MISSING, MISSING
+                )
+        );
+    }
+
+    @Test
+    public void testWithManyRows() {
+        this.check(
+                this.createTable(
+                        2,
+                        list(R0C0, R0C1),
+                        list(R1C0, R1C1)
+                ),
+                list(
+                        R0C0, R0C1
+                ),
+                list(
+                        R1C0, R1C1
+                )
+        );
+    }
+
+    // width & height...................................................................................................
 
     @Test
     public void testHeight() {
@@ -53,6 +157,50 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     // cell.............................................................................................................
 
     @Test
+    public void testCellRowMissingFails() {
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> this.createTable().cell(0, 4)
+        );
+    }
+
+    @Test
+    public void testCellColumnMissingFails() {
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> this.createTable().cell(4, 0)
+        );
+    }
+
+    //    @Test
+//    public void testCellAbsentRowMissing() {
+//        this.cellAndCheck(
+//                this.createTable(
+//                        2,
+//                        list(R0C0, R0C0),
+//                        list(R0C1, R1C1)
+//                ),
+//                1,
+//                2,
+//                MISSING
+//        );
+//    }
+//
+//    @Test
+//    public void testCellAbsentColumnOob() {
+//        this.cellAndCheck(
+//                this.createTable(
+//                        2,
+//                        list(R0C0, R0C0),
+//                        list(R0C1, R1C1)
+//                ),
+//                2,
+//                1,
+//                MISSING
+//        );
+//    }
+
+    @Test
     public void testCell() {
         this.cellAndCheck(
                 1,
@@ -67,38 +215,6 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                 0,
                 2,
                 R2C0
-        );
-    }
-
-    @Test
-    public void testCellAbsentRowMissing() {
-        this.cellAndCheck(
-                TableNotEmpty.with(
-                        list(
-                                list(R0C0, R0C0),
-                                list(R0C1, R1C1)
-                        ),
-                        2
-                ),
-                1,
-                2,
-                CharSequences.empty()
-        );
-    }
-
-    @Test
-    public void testCellAbsentColumnOob() {
-        this.cellAndCheck(
-                TableNotEmpty.with(
-                        list(
-                                list(R0C0, R0C0),
-                                list(R0C1, R1C1)
-                        ),
-                        2
-                ),
-                2,
-                1,
-                CharSequences.empty()
         );
     }
 
@@ -120,8 +236,8 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     public void testSetSameCell3() {
         final TableNotEmpty table = this.createTable();
 
-        for(int c = 0; c < table.width(); c++) {
-            for(int r = 0; r < table.height(); r++) {
+        for (int c = 0; c < table.width(); c++) {
+            for (int r = 0; r < table.height(); r++) {
                 assertSame(table, table.setCell(c, r, table.cell(c, r)));
             }
         }
@@ -151,46 +267,46 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
 
     @Test
     public void testSetCellDifferent2() {
-            this.check(
-                    this.setCellAndCheck(
-                            1,
-                            1,
-                            "x"
-                    ),
-                    list(
-                            list(
-                                    R0C0, R0C1, R0C2
-                            ),
-                            list(
-                                    R1C0, "x", R1C2
-                            ),
-                            list(
-                                    R2C0, R2C1, R2C2
-                            )
-                    )
-            );
+        this.check(
+                this.setCellAndCheck(
+                        1,
+                        1,
+                        "x"
+                ),
+                list(
+                        list(
+                                R0C0, R0C1, R0C2
+                        ),
+                        list(
+                                R1C0, "x", R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        )
+                )
+        );
     }
 
     @Test
     public void testSetCellDifferent3() {
-            this.check(
-                    this.setCellAndCheck(
-                            2,
-                            2,
-                            "x"
-                    ),
-                    list(
-                            list(
-                                    R0C0, R0C1, R0C2
-                            ),
-                            list(
-                                    R1C0, R1C1, R1C2
-                            ),
-                            list(
-                                    R2C0, R2C1, "x"
-                            )
-                    )
-            );
+        this.check(
+                this.setCellAndCheck(
+                        2,
+                        2,
+                        "x"
+                ),
+                list(
+                        list(
+                                R0C0, R0C1, R0C2
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, "x"
+                        )
+                )
+        );
     }
 
     @Test
@@ -209,7 +325,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                                 R1C0, R1C1, R1C2
                         ),
                         list(
-                                R2C0, R2C1
+                                R2C0, R2C1, MISSING
                         )
                 )
         );
@@ -231,7 +347,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                                 R1C0, R1C1, R1C2
                         ),
                         list(
-                                R2C0, R2C1
+                                R2C0, R2C1, MISSING
                         )
                 )
         );
@@ -274,7 +390,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                 this.createTable().setCell(0, 0, null),
                 list(
                         list(
-                                null, R0C1, R0C2
+                                MISSING, R0C1, R0C2
                         ),
                         list(
                                 R1C0, R1C1, R1C2
@@ -289,10 +405,11 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     @Test
     public void testSetCellEmpty() {
         this.check(
-                this.createTable().setCell(0, 0, ""),
+                this.createTable()
+                        .setCell(0, 0, ""),
                 list(
                         list(
-                                null, R0C1, R0C2
+                                MISSING, R0C1, R0C2
                         ),
                         list(
                                 R1C0, R1C1, R1C2
@@ -310,7 +427,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                 this.createTable().setCell(2, 0, null),
                 list(
                         list(
-                                R0C0, R0C1
+                                R0C0, R0C1, MISSING
                         ),
                         list(
                                 R1C0, R1C1, R1C2
@@ -325,10 +442,11 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     @Test
     public void testSetCellLastEmpty() {
         this.check(
-                this.createTable().setCell(2, 0, ""),
+                this.createTable()
+                        .setCell(2, 0, ""),
                 list(
                         list(
-                                R0C0, R0C1
+                                R0C0, R0C1, MISSING
                         ),
                         list(
                                 R1C0, R1C1, R1C2
@@ -341,12 +459,161 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     }
 
     @Test
-    public void testSetCellAllNull() {
-        Table table = TableNotEmpty.with(
+    public void testSetCellAddsColumn() {
+        this.check(
+                this.createTable()
+                        .setCell(3, 0, X),
                 list(
-                        list( A)
-                ),
-                1
+                        list(
+                                R0C0, R0C1, R0C2, X
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2, MISSING
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2, MISSING
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetCellAddsColumn2() {
+        this.check(
+                this.createTable()
+                        .setCell(4, 1, X),
+                list(
+                        list(
+                                R0C0, R0C1, R0C2, MISSING, MISSING
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2, MISSING, X
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2, MISSING, MISSING
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetCellAddsRow() {
+        this.check(
+                this.createTable()
+                        .setCell(0, 3, X),
+                list(
+                        list(
+                                R0C0, R0C1, R0C2
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        ),
+                        list(
+                                X, MISSING, MISSING
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetCellAddsRow2() {
+        this.check(
+                this.createTable()
+                        .setCell(1, 3, X),
+                list(
+                        list(
+                                R0C0, R0C1, R0C2
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        ),
+                        list(
+                                MISSING, X,  MISSING
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetCellAddsRow3() {
+        this.check(
+                this.createTable()
+                        .setCell(1, 3, X),
+                list(
+                        list(
+                                R0C0, R0C1, R0C2
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        ),
+                        list(
+                                MISSING, X,  MISSING
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetCellAddsColumnAndRow() {
+        this.check(
+                this.createTable()
+                        .setCell(3, 3, X),
+                list(
+                        list(
+                                R0C0, R0C1, R0C2, MISSING
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2, MISSING
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2, MISSING
+                        ),
+                        list(
+                                MISSING, MISSING,  MISSING, X
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetCellAddsColumnAndRow2() {
+        this.check(
+                this.createTable()
+                        .setCell(4, 4, X),
+                list(
+                        list(
+                                R0C0, R0C1, R0C2, MISSING, MISSING
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2, MISSING, MISSING
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2, MISSING, MISSING
+                        ),
+                        list(
+                                MISSING, MISSING, MISSING, MISSING, MISSING
+                        ),
+                        list(
+                                MISSING, MISSING,  MISSING, MISSING, X
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetCellOnlyNull() {
+        final Table table = this.createTable(
+                1,
+                list(A)
         );
         assertSame(
                 Table.empty(),
@@ -355,7 +622,34 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     }
 
     @Test
-    public void testSetCellAllNull2() {
+    public void testSetCellOnlyNullAndNull() {
+        final Table table = this.createTable(
+                2,
+                list(X, Y)
+        );
+        assertSame(
+                Table.empty(),
+                table.setCell(0, 0, null)
+                        .setCell(1, 0, null)
+        );
+    }
+
+    @Test
+    public void testSetCellBothRowsNullAndNull() {
+        final Table table = this.createTable(
+                1,
+                list(X),
+                list(Y)
+        );
+        assertSame(
+                Table.empty(),
+                table.setCell(0, 0, null)
+                        .setCell(0, 1, null)
+        );
+    }
+
+    @Test
+    public void testSetCellAllNull3() {
         Table table = this.createTable();
 
         for (int c = 0; c < table.width(); c++) {
@@ -369,11 +663,9 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
 
     @Test
     public void testSetCellAllEmpty() {
-        Table table = TableNotEmpty.with(
-                list(
-                       list( A)
-                ),
-                1
+        final Table table = this.createTable(
+                1,
+                list(A)
         );
         assertSame(
                 Table.empty(),
@@ -391,7 +683,10 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
             }
         }
 
-        assertSame(Table.empty(), table);
+        assertSame(
+                Table.empty(),
+                table
+        );
     }
 
     // column...........................................................................................................
@@ -408,14 +703,6 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     }
 
     @Test
-    public void testColumnMissing() {
-        this.columnAndCheck(
-                this.createTable(),
-                4
-        );
-    }
-
-    @Test
     public void testSetColumnColumn() {
         final int column = 1;
 
@@ -424,8 +711,8 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                         .setColumn(column, list(R0C1)),
                 column,
                 R0C1,
-                CharSequences.empty(),
-                CharSequences.empty()
+                MISSING,
+                MISSING
         );
     }
 
@@ -464,13 +751,13 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.check(
                 this.setColumnAndCheck(column),
                 list(
-                        null, R0C1, R0C2
+                        MISSING, R0C1, R0C2
                 ),
                 list(
-                        null, R1C1, R1C2
+                        MISSING, R1C1, R1C2
                 ),
                 list(
-                        null, R2C1, R2C2
+                        MISSING, R2C1, R2C2
                 )
         );
     }
@@ -482,13 +769,13 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.check(
                 this.setColumnAndCheck(column),
                 list(
-                        R0C0, null, R0C2
+                        R0C0, MISSING, R0C2
                 ),
                 list(
-                        R1C0, null, R1C2
+                        R1C0, MISSING, R1C2
                 ),
                 list(
-                        R2C0, null, R2C2
+                        R2C0, MISSING, R2C2
                 )
         );
     }
@@ -500,13 +787,13 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.check(
                 this.setColumnAndCheck(column),
                 list(
-                        R0C0, R0C1
+                        R0C0, R0C1, MISSING
                 ),
                 list(
-                        R1C0, R1C1
+                        R1C0, R1C1, MISSING
                 ),
                 list(
-                        R2C0, R2C1
+                        R2C0, R2C1, MISSING
                 )
         );
     }
@@ -518,13 +805,13 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.check(
                 this.setColumnAndCheck(column, null, null),
                 list(
-                        null, R0C1, R0C2
+                        MISSING, R0C1, R0C2
                 ),
                 list(
-                        null, R1C1, R1C2
+                        MISSING, R1C1, R1C2
                 ),
                 list(
-                        null, R2C1, R2C2
+                        MISSING, R2C1, R2C2
                 )
         );
     }
@@ -536,13 +823,13 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.check(
                 this.setColumnAndCheck(column, null, null),
                 list(
-                        R0C0, null, R0C2
+                        R0C0, MISSING, R0C2
                 ),
                 list(
-                        R1C0, null, R1C2
+                        R1C0, MISSING, R1C2
                 ),
                 list(
-                        R2C0, null, R2C2
+                        R2C0, MISSING, R2C2
                 )
         );
     }
@@ -554,13 +841,13 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.check(
                 this.setColumnAndCheck(column, null, null),
                 list(
-                        R0C0, R0C1
+                        R0C0, R0C1, MISSING
                 ),
                 list(
-                        R1C0, R1C1
+                        R1C0, R1C1, MISSING
                 ),
                 list(
-                        R2C0, R2C1
+                        R2C0, R2C1, MISSING
                 )
         );
     }
@@ -572,13 +859,13 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.check(
                 this.setColumnAndCheck(column, "", ""),
                 list(
-                        null, R0C1, R0C2
+                        MISSING, R0C1, R0C2
                 ),
                 list(
-                        null, R1C1, R1C2
+                        MISSING, R1C1, R1C2
                 ),
                 list(
-                        null, R2C1, R2C2
+                        MISSING, R2C1, R2C2
                 )
         );
     }
@@ -590,13 +877,13 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.check(
                 this.setColumnAndCheck(column, "", ""),
                 list(
-                        R0C0, null, R0C2
+                        R0C0, MISSING, R0C2
                 ),
                 list(
-                        R1C0, null, R1C2
+                        R1C0, MISSING, R1C2
                 ),
                 list(
-                        R2C0, null, R2C2
+                        R2C0, MISSING, R2C2
                 )
         );
     }
@@ -608,13 +895,13 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.check(
                 this.setColumnAndCheck(column, "", ""),
                 list(
-                        R0C0, R0C1
+                        R0C0, R0C1, MISSING
                 ),
                 list(
-                        R1C0, R1C1
+                        R1C0, R1C1, MISSING
                 ),
                 list(
-                        R2C0, R2C1
+                        R2C0, R2C1, MISSING
                 )
         );
     }
@@ -629,10 +916,10 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                         X, R0C1, R0C2
                 ),
                 list(
-                        null, R1C1, R1C2
+                        MISSING, R1C1, R1C2
                 ),
                 list(
-                        null, R2C1, R2C2
+                        MISSING, R2C1, R2C2
                 )
         );
     }
@@ -647,10 +934,10 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                         R0C0, X, R0C2
                 ),
                 list(
-                        R1C0, null, R1C2
+                        R1C0, MISSING, R1C2
                 ),
                 list(
-                        R2C0, null, R2C2
+                        R2C0, MISSING, R2C2
                 )
         );
     }
@@ -665,10 +952,10 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                         R0C0, R0C1, X
                 ),
                 list(
-                        R1C0, R1C1
+                        R1C0, R1C1, MISSING
                 ),
                 list(
-                        R2C0, R2C1
+                        R2C0, R2C1, MISSING
                 )
         );
     }
@@ -683,10 +970,10 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                         X, R0C1, R0C2
                 ),
                 list(
-                        null, R1C1, R1C2
+                        MISSING, R1C1, R1C2
                 ),
                 list(
-                        null, R2C1, R2C2
+                        MISSING, R2C1, R2C2
                 )
         );
     }
@@ -701,10 +988,10 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                         X, R0C1, R0C2
                 ),
                 list(
-                        null, R1C1, R1C2
+                        MISSING, R1C1, R1C2
                 ),
                 list(
-                        null, R2C1, R2C2
+                        MISSING, R2C1, R2C2
                 )
         );
     }
@@ -719,10 +1006,10 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                         R0C0, X, R0C2
                 ),
                 list(
-                        R1C0, null, R1C2
+                        R1C0, MISSING, R1C2
                 ),
                 list(
-                        R2C0, null, R2C2
+                        R2C0, MISSING, R2C2
                 )
         );
     }
@@ -734,13 +1021,13 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.check(
                 this.setColumnAndCheck(column, null, X),
                 list(
-                        null, R0C1, R0C2
+                        MISSING, R0C1, R0C2
                 ),
                 list(
                         X, R1C1, R1C2
                 ),
                 list(
-                        null, R2C1, R2C2
+                        MISSING, R2C1, R2C2
                 )
         );
     }
@@ -753,13 +1040,13 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.check(
                 this.setColumnAndCheck(column, null, X),
                 list(
-                        R0C0, null, R0C2
+                        R0C0, MISSING, R0C2
                 ),
                 list(
                         R1C0, X, R1C2
                 ),
                 list(
-                        R2C0, null, R2C2
+                        R2C0, MISSING, R2C2
                 )
         );
     }
@@ -771,13 +1058,13 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.check(
                 this.setColumnAndCheck(column, "", X),
                 list(
-                        null, R0C1, R0C2
+                        MISSING, R0C1, R0C2
                 ),
                 list(
                         X, R1C1, R1C2
                 ),
                 list(
-                        null, R2C1, R2C2
+                        MISSING, R2C1, R2C2
                 )
         );
     }
@@ -798,7 +1085,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                         Z, R2C1, R2C2
                 ),
                 list(
-                        A
+                        A, MISSING, MISSING
                 )
         );
     }
@@ -819,7 +1106,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                         R2C0, Z, R2C2
                 ),
                 list(
-                        null, A
+                        MISSING, A, MISSING
                 )
         );
     }
@@ -837,10 +1124,10 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                         R1C0, Y, R1C2
                 ),
                 list(
-                        R2C0, null, R2C2
+                        R2C0, MISSING, R2C2
                 ),
                 list(
-                        null, A
+                        MISSING, A, MISSING
                 )
         );
     }
@@ -858,16 +1145,16 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                         R1C0, Y, R1C2
                 ),
                 list(
-                        R2C0, null, R2C2
+                        R2C0, MISSING, R2C2
                 ),
                 list(
-                        null, A
+                        MISSING, A, MISSING
                 )
         );
     }
 
     @Test
-    public void testSetColumnWithListWithMoreCellsTrimmed() {
+    public void testSetColumnWithListWithMoreCellsIncludesNullAndEmpty() {
         final int column = 1;
 
         this.check(
@@ -880,6 +1167,58 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                 ),
                 list(
                         R2C0, Z, R2C2
+                ),
+                list(
+                        MISSING, MISSING, MISSING
+                ),
+                list(
+                        MISSING, MISSING, MISSING
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnSetColumn() {
+        this.check(
+                this.createTable()
+                        .setColumn(
+                                0,
+                                list(X)
+                        ).setColumn(
+                                1,
+                                list(Y)
+                        ),
+                list(
+                        X, Y, R0C2
+                ),
+                list(
+                        MISSING, MISSING, R1C2
+                ),
+                list(
+                        MISSING, MISSING, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnSetColumn2() {
+        this.check(
+                this.createTable()
+                        .setColumn(
+                                0,
+                                list(X)
+                        ).setColumn(
+                                3,
+                                list(Y)
+                        ),
+                list(
+                        X, R0C1, R0C2, Y
+                ),
+                list(
+                        MISSING, R1C1, R1C2, MISSING
+                ),
+                list(
+                        MISSING, R2C1, R2C2, MISSING
                 )
         );
     }
@@ -896,35 +1235,146 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     }
 
     @Test
+    public void testRowWithMissingRow() {
+        this.rowAndCheck(
+                this.createTable(
+                        3,
+                        list("A", "B", "C"),
+                        null
+                ),
+                1,
+                MISSING,
+                MISSING,
+                MISSING
+        );
+    }
+
+    @Test
     public void testRowWithMissingCells() {
         this.rowAndCheck(
-                this.createTable()
-                        .setRow(1, list("A", null, "B")),
+                this.createTable(
+                        3,
+                        null, // row 0
+                        list("A", null, "C") // row 1
+                ),
                 1,
                 "A",
-                CharSequences.empty(),
-                "B"
+                MISSING,
+                "C"
         );
     }
 
     @Test
-    public void testRowMissing() {
+    public void testRowWithMissingCells2() {
         this.rowAndCheck(
-                this.createTable(),
-                4
+                this.createTable(
+                        3,
+                        null,
+                        list("A", "", "C")
+                ),
+                1,
+                "A",
+                MISSING,
+                "C"
         );
     }
 
     @Test
-    public void testSetRowRow() {
+    public void testSetRowFullRow() {
         final int row = 1;
-        this.rowAndCheck(
+        this.check(
+                this.createTable()
+                        .setRow(
+                                row,
+                                list("A", "B", "C")
+                        ),
+                list(
+                        R0C0, R0C1, R0C2
+                ),
+                list(
+                        "A", "B", "C"
+                ),
+                list(
+                        R2C0, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowFullRowIncludesNullAndEmpty() {
+        final int row = 1;
+        this.check(
+                this.createTable()
+                        .setRow(
+                                row,
+                                list(null, "", "C")
+                        ),
+                list(
+                        R0C0, R0C1, R0C2
+                ),
+                list(
+                        MISSING, MISSING, "C"
+                ),
+                list(
+                        R2C0, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowLongerRow() {
+        final int row = 1;
+        this.check(
+                this.createTable()
+                        .setRow(
+                                row,
+                                list("A", "B", "C", "D")
+                        ),
+                list(
+                        R0C0, R0C1, R0C2, MISSING
+                ),
+                list(
+                        "A", "B", "C", "D"
+                ),
+                list(
+                        R2C0, R2C1, R2C2, MISSING
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowShortRow() {
+        final int row = 1;
+        this.check(
                 this.createTable()
                         .setRow(row, list(R1C0)),
-                row,
-                R1C0,
-                CharSequences.empty(),
-                CharSequences.empty()
+                list(
+                        R0C0, R0C1, R0C2
+                ),
+                list(
+                        R1C0, MISSING, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowEmptyRow() {
+        final int row = 1;
+        this.check(
+                this.createTable()
+                        .setRow(row, list()),
+                list(
+                        R0C0, R0C1, R0C2
+                ),
+                list(
+                        MISSING, MISSING, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2
+                )
         );
     }
 
@@ -950,21 +1400,64 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     }
 
     @Test
-    public void testSetRow() {
+    public void testSetRowDifferent() {
         final int row = 0;
 
         this.check(
-                this.setRowAndCheck(row, X, Y, Z),
+                this.createAndSetRow(
+                        row,
+                        X, Y, Z
+                ),
                 list(
-                        list(
-                                X, Y, Z
-                        ),
-                        list(
-                                R1C0, R1C1, R1C2
-                        ),
-                        list(
-                                R2C0, R2C1, R2C2
-                        )
+                        X, Y, Z
+                ),
+                list(
+                        R1C0, R1C1, R1C2
+                ),
+                list(
+                        R2C0, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowDifferent2() {
+        final int row = 1;
+
+        this.check(
+                this.createAndSetRow(
+                        row,
+                        X, Y, Z
+                ),
+                list(
+                        R0C0, R0C1, R0C2
+                ),
+                list(
+                        X, Y, Z
+                ),
+                list(
+                        R2C0, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowDifferent3() {
+        final int row = 2;
+
+        this.check(
+                this.createAndSetRow(
+                        row,
+                        X, Y, Z
+                ),
+                list(
+                        R0C0, R0C1, R0C2
+                ),
+                list(
+                        R1C0, R1C1, R1C2
+                ),
+                list(
+                        X, Y, Z
                 )
         );
     }
@@ -974,15 +1467,33 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         final int row = 0;
 
         this.check(
-                this.setRowAndCheck(row),
+                this.createAndSetRow(row),
                 list(
-                        null,
-                        list(
-                                R1C0, R1C1, R1C2
-                        ),
-                        list(
-                                R2C0, R2C1, R2C2
-                        )
+                        MISSING, MISSING, MISSING
+                ),
+                list(
+                        R1C0, R1C1, R1C2
+                ),
+                list(
+                        R2C0, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowEmptyList2() {
+        final int row = 1;
+
+        this.check(
+                this.createAndSetRow(row),
+                list(
+                        R0C0, R0C1, R0C2
+                ),
+                list(
+                        MISSING, MISSING, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2
                 )
         );
     }
@@ -992,15 +1503,39 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         final int row = 0;
 
         this.check(
-                this.setRowAndCheck(row, null, null),
+                this.createAndSetRow(
+                        row,
+                        null, null
+                ),
                 list(
-                        null,
-                        list(
-                                R1C0, R1C1, R1C2
-                        ),
-                        list(
-                                R2C0, R2C1, R2C2
-                        )
+                        MISSING, MISSING, MISSING
+                ),
+                list(
+                        R1C0, R1C1, R1C2
+                ),
+                list(
+                        R2C0, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithNulls2() {
+        final int row = 1;
+
+        this.check(
+                this.createAndSetRow(
+                        row,
+                        null, null
+                ),
+                list(
+                        R0C0, R0C1, R0C2
+                ),
+                list(
+                        MISSING, MISSING, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2
                 )
         );
     }
@@ -1010,15 +1545,39 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         final int row = 0;
 
         this.check(
-                this.setRowAndCheck(row, "", ""),
+                this.createAndSetRow(
+                        row,
+                        "", ""
+                ),
                 list(
-                        null,
-                        list(
-                                R1C0, R1C1, R1C2
-                        ),
-                        list(
-                                R2C0, R2C1, R2C2
-                        )
+                        MISSING, MISSING, MISSING
+                ),
+                list(
+                        R1C0, R1C1, R1C2
+                ),
+                list(
+                        R2C0, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithEmptyString2() {
+        final int row = 1;
+
+        this.check(
+                this.createAndSetRow(
+                        row,
+                        "", ""
+                ),
+                list(
+                        R0C0, R0C1, R0C2
+                ),
+                list(
+                        MISSING, MISSING, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2
                 )
         );
     }
@@ -1028,17 +1587,39 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         final int row = 0;
 
         this.check(
-                this.setRowAndCheck(row, X),
+                this.createAndSetRow(
+                        row,
+                        X
+                ),
                 list(
-                        list(
-                                X
-                        ),
-                        list(
-                                R1C0, R1C1, R1C2
-                        ),
-                        list(
-                                R2C0, R2C1, R2C2
-                        )
+                        X, MISSING, MISSING
+                ),
+                list(
+                        R1C0, R1C1, R1C2
+                ),
+                list(
+                        R2C0, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithFewerCells2() {
+        final int row = 1;
+
+        this.check(
+                this.createAndSetRow(
+                        row,
+                        X
+                ),
+                list(
+                        R0C0, R0C1, R0C2
+                ),
+                list(
+                        X, MISSING, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2
                 )
         );
     }
@@ -1048,17 +1629,39 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         final int row = 0;
 
         this.check(
-                this.setRowAndCheck(row, X, null),
+                this.createAndSetRow(
+                        row,
+                        X, null
+                ),
                 list(
-                        list(
-                                X
-                        ),
-                        list(
-                                R1C0, R1C1, R1C2
-                        ),
-                        list(
-                                R2C0, R2C1, R2C2
-                        )
+                        X, MISSING, MISSING
+                ),
+                list(
+                        R1C0, R1C1, R1C2
+                ),
+                list(
+                        R2C0, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithFewerCellsTrailingNull2() {
+        final int row = 1;
+
+        this.check(
+                this.createAndSetRow(
+                        row,
+                        X, null
+                ),
+                list(
+                        R0C0, R0C1, R0C2
+                ),
+                list(
+                        X, MISSING, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2
                 )
         );
     }
@@ -1068,17 +1671,41 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         final int row = 0;
 
         this.check(
-                this.setRowAndCheck(row, X, ""),
+                this.createAndSetRow(
+                        row,
+                        X,
+                        ""
+                ),
                 list(
-                        list(
-                                X
-                        ),
-                        list(
-                                R1C0, R1C1, R1C2
-                        ),
-                        list(
-                                R2C0, R2C1, R2C2
-                        )
+                        X, MISSING, MISSING
+                ),
+                list(
+                        R1C0, R1C1, R1C2
+                ),
+                list(
+                        R2C0, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithFewerCellsTrailingEmpty2() {
+        final int row = 1;
+
+        this.check(
+                this.createAndSetRow(
+                        row,
+                        X,
+                        ""
+                ),
+                list(
+                        R0C0, R0C1, R0C2
+                ),
+                list(
+                        X, MISSING, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2
                 )
         );
     }
@@ -1088,17 +1715,39 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         final int row = 0;
 
         this.check(
-                this.setRowAndCheck(row, null, X),
+                this.createAndSetRow(
+                        row,
+                        null, X
+                ),
                 list(
-                        list(
-                                null, X
-                        ),
-                        list(
-                                R1C0, R1C1, R1C2
-                        ),
-                        list(
-                                R2C0, R2C1, R2C2
-                        )
+                        MISSING, X, MISSING
+                ),
+                list(
+                        R1C0, R1C1, R1C2
+                ),
+                list(
+                        R2C0, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithFewerCellsIncludesNull2() {
+        final int row = 1;
+
+        this.check(
+                this.createAndSetRow(
+                        row,
+                        null, X
+                ),
+                list(
+                        R0C0, R0C1, R0C2
+                ),
+                list(
+                        MISSING, X, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2
                 )
         );
     }
@@ -1108,17 +1757,39 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         final int row = 0;
 
         this.check(
-                this.setRowAndCheck(row, "", X),
+                this.createAndSetRow(
+                        row,
+                        "", X
+                ),
                 list(
-                        list(
-                                null, X
-                        ),
-                        list(
-                                R1C0, R1C1, R1C2
-                        ),
-                        list(
-                                R2C0, R2C1, R2C2
-                        )
+                        MISSING, X, MISSING
+                ),
+                list(
+                        R1C0, R1C1, R1C2
+                ),
+                list(
+                        R2C0, R2C1, R2C2
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithFewerCellsIncludesEmpty2() {
+        final int row = 1;
+
+        this.check(
+                this.createAndSetRow(
+                        row,
+                        "", X
+                ),
+                list(
+                        R0C0, R0C1, R0C2
+                ),
+                list(
+                        MISSING, X, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2
                 )
         );
     }
@@ -1128,17 +1799,39 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         final int row = 0;
 
         this.check(
-                this.setRowAndCheck(row, X, Y, Z, A),
+                this.createAndSetRow(
+                        row,
+                        X, Y, Z, A
+                ),
                 list(
-                        list(
-                                X, Y, Z, A
-                        ),
-                        list(
-                                R1C0, R1C1, R1C2
-                        ),
-                        list(
-                                R2C0, R2C1, R2C2
-                        )
+                        X, Y, Z, A
+                ),
+                list(
+                        R1C0, R1C1, R1C2, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2, MISSING
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithMoreCells2() {
+        final int row = 1;
+
+        this.check(
+                this.createAndSetRow(
+                        row,
+                        X, Y, Z, A
+                ),
+                list(
+                        R0C0, R0C1, R0C2, MISSING
+                ),
+                list(
+                        X, Y, Z, A
+                ),
+                list(
+                        R2C0, R2C1, R2C2, MISSING
                 )
         );
     }
@@ -1148,17 +1841,39 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         final int row = 0;
 
         this.check(
-                this.setRowAndCheck(row, X, Y, null, A),
+                this.createAndSetRow(
+                        row,
+                        X, Y, null, A
+                ),
                 list(
-                        list(
-                                X, Y, null, A
-                        ),
-                        list(
-                                R1C0, R1C1, R1C2
-                        ),
-                        list(
-                                R2C0, R2C1, R2C2
-                        )
+                        X, Y, MISSING, A
+                ),
+                list(
+                        R1C0, R1C1, R1C2, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2, MISSING
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithMoreCellsIncludesNull2() {
+        final int row = 1;
+
+        this.check(
+                this.createAndSetRow(
+                        row,
+                        X, Y, null, A
+                ),
+                list(
+                        R0C0, R0C1, R0C2, MISSING
+                ),
+                list(
+                        X, Y, MISSING, A
+                ),
+                list(
+                        R2C0, R2C1, R2C2, MISSING
                 )
         );
     }
@@ -1168,17 +1883,39 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         final int row = 0;
 
         this.check(
-                this.setRowAndCheck(row, X, Y, "", A),
+                this.createAndSetRow(
+                        row,
+                        X, Y, "", A
+                ),
                 list(
-                        list(
-                                X, Y, null, A
-                        ),
-                        list(
-                                R1C0, R1C1, R1C2
-                        ),
-                        list(
-                                R2C0, R2C1, R2C2
-                        )
+                        X, Y, MISSING, A
+                ),
+                list(
+                        R1C0, R1C1, R1C2, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2, MISSING
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithMoreCellsIncludesEmpty2() {
+        final int row = 1;
+
+        this.check(
+                this.createAndSetRow(
+                        row,
+                        X, Y, "", A
+                ),
+                list(
+                        R0C0, R0C1, R0C2, MISSING
+                ),
+                list(
+                        X, Y, MISSING, A
+                ),
+                list(
+                        R2C0, R2C1, R2C2, MISSING
                 )
         );
     }
@@ -1188,17 +1925,39 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         final int row = 0;
 
         this.check(
-                this.setRowAndCheck(row, X, null, "", A),
+                this.createAndSetRow(
+                        row,
+                        X, null, "", A
+                ),
                 list(
-                        list(
-                                X, null, null, A
-                        ),
-                        list(
-                                R1C0, R1C1, R1C2
-                        ),
-                        list(
-                                R2C0, R2C1, R2C2
-                        )
+                        X, MISSING, MISSING, A
+                ),
+                list(
+                        R1C0, R1C1, R1C2, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2, MISSING
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithMoreCellsIncludesNullAndEmpty2() {
+        final int row = 1;
+
+        this.check(
+                this.createAndSetRow(
+                        row,
+                        X, null, "", A
+                ),
+                list(
+                        R0C0, R0C1, R0C2, MISSING
+                ),
+                list(
+                        X, MISSING, MISSING, A
+                ),
+                list(
+                        R2C0, R2C1, R2C2, MISSING
                 )
         );
     }
@@ -1208,17 +1967,39 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         final int row = 0;
 
         this.check(
-                this.setRowAndCheck(row, X, null, "", A, null),
+                this.createAndSetRow(
+                        row,
+                        X, null, "", A, null
+                ),
                 list(
-                        list(
-                                X, null, null, A
-                        ),
-                        list(
-                                R1C0, R1C1, R1C2
-                        ),
-                        list(
-                                R2C0, R2C1, R2C2
-                        )
+                        X, MISSING, MISSING, A, MISSING
+                ),
+                list(
+                        R1C0, R1C1, R1C2, MISSING, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2, MISSING, MISSING
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithMoreCellsIncludesNullAndEmptyAndTrimmed2() {
+        final int row = 1;
+
+        this.check(
+                this.createAndSetRow(
+                        row,
+                        X, null, "", A, null
+                ),
+                list(
+                        R0C0, R0C1, R0C2, MISSING, MISSING
+                ),
+                list(
+                        X, MISSING, MISSING, A, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2, MISSING, MISSING
                 )
         );
     }
@@ -1228,15 +2009,78 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         final int row = 0;
 
         this.check(
-                this.setRowAndCheck(row, null, "", null, ""),
+                this.createAndSetRow(
+                        row,
+                        null, "", null, ""
+                ),
                 list(
-                        null,
-                        list(
-                                R1C0, R1C1, R1C2
-                        ),
-                        list(
-                                R2C0, R2C1, R2C2
-                        )
+                        MISSING, MISSING, MISSING, MISSING
+                ),
+                list(
+                        R1C0, R1C1, R1C2, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2, MISSING
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithMoreCellsAllNullOrEmpty2() {
+        final int row = 1;
+
+        this.check(
+                this.createAndSetRow(
+                        row,
+                        null, "", null, ""
+                ),
+                list(
+                        R0C0, R0C1, R0C2, MISSING
+                ),
+                list(
+                        MISSING, MISSING, MISSING, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2, MISSING
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowWithListWithMoreCellsAllNullOrEmpty3() {
+        final int row = 2;
+
+        this.check(
+                this.createAndSetRow(
+                        row,
+                        null, "", null, ""
+                ),
+                list(
+                        R0C0, R0C1, R0C2, MISSING
+                ),
+                list(
+                        R1C0, R1C1, R1C2, MISSING
+                ),
+                list(
+                        MISSING,MISSING,MISSING,MISSING
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowSetRow() {
+        this.check(
+                this.createTable()
+                        .setRow(0, list(X))
+                        .setRow(1, list(null, Y)),
+                list(
+                        X, MISSING, MISSING
+                ),
+                list(
+                        MISSING, Y, MISSING
+                ),
+                list(
+                        R2C0, R2C1, R2C2
                 )
         );
     }
@@ -1246,17 +2090,13 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     @Test
     public void testDifferentCells() {
         this.checkNotEquals(
-                TableNotEmpty.with(
-                        list(
-                                list(R0C0, R0C1)
-                        ),
-                        2
+                this.createTable(
+                        2,
+                        list(R0C0, R0C1)
                 ),
-                TableNotEmpty.with(
-                        list(
-                                list(R0C0)
-                        ),
-                        1
+                this.createTable(
+                        1,
+                        list(R0C0)
                 )
         );
     }
@@ -1264,17 +2104,13 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
     @Test
     public void testDifferentCellsTypeSameContent() {
         this.checkNotEquals(
-                TableNotEmpty.with(
-                        list(
-                                list(R0C0)
-                        ),
-                        1
+                this.createTable(
+                        1,
+                        list(R0C0)
                 ),
-                TableNotEmpty.with(
-                        list(
-                                list(new StringBuilder(R0C0))
-                        ),
-                        1
+                this.createTable(
+                        1,
+                        list(new StringBuilder(R0C0))
                 )
         );
     }
@@ -1291,9 +2127,56 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
 
     @Override
     TableNotEmpty createTable() {
+        return createTable(
+                3,
+                this.listOrRows()
+        );
+    }
+
+    private TableNotEmpty createTable(final int width,
+                                      final List<CharSequence>... rows) {
+        return this.createTable(
+                width,
+                Lists.of(
+                        rows
+                )
+        );
+    }
+
+    private TableNotEmpty createTable(final int width,
+                                      final List<List<CharSequence>> rows) {
+        final TableNotEmptyListRows copiedRows = TableNotEmptyListRows.empty();
+
+        int row = 0;
+        for (final List<CharSequence> rowText : rows) {
+            final TableNotEmptyListRow copiedRowText;
+
+            if (null != rowText && !rowText.isEmpty()) {
+                copiedRowText = TableNotEmptyListRow.empty();
+
+                int column = 0;
+                for (final CharSequence text : rowText) {
+                    copiedRowText.setAuto(
+                            column,
+                            text
+                    );
+
+                    column++;
+                }
+            } else {
+                copiedRowText = null;
+            }
+
+            copiedRows.setAuto(
+                    row,
+                    copiedRowText
+            );
+            row++;
+        }
+
         return TableNotEmpty.with(
-                this.listOrRows(),
-                3
+                copiedRows,
+                width
         );
     }
 
@@ -1317,7 +2200,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.checkEquals(
                 list(text),
                 table.column(column),
-                () -> "column " + column + " from " + table
+                () -> "column " + column + " from " + table.toStringTest()
         );
     }
 
@@ -1327,7 +2210,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.checkEquals(
                 list(text),
                 table.row(row),
-                () -> "row " + row + " from " + table
+                () -> "row " + row + " from " + table.toStringTest()
         );
     }
 

@@ -17,41 +17,47 @@
 
 package walkingkooka.text.pretty;
 
+import walkingkooka.collect.list.Lists;
+
+import java.util.AbstractList;
 import java.util.List;
 
 /**
- * An immutable {@link List} view of a single column. Element indicies become the row coordinate.
+ * An immutable {@link List} view of a single column. Element indicies given to methods like {@link #get(int)}
+ * become the row coordinate to locate the cell.
  */
-final class TableNotEmptyListColumn extends TableNotEmptyList {
+final class TableNotEmptyColumnList extends AbstractList<CharSequence> {
 
-    static TableNotEmptyListColumn with(final int column,
-                                        final TableNotEmpty table) {
-        return new TableNotEmptyListColumn(column, table);
+    static {
+        Lists.registerImmutableType(TableNotEmptyColumnList.class);
     }
 
-    private TableNotEmptyListColumn(final int column,
+    static TableNotEmptyColumnList with(final int column,
+                                        final TableNotEmpty table) {
+        return new TableNotEmptyColumnList(column, table);
+    }
+
+    private TableNotEmptyColumnList(final int column,
                                     final TableNotEmpty table) {
-        super(table);
+        super();
         this.column = column;
+        this.table = table;
     }
 
     @Override
-    CharSequence cell(final int row) {
+    public CharSequence get(final int row) {
         return this.table.cell(
                 this.column,
                 row
         );
     }
 
-    @Override
-    String columnOrRow() {
-        return "row";
-    }
+    private final int column;
 
     @Override
     public int size() {
         return this.table.height();
     }
 
-    private final int column;
+    private final TableNotEmpty table;
 }

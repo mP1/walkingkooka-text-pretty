@@ -17,10 +17,12 @@
 
 package walkingkooka.text.pretty;
 
+import javaemul.internal.annotations.GwtIncompatible;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CharSequences;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collector;
 
 /**
@@ -30,81 +32,30 @@ import java.util.stream.Collector;
  */
 public abstract class Table {
 
-    /**
-     * Helper that may be used to expand a {@link List}
-     */
-    static void expand(final List<?> list,
-                       final int addCount) {
-        for(int i = 0; i < addCount; i++) {
-            list.add(null);
-        }
+    final static CharSequence MISSING_TEXT = CharSequences.empty();
+
+    static void checkText(final List<CharSequence> text) {
+        Objects.requireNonNull(text, "text");
     }
 
-    /**
-     * A helper that auto expands the row with null elements if necessary.
-     */
-    static <T> void setWithAutoExpandShrink(final List<T> list,
-                                            final int index,
-                                            final T element) {
-        final int count = list.size();
-        if (index < count) {
-            list.set(index, element);
+    static TableNotEmptyListRow copyRowText(final List<CharSequence> rowText) {
+        TableNotEmptyListRow copy;
+
+        if(rowText instanceof List) {
+            if(rowText instanceof TableNotEmptyListRow) {
+                final TableNotEmptyListRow listRow = (TableNotEmptyListRow)rowText;
+                copy = listRow.copy();
+            } else {
+                copy = TableNotEmptyListRow.with(
+                    TableNotEmptyList.computeCapacity(rowText.size())
+                );
+                copy.copy(rowText);
+            }
         } else {
-            expand(
-                    list,
-                    index - list.size()
-            );
-            list.add(element);
+            copy = TableNotEmptyListRow.empty();
         }
 
-        int i = list.size();
-        while (i > 0) {
-            i--;
-            if (null != list.get(i)) {
-                break;
-            }
-            list.remove(i);
-        }
-    }
-
-    /**
-     * Copies the given row of text, trimming null entries on the end, returning null if all are missing.
-     */
-    static List<CharSequence> copyRowText(final List<CharSequence> rowText) {
-        List<CharSequence> copied = null;
-
-        int column = rowText.size();
-
-        if(0 != column) {
-            // find a non null/empty
-            while(column > 0) {
-                column--;
-
-                final CharSequence lastText = rowText.get(column);
-                if(isNotEmpty(lastText)) {
-                    copied = Lists.array();
-
-                    int c = 0;
-                    while(c <= column) {
-                        final CharSequence text = rowText.get(c);
-                        copied.add(
-                                isEmpty(text) ?
-                                        null :
-                                        text
-                        );
-                        c++;
-                    }
-
-                    break;
-                }
-            }
-        }
-
-        return copied; // could be null
-    }
-
-    static boolean isEmpty(final CharSequence text) {
-        return null == text || text.length() == 0;
+        return copy;
     }
 
     static boolean isNotEmpty(final CharSequence text) {
@@ -129,37 +80,19 @@ public abstract class Table {
 
     // cell.............................................................................................................
 
-    /**
-     * Fetches the cell at the given coordinates. Coordinates out of bounds will return an empty {@link CharSequence}.
-     */
-    public final CharSequence cell(final int column,
+    final public CharSequence cell(final int column,
                                    final int row) {
         checkColumn(column);
         checkRow(row);
 
-        return column >= this.width() ||
-                row >= this.height() ?
-                CharSequences.empty() :
-                this.cell0(column, row);
+        return this.cell0(
+                column,
+                row
+        );
     }
 
-    private CharSequence cell0(final int column,
-                                final int row) {
-        final List<CharSequence> rowText = this.asList().get(row);
-
-        CharSequence text;
-
-        if(null != rowText && column < rowText.size()) {
-            text = rowText.get(column);
-            if(null == text) {
-                text = CharSequences.empty();
-            }
-        } else {
-            text = CharSequences.empty();
-        }
-
-        return text;
-    }
+    abstract CharSequence cell0(final int column,
+                                final int row);
 
     // setCell..........................................................................................................
 
@@ -192,11 +125,14 @@ public abstract class Table {
      * Returns all the columns for the given column number.
      */
     public final List<CharSequence> column(final int column) {
-        this.checkColumn(column);
+        checkColumn(column);
 
-        return column >= this.width() ?
-                Lists.empty() :
-                this.column0(column);
+        final int width = this.width();
+        if(column >= width) {
+            throw new IndexOutOfBoundsException("Invalid column " + column + " >= " + width);
+        }
+
+        return this.column0(column);
     }
 
     abstract List<CharSequence> column0(final int column);
@@ -204,8 +140,10 @@ public abstract class Table {
     /**
      * Would be setter that replaces an existing column. Any existing cells are replaced
      */
-    public final Table setColumn(final int column, final List<CharSequence> text) {
-        this.checkColumn(column);
+    public final Table setColumn(final int column,
+                                 final List<CharSequence> text) {
+        checkColumn(column);
+        checkText(text);
 
         return this.setColumn0(
                 column,
@@ -222,14 +160,14 @@ public abstract class Table {
 
     abstract Table setColumn1(final int column, final List<CharSequence> text);
 
-    final void checkColumn(final int column) {
+    static void checkColumn(final int column) {
         if (column < 0) {
-            throw new IllegalArgumentException("Invalid column " + column);
+            throw new IndexOutOfBoundsException("Invalid column " + column);
         }
     }
 
     /**
-     * The maximum number of columns
+     * The maximum number of columns with 0 indicating no columns.
      */
     public abstract int width();
 
@@ -239,21 +177,17 @@ public abstract class Table {
      * Returns all the rows for the given row number.
      */
     public final List<CharSequence> row(final int row) {
-        this.checkRow(row);
-
-        return row >= this.height() ?
-                Lists.empty() :
-                this.row0(row);
+        return this.rows()
+                .get(row);
     }
-
-    abstract List<CharSequence> row0(final int row);
 
     /**
      * Would be setter that replaces an existing row.
      */
     public final Table setRow(final int row,
                               final List<CharSequence> text) {
-        this.checkRow(row);
+        checkRow(row);
+        checkText(text);
 
         return this.setRow0(
                 row,
@@ -261,27 +195,47 @@ public abstract class Table {
         );
     }
 
-    private Table setRow0(final int row,
-                          final List<CharSequence> text) {
-        return (null == text || text.isEmpty()) && row >= this.height() ?
-                this :
-                this.setRow1(row, text);
+    Table setRow0(final int row,
+                  final TableNotEmptyListRow rowText) {
+        return row >= height() ?
+                this.addRow(
+                        row,
+                        rowText
+                ) :
+                this.replaceRow(
+                        row,
+                        rowText
+                );
     }
 
-    abstract Table setRow1(final int row, final List<CharSequence> text);
+    private Table addRow(final int row,
+                         final TableNotEmptyListRow rowText) {
+        return null == rowText ?
+                this :
+                this.addRow0(
+                        row,
+                        rowText
+                );
+    }
 
-    final void checkRow(final int row) {
+    abstract Table addRow0(final int row,
+                           final TableNotEmptyListRow rowText);
+
+    abstract Table replaceRow(final int row,
+                              final TableNotEmptyListRow rowText);
+
+    static void checkRow(final int row) {
         if (row < 0) {
-            throw new IllegalArgumentException("Invalid row " + row);
+            throw new IndexOutOfBoundsException("Invalid row " + row);
         }
     }
 
+    // height...........................................................................................................
+
     /**
-     * The last valid row number. 0 indicates an empty table
+     * The number of rows with 0 indicating an empty table
      */
-    public final int height() {
-        return this.asList().size();
-    }
+    abstract public int height();
 
     // Collector........................................................................................................
 
@@ -299,7 +253,10 @@ public abstract class Table {
         return TableCollectorRow.with(this, row);
     }
 
-    // internal.........................................................................................................
+    // rows.............................................................................................................
 
-    abstract List<List<CharSequence>> asList();
+    abstract TableNotEmptyListRows rows();
+
+    @GwtIncompatible
+    abstract String toStringTest();
 }

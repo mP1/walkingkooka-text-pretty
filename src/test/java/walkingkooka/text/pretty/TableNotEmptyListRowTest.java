@@ -18,37 +18,173 @@
 package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.iterator.IteratorTesting;
 import walkingkooka.collect.list.Lists;
 
 import java.util.List;
 
-public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<TableNotEmptyListRow> {
+public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<TableNotEmptyListRow, CharSequence> implements
+        IteratorTesting {
 
     @Test
     public void testGet() {
-        this.getAndCheck(this.createList(), 0, R1C0);
+        final TableNotEmptyListRow list = TableNotEmptyListRow.empty();
+
+        list.setWidth( 1);
+
+        this.getAndCheck(
+                list,
+                0,
+                TableNotEmptyListRow.MISSING
+        );
     }
 
     @Test
-    public void testGet2() {
-        this.getAndCheck(this.createList(), 2, R1C2);
+    public void testSetAndGet() {
+        final TableNotEmptyListRow list = TableNotEmptyListRow.empty();
+
+        final CharSequence a = "A";
+        list.setAuto(0, a);
+
+        list.setWidth( 1);
+
+        this.getAndCheck(
+                list,
+                0,
+                a
+        );
     }
 
     @Test
-    public void testSize() {
-        this.sizeAndCheck(this.createList(), 3);
+    public void testSetAndGet2() {
+        final TableNotEmptyListRow list = TableNotEmptyListRow.empty();
+
+        final CharSequence a = "A";
+        list.setAuto(0, a);
+
+        final CharSequence b = "B";
+        list.setAuto(1, b);
+
+        list.setWidth( 2);
+
+        this.getAndCheck(
+                list,
+                0,
+                a
+        );
+
+        this.getAndCheck(
+                list,
+                1,
+                b
+        );
     }
 
     @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createList(), Lists.of(R1C0, R1C1, R1C2).toString());
+    public void testSetAndGetMany() {
+        final TableNotEmptyListRow list = TableNotEmptyListRow.empty();
+
+        for(int i = 0; i < 10; i++) {
+            list.setAuto(i, "column-" + i);
+        }
+        list.setWidth( 10);
+
+        for(int i = 0; i < 10; i++) {
+            this.getAndCheck(
+                    list,
+                    i,
+                    "column-" + i
+            );
+        }
+
+        this.sizeAndCheck(
+                list,
+                10
+        );
+    }
+
+    @Test
+    public void testSetNullAndGet() {
+        final TableNotEmptyListRow list = TableNotEmptyListRow.empty();
+
+        list.setAuto(0, null);
+
+        list.setWidth( 1);
+
+        this.getAndCheck(
+                list,
+                0,
+                TableNotEmptyListRow.MISSING
+        );
+    }
+
+    @Test
+    public void testSetNullAndGetIncludesExpand() {
+        final TableNotEmptyListRow list = TableNotEmptyListRow.empty();
+
+        for(int i = 0; i < 10; i++){
+            list.setAuto(i, null);
+        }
+
+        list.setWidth( 11);
+
+        for(int i = 0; i < 10; i++){
+            this.getAndCheck(
+                    list,
+                    i,
+                    TableNotEmptyListRow.MISSING
+            );
+        }
+    }
+
+    @Test
+    public void testSetEmptyAndGetIncludesExpand() {
+        final TableNotEmptyListRow list = TableNotEmptyListRow.empty();
+
+        for(int i = 0; i < 10; i++){
+            list.setAuto(i, "");
+        }
+
+        list.setWidth( 11);
+
+        for(int i = 0; i < 10; i++){
+            this.getAndCheck(
+                    list,
+                    i,
+                    TableNotEmptyListRow.MISSING
+            );
+        }
+    }
+
+    @Test
+    public void testIterator() {
+        final List<CharSequence> list = Lists.array();
+        final TableNotEmptyListRow row = TableNotEmptyListRow.empty();
+
+        for(int i = 0; i < 10; i++) {
+            final CharSequence text = "column-" + i;
+            list.add(text);
+            row.setAuto(i, text);
+        }
+
+        row.setWidth( 10);
+
+        this.iterateAndCheck(
+                row.iterator(),
+                list.toArray(new CharSequence[0])
+        );
     }
 
     @Override
-    TableNotEmptyListRow createList(final List<List<CharSequence>> rows,
-                                       final int column,
-                                       final int row) {
-        return TableNotEmptyListRow.with(1, TableNotEmpty.with(rows, row));
+    public TableNotEmptyListRow createList() {
+        final TableNotEmptyListRow list = TableNotEmptyListRow.empty();
+        list.setWidth( 0);
+        return list;
+    }
+
+    @Override
+    CharSequence element(final int index) {
+        return "column-text-" + index;
     }
 
     @Override

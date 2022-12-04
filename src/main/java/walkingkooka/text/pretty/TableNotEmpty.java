@@ -17,7 +17,7 @@
 
 package walkingkooka.text.pretty;
 
-import walkingkooka.collect.list.Lists;
+import javaemul.internal.annotations.GwtIncompatible;
 
 import java.util.List;
 import java.util.Objects;
@@ -34,15 +34,15 @@ final class TableNotEmpty extends Table {
     static TableNotEmpty withCell(final int column,
                                   final int row,
                                   final CharSequence text) {
-        final List<CharSequence> columns = Lists.array();
-        setWithAutoExpandShrink(columns, column, text);
+        final TableNotEmptyListRow rowText = TableNotEmptyListRow.with(column + 1);
+        rowText.setAuto(
+                column,
+                text
+        );
 
-        final List<List<CharSequence>> rows = Lists.array();
-        setWithAutoExpandShrink(rows, row, columns);
-
-        return with(
-                rows,
-                column + 1
+        return withRow(
+                row,
+                rowText
         );
     }
 
@@ -51,56 +51,50 @@ final class TableNotEmpty extends Table {
      */
     static TableNotEmpty withColumn(final int column,
                                     final List<CharSequence> columnText) {
-        int last = columnText.size();
-        while(last > 0) {
-            last--;
-            if(isNotEmpty(columnText.get(last))) {
-                last++;
-                break;
-            }
-        }
+        final TableNotEmptyListRows rows = TableNotEmptyListRows.empty();
 
-        final List<List<CharSequence>> rows = Lists.array();
+        final int width = column + 1;
+        int row = 0;
 
-        for(int i = 0; i < last; i++) {
-            final CharSequence text = columnText.get(i);
-
-            final List<CharSequence> rowText;
-            if(isEmpty(text)) {
-                rowText = null;
-            } else {
-                rowText = Lists.array();
-                expand(
-                        rowText,
-                        column
+        for(final CharSequence text : columnText) {
+            if(isNotEmpty(text)) {
+                final TableNotEmptyListRow rowText = TableNotEmptyListRow.with(width);
+                rowText.setAuto(
+                        column,
+                        text
                 );
-                rowText.add(text);
+
+                rows.setAuto(
+                        row,
+                        rowText
+                );
             }
 
-            rows.add(rowText);
+            row++;
         }
 
         return with(
                 rows,
-                column + 1
+                width
         );
     }
 
     static TableNotEmpty withRow(final int row,
-                                 final List<CharSequence> rowText) {
-        final List<List<CharSequence>> rows = Lists.array();
-        setWithAutoExpandShrink(rows, row, rowText);
+                                 final TableNotEmptyListRow rowText) {
+        final TableNotEmptyListRows rows = TableNotEmptyListRows.with(row + 1);
+
+        rows.setAuto(row, rowText);
 
         return with(
                 rows,
-                rowText.size()
+                rowText.size
         );
     }
 
     /**
      * Creates a new {@link TableNotEmpty} with the given cells and maximum column/row.
      */
-    static TableNotEmpty with(final List<List<CharSequence>> rows,
+    static TableNotEmpty with(final TableNotEmptyListRows rows,
                               final int width) {
         return new TableNotEmpty(rows, width);
     }
@@ -108,11 +102,33 @@ final class TableNotEmpty extends Table {
     /**
      * Private ctor use factory.
      */
-    private TableNotEmpty(final List<List<CharSequence>> rows,
+    private TableNotEmpty(final TableNotEmptyListRows rows,
                           final int width) {
         super();
+
+        if(width <= 0) {
+            throw new IllegalArgumentException("Invalid width " + width + " <= 0");
+        }
+
+        rows.setWidth(width);
+
         this.rows = rows;
         this.width = width;
+    }
+
+    // cell.............................................................................................................
+
+    /**
+     * Fetches the cell at the given coordinates. Coordinates that are out of bounds will result in a {@link IndexOutOfBoundsException}.
+     */
+    @Override
+    CharSequence cell0(final int column,
+                       final int row) {
+        checkColumn(column);
+        checkRow(row);
+
+        return this.rows.get(row)
+                .get(column);
     }
 
     // setCell..........................................................................................................
@@ -123,40 +139,89 @@ final class TableNotEmpty extends Table {
                    final CharSequence text) {
         final Table after;
 
-        final CharSequence cell = this.cell(column, row);
-        if(Objects.equals(text, cell)) {
-            after = this;
-        } else {
-            final List<CharSequence> newRowText;
+        final int width = this.width();
+        final int height = this.height();
 
-            final List<List<CharSequence>> rows = this.rows;
-            if(row < rows.size()) {
-                final List<CharSequence> oldRowText = rows.get(row);
-                // copy old row of text and replace at column
-                newRowText = Lists.array();
-                if(null != oldRowText) {
-                    newRowText.addAll(oldRowText);
-                }
-                setWithAutoExpandShrink(newRowText, column, text);
+        if(column >- width) {
+            if(row >= height) {
+                after = this.addRow(
+                        column,
+                        row,
+                        text
+                );
             } else {
-                newRowText = Lists.array();
-                setWithAutoExpandShrink(newRowText, column, text);
+                after = this.addCell(
+                        column,
+                        row,
+                        text
+                );
             }
-
-            after = this.setRow(
+        } else {
+            after = this.replaceCell(
+                    column,
                     row,
-                    newRowText
+                    text
             );
         }
 
         return after;
     }
 
+    private Table addRow(final int column,
+                         final int row,
+                         final CharSequence text) {
+        final TableNotEmptyListRow rowText = TableNotEmptyListRow.with(
+                TableNotEmptyList.computeCapacity(column)
+        );
+        rowText.setAuto(column, text);
+
+        return this.addRow0(
+                row,
+                rowText
+        );
+    }
+
+    private Table replaceCell(final int column,
+                              final int row,
+                              final CharSequence text) {
+        final Table after;
+
+        final CharSequence cell = this.cell(column, row);
+        if(Objects.equals(text, cell)) {
+            after = this;
+        } else {
+            after = this.addCell(
+                    column,
+                    row,
+                    text
+            );
+        }
+
+        return after;
+    }
+
+    private Table addCell(final int column,
+                              final int row,
+                              final CharSequence text) {
+            TableNotEmptyListRow rowText = this.rows.get(row)
+                    .copy();
+
+            rowText.setAuto(
+                    column,
+                    text
+            );
+
+            return this.setRow0(
+                    row,
+                    0 == rowText.elementCount ? null : rowText
+            );
+    }
+
     // column...........................................................................................................
 
     @Override
     List<CharSequence> column0(final int column) {
-        return TableNotEmptyListColumn.with(
+        return TableNotEmptyColumnList.with(
             column,
             this
         );
@@ -165,13 +230,6 @@ final class TableNotEmpty extends Table {
     @Override
     Table setColumn1(final int column,
                      final List<CharSequence> columnText) {
-        return columnText.equals(this.column(column)) ?
-                this :
-                this.replaceColumn(column, columnText);
-    }
-
-    private Table replaceColumn(final int column,
-                                final List<CharSequence> columnText) {
         Table after = this;
 
         final int height = Math.max(
@@ -180,6 +238,7 @@ final class TableNotEmpty extends Table {
         );
         final int columnTextCount = columnText.size();
 
+        // TODO implement a bulk update form.
         for(int row = 0; row < height; row++) {
             after = after.setCell(
                     column,
@@ -195,75 +254,96 @@ final class TableNotEmpty extends Table {
 
     @Override
     public int width() {
-        if(-1 == this.width) {
-            this.width = this.rows.stream()
-                    .filter(Objects::nonNull)
-                    .mapToInt(List::size)
-                    .max()
-                    .orElse(0);
-        }
         return this.width;
     }
 
-    private int width;
+    // the width should never be 0.
+    private final int width;
 
     // row..............................................................................................................
 
     @Override
-    List<CharSequence> row0(final int row) {
-        return TableNotEmptyListRow.with(
+    Table addRow0(final int row,
+                           final TableNotEmptyListRow rowText) {
+        final TableNotEmptyListRows newRows = this.rows.copy();
+        newRows.setAuto(
                 row,
-                this
+                rowText
+        );
+
+        return with(
+                newRows,
+                Math.max(
+                        this.width,
+                        rowText.size
+                )
         );
     }
 
     @Override
-    Table setRow1(final int row,
-                  final List<CharSequence> rowText) {
-        return Objects.equals(rowText, this.row(row)) ?
-                this :
-                this.replaceRow(row, rowText);
-    }
-
-    private Table replaceRow(final int row,
-                             final List<CharSequence> rowText) {
-        final List<List<CharSequence>> newRows = Lists.array();
-        newRows.addAll(this.rows);
-        setWithAutoExpandShrink(newRows, row, rowText);
-
+    Table replaceRow(final int row,
+                     final TableNotEmptyListRow rowText) {
         final Table after;
 
-        if (newRows.isEmpty()) {
-            after = empty();
+        final TableNotEmptyListRows rows = this.rows();
+        final TableNotEmptyListRow previous = rows.get(row);
+        if (Objects.equals(rowText, previous)) {
+            after = this;
         } else {
-            int width = -1;
-            if(null != rowText) {
-                width = rowText.size();
-                if(width < this.width) {
-                    width = -1;
-                }
-            }
+            final TableNotEmptyListRows newRows = rows.copy();
+            newRows.setAuto(row, rowText);
 
-            after = new TableNotEmpty(
-                    newRows,
-                    width
-            );
+            if(0 == newRows.elementCount) {
+                after = empty();
+            } else {
+                // different row text...
+                final int currentWidth = this.width();
+                int width;
+
+                if(null ==rowText ){
+                    width = currentWidth;
+                } else {
+                    if(rowText.size >= currentWidth) {
+                        width = rowText.size;
+                    } else {
+                        // previous row text was width
+                        if(previous.size == currentWidth) {
+                            width = newRows.findWidth();
+                        } else {
+                            width = currentWidth;
+                        }
+                    }
+                    rowText.setWidth(width);
+                }
+
+                after = 0 == newRows.elementCount ?
+                        empty() :
+                        new TableNotEmpty(
+                                newRows,
+                                width
+                        );
+            }
         }
 
         return after;
     }
 
-    // internal..............................................................................................................)
+    // height...........................................................................................................
 
     @Override
-    List<List<CharSequence>> asList() {
+    public int height() {
+        return this.rows.size;
+    }
+
+    @Override
+    TableNotEmptyListRows rows() {
         return this.rows;
     }
 
     /**
      * A {@link List} of rows, with empty rows being nulls.
      */
-    final List<List<CharSequence>> rows;
+    TableNotEmptyListRows rows;
 
     // Object...........................................................................................................
 
@@ -280,11 +360,17 @@ final class TableNotEmpty extends Table {
     }
 
     private boolean equals0(final Table other) {
-        return this.asList().equals(other.asList());
+        return this.rows().equals(other.rows());
     }
 
     @Override
     public String toString() {
         return this.rows.toString();
+    }
+
+    @GwtIncompatible
+    @Override
+    String toStringTest() {
+        return this.rows.toStringTest();
     }
 }

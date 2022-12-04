@@ -17,41 +17,107 @@
 
 package walkingkooka.text.pretty;
 
+import walkingkooka.collect.list.Lists;
+
 import java.util.List;
 
 /**
- * An immutable {@link List} view of a single row. Element indicies become the column coordinate.
+ * An immutable {@link List} view of a single row, where the elements are non null {@link CharSequence}.
  */
-final class TableNotEmptyListRow extends TableNotEmptyList {
+final class TableNotEmptyListRow extends TableNotEmptyList<CharSequence> {
 
-    static TableNotEmptyListRow with(final int row,
-                                     final TableNotEmpty table) {
-        return new TableNotEmptyListRow(row, table);
+    static {
+        Lists.registerImmutableType(TableNotEmptyListRow.class);
     }
 
-    private TableNotEmptyListRow(final int row,
-                                 final TableNotEmpty table) {
-        super(table);
-        this.row = row;
+    static TableNotEmptyListRow alwaysEmpty() {
+        return with(0);
+    }
+
+    static TableNotEmptyListRow empty() {
+        return with(INITIAL_CAPACITY);
+    }
+
+    static TableNotEmptyListRow with(final int initialCapacity) {
+        return new TableNotEmptyListRow(new Object[initialCapacity]);
+    }
+
+    private TableNotEmptyListRow(final Object[] elements) {
+        super(elements);
     }
 
     @Override
-    CharSequence cell(final int column) {
-        return this.table.cell(
-                column,
-                this.row
-        );
-    }
-
-    @Override
-    String columnOrRow() {
+    String elementLabel() {
         return "column";
     }
 
     @Override
-    public int size() {
-        return this.table.width();
+    CharSequence missing() {
+        return MISSING;
     }
 
-    private final int row;
+    // @VisibleForTesting
+    final static CharSequence MISSING = Table.MISSING_TEXT;
+
+    @Override
+    boolean isMissing(final CharSequence text) {
+        return null == text || text.length() == 0;
+    }
+
+    @Override
+    public int size() {
+        return this.width;
+    }
+
+    @Override
+    void setWidth(final int width) {
+        this.width = width;
+    }
+
+    private int width;
+
+    @Override
+    TableNotEmptyListRow copy() {
+        final int elementCount = this.elementCount;
+
+        // GWT Object.clone() not implemented
+        final Object[] elements = this.elements;
+        final Object[] elementsCopy = new Object[elements.length];
+
+        System.arraycopy(
+                elements,
+                0,
+                elementsCopy,
+                0,
+                elementCount
+        );
+
+        final TableNotEmptyListRow copy = new TableNotEmptyListRow(elementsCopy);
+        copy.size = this.size;
+        copy.elementCount = elementCount;
+        copy.width = this.width;
+        return copy;
+    }
+
+    void copy(final List<CharSequence> rowText) {
+        int i = 0;
+
+        for(final CharSequence text : rowText) {
+            this.setAuto(
+                    i,
+                    text
+            );
+            i++;
+        }
+    }
+
+    @Override
+    boolean equalsTableNotEmptyListRow(final TableNotEmptyListRow other) {
+        return this.equalsTableNotEmptyList(other);
+    }
+
+    @Override
+    boolean equalsTableNotEmptyListRows(final TableNotEmptyListRows other) {
+        return false;
+    }
 }

@@ -50,12 +50,21 @@ final class TableTransformerUnaryOperator implements UnaryOperator<Table> {
     public Table apply(final Table table) {
         Objects.requireNonNull(table, "table");
 
+        final int width = table.width();
         Table result = table;
 
         int c = 0;
         for (final ColumnConfig column : this.columns) {
-            result = result.setColumn(c,
-                    column.apply(result.column(c)));
+            if(c >= width){
+                break;
+            }
+
+            result = result.setColumn(
+                    c,
+                    column.apply(
+                            result.column(c)
+                    )
+            );
             c++;
         }
 
