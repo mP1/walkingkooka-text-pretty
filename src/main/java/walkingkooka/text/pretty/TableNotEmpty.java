@@ -316,9 +316,7 @@ final class TableNotEmpty extends Table {
                     rowText.setWidth(width);
                 }
 
-                after = 0 == newRows.elementCount ?
-                        empty() :
-                        new TableNotEmpty(
+                after = new TableNotEmpty(
                                 newRows,
                                 width
                         );
