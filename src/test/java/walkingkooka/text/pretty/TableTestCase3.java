@@ -148,14 +148,14 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         );
     }
 
-    // setCells.........................................................................................................
+    // setRows.........................................................................................................
 
     @Test
-    public final void testSetCellsInvalidStartColumnFails() {
+    public final void testSetRowsInvalidStartColumnFails() {
         assertThrows(
                 IndexOutOfBoundsException.class,
                 () -> this.createTable()
-                        .setCells(
+                        .setRows(
                                 -1,
                                 0,
                                 Lists.empty()
@@ -164,11 +164,11 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
     }
 
     @Test
-    public final void testSetCellsInvalidStartRowFails() {
+    public final void testSetRowsInvalidStartRowFails() {
         assertThrows(
                 IndexOutOfBoundsException.class,
                 () -> this.createTable()
-                        .setCells(
+                        .setRows(
                                 0,
                                 -1,
                                 Lists.empty()
@@ -177,11 +177,11 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
     }
 
     @Test
-    public final void testSetCellsNullWindowFails() {
+    public final void testSetRowsNullWindowFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createTable()
-                        .setCells(
+                        .setRows(
                                 0,
                                 0,
                                 null
@@ -190,11 +190,11 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
     }
 
     @Test
-    public final void testSetCellsEmptyWindow() {
+    public final void testSetRowsEmptyWindow() {
         final Table table = this.createTable();
         assertSame(
                 table,
-                table.setCells(
+                table.setRows(
                         0,
                         0,
                         Lists.empty()
