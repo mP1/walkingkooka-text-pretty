@@ -274,7 +274,7 @@ public final class TableTest implements ClassTesting2<Table> {
     }
 
     @Test
-    public void testSetRow3() {
+    public void testSetRowNonSquare() {
         final Table table = Table.empty();
 
         // - - -
@@ -297,10 +297,74 @@ public final class TableTest implements ClassTesting2<Table> {
         this.rowAndCheck(
                 table3,
                 1,
-                "x",
-                MISSING
+                "x"
         );
         this.check(table3);
+    }
+
+    @Test
+    public void testSetRowNonSquare2() {
+        final Table table = Table.empty();
+
+        // - - -
+        // x
+        // - - -
+        final Table table2 = table.setRow(
+                1,
+                Lists.of("x")
+        ).setRow(
+                2,
+                Lists.of("y")
+        ).setRow(
+                4,
+                Lists.of("z")
+        );
+        this.rowAndCheck(
+                table2,
+                1,
+                "x"
+        );
+        this.rowAndCheck(
+                table2,
+                2,
+                "y"
+        );
+        this.rowAndCheck(
+                table2,
+                3,
+                MISSING
+        );
+        this.rowAndCheck(
+                table2,
+                4,
+                "z"
+        );
+    }
+
+    @Test
+    public void testSetRowNonSquare3() {
+        final Table table = Table.empty();
+
+        // - - -
+        // x
+        // - - -
+        final Table table2 = table.setRow(
+                1,
+                Lists.of("x", "y", "z", "a")
+        ).setRow(
+                2,
+                Lists.of("m", "n", "o")
+        );
+        this.rowAndCheck(
+                table2,
+                1,
+                "x", "y", "z", "a"
+        );
+        this.rowAndCheck(
+                table2,
+                2,
+                "m", "n", "o", MISSING
+        );
     }
 
     @Test
