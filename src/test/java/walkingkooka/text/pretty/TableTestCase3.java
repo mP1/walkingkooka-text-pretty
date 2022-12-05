@@ -297,6 +297,88 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         );
     }
 
+    // setSize..........................................................................................................
+
+    @Test
+    public final void testSetSizeSame() {
+        final Table table = this.createTable();
+
+        this.setSizeAndCheck(
+                table,
+                table.width(),
+                table.height(),
+                table
+        );
+    }
+
+    @Test
+    public final void testSetSizeWithWidthIncrease() {
+        final Table table = this.createTable();
+        final int width = table.width() + 1;
+        final int height = table.height();
+
+        this.setSizeAndCheck(
+                table,
+                width,
+                height,
+                table.setColumn(
+                        width - 1,
+                        Lists.empty()
+                )
+        );
+    }
+
+    @Test
+    public final void testSetSizeWithWidthIncrease2() {
+        final Table table = this.createTable();
+        final int width = table.width() + 2;
+        final int height = table.height();
+
+        this.setSizeAndCheck(
+                table,
+                width,
+                height,
+                table.setColumn(
+                        width - 1,
+                        Lists.empty()
+                )
+        );
+    }
+
+    @Test
+    public final void testSetSizeWithHeightIncrease() {
+        final Table table = this.createTable();
+        final int width = table.width();
+        final int height = table.height() + 1;
+
+        this.setSizeAndCheck(
+                table,
+                width,
+                height,
+                table.setRow(
+                        height - 1,
+                        Lists.empty()
+                )
+        );
+    }
+
+    @Test
+    public final void testSetSizeWithHeightIncrease2() {
+        final Table table = this.createTable();
+        final int width = table.width();
+        final int height = table.height() + 2;
+
+        this.setSizeAndCheck(
+                table,
+                width,
+                height,
+                table.setRow(
+                        height - 1,
+                        Lists.empty()
+                )
+        );
+    }
+
     // helpers.........................................................................................................
 
     abstract T createTable();
@@ -448,6 +530,17 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
                 expected,
                 table.setWidth(width),
                 () -> "setWidth " + width + " " + table.toStringTest()
+        );
+    }
+
+    final void setSizeAndCheck(final Table table,
+                                final int width,
+                                final int height,
+                                final Table expected) {
+        this.checkEquals(
+                expected,
+                table.setSize(width, height),
+                () -> "setSize( " + width + "," + height + ") " + table.toStringTest()
         );
     }
 

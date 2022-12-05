@@ -2488,7 +2488,11 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                 Table.empty()
                         .setRow(
                                 0,
-                                Lists.empty()
+                                Lists.of(
+                                        MISSING,
+                                        MISSING,
+                                        MISSING
+                                )
                         )
         );
     }
@@ -2661,6 +2665,203 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                         ),
                         list(
                                 R2C0, R2C1, MISSING, MISSING
+                        )
+                )
+        );
+    }
+
+    // setSize...........................................................................................................
+
+    @Test
+    public void testSetSizeLessWidth() {
+        this.setSizeAndCheck(
+                this.createTable(),
+                2,
+                3,
+                this.createTable(
+                        2,
+                        list(
+                                R0C0, R0C1
+                        ),
+                        list(
+                                R1C0, R1C1
+                        ),
+                        list(
+                                R2C0, R2C1
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetSizeMoreWidth() {
+        this.setSizeAndCheck(
+                this.createTable(),
+                4,
+                3,
+                this.createTable(
+                        4,
+                        list(
+                                R0C0, R0C1, R0C2, MISSING
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2, MISSING
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2, MISSING
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetSizeLessHeight() {
+        this.setSizeAndCheck(
+                this.createTable(),
+                3,
+                2,
+                this.createTable(
+                        3,
+                        list(
+                                R0C0, R0C1, R0C2
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetSizeMoreHeight() {
+        this.setSizeAndCheck(
+                this.createTable(),
+                3,
+                4,
+                this.createTable(
+                        3,
+                        list(
+                                R0C0, R0C1, R0C2
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2
+                        ),
+                        list(
+                                MISSING, MISSING, MISSING
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetSizeLessWidthLessHeight() {
+        this.setSizeAndCheck(
+                this.createTable(),
+                2,
+                2,
+                this.createTable(
+                        2,
+                        list(
+                                R0C0, R0C1
+                        ),
+                        list(
+                                R1C0, R1C1
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetSizeLessWidthMoreHeight() {
+        this.setSizeAndCheck(
+                this.createTable(),
+                2,
+                4,
+                this.createTable(
+                        2,
+                        list(
+                                R0C0, R0C1
+                        ),
+                        list(
+                                R1C0, R1C1
+                        ),
+                        list(
+                                R2C0, R2C1
+                        ),
+                        list(
+                                MISSING, MISSING
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetSizeMoreWidthLessHeight() {
+        this.setSizeAndCheck(
+                this.createTable(),
+                4,
+                2,
+                this.createTable(
+                        4,
+                        list(
+                                R0C0, R0C1, R0C2, MISSING
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2, MISSING
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetSizeMoreWidthMoreHeight() {
+        this.setSizeAndCheck(
+                this.createTable(),
+                4,
+                4,
+                this.createTable(
+                        4,
+                        list(
+                                R0C0, R0C1, R0C2, MISSING
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2, MISSING
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2, MISSING
+                        ),
+                        list(
+                                MISSING, MISSING, MISSING, MISSING
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetSizeMoreWidthMoreHeight2() {
+        this.setSizeAndCheck(
+                this.createTable(),
+                5,
+                5,
+                this.createTable(
+                        5,
+                        list(
+                                R0C0, R0C1, R0C2, MISSING, MISSING
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2, MISSING, MISSING
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2, MISSING, MISSING
+                        ),
+                        list(
+                                MISSING, MISSING, MISSING, MISSING, MISSING
+                        ),
+                        list(
+                                MISSING, MISSING, MISSING, MISSING, MISSING
                         )
                 )
         );

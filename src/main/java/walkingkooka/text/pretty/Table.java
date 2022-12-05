@@ -131,7 +131,6 @@ public abstract class Table implements TreePrintable {
         checkRow(startRow);
         Objects.requireNonNull(windowText, "windowText");
 
-        // #137 if windowText.isEmpty use setWidthAndHeight(startColumn, startRow) etc
         return windowText.isEmpty() ?
                 0 == startColumn && 0 == startRow ?
                         this :
@@ -148,23 +147,9 @@ public abstract class Table implements TreePrintable {
 
     private Table setRowsEmpty(final int startColumn,
                                final int startRow) {
-        final TableNotEmptyListRows rows = this.rows()
-                .copy();
-        rows.size = Math.max(
-                startRow,
-                rows.size
-        );
-
-        final int width = Math.max(
+        return this.setSize(
                 startColumn,
-                this.width()
-        );
-
-        rows.setWidth(width);
-
-        return TableNotEmpty.with(
-                rows,
-                width
+                startRow
         );
     }
 
@@ -333,25 +318,66 @@ public abstract class Table implements TreePrintable {
      * causing the extra columns to be lost.
      */
     public final Table setWidth(final int width) {
+        return this.setSize(
+                width,
+                this.height()
+        );
+    }
+
+    // setSize..........................................................................................................
+
+    public final Table setSize(final int width,
+                               final int height) {
+        checkWidth(width);
+        checkHeight(height);
+
+        final Table table;
+
+        final int currentWidth = this.width();
+        final int currentHeight = this.height();
+
+        // unchanged width and height return this...
+        if(width == currentWidth && height == currentHeight) {
+            table = this;
+        } else {
+            final TableNotEmptyListRows rows = this.rows()
+                    .copy();
+
+            int newWidth = width;
+
+            if(height != currentHeight) {
+                rows.size = height;
+
+                if(height < currentHeight) {
+                    if(currentWidth == newWidth) {
+                        rows.findAndSetWidth(); // width didnt change but height did, need to find new width
+                    }
+                }
+            }
+
+            if(currentWidth != newWidth) {
+                rows.setWidth(newWidth);
+            }
+
+            table = TableNotEmpty.with(
+                    rows,
+                    width
+            );
+        }
+
+        return table;
+    }
+
+    private static void checkWidth(final int width) {
         if (width < 0) {
             throw new IllegalArgumentException("Invalid width " + width + " < 0");
         }
-
-        final int currentWidth = this.width();
-        return width == currentWidth ?
-                this :
-                this.setWidthDifferent(width);
     }
 
-    private TableNotEmpty setWidthDifferent(final int width) {
-        final TableNotEmptyListRows rows = this.rows()
-                .copy();
-        rows.setWidth(width);
-
-        return TableNotEmpty.with(
-                rows,
-                width
-        );
+    private static void checkHeight(final int height) {
+        if (height < 0) {
+            throw new IllegalArgumentException("Invalid height " + height + " < 0");
+        }
     }
 
     // row..............................................................................................................
@@ -424,39 +450,9 @@ public abstract class Table implements TreePrintable {
      * Returns a {@link Table} with the given height.
      */
     public final Table setHeight(final int height) {
-        if (height < 0) {
-            throw new IllegalArgumentException("Invalid height " + height + " < 0");
-        }
-
-        final int currentHeight = this.height();
-        return height == currentHeight ?
-                this :
-                0 == height ?
-                        empty() :
-                        height < currentHeight ?
-                                this.setHeightDecreased(height) :
-                                this.setHeightIncreased(height);
-    }
-
-    private TableNotEmpty setHeightDecreased(final int height) {
-        final TableNotEmptyListRows rows = this.rows()
-                .copy();
-        rows.size = height;
-
-        return TableNotEmpty.with(
-                rows,
-                rows.findAndSetWidth()
-        );
-    }
-
-    private TableNotEmpty setHeightIncreased(final int height) {
-        final TableNotEmptyListRows rows = this.rows()
-                .copy();
-        rows.size = height;
-
-        return TableNotEmpty.with(
-                rows,
-                this.width() // width doesnt change
+        return this.setSize(
+                this.width(),
+                height
         );
     }
 
