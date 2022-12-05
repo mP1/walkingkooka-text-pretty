@@ -72,6 +72,18 @@ final class TableNotEmptyListRow extends TableNotEmptyList<CharSequence> {
     @Override
     void setWidth(final int width) {
         this.width = width;
+
+        final int elementCount = this.elementCount;
+
+        // garbage collect deleted elements
+        for (int c = width; c < elementCount; c++) {
+            this.elements[c] = null;
+        }
+
+        this.size = Math.min(
+                this.size,
+                width
+        );
     }
 
     private int width;
