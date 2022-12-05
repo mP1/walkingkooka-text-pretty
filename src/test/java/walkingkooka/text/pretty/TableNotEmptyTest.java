@@ -26,6 +26,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@SuppressWarnings("unchecked")
 public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         implements HashCodeEqualsDefinedTesting2<TableNotEmpty> {
 

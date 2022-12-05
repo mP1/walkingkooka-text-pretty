@@ -27,6 +27,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
+@SuppressWarnings("unchecked")
 public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, T> extends TableTestCase<L>
         implements ListTesting2<L, T> {
 
