@@ -40,6 +40,7 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> {
         this.elements = elements;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final T get(final int index) {
         if (index < 0) {
@@ -82,6 +83,7 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> {
 
     // mutable TableNotEmpty only methods...............................................................................
 
+    @SuppressWarnings("unchecked")
     final void setAuto(final int index,
                        final T element) {
         final Object[] elements = this.elements;
