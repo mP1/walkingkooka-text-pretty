@@ -188,6 +188,41 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
         );
     }
 
+    // setWidth.........................................................................................................
+
+    @Test
+    public void testSetWidthIncreaseFromEmpty() {
+        this.setWidthAndCheck(
+                Table.empty(),
+                2,
+                Table.empty()
+                        .setColumn(
+                                1,
+                                list()
+                        )
+        );
+    }
+
+    @Test
+    public final void testSetWidthWithZero() {
+        this.setWidthAndCheck(
+                this.createTable(),
+                0,
+                Table.empty()
+        );
+    }
+
+    @Test
+    public void testSetWidthThenSetHeight() {
+        this.checkEquals(
+                Table.empty()
+                        .setWidth(3)
+                        .setHeight(4),
+                Table.empty()
+                        .setCell(2, 3, "")
+        );
+    }
+
     // toString.........................................................................................................
 
     @Test

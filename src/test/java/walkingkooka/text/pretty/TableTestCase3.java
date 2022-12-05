@@ -254,6 +254,49 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         );
     }
 
+    // setWidth........................................................................................................
+
+    @Test
+    public final void testSetWidthSame() {
+        final Table table = this.createTable();
+
+        this.setWidthAndCheck(
+                table,
+                table.width(),
+                table
+        );
+    }
+
+    @Test
+    public final void testSetWidthIncrease() {
+        final Table table = this.createTable();
+        final int width = table.width() + 1;
+
+        this.setWidthAndCheck(
+                table,
+                width,
+                table.setColumn(
+                        width - 1,
+                        Lists.empty()
+                )
+        );
+    }
+
+    @Test
+    public final void testSetWidthIncrease2() {
+        final Table table = this.createTable();
+        final int width = table.width() + 2;
+
+        this.setWidthAndCheck(
+                table,
+                width,
+                table.setColumn(
+                        width - 1,
+                        Lists.empty()
+                )
+        );
+    }
+
     // helpers.........................................................................................................
 
     abstract T createTable();
@@ -395,6 +438,16 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
                 expected,
                 table.setHeight(height),
                 () -> "setHeight " + height + " " + table.toStringTest()
+        );
+    }
+
+    final void setWidthAndCheck(final Table table,
+                                final int width,
+                                final Table expected) {
+        this.checkEquals(
+                expected,
+                table.setWidth(width),
+                () -> "setWidth " + width + " " + table.toStringTest()
         );
     }
 

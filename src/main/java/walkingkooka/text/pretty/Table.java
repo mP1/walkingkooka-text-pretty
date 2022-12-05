@@ -320,10 +320,37 @@ public abstract class Table implements TreePrintable {
         }
     }
 
+    // width............................................................................................................
+    
     /**
      * The maximum number of columns with 0 indicating no columns.
      */
     public abstract int width();
+
+    /**
+     * Returns a {@link Table} with the given width. The width may increase (adding empty columns) or decrease the width,
+     * causing the extra columns to be lost.
+     */
+    public final Table setWidth(final int width) {
+        if (width < 0) {
+            throw new IllegalArgumentException("Invalid width " + width + " < 0");
+        }
+
+        final int currentWidth = this.width();
+        return width == currentWidth ?
+                this :
+                this.setWidthDifferent(width);
+    }
+
+    private TableNotEmpty setWidthDifferent(final int width) {
+        final TableNotEmptyListRows rows = this.rows()
+                .copy();
+
+        return TableNotEmpty.with(
+                rows,
+                width
+        );
+    }
 
     // row..............................................................................................................
 

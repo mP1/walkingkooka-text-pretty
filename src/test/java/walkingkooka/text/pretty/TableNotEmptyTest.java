@@ -2568,6 +2568,131 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         );
     }
 
+    // setWidth.........................................................................................................
+
+    @Test
+    public void testSetWidthIncreased() {
+        this.setWidthAndCheck(
+                this.createTable(),
+                4,
+                this.createTable(
+                        4,
+                        list(
+                                R0C0, R0C1, R0C2, MISSING
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2, MISSING
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2, MISSING
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetWidthIncreased2() {
+        this.setWidthAndCheck(
+                this.createTable(),
+                5,
+                this.createTable(
+                        5,
+                        list(
+                                R0C0, R0C1, R0C2, MISSING, MISSING
+                        ),
+                        list(
+                                R1C0, R1C1, R1C2, MISSING, MISSING
+                        ),
+                        list(
+                                R2C0, R2C1, R2C2, MISSING, MISSING
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetWidthDecreased() {
+        this.setWidthAndCheck(
+                this.createTable(),
+                2,
+                this.createTable(
+                        2,
+                        list(
+                                R0C0, R0C1
+                        ),
+                        list(
+                                R1C0, R1C1
+                        ),
+                        list(
+                                R2C0, R2C1
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetWidthDecreased2() {
+        this.setWidthAndCheck(
+                this.createTable(),
+                1,
+                this.createTable(
+                        1,
+                        list(
+                                R0C0
+                        ),
+                        list(
+                                R1C0
+                        ),
+                        list(
+                                R2C0
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetWidthDecreaseThenIncreased() {
+        this.checkEquals(
+                this.createTable(
+                        4,
+                        list(
+                                R0C0, R0C1, MISSING, MISSING
+                        ),
+                        list(
+                                R1C0, R1C1, MISSING, MISSING
+                        ),
+                        list(
+                                R2C0, R2C1, MISSING, MISSING
+                        )
+                ),
+                this.createTable()
+                        .setWidth(2)
+                        .setWidth(4)
+        );
+    }
+
+    @Test
+    public void testSetWidthDecreaseThenIncreased2() {
+        this.checkEquals(
+                this.createTable()
+                        .setWidth(2)
+                        .setWidth(4)
+                        .setCell(1, 1, X),
+                this.createTable(
+                        4,
+                        list(
+                                R0C0, R0C1, MISSING, MISSING
+                        ),
+                        list(
+                                R1C0, X, MISSING, MISSING
+                        ),
+                        list(
+                                R2C0, R2C1, MISSING, MISSING
+                        )
+                )
+        );
+    }
+
     // equals...........................................................................................................
 
     @Test
