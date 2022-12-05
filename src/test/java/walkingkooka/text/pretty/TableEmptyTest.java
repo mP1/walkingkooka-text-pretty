@@ -204,7 +204,7 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
     }
 
     @Test
-    public final void testSetWidthWithZero() {
+    public void testSetWidthWithZero() {
         this.setWidthAndCheck(
                 this.createTable(),
                 0,
