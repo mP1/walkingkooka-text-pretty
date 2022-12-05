@@ -174,34 +174,6 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         );
     }
 
-    //    @Test
-//    public void testCellAbsentRowMissing() {
-//        this.cellAndCheck(
-//                this.createTable(
-//                        2,
-//                        list(R0C0, R0C0),
-//                        list(R0C1, R1C1)
-//                ),
-//                1,
-//                2,
-//                MISSING
-//        );
-//    }
-//
-//    @Test
-//    public void testCellAbsentColumnOob() {
-//        this.cellAndCheck(
-//                this.createTable(
-//                        2,
-//                        list(R0C0, R0C0),
-//                        list(R0C1, R1C1)
-//                ),
-//                2,
-//                1,
-//                MISSING
-//        );
-//    }
-
     @Test
     public void testCell() {
         this.cellAndCheck(
