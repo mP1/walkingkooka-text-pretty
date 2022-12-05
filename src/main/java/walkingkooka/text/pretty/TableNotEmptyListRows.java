@@ -79,11 +79,17 @@ final class TableNotEmptyListRows extends TableNotEmptyList<TableNotEmptyListRow
     int findWidth() {
         int width = 0;
 
+        int row = this.size;
         for (final Object element : this.elements) {
-            if (element instanceof TableNotEmptyListRow) {
-                final TableNotEmptyListRow row = (TableNotEmptyListRow) element;
-                width = Math.max(width, row.size);
+            if(row <= 0) {
+                break;
             }
+            if (element instanceof TableNotEmptyListRow) {
+                final TableNotEmptyListRow tableRow = (TableNotEmptyListRow) element;
+                width = Math.max(width, tableRow.size);
+            }
+
+            row--;
         }
 
         return width;

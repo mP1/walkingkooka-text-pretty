@@ -202,6 +202,58 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         );
     }
 
+    // setHeight........................................................................................................
+
+    @Test
+    public final void testSetHeightSame() {
+        final Table table = this.createTable();
+
+        this.setHeightAndCheck(
+                table,
+                table.height(),
+                table
+        );
+    }
+
+    @Test
+    public final void testSetHeightWithZero() {
+        this.setHeightAndCheck(
+                this.createTable(),
+                0,
+                Table.empty()
+        );
+    }
+
+    @Test
+    public final void testSetHeightIncrease() {
+        final Table table = this.createTable();
+        final int height = table.height() + 1;
+
+        this.setHeightAndCheck(
+                table,
+                height,
+                table.setRow(
+                        height - 1,
+                        Lists.empty()
+                )
+        );
+    }
+
+    @Test
+    public final void testSetHeightIncrease2() {
+        final Table table = this.createTable();
+        final int height = table.height() + 2;
+
+        this.setHeightAndCheck(
+                table,
+                height,
+                table.setRow(
+                        height - 1,
+                        Lists.empty()
+                )
+        );
+    }
+
     // helpers.........................................................................................................
 
     abstract T createTable();
@@ -333,6 +385,16 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         return table.setRow(
                 row,
                 text
+        );
+    }
+
+    final void setHeightAndCheck(final Table table,
+                                 final int height,
+                                 final Table expected) {
+        this.checkEquals(
+                expected,
+                table.setHeight(height),
+                () -> "setHeight " + height + " " + table.toStringTest()
         );
     }
 
