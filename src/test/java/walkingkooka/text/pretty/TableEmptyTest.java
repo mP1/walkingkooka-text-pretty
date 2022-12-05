@@ -111,6 +111,13 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
         this.createAndSetRow(1, R1C0, R1C1, R1C2);
     }
 
+    @Test
+    public void testSetEmptyRow() {
+        this.createAndSetRow(
+                1
+        );
+    }
+
     // setRows.........................................................................................................
 
     @Test
