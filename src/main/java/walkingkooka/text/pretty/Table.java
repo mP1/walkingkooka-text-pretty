@@ -445,7 +445,7 @@ public abstract class Table implements TreePrintable {
 
         return TableNotEmpty.with(
                 rows,
-                rows.findWidth() // need to find new width because the longest could have been removed
+                width
         );
     }
 
