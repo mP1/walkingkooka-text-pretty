@@ -205,7 +205,7 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
 
     @Test
     public void testAtSecondLineMiddle() {
-        final int index = +1;
+        final int index = 1;
         this.checkCharAt((LINE1 + EOL).length() + index, LINE2.charAt(index));
     }
 
