@@ -2087,6 +2087,30 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         );
     }
 
+    @Test
+    public void testSetEmptyRows() {
+        this.check(
+                Table.empty()
+                        .setRow(0, list())
+                        .setRow(1, list()),
+                list(),
+                list()
+        );
+    }
+
+    @Test
+    public void testSetEmptyRows2() {
+        this.check(
+                this.createTable()
+                        .setRow(0, list())
+                        .setRow(1, list())
+                        .setRow(2, list()),
+                list(),
+                list(),
+                list()
+        );
+    }
+
     // setRows.........................................................................................................
 
     @Test

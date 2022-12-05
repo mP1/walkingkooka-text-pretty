@@ -106,8 +106,8 @@ final class TableNotEmpty extends Table {
                           final int width) {
         super();
 
-        if(width <= 0) {
-            throw new IllegalArgumentException("Invalid width " + width + " <= 0");
+        if(width < 0) {
+            throw new IllegalArgumentException("Invalid width " + width + " < 0");
         }
 
         rows.setWidth(width);
