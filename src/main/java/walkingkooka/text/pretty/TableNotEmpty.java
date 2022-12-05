@@ -73,6 +73,8 @@ final class TableNotEmpty extends Table {
             row++;
         }
 
+        rows.setWidth(width);
+
         return with(
                 rows,
                 width
@@ -85,9 +87,12 @@ final class TableNotEmpty extends Table {
 
         rows.setAuto(row, rowText);
 
+        final int width = rowText.size;
+        rowText.setWidth(width);
+
         return with(
                 rows,
-                rowText.size
+                width
         );
     }
 
@@ -110,9 +115,8 @@ final class TableNotEmpty extends Table {
             throw new IllegalArgumentException("Invalid width " + width + " < 0");
         }
 
-        rows.setWidth(width);
-
         this.rows = rows;
+        rows.missing.width = width;
         this.width = width;
     }
 
@@ -264,19 +268,25 @@ final class TableNotEmpty extends Table {
 
     @Override
     Table addRow0(final int row,
-                           final TableNotEmptyListRow rowText) {
+                  final TableNotEmptyListRow rowText) {
         final TableNotEmptyListRows newRows = this.rows.copy();
         newRows.setAuto(
                 row,
                 rowText
         );
 
+        final int rowTextWidth = rowText.size;
+        int width = this.width;
+        if(rowTextWidth > width) {
+            newRows.setWidth(rowTextWidth);
+            width = rowTextWidth;
+        } else {
+            rowText.setWidth(width);
+        }
+
         return with(
                 newRows,
-                Math.max(
-                        this.width,
-                        rowText.size
-                )
+                width
         );
     }
 
@@ -293,33 +303,35 @@ final class TableNotEmpty extends Table {
             final TableNotEmptyListRows newRows = rows.copy();
             newRows.setAuto(row, rowText);
 
-            if(0 == newRows.elementCount) {
+            if (0 == newRows.elementCount) {
                 after = empty();
             } else {
                 // different row text...
                 final int currentWidth = this.width();
                 int width;
 
-                if(null ==rowText ){
+                if (null == rowText) {
                     width = currentWidth;
                 } else {
-                    if(rowText.size >= currentWidth) {
+                    width = rowText.size;
+                    if (width >= currentWidth) {
                         width = rowText.size;
+                        newRows.setWidth(width);
                     } else {
                         // previous row text was width
-                        if(previous.size == currentWidth) {
-                            width = newRows.findWidth();
+                        if (previous.size == currentWidth) {
+                            width = newRows.findAndSetWidth();
                         } else {
                             width = currentWidth;
+                            rowText.setWidth(width);
                         }
                     }
-                    rowText.setWidth(width);
                 }
 
                 after = new TableNotEmpty(
-                                newRows,
-                                width
-                        );
+                        newRows,
+                        width
+                );
             }
         }
 

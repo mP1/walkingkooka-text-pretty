@@ -158,12 +158,16 @@ public abstract class Table implements TreePrintable {
                 rows.size
         );
 
+        final int width = Math.max(
+                startColumn,
+                this.width()
+        );
+
+        rows.setWidth(width);
+
         return TableNotEmpty.with(
                 rows,
-                Math.max(
-                        startColumn,
-                        this.width()
-                )
+                width
         );
     }
 
@@ -345,6 +349,7 @@ public abstract class Table implements TreePrintable {
     private TableNotEmpty setWidthDifferent(final int width) {
         final TableNotEmptyListRows rows = this.rows()
                 .copy();
+        rows.setWidth(width);
 
         return TableNotEmpty.with(
                 rows,
@@ -441,11 +446,9 @@ public abstract class Table implements TreePrintable {
                 .copy();
         rows.size = height;
 
-        final int width = rows.findWidth();
-
         return TableNotEmpty.with(
                 rows,
-                width
+                rows.findAndSetWidth()
         );
     }
 

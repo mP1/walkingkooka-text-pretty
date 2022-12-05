@@ -52,7 +52,7 @@ final class TableNotEmptyListRows extends TableNotEmptyList<TableNotEmptyListRow
         return this.missing;
     }
 
-    private final TableNotEmptyListRow missing = TableNotEmptyListRow.alwaysEmpty();
+    final TableNotEmptyListRow missing = TableNotEmptyListRow.alwaysEmpty();
 
     @Override
     boolean isMissing(final TableNotEmptyListRow row) {
@@ -76,7 +76,7 @@ final class TableNotEmptyListRows extends TableNotEmptyList<TableNotEmptyListRow
         }
     }
 
-    int findWidth() {
+    int findAndSetWidth() {
         int width = 0;
 
         int row = this.size;
@@ -91,6 +91,8 @@ final class TableNotEmptyListRows extends TableNotEmptyList<TableNotEmptyListRow
 
             row--;
         }
+
+        this.setWidth(width);
 
         return width;
     }
@@ -112,6 +114,7 @@ final class TableNotEmptyListRows extends TableNotEmptyList<TableNotEmptyListRow
         final TableNotEmptyListRows copy = new TableNotEmptyListRows(newElements);
         copy.size = this.size;
         copy.elementCount = elementCount;
+        copy.missing.width = this.missing.width;
         return copy;
     }
 

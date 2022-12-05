@@ -139,11 +139,14 @@ public final class TableNotEmptyColumnListTest extends TableTestCase2<TableNotEm
             r++;
         }
 
+        final int width = 3;
+        tableRows.setWidth(width);
+
         return TableNotEmptyColumnList.with(
                 COLUMN,
                 TableNotEmpty.with(
                         tableRows,
-                        3
+                        width
                 )
         );
     }
