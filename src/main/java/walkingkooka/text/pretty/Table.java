@@ -84,9 +84,6 @@ public abstract class Table implements TreePrintable {
 
     final public CharSequence cell(final int column,
                                    final int row) {
-        checkColumn(column);
-        checkRow(row);
-
         return this.cell0(
                 column,
                 row

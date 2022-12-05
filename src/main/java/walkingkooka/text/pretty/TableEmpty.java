@@ -43,6 +43,9 @@ final class TableEmpty extends Table {
     @Override
     CharSequence cell0(final int column,
                        final int row) {
+        checkColumn(column);
+        checkRow(row);
+
         return MISSING_CELL;
     }
 
