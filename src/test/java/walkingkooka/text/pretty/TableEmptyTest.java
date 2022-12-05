@@ -223,6 +223,41 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
         );
     }
 
+    // setSize..........................................................................................................
+
+    @Test
+    public void testSetSizeIncreased() {
+        this.setSizeAndCheck(
+                Table.empty(),
+                2,
+                3,
+                Table.empty()
+                        .setRow(
+                                3 - 1,
+                                list(
+                                        MISSING,
+                                        MISSING
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testSetSizeIncreased2() {
+        this.setSizeAndCheck(
+                Table.empty(),
+                1,
+                2,
+                Table.empty()
+                        .setRow(
+                                2 - 1,
+                                list(
+                                        MISSING
+                                )
+                        )
+        );
+    }
+
     // toString.........................................................................................................
 
     @Test
