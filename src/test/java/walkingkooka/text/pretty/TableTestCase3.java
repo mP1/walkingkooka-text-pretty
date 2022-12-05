@@ -451,7 +451,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         );
     }
 
-    final <T> List<T> list(final T...elements) {
+    static <TT> List<TT> list(final TT...elements) {
         return Arrays.asList(elements);
     }
 
