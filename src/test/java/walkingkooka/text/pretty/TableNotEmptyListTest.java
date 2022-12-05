@@ -17,12 +17,14 @@
 
 package walkingkooka.text.pretty;
 
-public final class TableNotEmptyListTest extends TableTestCase<TableNotEmptyList> {
+import walkingkooka.Cast;
+
+public final class TableNotEmptyListTest extends TableTestCase<TableNotEmptyList<?>> {
 
     // ClassTesting2....................................................................................................
 
     @Override
-    public Class<TableNotEmptyList> type() {
-        return TableNotEmptyList.class;
+    public Class<TableNotEmptyList<?>> type() {
+        return Cast.to(TableNotEmptyList.class);
     }
 }
