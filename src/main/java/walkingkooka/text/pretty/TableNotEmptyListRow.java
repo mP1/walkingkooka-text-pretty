@@ -86,7 +86,7 @@ final class TableNotEmptyListRow extends TableNotEmptyList<CharSequence> {
         );
     }
 
-    private int width;
+    int width;
 
     @Override
     TableNotEmptyListRow copy() {

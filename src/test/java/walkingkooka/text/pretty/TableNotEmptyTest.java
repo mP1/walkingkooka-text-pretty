@@ -2779,6 +2779,8 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
             row++;
         }
 
+        copiedRows.setWidth(width);
+
         return TableNotEmpty.with(
                 copiedRows,
                 width
