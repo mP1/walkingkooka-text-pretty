@@ -142,7 +142,7 @@ public abstract class Table implements TreePrintable {
                                 startColumn,
                                 startRow
                         ) :
-                this.setRowsNotEmty(
+                this.setRowsNotEmpty(
                         startColumn,
                         startRow,
                         windowText
@@ -167,9 +167,9 @@ public abstract class Table implements TreePrintable {
         );
     }
 
-    private Table setRowsNotEmty(final int startColumn,
-                                 final int startRow,
-                                 final List<List<CharSequence>> windowText) {
+    private Table setRowsNotEmpty(final int startColumn,
+                                  final int startRow,
+                                  final List<List<CharSequence>> windowText) {
         final TableNotEmptyListRows rows = this.rows();
         final TableNotEmptyListRows newRows = TableNotEmptyListRows.with(
                 rows.elements.length
