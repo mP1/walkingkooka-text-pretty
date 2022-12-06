@@ -51,24 +51,28 @@ final class TableTransformerUnaryOperator implements UnaryOperator<Table> {
         Objects.requireNonNull(table, "table");
 
         final int width = table.width();
-        Table result = table;
+        final List<List<CharSequence>> newColumns = Lists.array();
 
         int c = 0;
         for (final ColumnConfig column : this.columns) {
-            if(c >= width){
+            if (c >= width) {
                 break;
             }
 
-            result = result.setColumn(
-                    c,
+            newColumns.add(
                     column.apply(
-                            result.column(c)
+                            table.column(c)
                     )
             );
+
             c++;
         }
 
-        return result;
+        return table.setColumns(
+                0, // startColumn
+                0, // startRow
+                newColumns
+        );
     }
 
     private final List<ColumnConfig> columns;
