@@ -129,7 +129,7 @@ public abstract class Table implements TreePrintable {
         // startColumn and startRow must
         checkColumn(startColumn);
         checkRow(startRow);
-        Objects.requireNonNull(windowText, "windowText");
+        checkWindowText(windowText);
 
         return windowText.isEmpty() ?
                 0 == startColumn && 0 == startRow ?
@@ -265,6 +265,61 @@ public abstract class Table implements TreePrintable {
         }
 
         return table;
+    }
+
+    // setColumns.......................................................................................................
+
+    /**
+     * Converts the columns of text into rows of text and then calls {@link #setRows(int, int, List)}.
+     */
+    public final Table setColumns(final int startColumn,
+                                  final int startRow,
+                                  final List<List<CharSequence>> windowText) {
+        checkColumn(startColumn);
+        checkRow(startRow);
+        checkWindowText(windowText);
+
+        final List<List<CharSequence>> rowWindowText = Lists.autoExpandArray();
+
+        int column = 0;
+
+        for (final List<CharSequence> columnText : windowText) {
+
+            if (null != columnText && !columnText.isEmpty()) {
+
+                int row = 0;
+                for (final CharSequence cellText : columnText) {
+                    if (null != cellText) {
+                        List<CharSequence> rowText = rowWindowText.get(row);
+                        if (null == rowText) {
+                            rowText = Lists.autoExpandArray();
+                        }
+                        rowWindowText.set(row, rowText);
+
+                        rowText.set(
+                                column,
+                                cellText
+                        );
+                    }
+                    row++;
+                }
+            }
+
+            column++;
+        }
+
+        return this.setRows(
+                startColumn,
+                startRow,
+                rowWindowText
+        );
+    }
+
+    private static void checkWindowText(final List<List<CharSequence>> windowText) {
+        Objects.requireNonNull(
+                windowText,
+                "windowText"
+        );
     }
 
     // column...........................................................................................................

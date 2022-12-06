@@ -344,6 +344,64 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
         );
     }
 
+    // setColumns.......................................................................................................
+
+    @Test
+    public void testSetColumnsAtOrigin() {
+        final Table expected = TableEmpty.INSTANCE.setColumn(
+                0,
+                list(R0C0, R1C0, R2C0)
+        );
+
+        this.checkEquals(
+                expected,
+                TableEmpty.INSTANCE.setColumns(
+                        0,
+                        0,
+                        Lists.of(
+                                list(R0C0, R1C0, R2C0)
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnsNonOriginEmpty() {
+        final Table expected = TableEmpty.INSTANCE.setCell(
+                2,
+                2,
+                ""
+        );
+
+        this.checkEquals(
+                expected,
+                TableEmpty.INSTANCE.setColumns(
+                        3,
+                        3,
+                        Lists.empty()
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnsNonOrigin() {
+        final Table expected = TableEmpty.INSTANCE.setColumn(
+                2,
+                list(MISSING, MISSING, "X", "Y", "Z")
+        );
+
+        this.checkEquals(
+                expected,
+                TableEmpty.INSTANCE.setColumns(
+                        2,
+                        2,
+                        Lists.of(
+                                list("X", "Y", "Z")
+                        )
+                )
+        );
+    }
+    
     // toString.........................................................................................................
 
     @Test
