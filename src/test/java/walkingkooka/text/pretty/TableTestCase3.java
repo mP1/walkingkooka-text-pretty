@@ -379,6 +379,60 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         );
     }
 
+    // setColumns.......................................................................................................
+
+    @Test
+    public final void testSetColumnsInvalidStartColumnFails() {
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> this.createTable()
+                        .setColumns(
+                                -1,
+                                0,
+                                Lists.empty()
+                        )
+        );
+    }
+
+    @Test
+    public final void testSetColumnsInvalidStartRowFails() {
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> this.createTable()
+                        .setColumns(
+                                0,
+                                -1,
+                                Lists.empty()
+                        )
+        );
+    }
+
+    @Test
+    public final void testSetColumnsNullWindowFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createTable()
+                        .setColumns(
+                                0,
+                                0,
+                                null
+                        )
+        );
+    }
+
+    @Test
+    public final void testSetColumnsEmptyWindow() {
+        final Table table = this.createTable();
+        assertSame(
+                table,
+                table.setColumns(
+                        0,
+                        0,
+                        Lists.empty()
+                )
+        );
+    }
+    
     // helpers.........................................................................................................
 
     abstract T createTable();
