@@ -206,12 +206,14 @@ public abstract class Table implements TreePrintable {
             }
 
             // copy window row.
-            for (final CharSequence text : rowText) {
-                newTableRow.setAuto(
-                        column,
-                        text
-                );
-                column++;
+            if(null != rowText) {
+                for (final CharSequence text : rowText) {
+                    newTableRow.setAuto(
+                            column,
+                            text
+                    );
+                    column++;
+                }
             }
 
             // copy the columns after window
@@ -251,12 +253,18 @@ public abstract class Table implements TreePrintable {
             row++;
         }
 
-        return rows.isEmpty() ?
-                empty() :
-                TableNotEmpty.with(
-                        newRows,
-                        newWidth
-                );
+        final Table table;
+        if(rows.isEmpty()) {
+            table = empty();
+        } else {
+            newRows.setWidth(newWidth);
+            table = TableNotEmpty.with(
+                    newRows,
+                    newWidth
+            );
+        }
+
+        return table;
     }
 
     // column...........................................................................................................
