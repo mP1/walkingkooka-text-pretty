@@ -176,6 +176,92 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
         );
     }
 
+    @Test
+    public void testSetRowsManyRows() {
+        final Table expected = TableEmpty.INSTANCE.setRow(
+                1,
+                list(R1C0, R1C1, R1C2)
+        ).setRow(
+                2,
+                list(R2C0, R2C1, R2C2)
+        );
+
+        this.checkEquals(
+                expected,
+                TableEmpty.INSTANCE.setRows(
+                        0,
+                        1,
+                        Lists.of(
+                                list(R1C0, R1C1, R1C2), // row1
+                                list(R2C0, R2C1, R2C2) // row2
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowsManyRows2() {
+        final Table expected = TableEmpty.INSTANCE.setRow(
+                1,
+                list(R1C0)
+        ).setRow(
+                2,
+                list(R2C0, R2C1, R2C2)
+        );
+
+        this.checkEquals(
+                expected,
+                TableEmpty.INSTANCE.setRows(
+                        0,
+                        1,
+                        Lists.of(
+                                list(R1C0), // row1
+                                list(R2C0, R2C1, R2C2) // row2
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowsIncludesFirstNullRow() {
+        final Table expected = TableEmpty.INSTANCE.setRow(
+                2,
+                list(R2C0, R2C1, R2C2)
+        );
+
+        this.checkEquals(
+                expected,
+                TableEmpty.INSTANCE.setRows(
+                        0,
+                        1,
+                        Lists.of(
+                                null, // row1
+                                list(R2C0, R2C1, R2C2) // row2
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetRowsIncludesFirstEmptyRow() {
+        final Table expected = TableEmpty.INSTANCE.setRow(
+                2,
+                list(R2C0, R2C1, R2C2)
+        );
+
+        this.checkEquals(
+                expected,
+                TableEmpty.INSTANCE.setRows(
+                        0,
+                        1,
+                        Lists.of(
+                                list(), // row1
+                                list(R2C0, R2C1, R2C2) // row2
+                        )
+                )
+        );
+    }
+
     // setHeight........................................................................................................
 
     @Test

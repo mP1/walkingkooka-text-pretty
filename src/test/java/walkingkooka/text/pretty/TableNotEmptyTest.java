@@ -2410,6 +2410,104 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         );
     }
 
+    @Test
+    public void testSetRowsNullFirstRow() {
+        final Table expected = this.createTable()
+                .setCell(
+                        1,
+                        2,
+                        Z
+                );
+
+        this.checkEquals(
+                expected,
+                this.createTable()
+                        .setRows(
+                                1,
+                                1,
+                                Lists.of(
+                                        null, // row1
+                                        list(Z) // row2
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testSetRowsEmptyFirstRow() {
+        final Table expected = this.createTable()
+                .setCell(
+                        1,
+                        2,
+                        Z
+                );
+
+        this.checkEquals(
+                expected,
+                this.createTable()
+                        .setRows(
+                                1,
+                                1,
+                                Lists.of(
+                                        list(), // row1
+                                        list(Z) // row2
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testSetRowsNullElement() {
+        final Table expected = this.createTable()
+                .setCell(
+                        1,
+                        1,
+                        null
+                ).setCell(
+                        2,
+                        1,
+                        Z
+                );
+
+        this.checkEquals(
+                expected,
+                this.createTable()
+                        .setRows(
+                                1,
+                                1,
+                                Lists.of(
+                                        list(null, Z) // row2
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testSetRowsEmptyElement() {
+        final Table expected = this.createTable()
+                .setCell(
+                        1,
+                        1,
+                        ""
+                ).setCell(
+                        2,
+                        1,
+                        Z
+                );
+
+        this.checkEquals(
+                expected,
+                this.createTable()
+                        .setRows(
+                                1,
+                                1,
+                                Lists.of(
+                                        list("", Z) // row2
+                                )
+                        )
+        );
+    }
+
     // setHeight........................................................................................................
 
     // width should also decrease to the max width of row 0 and row 1 which is 2
