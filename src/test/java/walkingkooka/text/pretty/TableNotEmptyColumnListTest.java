@@ -24,21 +24,11 @@ import walkingkooka.collect.list.Lists;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class TableNotEmptyColumnListTest extends TableTestCase2<TableNotEmptyColumnList>
         implements ListTesting2<TableNotEmptyColumnList, CharSequence> {
 
     private final static int COLUMN = 1;
-
-    // https://github.com/mP1/walkingkooka/issues/2579
-    @Test
-    public void testGetNegativeIndexFails() {
-        assertThrows(
-                IndexOutOfBoundsException.class,
-                () -> this.createList().get(-1)
-        );
-    }
 
     @Test
     public void testImmutableList() {
