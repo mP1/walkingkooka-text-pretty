@@ -43,13 +43,13 @@ public abstract class TableCollectorTestCase2<C extends TableCollector> extends 
 
     @Test
     public final void testParallelStreamFails() {
-        assertThrows(UnsupportedOperationException.class,
-                () -> {
-                    Arrays.<List<CharSequence>>asList(Lists.of("a"), Lists.of("b"))
-                            .stream()
-                            .parallel()
-                            .collect(this.createCollector(Table.empty(), 0));
-                });
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> Arrays.<List<CharSequence>>asList(Lists.of("a"), Lists.of("b"))
+                        .stream()
+                        .parallel()
+                        .collect(this.createCollector(Table.empty(), 0))
+        );
     }
 
     @Test
