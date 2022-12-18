@@ -89,7 +89,7 @@ public final class TagStrippingCharSequenceUnaryOperatorTest extends TextPrettyT
 
     @Test
     public void testOnlyTagWithSingleQuotedAttributes() {
-        this.applyAndCheck2("<x attribute=\'123\'>", "");
+        this.applyAndCheck2("<x attribute='123'>", "");
     }
 
     @Test
@@ -114,7 +114,7 @@ public final class TagStrippingCharSequenceUnaryOperatorTest extends TextPrettyT
 
     @Test
     public void testAttributeSingleQuoteText() {
-        this.applyAndCheck2("<x attribute=\'123\'>z", "z");
+        this.applyAndCheck2("<x attribute='123'>z", "z");
     }
 
     @Test
@@ -124,17 +124,17 @@ public final class TagStrippingCharSequenceUnaryOperatorTest extends TextPrettyT
 
     @Test
     public void testAttributeSingleQuoteEscaping() {
-        this.applyAndCheck2("<x attribute=\'1\\\'23\'>", "");
+        this.applyAndCheck2("<x attribute='1\\'23'>", "");
     }
 
     @Test
     public void testAttributeSingleQuoteEscapingText() {
-        this.applyAndCheck2("<x attribute=\'1\\\'23\'>z", "z");
+        this.applyAndCheck2("<x attribute='1\\'23'>z", "z");
     }
 
     @Test
     public void testUnclosedSingleQuotedAttribute() {
-        this.applyAndCheck2("<x attribute=\'123", "");
+        this.applyAndCheck2("<x attribute='123", "");
     }
 
     @Test
