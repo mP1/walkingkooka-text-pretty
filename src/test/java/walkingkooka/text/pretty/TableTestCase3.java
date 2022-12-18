@@ -598,6 +598,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         );
     }
 
+    @SafeVarargs
     static <TT> List<TT> list(final TT...elements) {
         return Arrays.asList(elements);
     }
@@ -644,6 +645,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         this.heightAndCheck(table, height + 1);
     }
 
+    @SafeVarargs
     final void check(final Table table,
                      final List<CharSequence>... rows) {
         this.check(

@@ -88,6 +88,7 @@ public abstract class TableCollectorTestCase2<C extends TableCollector> extends 
 
     abstract C createCollector(final Table table, final int next);
 
+    @SafeVarargs
     final void collectAndCheck(final Table table,
                                final int start,
                                final List<CharSequence>... data) {
@@ -97,6 +98,7 @@ public abstract class TableCollectorTestCase2<C extends TableCollector> extends 
                         .collect(this.createCollector(table, start)));
     }
 
+    @SuppressWarnings("unchecked")
     abstract Table add(final Table table,
                        final int start,
                        final List<CharSequence>... data);

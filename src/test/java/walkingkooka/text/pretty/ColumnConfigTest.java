@@ -287,11 +287,13 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
                 TextPretty.trimLeft(), TextPretty.centerAlignment());
     }
 
+    @SafeVarargs
     private void check(final ColumnConfig column,
                        final BiFunction<CharSequence, Integer, CharSequence>... functions) {
         this.check(column, Integer.MAX_VALUE, functions);
     }
 
+    @SafeVarargs
     private void check(final ColumnConfig column,
                        final int maxWidth,
                        final BiFunction<CharSequence, Integer, CharSequence>... functions) {

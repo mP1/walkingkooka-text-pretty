@@ -56,6 +56,7 @@ public final class TableCollectorRowTest extends TableCollectorTestCase2<TableCo
         );
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     Table add(final Table table,
               final int start,
