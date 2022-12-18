@@ -131,6 +131,7 @@ public final class TableTest implements ClassTesting2<Table> {
         );
     }
 
+    @SafeVarargs
     private <T> List<T> list(final T ... elements) {
         return Arrays.asList(elements);
     }
