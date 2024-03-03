@@ -567,14 +567,23 @@ public abstract class Table implements TreePrintable {
 
         printer.indent();
         {
+            final int width = this.width();
+            if (width > 0) {
+                printer.println("width: " + width);
+            }
+            final int height = this.height();
+            if (height > 0) {
+                printer.println("height: " + height);
+            }
+
             int row = 0;
-            for(final List<CharSequence> rowText : this.rows()) {
+            for (final List<CharSequence> rowText : this.rows()) {
                 printer.print("row: ");
                 printer.println(String.valueOf(row));
 
                 printer.indent();
                 {
-                    for(final CharSequence text : rowText) {
+                    for (final CharSequence text : rowText) {
                         printer.println(
                                 CharSequences.quoteAndEscape(text)
                         );
