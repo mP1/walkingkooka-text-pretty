@@ -281,11 +281,10 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
         this.setWidthAndCheck(
                 Table.empty(),
                 2,
-                Table.empty()
-                        .setColumn(
-                                1,
-                                list()
-                        )
+                TableNotEmpty.with(
+                        TableNotEmptyListRows.with(2),
+                        2
+                )
         );
     }
 

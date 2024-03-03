@@ -217,10 +217,15 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
 
     @Test
     public final void testSetHeightWithZero() {
+        final Table table = this.createTable();
+
         this.setHeightAndCheck(
-                this.createTable(),
+                table,
                 0,
                 Table.empty()
+                        .setWidth(
+                                table.width()
+                        )
         );
     }
 
@@ -275,10 +280,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         this.setWidthAndCheck(
                 table,
                 width,
-                table.setColumn(
-                        width - 1,
-                        Lists.empty()
-                )
+                table.setWidth(width)
         );
     }
 
@@ -290,10 +292,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         this.setWidthAndCheck(
                 table,
                 width,
-                table.setColumn(
-                        width - 1,
-                        Lists.empty()
-                )
+                table.setWidth(width)
         );
     }
 
@@ -321,10 +320,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
                 table,
                 width,
                 height,
-                table.setColumn(
-                        width - 1,
-                        Lists.empty()
-                )
+                table.setWidth(width)
         );
     }
 
@@ -338,10 +334,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
                 table,
                 width,
                 height,
-                table.setColumn(
-                        width - 1,
-                        Lists.empty()
-                )
+                table.setWidth(width)
         );
     }
 
@@ -355,10 +348,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
                 table,
                 width,
                 height,
-                table.setRow(
-                        height - 1,
-                        Lists.empty()
-                )
+                table.setHeight(height)
         );
     }
 

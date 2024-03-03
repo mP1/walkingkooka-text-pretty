@@ -394,13 +394,23 @@ public abstract class Table implements TreePrintable {
         checkWidth(width);
         checkHeight(height);
 
+        return 0 == width && 0 == height ?
+                Table.empty() :
+                this.setSizeNotEmpty(
+                        width,
+                        height
+                );
+    }
+
+    private Table setSizeNotEmpty(final int width,
+                                  final int height) {
         final Table table;
 
         final int currentWidth = this.width();
         final int currentHeight = this.height();
 
         // unchanged width and height return this...
-        if(width == currentWidth && height == currentHeight) {
+        if (width == currentWidth && height == currentHeight) {
             table = this;
         } else {
             final TableNotEmptyListRows rows = this.rows()
@@ -408,17 +418,17 @@ public abstract class Table implements TreePrintable {
 
             int newWidth = width;
 
-            if(height != currentHeight) {
+            if (height != currentHeight) {
                 rows.size = height;
 
-                if(height < currentHeight) {
-                    if(currentWidth == newWidth) {
+                if (height < currentHeight) {
+                    if (currentWidth == newWidth) {
                         rows.findAndSetWidth(); // width didnt change but height did, need to find new width
                     }
                 }
             }
 
-            if(currentWidth != newWidth) {
+            if (currentWidth != newWidth) {
                 rows.setWidth(newWidth);
             }
 
