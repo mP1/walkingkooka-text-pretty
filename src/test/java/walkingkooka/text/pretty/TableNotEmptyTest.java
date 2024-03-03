@@ -2524,7 +2524,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                                 1,
                                 Y
                         ).setCell(
-                                2,
+                                0,
                                 2,
                                 Z
                         ),
@@ -2551,11 +2551,11 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                                 0,
                                 X
                         ).setCell(
-                                1,
+                                0,
                                 1,
                                 Y
                         ).setCell(
-                                2,
+                                0,
                                 2,
                                 Z
                         ),
@@ -3269,6 +3269,8 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
         this.treePrintAndCheck(
                 this.createTable(),
                 "Table\n" +
+                        "  width: 3\n" +
+                        "  height: 3\n" +
                         "  row: 0\n" +
                         "    \"r0c0\"\n" +
                         "    \"r0c1\"\n" +
