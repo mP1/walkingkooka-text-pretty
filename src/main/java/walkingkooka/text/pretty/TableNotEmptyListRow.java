@@ -17,6 +17,7 @@
 
 package walkingkooka.text.pretty;
 
+import walkingkooka.collect.list.ImmutableList;
 import walkingkooka.collect.list.Lists;
 
 import java.util.List;
@@ -24,7 +25,8 @@ import java.util.List;
 /**
  * An immutable {@link List} view of a single row, where the elements are non null {@link CharSequence}.
  */
-final class TableNotEmptyListRow extends TableNotEmptyList<CharSequence> {
+final class TableNotEmptyListRow extends TableNotEmptyList<CharSequence>
+        implements ImmutableList<CharSequence> {
 
     static {
         Lists.registerImmutableType(TableNotEmptyListRow.class);
