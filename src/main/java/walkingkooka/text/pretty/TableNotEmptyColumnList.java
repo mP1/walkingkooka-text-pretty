@@ -69,13 +69,6 @@ final class TableNotEmptyColumnList extends AbstractList<CharSequence> implement
      */
     @Override
     public ImmutableList<CharSequence> setElements(final List<CharSequence> list) {
-        final List<CharSequence> copy = Lists.immutable(list);
-        return this.equals(copy) ?
-                this :
-                this.throwUnsupportedOperationException();
-    }
-
-    private ImmutableList<CharSequence> throwUnsupportedOperationException() {
-        throw new UnsupportedOperationException();
+        return this.setElementsFailIfDifferent(list);
     }
 }
