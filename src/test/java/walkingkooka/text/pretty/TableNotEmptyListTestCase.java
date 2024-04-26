@@ -18,6 +18,8 @@
 package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.ImmutableList;
+import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.ListTesting2;
 import walkingkooka.collect.list.Lists;
 
@@ -29,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 @SuppressWarnings("unchecked")
 public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, T> extends TableTestCase<L>
-        implements ListTesting2<L, T> {
+        implements ImmutableListTesting<L, T> {
 
     TableNotEmptyListTestCase() {
         super();
