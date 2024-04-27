@@ -18,7 +18,6 @@
 package walkingkooka.text.pretty;
 
 import walkingkooka.collect.list.ImmutableList;
-import walkingkooka.collect.list.Lists;
 
 import java.util.AbstractList;
 import java.util.List;
@@ -28,10 +27,6 @@ import java.util.List;
  * become the row coordinate to locate the cell.
  */
 final class TableNotEmptyColumnList extends AbstractList<CharSequence> implements ImmutableList<CharSequence> {
-
-    static {
-        Lists.registerImmutableType(TableNotEmptyColumnList.class);
-    }
 
     static TableNotEmptyColumnList with(final int column,
                                         final TableNotEmpty table) {
