@@ -17,18 +17,12 @@
 
 package walkingkooka.text.pretty;
 
-import walkingkooka.collect.list.Lists;
-
 import java.util.List;
 
 /**
  * An immutable {@link List} view of a single row, where the elements are non null {@link CharSequence}.
  */
 final class TableNotEmptyListRows extends TableNotEmptyList<TableNotEmptyListRow> {
-
-    static {
-        Lists.registerImmutableType(TableNotEmptyListRows.class);
-    }
 
     static TableNotEmptyListRows empty() {
         return with(INITIAL_CAPACITY);
