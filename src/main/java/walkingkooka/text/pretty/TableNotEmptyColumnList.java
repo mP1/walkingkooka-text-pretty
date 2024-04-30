@@ -17,6 +17,7 @@
 
 package walkingkooka.text.pretty;
 
+import walkingkooka.collect.list.ImmutableList;
 import walkingkooka.collect.list.ImmutableListDefaults;
 
 import java.util.AbstractList;
@@ -27,7 +28,7 @@ import java.util.List;
  * become the row coordinate to locate the cell.
  */
 final class TableNotEmptyColumnList extends AbstractList<CharSequence>
-        implements ImmutableListDefaults<TableNotEmptyColumnList, CharSequence> {
+        implements ImmutableListDefaults<ImmutableList<CharSequence>, CharSequence> {
 
     static TableNotEmptyColumnList with(final int column,
                                         final TableNotEmpty table) {
@@ -64,7 +65,7 @@ final class TableNotEmptyColumnList extends AbstractList<CharSequence>
      * Not possible to set new elements because the updated {@link Table} is not returned.
      */
     @Override
-    public TableNotEmptyColumnList setElements(final List<CharSequence> list) {
+    public ImmutableList<CharSequence> setElements(final List<CharSequence> list) {
         return this.setElementsFailIfDifferent(list);
     }
 }
