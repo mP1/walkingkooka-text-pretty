@@ -18,6 +18,7 @@
 package walkingkooka.text.pretty;
 
 import javaemul.internal.annotations.GwtIncompatible;
+import walkingkooka.collect.list.ImmutableList;
 import walkingkooka.collect.list.ImmutableListDefaults;
 
 import java.util.AbstractList;
@@ -28,7 +29,7 @@ import java.util.Objects;
 /**
  * An immutable {@link java.util.List} that includes a reference to the parent {@link TableNotEmpty}
  */
-abstract class TableNotEmptyList<T> extends AbstractList<T> implements ImmutableListDefaults<TableNotEmptyList<T>, T> {
+abstract class TableNotEmptyList<T> extends AbstractList<T> implements ImmutableListDefaults<ImmutableList<T>, T> {
 
     final static int INITIAL_CAPACITY = 3;
 
@@ -234,7 +235,7 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
      * Not possible to set new elements because the updated {@link Table} is not returned.
      */
     @Override
-    public final TableNotEmptyList<T> setElements(final List<T> list) {
+    public final ImmutableList<T> setElements(final List<T> list) {
         return this.setElementsFailIfDifferent(list);
     }
 }
