@@ -18,6 +18,7 @@
 package walkingkooka.text.pretty;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.naming.Name;
 import walkingkooka.naming.Path;
 
@@ -33,8 +34,9 @@ public enum TreePrintingBranches {
      * This is useful to print a tree of files where each branch has files & directories sorted lexically.
      */
     SORTED {
-        @Override <P extends Path<P, N> & Comparable<P>, N extends Name & Comparable<N>> Set<P> emptyChildrenSet() {
-            return Sets.sorted();
+        @Override //
+        <P extends Path<P, N> & Comparable<P>, N extends Name & Comparable<N>> Set<P> emptyChildrenSet() {
+            return SortedSets.tree();
         }
     },
 
