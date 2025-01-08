@@ -509,7 +509,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                                 R2C0, R2C1, R2C2
                         ),
                         list(
-                                MISSING, X,  MISSING
+                                MISSING, X, MISSING
                         )
                 )
         );
@@ -531,7 +531,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                                 R2C0, R2C1, R2C2
                         ),
                         list(
-                                MISSING, X,  MISSING
+                                MISSING, X, MISSING
                         )
                 )
         );
@@ -553,7 +553,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                                 R2C0, R2C1, R2C2, MISSING
                         ),
                         list(
-                                MISSING, MISSING,  MISSING, X
+                                MISSING, MISSING, MISSING, X
                         )
                 )
         );
@@ -578,7 +578,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                                 MISSING, MISSING, MISSING, MISSING, MISSING
                         ),
                         list(
-                                MISSING, MISSING,  MISSING, MISSING, X
+                                MISSING, MISSING, MISSING, MISSING, X
                         )
                 )
         );
@@ -2037,7 +2037,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                         R1C0, R1C1, R1C2, MISSING
                 ),
                 list(
-                        MISSING,MISSING,MISSING,MISSING
+                        MISSING, MISSING, MISSING, MISSING
                 )
         );
     }
@@ -3221,7 +3221,7 @@ public final class TableNotEmptyTest extends TableTestCase3<TableNotEmpty>
                         )
         );
     }
-    
+
     // equals...........................................................................................................
 
     @Test

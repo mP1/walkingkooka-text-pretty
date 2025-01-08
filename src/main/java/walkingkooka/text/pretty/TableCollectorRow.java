@@ -27,7 +27,7 @@ final class TableCollectorRow extends TableCollector {
 
     static TableCollectorRow with(final Table table,
                                   final int startRow) {
-        if(startRow < 0) {
+        if (startRow < 0) {
             throw new IllegalArgumentException("Invalid start row " + startRow + " < 0");
         }
         return new TableCollectorRow(table, startRow);

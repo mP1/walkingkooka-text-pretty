@@ -88,10 +88,9 @@ public abstract class TableCollectorTestCase2<C extends TableCollector> extends 
 
     abstract C createCollector(final Table table, final int next);
 
-    @SafeVarargs
-    final void collectAndCheck(final Table table,
-                               final int start,
-                               final List<CharSequence>... data) {
+    @SafeVarargs final void collectAndCheck(final Table table,
+                                            final int start,
+                                            final List<CharSequence>... data) {
         this.checkEquals(this.add(table, start, data),
                 Lists.of(data)
                         .stream()

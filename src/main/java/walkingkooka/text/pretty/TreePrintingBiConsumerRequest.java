@@ -57,7 +57,7 @@ final class TreePrintingBiConsumerRequest<P extends Path<P, N> & Comparable<P>,
         final Map<P, Set<P>> parentToChildren = this.parentToChildren;
 
         for (final P path : paths) {
-            if(path.isRoot()) {
+            if (path.isRoot()) {
                 this.root = path;
                 continue;
             }
@@ -72,8 +72,8 @@ final class TreePrintingBiConsumerRequest<P extends Path<P, N> & Comparable<P>,
                 children.add(path);
             }
 
-            for(;;) {
-                if(parent.isRoot()) {
+            for (; ; ) {
+                if (parent.isRoot()) {
                     this.root = parent;
                     break;
                 }
@@ -93,7 +93,7 @@ final class TreePrintingBiConsumerRequest<P extends Path<P, N> & Comparable<P>,
      * Begins the printing process starting with the root.
      */
     private void printRoot() {
-        if(false == this.parentToChildren.isEmpty()) {
+        if (false == this.parentToChildren.isEmpty()) {
             this.printBranch(this.root, this.namesList());
         }
     }
@@ -107,14 +107,14 @@ final class TreePrintingBiConsumerRequest<P extends Path<P, N> & Comparable<P>,
         names.append(parent.name());
 
         final Set<P> leaves = this.emptySet(parent);
-        for(final P child : children) {
-            if(false == this.isBranch(child)) {
+        for (final P child : children) {
+            if (false == this.isBranch(child)) {
                 leaves.add(child);
             }
         }
 
-        if(leaves.isEmpty() && children.size() == 1) {
-            for(final P child : children) {
+        if (leaves.isEmpty() && children.size() == 1) {
+            for (final P child : children) {
                 this.printBranch(child, names);
             }
         } else {
@@ -169,7 +169,7 @@ final class TreePrintingBiConsumerRequest<P extends Path<P, N> & Comparable<P>,
     private TreePrintingBiConsumerRequestList<N> namesList() {
         return TreePrintingBiConsumerRequestList.empty();
     }
-    
+
 
     // Object...........................................................................................................
 

@@ -123,7 +123,7 @@ public class TestGwtTest extends GWTTestCase {
                         "  jacoco.exec\n" +
                         "  walkingkooka-text-pretty-1.0-SNAPSHOT-sources.jar\n" +
                         "  walkingkooka-text-pretty-1.0-SNAPSHOT.jar\n",
-            b.toString()
+                b.toString()
         );
     }
 }

@@ -56,8 +56,8 @@ final class TableNotEmpty extends Table {
         final int width = column + 1;
         int row = 0;
 
-        for(final CharSequence text : columnText) {
-            if(isNotEmpty(text)) {
+        for (final CharSequence text : columnText) {
+            if (isNotEmpty(text)) {
                 final TableNotEmptyListRow rowText = TableNotEmptyListRow.with(width);
                 rowText.setAuto(
                         column,
@@ -111,7 +111,7 @@ final class TableNotEmpty extends Table {
                           final int width) {
         super();
 
-        if(width < 0) {
+        if (width < 0) {
             throw new IllegalArgumentException("Invalid width " + width + " < 0");
         }
 
@@ -143,8 +143,8 @@ final class TableNotEmpty extends Table {
         final int width = this.width();
         final int height = this.height();
 
-        if(column >- width) {
-            if(row >= height) {
+        if (column > -width) {
+            if (row >= height) {
                 after = this.addRow(
                         column,
                         row,
@@ -188,7 +188,7 @@ final class TableNotEmpty extends Table {
         final Table after;
 
         final CharSequence cell = this.cell(column, row);
-        if(Objects.equals(text, cell)) {
+        if (Objects.equals(text, cell)) {
             after = this;
         } else {
             after = this.addCell(
@@ -202,20 +202,20 @@ final class TableNotEmpty extends Table {
     }
 
     private Table addCell(final int column,
-                              final int row,
-                              final CharSequence text) {
-            TableNotEmptyListRow rowText = this.rows.get(row)
-                    .copy();
+                          final int row,
+                          final CharSequence text) {
+        TableNotEmptyListRow rowText = this.rows.get(row)
+                .copy();
 
-            rowText.setAuto(
-                    column,
-                    text
-            );
+        rowText.setAuto(
+                column,
+                text
+        );
 
-            return this.setRow0(
-                    row,
-                    0 == rowText.elementCount ? null : rowText
-            );
+        return this.setRow0(
+                row,
+                0 == rowText.elementCount ? null : rowText
+        );
     }
 
     // column...........................................................................................................
@@ -223,8 +223,8 @@ final class TableNotEmpty extends Table {
     @Override
     List<CharSequence> column0(final int column) {
         return TableNotEmptyColumnList.with(
-            column,
-            this
+                column,
+                this
         );
     }
 
@@ -240,7 +240,7 @@ final class TableNotEmpty extends Table {
         final int columnTextCount = columnText.size();
 
         // TODO implement a bulk update form.
-        for(int row = 0; row < height; row++) {
+        for (int row = 0; row < height; row++) {
             after = after.setCell(
                     column,
                     row,
@@ -274,7 +274,7 @@ final class TableNotEmpty extends Table {
 
         final int rowTextWidth = rowText.size;
         int width = this.width;
-        if(rowTextWidth > width) {
+        if (rowTextWidth > width) {
             newRows.setWidth(rowTextWidth);
             width = rowTextWidth;
         } else {

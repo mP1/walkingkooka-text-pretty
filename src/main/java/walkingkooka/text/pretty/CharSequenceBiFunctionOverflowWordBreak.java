@@ -46,12 +46,12 @@ final class CharSequenceBiFunctionOverflowWordBreak extends CharSequenceBiFuncti
         int lineStart = 0;
         boolean skipWhitespace = false;
 
-        while(lineStart < textLength) {
-            if(skipWhitespace) {
+        while (lineStart < textLength) {
+            if (skipWhitespace) {
                 skipWhitespace = false;
 
-                while(lineStart <= textLength) {
-                    if(false == isBreak(text.charAt(lineStart))) {
+                while (lineStart <= textLength) {
+                    if (false == isBreak(text.charAt(lineStart))) {
                         break;
                     }
                     lineStart++;
@@ -61,7 +61,7 @@ final class CharSequenceBiFunctionOverflowWordBreak extends CharSequenceBiFuncti
 
             // not skipping whitespace
             final int nextLineStart = lineStart + width;
-            if(textLength <= nextLineStart) {
+            if (textLength <= nextLineStart) {
                 // last line...
                 lines.add(CharSequences.trimRight(text.subSequence(lineStart, textLength)));
                 break;
@@ -69,18 +69,18 @@ final class CharSequenceBiFunctionOverflowWordBreak extends CharSequenceBiFuncti
 
             // try find end
             int lineEnd = nextLineStart;
-            for(;;) {
+            for (; ; ) {
                 lineEnd--;
 
                 // line has no whitespace must be full of text, insert line break at right edge
-                if(lineEnd == lineStart) {
+                if (lineEnd == lineStart) {
                     lines.add(text.subSequence(lineStart, nextLineStart));
                     lineStart = nextLineStart;
                     break;
                 }
 
                 //
-                if(isBreak(text.charAt(lineEnd))) {
+                if (isBreak(text.charAt(lineEnd))) {
                     lines.add(CharSequences.trimRight(text.subSequence(lineStart, lineEnd)));
                     lineStart = lineEnd;
                     break;

@@ -58,7 +58,7 @@ final class TableConfigNotEmpty extends TableConfig {
 
         int columnCounter = 0;
         for (final ColumnConfig column : this.columns) {
-            if(columnCounter >= width) {
+            if (columnCounter >= width) {
                 break;
             }
 

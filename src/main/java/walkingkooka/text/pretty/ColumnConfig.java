@@ -58,7 +58,7 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
             throw new IllegalArgumentException("Invalid minWidth " + minWidth + " < 0");
         }
         final int maxWidth = this.maxWidth;
-        if(minWidth > maxWidth) {
+        if (minWidth > maxWidth) {
             throw new IllegalArgumentException("MinWidth " + minWidth + " > maxWidth " + maxWidth);
         }
         return this.minWidth == minWidth ?
@@ -231,8 +231,8 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
 
     private boolean equals0(final ColumnConfig other) {
         return this.minWidth == other.minWidth &&
-            this.maxWidth == other.maxWidth &&
-            this.functions.equals(other.functions);
+                this.maxWidth == other.maxWidth &&
+                this.functions.equals(other.functions);
     }
 
     // toString.........................................................................................................

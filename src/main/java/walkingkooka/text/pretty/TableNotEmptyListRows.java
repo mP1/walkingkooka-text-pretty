@@ -62,9 +62,9 @@ final class TableNotEmptyListRows extends TableNotEmptyList<TableNotEmptyListRow
     void setWidth(final int width) {
         this.missing.setWidth(width);
 
-        for(int r = 0; r < this.elementCount; r++) {
-            final TableNotEmptyListRow row = (TableNotEmptyListRow)this.elements[r];
-            if(null != row) {
+        for (int r = 0; r < this.elementCount; r++) {
+            final TableNotEmptyListRow row = (TableNotEmptyListRow) this.elements[r];
+            if (null != row) {
                 row.setWidth(width);
             }
         }
@@ -75,7 +75,7 @@ final class TableNotEmptyListRows extends TableNotEmptyList<TableNotEmptyListRow
 
         int row = this.size;
         for (final Object element : this.elements) {
-            if(row <= 0) {
+            if (row <= 0) {
                 break;
             }
             if (element instanceof TableNotEmptyListRow) {
@@ -97,9 +97,9 @@ final class TableNotEmptyListRows extends TableNotEmptyList<TableNotEmptyListRow
         final int elementCount = this.elementCount;
 
         final Object[] newElements = new Object[elements.length];
-        for(int i = 0; i < elementCount; i++) {
-            final Object element = elements[ i ];
-            if(element instanceof TableNotEmptyListRow) {
+        for (int i = 0; i < elementCount; i++) {
+            final Object element = elements[i];
+            if (element instanceof TableNotEmptyListRow) {
                 final TableNotEmptyListRow row = (TableNotEmptyListRow) element;
                 newElements[i] = row.copy();
             }

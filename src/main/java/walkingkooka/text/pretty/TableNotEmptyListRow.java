@@ -108,7 +108,7 @@ final class TableNotEmptyListRow extends TableNotEmptyList<CharSequence> {
     void copy(final List<CharSequence> rowText) {
         int i = 0;
 
-        for(final CharSequence text : rowText) {
+        for (final CharSequence text : rowText) {
             this.setAuto(
                     i,
                     text

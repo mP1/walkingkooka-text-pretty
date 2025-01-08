@@ -55,7 +55,7 @@ final public class TextPretty implements PublicStaticHelper {
      * {@see ColumnsExtractorCharSequenceFunction}
      */
     public static <T> Function<T, List<CharSequence>> columnsExtractor(final List<Function<T, CharSequence>> transformers) {
-         return ColumnsExtractorCharSequenceFunction.with(transformers);
+        return ColumnsExtractorCharSequenceFunction.with(transformers);
     }
 
     /**

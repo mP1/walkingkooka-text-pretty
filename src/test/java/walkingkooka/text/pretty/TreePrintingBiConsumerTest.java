@@ -57,7 +57,7 @@ public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrint
     @Test
     public void testBranchAndLeaf() {
         this.printTreeAndCheck(Sets.of("/branch",
-                "/branch/leaf"),
+                        "/branch/leaf"),
                 "branch\n" +
                         ">leaf\n");
     }
@@ -175,7 +175,7 @@ public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrint
 
     private void printTreeAndCheck2(final Function<StringPath, TreePrintingBranches> branches,
                                     final Set<String> paths,
-                                   final String expected) {
+                                    final String expected) {
         final StringBuilder text = new StringBuilder();
         try (final Printer printer = Printers.stringBuilder(text, LineEnding.NL)) {
             new TestTreePrinting(branches)

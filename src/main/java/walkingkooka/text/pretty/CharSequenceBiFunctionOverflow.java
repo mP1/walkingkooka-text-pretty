@@ -28,20 +28,17 @@ abstract class CharSequenceBiFunctionOverflow extends CharSequenceBiFunction {
         super();
     }
 
-    @Override
-    final CharSequence empty(final int width) {
+    @Override final CharSequence empty(final int width) {
         return "";
     }
 
-    @Override
-    final CharSequence notEmpty(final CharSequence text,
-                                final int width) {
+    @Override final CharSequence notEmpty(final CharSequence text,
+                                          final int width) {
         return text;
     }
 
-    @Override
-    final CharSequence full(final CharSequence text,
-                            final int width) {
+    @Override final CharSequence full(final CharSequence text,
+                                      final int width) {
         return text;
     }
 

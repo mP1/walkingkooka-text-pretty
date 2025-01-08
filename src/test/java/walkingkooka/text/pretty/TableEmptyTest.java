@@ -400,7 +400,7 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
                 )
         );
     }
-    
+
     // toString.........................................................................................................
 
     @Test

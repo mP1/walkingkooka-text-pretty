@@ -64,7 +64,7 @@ final class TabExpandingCharSequenceUnaryOperator implements UnaryOperator<CharS
 
         for (int i = 0; i < length; i++) {
             final char c = chars.charAt(i);
-            switch(c) {
+            switch (c) {
                 case '\t':
                     // print everything before the tab.
                     if (null == out) {
