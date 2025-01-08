@@ -85,18 +85,17 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
 
     // mutable TableNotEmpty only methods...............................................................................
 
-    @SuppressWarnings("unchecked")
-    final void setAuto(final int index,
-                       final T element) {
+    @SuppressWarnings("unchecked") final void setAuto(final int index,
+                                                      final T element) {
         final Object[] elements = this.elements;
         final int elementCount = this.elementCount;
         final int size = this.size;
 
-        if(this.isMissing(element)) {
+        if (this.isMissing(element)) {
             if (index < elements.length) {
                 elements[index] = null;
 
-                if(size -1 == index) {
+                if (size - 1 == index) {
                     // need to update elementCount with the first non null element
                     int newElementCount = elementCount - 1;
 
@@ -197,17 +196,17 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
         boolean equals = false;
 
         final int count = this.elementCount;
-        if(count == other.elementCount && this.size == other.size) {
+        if (count == other.elementCount && this.size == other.size) {
             // Gwt jre Arrays.equals(Object[], int, Object[], int, int) is not implemented.
             final Object[] elements = this.elements;
             final Object[] otherElements = other.elements;
 
-            for(int i = 0; i < count; i++) {
+            for (int i = 0; i < count; i++) {
                 equals = Objects.equals(
                         elements[i],
                         otherElements[i]
                 );
-                if(!equals) {
+                if (!equals) {
                     break;
                 }
             }
@@ -224,8 +223,7 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
         return super.equals(other);
     }
 
-    @GwtIncompatible
-    final String toStringTest() {
+    @GwtIncompatible final String toStringTest() {
         return this.elementCount + "/" + this.size + " " + Arrays.toString(this.elements);
     }
 

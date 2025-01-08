@@ -58,7 +58,7 @@ final class RowColumnsToLineCharSequenceFunction implements Function<List<CharSe
         // break up each column's CharSequence into individual lines,.
         final List<MultiLineCharSequence> columnToLines = Lists.array();
 
-        for(final CharSequence column : columns) {
+        for (final CharSequence column : columns) {
             columnToLines.add(MultiLineCharSequence.parse(column, this.lineEnding));
         }
 
@@ -69,21 +69,21 @@ final class RowColumnsToLineCharSequenceFunction implements Function<List<CharSe
                 .orElse(0);
 
         final int columnCount = columnToLines.size();
-        final int lastColumn = columnCount -1;
+        final int lastColumn = columnCount - 1;
 
         final StringBuilder all = new StringBuilder();
 
-        for(int r = 0; r < maxRows; r++) {
+        for (int r = 0; r < maxRows; r++) {
 
             final StringBuilder text = new StringBuilder();
 
-            for(int c = 0; c < columnCount; c++) {
+            for (int c = 0; c < columnCount; c++) {
                 final MultiLineCharSequence rows = columnToLines.get(c);
                 final CharSequence columnText = r < rows.lineCount() ?
                         rows.line(r) :
                         "";
                 // only add padding to columns that are not the last.
-                if(c < lastColumn) {
+                if (c < lastColumn) {
                     final CharSequence padded = CharSequences.padRight(columnText,
                             rows.maxWidth(),
                             ' ');

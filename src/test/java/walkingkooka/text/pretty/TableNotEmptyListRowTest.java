@@ -30,7 +30,7 @@ public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<Ta
     public void testGet() {
         final TableNotEmptyListRow list = TableNotEmptyListRow.empty();
 
-        list.setWidth( 1);
+        list.setWidth(1);
 
         this.getAndCheck(
                 list,
@@ -46,7 +46,7 @@ public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<Ta
         final CharSequence a = "A";
         list.setAuto(0, a);
 
-        list.setWidth( 1);
+        list.setWidth(1);
 
         this.getAndCheck(
                 list,
@@ -65,7 +65,7 @@ public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<Ta
         final CharSequence b = "B";
         list.setAuto(1, b);
 
-        list.setWidth( 2);
+        list.setWidth(2);
 
         this.getAndCheck(
                 list,
@@ -84,12 +84,12 @@ public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<Ta
     public void testSetAndGetMany() {
         final TableNotEmptyListRow list = TableNotEmptyListRow.empty();
 
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             list.setAuto(i, "column-" + i);
         }
-        list.setWidth( 10);
+        list.setWidth(10);
 
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             this.getAndCheck(
                     list,
                     i,
@@ -109,7 +109,7 @@ public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<Ta
 
         list.setAuto(0, null);
 
-        list.setWidth( 1);
+        list.setWidth(1);
 
         this.getAndCheck(
                 list,
@@ -122,13 +122,13 @@ public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<Ta
     public void testSetNullAndGetIncludesExpand() {
         final TableNotEmptyListRow list = TableNotEmptyListRow.empty();
 
-        for(int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             list.setAuto(i, null);
         }
 
-        list.setWidth( 11);
+        list.setWidth(11);
 
-        for(int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             this.getAndCheck(
                     list,
                     i,
@@ -141,13 +141,13 @@ public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<Ta
     public void testSetEmptyAndGetIncludesExpand() {
         final TableNotEmptyListRow list = TableNotEmptyListRow.empty();
 
-        for(int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             list.setAuto(i, "");
         }
 
-        list.setWidth( 11);
+        list.setWidth(11);
 
-        for(int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             this.getAndCheck(
                     list,
                     i,
@@ -161,13 +161,13 @@ public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<Ta
         final List<CharSequence> list = Lists.array();
         final TableNotEmptyListRow row = TableNotEmptyListRow.empty();
 
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             final CharSequence text = "column-" + i;
             list.add(text);
             row.setAuto(i, text);
         }
 
-        row.setWidth( 10);
+        row.setWidth(10);
 
         this.iterateAndCheck(
                 row.iterator(),
@@ -178,7 +178,7 @@ public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<Ta
     @Override
     public TableNotEmptyListRow createList() {
         final TableNotEmptyListRow list = TableNotEmptyListRow.empty();
-        list.setWidth( 0);
+        list.setWidth(0);
         return list;
     }
 

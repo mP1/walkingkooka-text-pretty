@@ -29,7 +29,7 @@ import walkingkooka.reflect.JavaVisibility;
 import java.util.List;
 
 public final class TreePrintingBiConsumerRequestListTest implements ClassTesting2<TreePrintingBiConsumerRequestList<StringName>>,
-    ListTesting2<TreePrintingBiConsumerRequestList<StringName>, StringName> {
+        ListTesting2<TreePrintingBiConsumerRequestList<StringName>, StringName> {
 
     @Test
     public void testAddFails() {

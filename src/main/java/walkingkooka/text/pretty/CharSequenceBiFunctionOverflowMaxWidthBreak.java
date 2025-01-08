@@ -48,7 +48,7 @@ final class CharSequenceBiFunctionOverflowMaxWidthBreak extends CharSequenceBiFu
             lines.add(text.subSequence(start, end));
 
             start = end;
-        } while(start < textLength);
+        } while (start < textLength);
 
         return MultiLineCharSequence.with(lines, LineEnding.NL); // hardcoding NL doesnt matter will be replaced later anyway.
     }

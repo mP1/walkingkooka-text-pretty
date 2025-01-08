@@ -28,26 +28,22 @@ abstract class CharSequenceBiFunctionTrim extends CharSequenceBiFunction {
         super();
     }
 
-    @Override
-    final CharSequence empty(final int width) {
+    @Override final CharSequence empty(final int width) {
         return "";
     }
 
-    @Override
-    final CharSequence full(final CharSequence text,
-                            final int width) {
+    @Override final CharSequence full(final CharSequence text,
+                                      final int width) {
         return this.trim(text);
     }
 
-    @Override
-    final CharSequence notEmpty(final CharSequence text,
-                                final int width) {
+    @Override final CharSequence notEmpty(final CharSequence text,
+                                          final int width) {
         return this.trim(text);
     }
 
-    @Override
-    final CharSequence overflowed(final CharSequence text,
-                                  final int width) {
+    @Override final CharSequence overflowed(final CharSequence text,
+                                            final int width) {
         return this.trim(text);
     }
 

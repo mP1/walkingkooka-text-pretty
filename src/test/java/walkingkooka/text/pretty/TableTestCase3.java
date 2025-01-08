@@ -128,7 +128,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
     public final void testRowHeightFails2() {
         assertThrows(
                 IndexOutOfBoundsException.class,
-                () -> this.createTable().row(1+this.height())
+                () -> this.createTable().row(1 + this.height())
         );
     }
 
@@ -422,7 +422,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
                 )
         );
     }
-    
+
     // helpers.........................................................................................................
 
     abstract T createTable();
@@ -578,9 +578,9 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
     }
 
     final void setSizeAndCheck(final Table table,
-                                final int width,
-                                final int height,
-                                final Table expected) {
+                               final int width,
+                               final int height,
+                               final Table expected) {
         this.checkEquals(
                 expected,
                 table.setSize(width, height),
@@ -589,7 +589,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
     }
 
     @SafeVarargs
-    static <TT> List<TT> list(final TT...elements) {
+    static <TT> List<TT> list(final TT... elements) {
         return Arrays.asList(elements);
     }
 
@@ -606,11 +606,11 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         int row = 0;
         for (final List<CharSequence> rowText : table.rows) {
             int lastNotEmptyColumn = -1;
-            if(null != rowText) {
+            if (null != rowText) {
 
                 int c = 0;
-                for(final CharSequence text : rowText) {
-                    if(null != text) {
+                for (final CharSequence text : rowText) {
+                    if (null != text) {
                         lastNotEmptyColumn = c;
                     }
                     c++;
@@ -620,7 +620,7 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
                 final int rowFinal = row;
                 this.checkEquals(
                         lastNotEmptyColumn,
-                        rowText.size() -1,
+                        rowText.size() - 1,
                         () -> "row " + rowFinal + " has trailing missing cells in row List: " + rowText
                 );
 
@@ -635,9 +635,8 @@ public abstract class TableTestCase3<T extends Table> extends TableTestCase2<T> 
         this.heightAndCheck(table, height + 1);
     }
 
-    @SafeVarargs
-    final void check(final Table table,
-                     final List<CharSequence>... rows) {
+    @SafeVarargs final void check(final Table table,
+                                  final List<CharSequence>... rows) {
         this.check(
                 table,
                 Lists.of(rows)

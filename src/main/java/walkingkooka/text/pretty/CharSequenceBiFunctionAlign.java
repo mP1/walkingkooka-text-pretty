@@ -31,20 +31,17 @@ abstract class CharSequenceBiFunctionAlign extends CharSequenceBiFunction {
         super();
     }
 
-    @Override
-    final CharSequence empty(final int width) {
+    @Override final CharSequence empty(final int width) {
         return "";
     }
 
-    @Override
-    final CharSequence full(final CharSequence text,
-                            final int width) {
+    @Override final CharSequence full(final CharSequence text,
+                                      final int width) {
         return text;
     }
 
-    @Override
-    final CharSequence overflowed(final CharSequence text,
-                                  final int width) {
+    @Override final CharSequence overflowed(final CharSequence text,
+                                            final int width) {
         throw new IllegalArgumentException("Text length " + text.length() + " > " + width + " while " + this);
     }
 

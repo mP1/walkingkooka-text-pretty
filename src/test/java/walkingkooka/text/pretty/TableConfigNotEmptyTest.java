@@ -107,9 +107,9 @@ public final class TableConfigNotEmptyTest extends TableConfigTestCase<TableConf
 
     private List<ColumnConfig> columns() {
         return Lists.of(ColumnConfig.empty()
-            .maxWidth(12)
-            .minWidth(12)
-            .rightAlign());
+                .maxWidth(12)
+                .minWidth(12)
+                .rightAlign());
     }
 
     private void applyAndCheck2(final Table input,

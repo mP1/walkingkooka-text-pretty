@@ -59,16 +59,16 @@ public final class TreePrintingSample {
 
         // over simplified sample of this projects target directory.
         final Set<StringPath> paths = Sets.of(
-                "/target/classes/java/walkingkooka/text/pretty/CharSequenceBiFunction.class",
-                "/target/classes/java/walkingkooka/text/pretty/CharSequenceBiFunctionAlign.class", // some class files...
-                "/target/maven-archiver/pom.properties",
-                "/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst",
-                "/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst",
-                "/target/maven-status/maven-compiler-plugin/testCompile/default-compile/createdFiles.lst",
-                "/target/maven-status/maven-compiler-plugin/testCompile/default-compile/inputFiles.lst",
-                "/jacoco.exec",
-                "/walkingkooka-text-pretty-1.0-SNAPSHOT.jar",
-                "/walkingkooka-text-pretty-1.0-SNAPSHOT-sources.jar")
+                        "/target/classes/java/walkingkooka/text/pretty/CharSequenceBiFunction.class",
+                        "/target/classes/java/walkingkooka/text/pretty/CharSequenceBiFunctionAlign.class", // some class files...
+                        "/target/maven-archiver/pom.properties",
+                        "/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst",
+                        "/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst",
+                        "/target/maven-status/maven-compiler-plugin/testCompile/default-compile/createdFiles.lst",
+                        "/target/maven-status/maven-compiler-plugin/testCompile/default-compile/inputFiles.lst",
+                        "/jacoco.exec",
+                        "/walkingkooka-text-pretty-1.0-SNAPSHOT.jar",
+                        "/walkingkooka-text-pretty-1.0-SNAPSHOT-sources.jar")
                 .stream()
                 .map(s -> StringPath.parse("/~/github/project" + s))
                 .collect(Collectors.toSet());

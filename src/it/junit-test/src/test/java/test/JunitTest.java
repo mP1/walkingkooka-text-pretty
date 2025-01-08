@@ -52,16 +52,16 @@ public class JunitTest {
 
         // over simplified sample of this projects target directory.
         final Set<StringPath> paths = Sets.of(
-                "/target/classes/java/walkingkooka/text/pretty/CharSequenceBiFunction.class",
-                "/target/classes/java/walkingkooka/text/pretty/CharSequenceBiFunctionAlign.class", // some class files...
-                "/target/maven-archiver/pom.properties",
-                "/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst",
-                "/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst",
-                "/target/maven-status/maven-compiler-plugin/testCompile/default-compile/createdFiles.lst",
-                "/target/maven-status/maven-compiler-plugin/testCompile/default-compile/inputFiles.lst",
-                "/jacoco.exec",
-                "/walkingkooka-text-pretty-1.0-SNAPSHOT.jar",
-                "/walkingkooka-text-pretty-1.0-SNAPSHOT-sources.jar")
+                        "/target/classes/java/walkingkooka/text/pretty/CharSequenceBiFunction.class",
+                        "/target/classes/java/walkingkooka/text/pretty/CharSequenceBiFunctionAlign.class", // some class files...
+                        "/target/maven-archiver/pom.properties",
+                        "/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst",
+                        "/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst",
+                        "/target/maven-status/maven-compiler-plugin/testCompile/default-compile/createdFiles.lst",
+                        "/target/maven-status/maven-compiler-plugin/testCompile/default-compile/inputFiles.lst",
+                        "/jacoco.exec",
+                        "/walkingkooka-text-pretty-1.0-SNAPSHOT.jar",
+                        "/walkingkooka-text-pretty-1.0-SNAPSHOT-sources.jar")
                 .stream()
                 .map(s -> StringPath.parse("/~/github/project" + s))
                 .collect(Collectors.toSet());
@@ -102,22 +102,22 @@ public class JunitTest {
                 .accept(paths, printer);
 
         Assert.assertEquals("~/github/project\n" +
-                "  target\n" +
-                "    classes/java/walkingkooka/text/pretty\n" +
-                "      CharSequenceBiFunction.class\n" +
-                "      CharSequenceBiFunctionAlign.class\n" +
-                "    maven-archiver\n" +
-                "      pom.properties\n" +
-                "    maven-status/maven-compiler-plugin\n" +
-                "      compile/default-compile\n" +
-                "        createdFiles.lst\n" +
-                "        inputFiles.lst\n" +
-                "      testCompile/default-compile\n" +
-                "        createdFiles.lst\n" +
-                "        inputFiles.lst\n" +
-                "  jacoco.exec\n" +
-                "  walkingkooka-text-pretty-1.0-SNAPSHOT-sources.jar\n" +
-                "  walkingkooka-text-pretty-1.0-SNAPSHOT.jar\n",
+                        "  target\n" +
+                        "    classes/java/walkingkooka/text/pretty\n" +
+                        "      CharSequenceBiFunction.class\n" +
+                        "      CharSequenceBiFunctionAlign.class\n" +
+                        "    maven-archiver\n" +
+                        "      pom.properties\n" +
+                        "    maven-status/maven-compiler-plugin\n" +
+                        "      compile/default-compile\n" +
+                        "        createdFiles.lst\n" +
+                        "        inputFiles.lst\n" +
+                        "      testCompile/default-compile\n" +
+                        "        createdFiles.lst\n" +
+                        "        inputFiles.lst\n" +
+                        "  jacoco.exec\n" +
+                        "  walkingkooka-text-pretty-1.0-SNAPSHOT-sources.jar\n" +
+                        "  walkingkooka-text-pretty-1.0-SNAPSHOT.jar\n",
                 printed.toString());
     }
 
@@ -151,7 +151,7 @@ public class JunitTest {
 
         // streaming a list of csv lines (different delimiters) and collect (aka add to table)
         final Table table123 = Lists.of(TextPretty.csv('/').apply("Queensland/4000000/$11.75"),
-                TextPretty.csv(';').apply("Tasmania;500000;$9.0"))
+                        TextPretty.csv(';').apply("Tasmania;500000;$9.0"))
                 .stream()
                 .collect(table1.collectRow(1));
 
@@ -161,7 +161,7 @@ public class JunitTest {
         final StringBuilder printed = new StringBuilder();
 
         // print row by row
-        try (final IndentingPrinter printer =  Printers.stringBuilder(printed, LineEnding.NL)
+        try (final IndentingPrinter printer = Printers.stringBuilder(printed, LineEnding.NL)
                 .indenting(Indentation.SPACES2)) {
             for (int i = 0; i < formattedTable.height(); i++) {
                 printer.print(
@@ -171,8 +171,8 @@ public class JunitTest {
         }
 
         Assert.assertEquals("New South Wales         10000000      $12.00\n" +
-                "Queensland               4000000      $11.75\n" +
-                "Tasmania                  500000       $9.0\n",
+                        "Queensland               4000000      $11.75\n" +
+                        "Tasmania                  500000       $9.0\n",
                 printed.toString());
     }
 }

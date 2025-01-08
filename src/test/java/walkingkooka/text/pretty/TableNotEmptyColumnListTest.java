@@ -109,11 +109,11 @@ public final class TableNotEmptyColumnListTest extends TableTestCase2<TableNotEm
         final TableNotEmptyListRows tableRows = TableNotEmptyListRows.empty();
 
         int r = 0;
-        for(final List<CharSequence> row : rows) {
+        for (final List<CharSequence> row : rows) {
             final TableNotEmptyListRow tableRow = TableNotEmptyListRow.empty();
 
             int c = 0;
-            for(final CharSequence text : row) {
+            for (final CharSequence text : row) {
                 tableRow.setAuto(
                         c,
                         text

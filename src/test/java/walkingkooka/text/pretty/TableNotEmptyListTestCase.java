@@ -18,9 +18,7 @@
 package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.list.ImmutableList;
 import walkingkooka.collect.list.ImmutableListTesting;
-import walkingkooka.collect.list.ListTesting2;
 import walkingkooka.collect.list.Lists;
 
 import java.util.Arrays;
@@ -387,11 +385,11 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
     public void testSetExpandAndClearAll() {
         final L list = this.createList();
 
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             list.setAuto(i, this.element(i));
         }
 
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             list.setAuto(i, null);
         }
 
@@ -424,7 +422,7 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
     final void check(final L list,
                      final int capacity,
                      final int size,
-                     final T...elements) {
+                     final T... elements) {
         this.checkEquals(
                 elements.length,
                 list.elementCount,
@@ -465,7 +463,7 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
 
     abstract T element(final int index);
 
-    final List<?> list(final Object...elements) {
+    final List<?> list(final Object... elements) {
         return Arrays.asList(elements);
     }
 

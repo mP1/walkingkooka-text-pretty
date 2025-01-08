@@ -58,7 +58,7 @@ public final class TableColumnPrintSample {
 
         // streaming a list of csv lines (different delimiters) and collect (aka add to table)
         final Table table123 = Lists.of(TextPretty.csv('/').apply("Queensland/4000000/$11.75"),
-                TextPretty.csv(';').apply("Tasmania;500000;$9.0"))
+                        TextPretty.csv(';').apply("Tasmania;500000;$9.0"))
                 .stream()
                 .collect(table1.collectRow(1));
 

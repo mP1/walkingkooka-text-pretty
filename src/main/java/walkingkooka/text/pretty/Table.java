@@ -206,7 +206,7 @@ public abstract class Table implements TreePrintable {
             }
 
             // copy window row.
-            if(null != rowText) {
+            if (null != rowText) {
                 for (final CharSequence text : rowText) {
                     newTableRow.setAuto(
                             column,
@@ -254,7 +254,7 @@ public abstract class Table implements TreePrintable {
         }
 
         final Table table;
-        if(rows.isEmpty()) {
+        if (rows.isEmpty()) {
             table = empty();
         } else {
             newRows.setWidth(newWidth);
@@ -331,7 +331,7 @@ public abstract class Table implements TreePrintable {
         checkColumn(column);
 
         final int width = this.width();
-        if(column >= width) {
+        if (column >= width) {
             throw new IndexOutOfBoundsException("Invalid column " + column + " >= " + width);
         }
 
@@ -370,7 +370,7 @@ public abstract class Table implements TreePrintable {
     }
 
     // width............................................................................................................
-    
+
     /**
      * The maximum number of columns with 0 indicating no columns.
      */

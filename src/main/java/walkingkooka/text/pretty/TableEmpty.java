@@ -93,7 +93,7 @@ final class TableEmpty extends Table {
 
     @Override
     Table replaceRow(final int row,
-                              final TableNotEmptyListRow rowText) {
+                     final TableNotEmptyListRow rowText) {
         throw new UnsupportedOperationException();
     }
 

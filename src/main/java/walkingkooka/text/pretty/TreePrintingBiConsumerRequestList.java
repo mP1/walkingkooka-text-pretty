@@ -39,10 +39,10 @@ final class TreePrintingBiConsumerRequestList<N extends Name> extends AbstractLi
     @Override
     public N get(final int index) {
         final int size = this.size();
-        if(index < 0 || index >= size) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Invalid index " + index + " not between 0 and " + size);
         }
-        return (N)this.elements[index];
+        return (N) this.elements[index];
     }
 
     /**
@@ -52,8 +52,8 @@ final class TreePrintingBiConsumerRequestList<N extends Name> extends AbstractLi
         int size = this.size;
         Object[] elements = this.elements;
 
-        if(size == elements.length) {
-            Object[] expanded = new Object[ size * 2 ];
+        if (size == elements.length) {
+            Object[] expanded = new Object[size * 2];
             System.arraycopy(elements, 0, expanded, 0, size);
             this.elements = expanded;
             elements = expanded;
@@ -63,13 +63,13 @@ final class TreePrintingBiConsumerRequestList<N extends Name> extends AbstractLi
     }
 
     void pop() {
-        if(0 == this.size) {
+        if (0 == this.size) {
             throw new IllegalStateException("Cannot pop List empty");
         }
         this.size--;
     }
 
-    private Object[] elements = new Object[ 4];
+    private Object[] elements = new Object[4];
 
     @Override
     public int size() {

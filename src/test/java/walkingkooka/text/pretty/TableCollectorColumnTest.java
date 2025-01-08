@@ -58,10 +58,9 @@ public final class TableCollectorColumnTest extends TableCollectorTestCase2<Tabl
     }
 
     @SafeVarargs
-    @Override
-    final Table add(final Table table,
-                    final int start,
-                    final List<CharSequence>... data) {
+    @Override final Table add(final Table table,
+                              final int start,
+                              final List<CharSequence>... data) {
         Table result = table;
 
         int r = start;

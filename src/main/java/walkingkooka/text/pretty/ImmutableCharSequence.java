@@ -61,7 +61,7 @@ final class ImmutableCharSequence implements CharSequence {
 
     public boolean equals(final Object other) {
         return this == other ||
-                (other instanceof CharSequence && CharSequences.equals(this.chars, (CharSequence)other));
+                (other instanceof CharSequence && CharSequences.equals(this.chars, (CharSequence) other));
 
     }
 

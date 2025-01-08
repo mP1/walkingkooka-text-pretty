@@ -132,7 +132,7 @@ public final class TableTest implements ClassTesting2<Table> {
     }
 
     @SafeVarargs
-    private <T> List<T> list(final T ... elements) {
+    private <T> List<T> list(final T... elements) {
         return Arrays.asList(elements);
     }
 
@@ -149,7 +149,7 @@ public final class TableTest implements ClassTesting2<Table> {
     }
 
     // column...........................................................................................................
-    
+
     @Test
     public void testSetColumn() {
         final Table table = Table.empty();
@@ -283,9 +283,9 @@ public final class TableTest implements ClassTesting2<Table> {
         // - - -
         final Table table2 = table.setRow(
                 1,
-                        Lists.of("x", "y", "z")
-                ).setRow(
-                        0,
+                Lists.of("x", "y", "z")
+        ).setRow(
+                0,
                 Lists.of("a")
         );
         this.rowAndCheck(table2, 1, "x", "y", "z");
@@ -417,8 +417,8 @@ public final class TableTest implements ClassTesting2<Table> {
 
         this.checkEquals(table,
                 Lists.of(row1, row2)
-                .stream()
-                .collect(Table.empty().collectRow(1)));
+                        .stream()
+                        .collect(Table.empty().collectRow(1)));
     }
 
     // helpers..........................................................................................................

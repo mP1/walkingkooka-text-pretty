@@ -32,9 +32,9 @@ final class CharSequenceBiFunctionAlignCharacter extends CharSequenceBiFunctionA
      * Factory that creates a new {@link CharSequenceBiFunctionAlignCharacter}.
      */
     static CharSequenceBiFunctionAlignCharacter with(final CharPredicate chars,
-                                                           final int column) {
+                                                     final int column) {
         Objects.requireNonNull(chars, "chars");
-        if(column < 0) {
+        if (column < 0) {
             throw new IllegalArgumentException("Column " + column + " < 0");
         }
 
@@ -62,12 +62,12 @@ final class CharSequenceBiFunctionAlignCharacter extends CharSequenceBiFunctionA
         final int stop = Math.min(this.column, textLength);
         for (int i = 0; i < stop; i++) {
             if (this.chars.test(text.charAt(i))) {
-                if(i > 0) {
+                if (i > 0) {
                     int leftPadding = this.column - i;
                     final int right = (leftPadding + textLength) - width;
-                    if(right > 0) {
+                    if (right > 0) {
                         leftPadding -= right;
-                        if(leftPadding <= 0) {
+                        if (leftPadding <= 0) {
                             break;
                         }
                     }
@@ -84,8 +84,8 @@ final class CharSequenceBiFunctionAlignCharacter extends CharSequenceBiFunctionA
     }
 
     private void checkWidth(final int width) {
-        final int column  = this.column;
-        if(column >= width) {
+        final int column = this.column;
+        if (column >= width) {
             throw new IllegalArgumentException("Column width " + column + " >= width " + width);
         }
     }
@@ -99,7 +99,7 @@ final class CharSequenceBiFunctionAlignCharacter extends CharSequenceBiFunctionA
 
     @Override
     public boolean equals(final Object other) {
-        return this == other || (other instanceof CharSequenceBiFunctionAlignCharacter && this.equals0((CharSequenceBiFunctionAlignCharacter)other));
+        return this == other || (other instanceof CharSequenceBiFunctionAlignCharacter && this.equals0((CharSequenceBiFunctionAlignCharacter) other));
     }
 
     private boolean equals0(final CharSequenceBiFunctionAlignCharacter other) {
