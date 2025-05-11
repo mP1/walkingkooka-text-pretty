@@ -227,8 +227,8 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
         return this.elementCount + "/" + this.size + " " + Arrays.toString(this.elements);
     }
 
-    // ImmutableList....................................................................................................
-
+    // ImmutableListDefaults............................................................................................
+    
     /**
      * Not possible to set new elements because the updated {@link Table} is not returned.
      */

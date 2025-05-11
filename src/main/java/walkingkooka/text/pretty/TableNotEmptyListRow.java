@@ -18,6 +18,7 @@
 package walkingkooka.text.pretty;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * An immutable {@link List} view of a single row, where the elements are non null {@link CharSequence}.
@@ -125,5 +126,12 @@ final class TableNotEmptyListRow extends TableNotEmptyList<CharSequence> {
     @Override
     boolean equalsTableNotEmptyListRows(final TableNotEmptyListRows other) {
         return false;
+    }
+
+    // ImmutableListDefaults............................................................................................
+
+    @Override
+    public void elementCheck(final CharSequence text) {
+        Objects.requireNonNull(text, "text");
     }
 }

@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SuppressWarnings("unchecked")
 public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, T> extends TableTestCase<L>
@@ -41,6 +42,25 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
         assertSame(
                 list,
                 Lists.immutable(list)
+        );
+    }
+
+    @Test
+    public final void testConcatNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createList().concat(null)
+        );
+    }
+
+    @Test
+    public final void testReplaceNullElementFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createList().replace(
+                        0,
+                        null
+                )
         );
     }
 
