@@ -24,6 +24,7 @@ import walkingkooka.collect.list.Lists;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class TableNotEmptyColumnListTest extends TableTestCase2<TableNotEmptyColumnList>
         implements ListTesting2<TableNotEmptyColumnList, CharSequence> {
@@ -36,6 +37,25 @@ public final class TableNotEmptyColumnListTest extends TableTestCase2<TableNotEm
         assertSame(
                 list,
                 Lists.immutable(list)
+        );
+    }
+
+    @Test
+    public void testConcatNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createList().concat(null)
+        );
+    }
+
+    @Test
+    public void testReplaceNullElementFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createList().replace(
+                        0,
+                        null
+                )
         );
     }
 

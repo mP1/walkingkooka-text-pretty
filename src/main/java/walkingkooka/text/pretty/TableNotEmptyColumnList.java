@@ -22,6 +22,7 @@ import walkingkooka.collect.list.ImmutableListDefaults;
 
 import java.util.AbstractList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * An immutable {@link List} view of a single column. Element indicies given to methods like {@link #get(int)}
@@ -60,6 +61,11 @@ final class TableNotEmptyColumnList extends AbstractList<CharSequence>
     private final TableNotEmpty table;
 
     // ImmutableList....................................................................................................
+
+    @Override
+    public void elementCheck(final CharSequence text) {
+        Objects.requireNonNull(text, "text");
+    }
 
     /**
      * Not possible to set new elements because the updated {@link Table} is not returned.
