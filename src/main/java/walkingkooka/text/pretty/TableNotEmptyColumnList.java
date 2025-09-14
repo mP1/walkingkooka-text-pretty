@@ -21,6 +21,7 @@ import walkingkooka.collect.list.ImmutableList;
 import walkingkooka.collect.list.ImmutableListDefaults;
 
 import java.util.AbstractList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -68,10 +69,10 @@ final class TableNotEmptyColumnList extends AbstractList<CharSequence>
     }
 
     /**
-     * Not possible to set new elements because the updated {@link Table} is not returned.
+     * It is not possible to set new elements because the updated {@link Table} is not returned.
      */
     @Override
-    public ImmutableList<CharSequence> setElements(final List<CharSequence> list) {
-        return this.setElementsFailIfDifferent(list);
+    public ImmutableList<CharSequence> setElements(final Collection<CharSequence> collection) {
+        return this.setElementsFailIfDifferent(collection);
     }
 }

@@ -23,6 +23,7 @@ import walkingkooka.collect.list.ImmutableListDefaults;
 
 import java.util.AbstractList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -233,7 +234,7 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
      * Not possible to set new elements because the updated {@link Table} is not returned.
      */
     @Override
-    public final ImmutableList<T> setElements(final List<T> list) {
-        return this.setElementsFailIfDifferent(list);
+    public final ImmutableList<T> setElements(final Collection<T> collection) {
+        return this.setElementsFailIfDifferent(collection);
     }
 }
