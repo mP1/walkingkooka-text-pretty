@@ -17,6 +17,7 @@
 
 package walkingkooka.text.pretty.sample;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.naming.StringName;
 import walkingkooka.naming.StringPath;
@@ -31,6 +32,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class TreePrintingSample {
+
+    public static void main(final String[] ignored) {
+        final TreePrintingSample sample = new TreePrintingSample();
+        sample.testSample();
+    }
 
     /**
      * Prints...
@@ -54,7 +60,8 @@ public final class TreePrintingSample {
      *   walkingkooka-text-pretty-1.0-SNAPSHOT.jar
      * </pre>
      */
-    public static void main(final String[] ignored) {
+    @Test
+    public void testSample() {
         final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.SPACES2);
 
         // over simplified sample of this projects target directory.
