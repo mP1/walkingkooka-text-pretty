@@ -17,6 +17,7 @@
 
 package walkingkooka.text.pretty.sample;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.text.Indentation;
@@ -29,7 +30,14 @@ import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.Printers;
 
 public final class TableColumnPrintSample {
+
     public static void main(final String[] ignored) {
+        final TableColumnPrintSample sample = new TableColumnPrintSample();
+        sample.testSample();
+    }
+
+    @Test
+    public void testSample() {
         // create three columns with different widths and alignments.
         final ColumnConfig states = TextPretty.columnConfig()
                 .minWidth(20)

@@ -45,7 +45,7 @@ public class TestGwtTest extends GWTTestCase {
         );
     }
 
-    public void testSample() {
+    public void testPrintingSample() {
         final StringBuilder b = new StringBuilder();
         final IndentingPrinter printer = Printers.stringBuilder(
                 b,
@@ -125,5 +125,52 @@ public class TestGwtTest extends GWTTestCase {
                         "  walkingkooka-text-pretty-1.0-SNAPSHOT.jar\n",
                 b.toString()
         );
+    }
+
+    public void testColumnPrintSample() {
+        public void testSample() {
+            // create three columns with different widths and alignments.
+            final ColumnConfig states = TextPretty.columnConfig()
+                    .minWidth(20)
+                    .maxWidth(20)
+                    .leftAlign();
+
+            final ColumnConfig population = TextPretty.columnConfig()
+                    .minWidth(10)
+                    .maxWidth(10)
+                    .rightAlign();
+
+            final ColumnConfig money = TextPretty.columnConfig()
+                    .minWidth(12)
+                    .maxWidth(12)
+                    .characterAlign(CharPredicates.is('.'), 7);
+
+            // populate table with 3 columns.
+            final TableConfig tableConfig = TextPretty.tableConfig()
+                    .add(states)
+                    .add(population)
+                    .add(money);
+
+            // create table with a single row from a csv line
+            final Table table1 = TextPretty.table()
+                    .setRow(0, TextPretty.csv(',').apply("\"New South Wales\",10000000,$12.00"));
+
+            // streaming a list of csv lines (different delimiters) and collect (aka add to table)
+            final Table table123 = Lists.of(TextPretty.csv('/').apply("Queensland/4000000/$11.75"),
+                            TextPretty.csv(';').apply("Tasmania;500000;$9.0"))
+                    .stream()
+                    .collect(table1.collectRow(1));
+
+            // format the table with cells using the columns.
+            final Table formattedTable = tableConfig.apply(table123);
+
+            // print row by row
+            try (final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.SPACES2)) {
+                for (int i = 0; i < formattedTable.height(); i++) {
+                    printer.print(TextPretty.rowColumnsToLine((column -> 2), LineEnding.SYSTEM)
+                            .apply(formattedTable.row(i)));
+                }
+            }
+        }
     }
 }
