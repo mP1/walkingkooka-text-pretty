@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Miroslav Pokorny (github.com/mP1)
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,8 @@
  * limitations under the License.
  *
  */
-package test;
 
-import com.google.gwt.junit.client.GWTTestCase;
+package walkingkooka.text.pretty.sample;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
@@ -38,25 +37,64 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class TestGwtTest extends GWTTestCase {
-    @Override
-    public String getModuleName() {
-        return "test.Test";
+public final class Sample {
+
+    public static void main(final String[] args) {
+        new Sample();
     }
 
-    public void testAssertEquals() {
-        assertEquals(
-                1,
-                1
-        );
+    private Sample() {
+        this.testColumnPrintSample();
+        this.testTreePrintingSample();
     }
 
-    public void testPrintingSample() {
-        final StringBuilder b = new StringBuilder();
-        final IndentingPrinter printer = Printers.stringBuilder(
-                b,
-                LineEnding.NL
-        ).indenting(Indentation.SPACES2);
+    public void testColumnPrintSample() {
+        // create three columns with different widths and alignments.
+        final ColumnConfig states = TextPretty.columnConfig()
+                .minWidth(20)
+                .maxWidth(20)
+                .leftAlign();
+
+        final ColumnConfig population = TextPretty.columnConfig()
+                .minWidth(10)
+                .maxWidth(10)
+                .rightAlign();
+
+        final ColumnConfig money = TextPretty.columnConfig()
+                .minWidth(12)
+                .maxWidth(12)
+                .characterAlign(CharPredicates.is('.'), 7);
+
+        // populate table with 3 columns.
+        final TableConfig tableConfig = TextPretty.tableConfig()
+                .add(states)
+                .add(population)
+                .add(money);
+
+        // create table with a single row from a csv line
+        final Table table1 = TextPretty.table()
+                .setRow(0, TextPretty.csv(',').apply("\"New South Wales\",10000000,$12.00"));
+
+        // streaming a list of csv lines (different delimiters) and collect (aka add to table)
+        final Table table123 = Lists.of(TextPretty.csv('/').apply("Queensland/4000000/$11.75"),
+                        TextPretty.csv(';').apply("Tasmania;500000;$9.0"))
+                .stream()
+                .collect(table1.collectRow(1));
+
+        // format the table with cells using the columns.
+        final Table formattedTable = tableConfig.apply(table123);
+
+        // print row by row
+        try (final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.SPACES2)) {
+            for (int i = 0; i < formattedTable.height(); i++) {
+                printer.print(TextPretty.rowColumnsToLine((column -> 2), LineEnding.SYSTEM)
+                        .apply(formattedTable.row(i)));
+            }
+        }
+    }
+
+    public void testTreePrintingSample() {
+        final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.SPACES2);
 
         // over simplified sample of this projects target directory.
         final Set<StringPath> paths = Sets.of(
@@ -108,73 +146,5 @@ public class TestGwtTest extends GWTTestCase {
             }
         }.biConsumer()
                 .accept(paths, printer);
-
-        printer.flush();
-
-        assertEquals(
-                "~/github/project\n" +
-                        "  target\n" +
-                        "    classes/java/walkingkooka/text/pretty\n" +
-                        "      CharSequenceBiFunction.class\n" +
-                        "      CharSequenceBiFunctionAlign.class\n" +
-                        "    maven-archiver\n" +
-                        "      pom.properties\n" +
-                        "    maven-status/maven-compiler-plugin\n" +
-                        "      compile/default-compile\n" +
-                        "        createdFiles.lst\n" +
-                        "        inputFiles.lst\n" +
-                        "      testCompile/default-compile\n" +
-                        "        createdFiles.lst\n" +
-                        "        inputFiles.lst\n" +
-                        "  jacoco.exec\n" +
-                        "  walkingkooka-text-pretty-1.0-SNAPSHOT-sources.jar\n" +
-                        "  walkingkooka-text-pretty-1.0-SNAPSHOT.jar\n",
-                b.toString()
-        );
-    }
-
-    public void testColumnPrintSample() {
-        // create three columns with different widths and alignments.
-        final ColumnConfig states = TextPretty.columnConfig()
-                .minWidth(20)
-                .maxWidth(20)
-                .leftAlign();
-
-        final ColumnConfig population = TextPretty.columnConfig()
-                .minWidth(10)
-                .maxWidth(10)
-                .rightAlign();
-
-        final ColumnConfig money = TextPretty.columnConfig()
-                .minWidth(12)
-                .maxWidth(12)
-                .characterAlign(CharPredicates.is('.'), 7);
-
-        // populate table with 3 columns.
-        final TableConfig tableConfig = TextPretty.tableConfig()
-                .add(states)
-                .add(population)
-                .add(money);
-
-        // create table with a single row from a csv line
-        final Table table1 = TextPretty.table()
-                .setRow(0, TextPretty.csv(',').apply("\"New South Wales\",10000000,$12.00"));
-
-        // streaming a list of csv lines (different delimiters) and collect (aka add to table)
-        final Table table123 = Lists.of(TextPretty.csv('/').apply("Queensland/4000000/$11.75"),
-                        TextPretty.csv(';').apply("Tasmania;500000;$9.0"))
-                .stream()
-                .collect(table1.collectRow(1));
-
-        // format the table with cells using the columns.
-        final Table formattedTable = tableConfig.apply(table123);
-
-        // print row by row
-        try (final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.SPACES2)) {
-            for (int i = 0; i < formattedTable.height(); i++) {
-                printer.print(TextPretty.rowColumnsToLine((column -> 2), LineEnding.SYSTEM)
-                        .apply(formattedTable.row(i)));
-            }
-        }
     }
 }
