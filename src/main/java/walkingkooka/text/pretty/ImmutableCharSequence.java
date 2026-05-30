@@ -17,12 +17,14 @@
 
 package walkingkooka.text.pretty;
 
-import walkingkooka.text.CharSequences;
+import walkingkooka.text.CaseSensitivity;
 
 /**
  * An immutable {@link CharSequence} wrapper around a {@link StringBuilder}
  */
 final class ImmutableCharSequence implements CharSequence {
+
+    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
 
     static ImmutableCharSequence with(final CharSequence chars) {
         return new ImmutableCharSequence(chars);
@@ -56,12 +58,17 @@ final class ImmutableCharSequence implements CharSequence {
 
     @Override
     public int hashCode() {
-        return CharSequences.hash(this.chars);
+        return CASE_SENSITIVITY.hash(this.chars);
     }
 
     public boolean equals(final Object other) {
         return this == other ||
-                (other instanceof CharSequence && CharSequences.equals(this.chars, (CharSequence) other));
+                (other instanceof CharSequence &&
+                        CASE_SENSITIVITY.equals(
+                                this.chars,
+                                (CharSequence) other
+                        )
+                );
 
     }
 
