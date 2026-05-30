@@ -30,6 +30,8 @@ import java.util.Objects;
  */
 final class MultiLineCharSequence implements CharSequence {
 
+    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
+
     static MultiLineCharSequence parse(final CharSequence text,
                                        final LineEnding lineEnding) {
         Objects.requireNonNull(text, "text");
@@ -91,10 +93,10 @@ final class MultiLineCharSequence implements CharSequence {
 
         int i = 0;
         for (final CharSequence line : lines) {
-            if (CharSequences.indexOf(line, "\n") != -1) {
+            if (CASE_SENSITIVITY.indexOf(line, "\n") != -1) {
                 throw new IllegalArgumentException("Line " + i + " " + CharSequences.quoteAndEscape(line) + " contains '\\n'");
             }
-            if (CharSequences.indexOf(line, "\r") != -1) {
+            if (CASE_SENSITIVITY.indexOf(line, "\r") != -1) {
                 throw new IllegalArgumentException("Line " + i + " " + CharSequences.quoteAndEscape(line) + " contains '\\r'");
             }
             i++;
@@ -283,7 +285,7 @@ final class MultiLineCharSequence implements CharSequence {
     @Override
     public int hashCode() {
         if (0 == this.hashCode) {
-            this.hashCode = CaseSensitivity.SENSITIVE.hash(this);
+            this.hashCode = CASE_SENSITIVITY.hash(this);
         }
         return this.hashCode;
     }
