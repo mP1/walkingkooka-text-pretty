@@ -18,6 +18,7 @@
 package walkingkooka.text.pretty;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
 
@@ -282,7 +283,7 @@ final class MultiLineCharSequence implements CharSequence {
     @Override
     public int hashCode() {
         if (0 == this.hashCode) {
-            this.hashCode = CharSequences.hash(this);
+            this.hashCode = CaseSensitivity.SENSITIVE.hash(this);
         }
         return this.hashCode;
     }
