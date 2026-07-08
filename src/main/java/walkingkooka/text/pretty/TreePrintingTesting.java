@@ -17,14 +17,10 @@
 
 package walkingkooka.text.pretty;
 
-import walkingkooka.naming.Path;
-import walkingkooka.naming.PathName;
 import walkingkooka.test.Testing;
 
 /**
  * Mixing interface that contains helpers to assist testing a {@link TreePrinting}.
  */
-public interface TreePrintingTesting<G extends TreePrinting<P, N>,
-        P extends Path<P, N> & Comparable<P>,
-        N extends PathName & Comparable<N>> extends Testing {
+public interface TreePrintingTesting extends Testing {
 }
