@@ -17,8 +17,8 @@
 
 package walkingkooka.text.pretty;
 
-import walkingkooka.naming.Name;
 import walkingkooka.naming.Path;
+import walkingkooka.naming.PathName;
 import walkingkooka.test.Fake;
 import walkingkooka.text.printer.IndentingPrinter;
 
@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 
-public class FakeTreePrinting<P extends Path<P, N> & Comparable<P>, N extends Name & Comparable<N>> implements TreePrinting<P, N>, Fake {
+public class FakeTreePrinting<P extends Path<P, N> & Comparable<P>, N extends PathName & Comparable<N>> implements TreePrinting<P, N>, Fake {
 
     @Override
     public TreePrintingBranches branches(final P parent) {

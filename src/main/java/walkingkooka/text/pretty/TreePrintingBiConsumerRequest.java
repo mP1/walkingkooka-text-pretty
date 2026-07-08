@@ -19,8 +19,8 @@ package walkingkooka.text.pretty;
 
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.naming.Name;
 import walkingkooka.naming.Path;
+import walkingkooka.naming.PathName;
 import walkingkooka.text.printer.IndentingPrinter;
 
 import java.util.Map;
@@ -31,12 +31,12 @@ import java.util.Set;
  * An individual request to print a {@link Set} of {@link Path paths}.
  */
 final class TreePrintingBiConsumerRequest<P extends Path<P, N> & Comparable<P>,
-        N extends Name & Comparable<N>> {
+        N extends PathName & Comparable<N>> {
 
     static <P extends Path<P, N> & Comparable<P>,
-            N extends Name & Comparable<N>> void handle(final Set<P> paths,
-                                                        final IndentingPrinter printer,
-                                                        final TreePrinting<P, N> printing) {
+            N extends PathName & Comparable<N>> void handle(final Set<P> paths,
+                                                            final IndentingPrinter printer,
+                                                            final TreePrinting<P, N> printing) {
         Objects.requireNonNull(paths, "paths");
         Objects.requireNonNull(printer, "printer");
         Objects.requireNonNull(printing, "printing");

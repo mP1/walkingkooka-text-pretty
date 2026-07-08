@@ -17,8 +17,8 @@
 
 package walkingkooka.text.pretty;
 
-import walkingkooka.naming.Name;
 import walkingkooka.naming.Path;
+import walkingkooka.naming.PathName;
 import walkingkooka.test.Testing;
 
 /**
@@ -26,5 +26,5 @@ import walkingkooka.test.Testing;
  */
 public interface TreePrintingTesting<G extends TreePrinting<P, N>,
         P extends Path<P, N> & Comparable<P>,
-        N extends Name & Comparable<N>> extends Testing {
+        N extends PathName & Comparable<N>> extends Testing {
 }

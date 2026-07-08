@@ -19,8 +19,8 @@ package walkingkooka.text.pretty;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
-import walkingkooka.naming.Name;
 import walkingkooka.naming.Path;
+import walkingkooka.naming.PathName;
 
 import java.util.Set;
 
@@ -35,7 +35,7 @@ public enum TreePrintingBranches {
      */
     SORTED {
         @Override //
-        <P extends Path<P, N> & Comparable<P>, N extends Name & Comparable<N>> Set<P> emptyChildrenSet() {
+        <P extends Path<P, N> & Comparable<P>, N extends PathName & Comparable<N>> Set<P> emptyChildrenSet() {
             return SortedSets.tree();
         }
     },
@@ -46,7 +46,7 @@ public enum TreePrintingBranches {
      * entries original order.
      */
     VISITED {
-        @Override <P extends Path<P, N> & Comparable<P>, N extends Name & Comparable<N>> Set<P> emptyChildrenSet() {
+        @Override <P extends Path<P, N> & Comparable<P>, N extends PathName & Comparable<N>> Set<P> emptyChildrenSet() {
             return Sets.ordered();
         }
     };
@@ -54,5 +54,5 @@ public enum TreePrintingBranches {
     /**
      * Factory used to create a {@link Set} which will hold gathered {@link Path} that are actually children of a common parent.
      */
-    abstract <P extends Path<P, N> & Comparable<P>, N extends Name & Comparable<N>> Set<P> emptyChildrenSet();
+    abstract <P extends Path<P, N> & Comparable<P>, N extends PathName & Comparable<N>> Set<P> emptyChildrenSet();
 }
