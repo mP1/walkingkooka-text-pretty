@@ -17,8 +17,8 @@
 
 package walkingkooka.text.pretty;
 
-import walkingkooka.naming.Name;
 import walkingkooka.naming.Path;
+import walkingkooka.naming.PathName;
 import walkingkooka.text.printer.IndentingPrinter;
 
 import java.util.Objects;
@@ -29,15 +29,14 @@ import java.util.function.BiConsumer;
  * A {@link BiConsumer} that accepts paths and a {@link IndentingPrinter} that prints a tree with indentation and relative paths.
  */
 final class TreePrintingBiConsumer<P extends Path<P, N> & Comparable<P>,
-        N extends Name & Comparable<N>>
+        N extends PathName & Comparable<N>>
         implements BiConsumer<Set<P>, IndentingPrinter> {
 
     /**
      * Creates a new {@link TreePrintingBiConsumer}
      */
     static <P extends Path<P, N> & Comparable<P>,
-            N extends Name & Comparable<N>>
-    TreePrintingBiConsumer<P, N> with(final TreePrinting<P, N> printing) {
+            N extends PathName & Comparable<N>> TreePrintingBiConsumer<P, N> with(final TreePrinting<P, N> printing) {
         Objects.requireNonNull(printing, "printing");
 
         return new TreePrintingBiConsumer<>(printing);

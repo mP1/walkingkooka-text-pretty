@@ -19,6 +19,7 @@ package walkingkooka.text.pretty;
 
 import walkingkooka.naming.Name;
 import walkingkooka.naming.Path;
+import walkingkooka.naming.PathName;
 import walkingkooka.naming.PathSeparator;
 import walkingkooka.text.printer.IndentingPrinter;
 
@@ -30,7 +31,7 @@ import java.util.stream.Collectors;
 /**
  * Handles printing a tree of {@link Path paths} with support for grouping children for each branch or path.
  */
-public interface TreePrinting<P extends Path<P, N> & Comparable<P>, N extends Name & Comparable<N>> {
+public interface TreePrinting<P extends Path<P, N> & Comparable<P>, N extends PathName & Comparable<N>> {
 
     /**
      * {@see TreePrintingBranches}
