@@ -24,8 +24,10 @@ import walkingkooka.collect.list.ImmutableListDefaults;
 import java.util.AbstractList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * An immutable {@link java.util.List} that includes a reference to the parent {@link TableNotEmpty}
@@ -236,5 +238,17 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
     @Override
     public final ImmutableList<T> setElements(final Collection<T> collection) {
         return this.setElementsFailIfDifferent(collection);
+    }
+
+    // CanFirstOrEmpty..................................................................................................
+
+    @Override
+    public final Optional<T> firstOrEmpty() {
+        final Iterator<T> iterator = this.iterator();
+        return Optional.ofNullable(
+          iterator.hasNext() ?
+            iterator.next() :
+            null
+        );
     }
 }
