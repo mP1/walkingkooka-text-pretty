@@ -132,6 +132,30 @@ public final class TableNotEmptyListRowsTest extends TableNotEmptyListTestCase<T
         return row;
     }
 
+    @Test
+    public void testFirstOrEmptyWhenEmpty() {
+        this.firstOrEmptyAndCheck(
+            TableNotEmptyListRows.empty()
+        );
+    }
+
+    @Test
+    public void testFirstOrEmptyWhenNotEmpty() {
+        final TableNotEmptyListRow row0 = TableNotEmptyListRow.empty();
+        row0.setAuto(0, "A");
+
+        final TableNotEmptyListRow row1 = null;
+
+        final TableNotEmptyListRows rows = TableNotEmptyListRows.empty();
+        rows.setAuto(0, row0);
+        rows.setAuto(1, row1);
+
+        this.firstOrEmptyAndCheck(
+             rows,
+             row0
+        );
+    }
+
     @Override
     public Class<TableNotEmptyListRows> type() {
         return TableNotEmptyListRows.class;
