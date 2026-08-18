@@ -50,127 +50,127 @@ public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrint
     @Test
     public void testLeaf2() {
         this.printTreeAndCheck(Sets.of("/branch/leaf"),
-                "branch\n" +
-                        ">leaf\n");
+            "branch\n" +
+                ">leaf\n");
     }
 
     @Test
     public void testBranchAndLeaf() {
         this.printTreeAndCheck(Sets.of("/branch",
-                        "/branch/leaf"),
-                "branch\n" +
-                        ">leaf\n");
+                "/branch/leaf"),
+            "branch\n" +
+                ">leaf\n");
     }
 
     @Test
     public void testBranchAndLeaf2() {
         this.printTreeAndCheck(Sets.of("/branch", "/branch/leaf1", "/branch/leaf2"),
-                "branch\n" +
-                        ">leaf1\n" +
-                        ">leaf2\n");
+            "branch\n" +
+                ">leaf1\n" +
+                ">leaf2\n");
     }
 
     @Test
     public void testBranchWithLeafAndLeaf() {
         this.printTreeAndCheck(Sets.of("/branch", "/branch/leaf1", "/a-leaf2"),
-                "branch\n" +
-                        ">leaf1\n" +
-                        "a-leaf2\n");
+            "branch\n" +
+                ">leaf1\n" +
+                "a-leaf2\n");
     }
 
     @Test
     public void testBranchWithLeafAndLeaf2() {
         this.printTreeAndCheck(Sets.of("/branch", "/branch/leaf1", "/z-leaf2"),
-                "branch\n" +
-                        ">leaf1\n" +
-                        "z-leaf2\n");
+            "branch\n" +
+                ">leaf1\n" +
+                "z-leaf2\n");
     }
 
     @Test
     public void testBranchBranchLeaf() {
         this.printTreeAndCheck(Sets.of("/branch1/branch2/branch3/leaf"),
-                "branch1/branch2/branch3\n" +
-                        ">leaf\n");
+            "branch1/branch2/branch3\n" +
+                ">leaf\n");
     }
 
     @Test
     public void testBranchBranchLeafAndLeaf() {
         this.printTreeAndCheck(Sets.of("/branch1/branch2/branch3/leaf1", "/leaf2"),
-                "branch1/branch2/branch3\n" +
-                        ">leaf1\n" +
-                        "leaf2\n");
+            "branch1/branch2/branch3\n" +
+                ">leaf1\n" +
+                "leaf2\n");
     }
 
     @Test
     public void testBranchLeafBranchLeaf() {
         this.printTreeAndCheck(Sets.of("/branch1/leaf1", "/branch2/leaf2"),
-                "branch1\n" +
-                        ">leaf1\n" +
-                        "branch2\n" +
-                        ">leaf2\n");
+            "branch1\n" +
+                ">leaf1\n" +
+                "branch2\n" +
+                ">leaf2\n");
     }
 
     @Test
     public void testBranchBranchLeafAndBranchLeaf() {
         this.printTreeAndCheck(Sets.of("/branch1/branch2/branch3/leaf1", "/branch1/leaf2"),
-                "branch1\n" +
-                        ">branch2/branch3\n" +
-                        ">>leaf1\n" +
-                        ">leaf2\n");
+            "branch1\n" +
+                ">branch2/branch3\n" +
+                ">>leaf1\n" +
+                ">leaf2\n");
     }
 
     @Test
     public void testBranchBranchLeafAndBranchLeaf2() {
         this.printTreeAndCheck(Sets.of("/branch1/branch2/branch3/leaf1", "/branch1/leaf2", "/branch1/leaf3"),
-                "branch1\n" +
-                        ">branch2/branch3\n" +
-                        ">>leaf1\n" +
-                        ">leaf2\n" +
-                        ">leaf3\n");
+            "branch1\n" +
+                ">branch2/branch3\n" +
+                ">>leaf1\n" +
+                ">leaf2\n" +
+                ">leaf3\n");
     }
 
     @Test
     public void testBranchTwoBranchLeaf() {
         this.printTreeAndCheck(Sets.of("/branch1/branch2/leaf1", "/branch1/branch3/leaf2"),
-                "branch1\n" +
-                        ">branch2\n" +
-                        ">>leaf1\n" +
-                        ">branch3\n" +
-                        ">>leaf2\n");
+            "branch1\n" +
+                ">branch2\n" +
+                ">>leaf1\n" +
+                ">branch3\n" +
+                ">>leaf2\n");
     }
 
     @Test
     public void testBranchTwoBranchLeafVisit() {
         this.printTreeAndCheck2((p) -> TreePrintingBranches.VISITED,
-                Sets.of("/branch1/branch3/leaf2", "/branch1/branch2/leaf1"),
-                "branch1\n" +
-                        ">branch3\n" +
-                        ">>leaf2\n" +
-                        ">branch2\n" +
-                        ">>leaf1\n");
+            Sets.of("/branch1/branch3/leaf2", "/branch1/branch2/leaf1"),
+            "branch1\n" +
+                ">branch3\n" +
+                ">>leaf2\n" +
+                ">branch2\n" +
+                ">>leaf1\n");
     }
 
     @Test
     public void testMixedTreePrintingBranches() {
         this.printTreeAndCheck2((p) -> p.toString().equals("/branch1/branch3") ? TreePrintingBranches.SORTED : TreePrintingBranches.VISITED,
-                Sets.of("/branch1/branch3/leaf3", "/branch1/branch3/leaf2", "/branch1/branch2/leaf1", "/771", "/992", "/883", "/004"),
-                "branch1\n" +
-                        ">branch3\n" +
-                        ">>leaf2\n" +
-                        ">>leaf3\n" +
-                        ">branch2\n" +
-                        ">>leaf1\n" +
-                        "771\n" +
-                        "992\n" +
-                        "883\n" +
-                        "004\n");
+            Sets.of("/branch1/branch3/leaf3", "/branch1/branch3/leaf2", "/branch1/branch2/leaf1", "/771", "/992", "/883", "/004"),
+            "branch1\n" +
+                ">branch3\n" +
+                ">>leaf2\n" +
+                ">>leaf3\n" +
+                ">branch2\n" +
+                ">>leaf1\n" +
+                "771\n" +
+                "992\n" +
+                "883\n" +
+                "004\n");
     }
 
     private void printTreeAndCheck(final Set<String> paths,
                                    final String expected) {
         this.printTreeAndCheck2((p) -> TreePrintingBranches.SORTED,
-                paths,
-                expected);
+            paths,
+            expected);
     }
 
     private void printTreeAndCheck2(final Function<StringPath, TreePrintingBranches> branches,
@@ -179,13 +179,13 @@ public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrint
         final StringBuilder text = new StringBuilder();
         try (final Printer printer = Printers.stringBuilder(text, LineEnding.NL)) {
             new TestTreePrinting(branches)
-                    .biConsumer()
-                    .accept(paths.stream().map(StringPath::parse).collect(Collectors.toCollection(Sets::ordered)), printer.indenting(Indentation.with(">")));
+                .biConsumer()
+                .accept(paths.stream().map(StringPath::parse).collect(Collectors.toCollection(Sets::ordered)), printer.indenting(Indentation.with(">")));
         }
 
         this.checkEquals(expected,
-                text.toString(),
-                paths::toString);
+            text.toString(),
+            paths::toString);
     }
 
     private static class TestTreePrinting implements TreePrinting<StringPath, StringName> {
@@ -204,9 +204,9 @@ public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrint
         @Override
         public void branchBegin(final List<StringName> names, final IndentingPrinter printer) {
             final String path = names.stream()
-                    .filter(n -> false == n.value().isEmpty())
-                    .map(StringName::toString)
-                    .collect(Collectors.joining("/"));
+                .filter(n -> false == n.value().isEmpty())
+                .map(StringName::toString)
+                .collect(Collectors.joining("/"));
             if (false == path.isEmpty()) {
                 printer.print(path + "\n");
                 printer.indent();
@@ -216,9 +216,9 @@ public final class TreePrintingBiConsumerTest implements ClassTesting2<TreePrint
         @Override
         public void branchEnd(final List<StringName> names, final IndentingPrinter printer) {
             final String path = names.stream()
-                    .filter(n -> false == n.value().isEmpty())
-                    .map(StringName::toString)
-                    .collect(Collectors.joining("/"));
+                .filter(n -> false == n.value().isEmpty())
+                .map(StringName::toString)
+                .collect(Collectors.joining("/"));
             if (false == path.isEmpty()) {
                 printer.outdent();
             }

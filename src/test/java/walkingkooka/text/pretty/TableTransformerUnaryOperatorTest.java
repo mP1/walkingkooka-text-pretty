@@ -28,8 +28,8 @@ import java.util.function.UnaryOperator;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<TableTransformerUnaryOperator>
-        implements FunctionTesting<TableTransformerUnaryOperator, Table, Table>,
-        ToStringTesting<TableTransformerUnaryOperator> {
+    implements FunctionTesting<TableTransformerUnaryOperator, Table, Table>,
+    ToStringTesting<TableTransformerUnaryOperator> {
 
     @Test
     public void testWithNullColumnsFails() {
@@ -46,39 +46,39 @@ public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<
         final ColumnConfig column = TextPretty.columnConfig();
 
         this.applyAndCheck2(TableTransformerUnaryOperator.with(Lists.of(column, column)),
-                Table.empty()
-                        .setRow(0, Lists.of("A", "BC")),
-                Table.empty()
-                        .setRow(0, Lists.of("A", "BC")));
+            Table.empty()
+                .setRow(0, Lists.of("A", "BC")),
+            Table.empty()
+                .setRow(0, Lists.of("A", "BC")));
     }
 
     @Test
     public void testColumnMinWidth() {
         final ColumnConfig column = TextPretty.columnConfig()
-                .minWidth(5)
-                .leftAlign();
+            .minWidth(5)
+            .leftAlign();
 
         this.applyAndCheck2(TableTransformerUnaryOperator.with(Lists.of(column, column)),
-                Table.empty()
-                        .setRow(0, Lists.of("A", "B")),
-                Table.empty()
-                        .setRow(0, Lists.of("A    ", "B    ")));
+            Table.empty()
+                .setRow(0, Lists.of("A", "B")),
+            Table.empty()
+                .setRow(0, Lists.of("A    ", "B    ")));
     }
 
     @Test
     public void testOneRowAllColumnsPresent() {
         this.applyAndCheck2(Table.empty()
-                        .setRow(0, Lists.of("A", "B", "1")),
-                Table.empty()
-                        .setRow(0, Lists.of("A     ", "       B", "1")));
+                .setRow(0, Lists.of("A", "B", "1")),
+            Table.empty()
+                .setRow(0, Lists.of("A     ", "       B", "1")));
     }
 
     @Test
     public void testOneRowMissingColumn() {
         this.applyAndCheck2(Table.empty()
-                        .setRow(0, Lists.of("A", "B")),
-                Table.empty()
-                        .setRow(0, Lists.of("A     ", "       B")));
+                .setRow(0, Lists.of("A", "B")),
+            Table.empty()
+                .setRow(0, Lists.of("A     ", "       B")));
     }
 
     @Test
@@ -86,31 +86,31 @@ public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<
         final String extra = "*Extra*";
 
         this.applyAndCheck2(Table.empty()
-                        .setRow(0, Lists.of("A", "B", "1", extra)),
-                Table.empty()
-                        .setRow(0, Lists.of("A     ", "       B", "1", extra)));
+                .setRow(0, Lists.of("A", "B", "1", extra)),
+            Table.empty()
+                .setRow(0, Lists.of("A     ", "       B", "1", extra)));
     }
 
     @Test
     public void testManyRows() {
         this.applyAndCheck2(Table.empty()
-                        .setRow(0, Lists.of("A", "B", "1"))
-                        .setRow(1, Lists.of("C", "D", "2.0")),
-                Table.empty()
-                        .setRow(0, Lists.of("A     ", "       B", "1"))
-                        .setRow(1, Lists.of("C     ", "       D", "    2.0")));
+                .setRow(0, Lists.of("A", "B", "1"))
+                .setRow(1, Lists.of("C", "D", "2.0")),
+            Table.empty()
+                .setRow(0, Lists.of("A     ", "       B", "1"))
+                .setRow(1, Lists.of("C     ", "       D", "    2.0")));
     }
 
     @Test
     public void testManyRows2() {
         this.applyAndCheck2(Table.empty()
-                        .setRow(0, Lists.of("A", "B", "1"))
-                        .setRow(1, Lists.of("C", "D", "2.0"))
-                        .setRow(2, Lists.of("E", "FF", "3.50")),
-                Table.empty()
-                        .setRow(0, Lists.of("A     ", "       B", "1"))
-                        .setRow(1, Lists.of("C     ", "       D", "    2.0"))
-                        .setRow(2, Lists.of("E     ", "      FF", "    3.50")));
+                .setRow(0, Lists.of("A", "B", "1"))
+                .setRow(1, Lists.of("C", "D", "2.0"))
+                .setRow(2, Lists.of("E", "FF", "3.50")),
+            Table.empty()
+                .setRow(0, Lists.of("A     ", "       B", "1"))
+                .setRow(1, Lists.of("C     ", "       D", "    2.0"))
+                .setRow(2, Lists.of("E     ", "      FF", "    3.50")));
     }
 
     private void applyAndCheck2(final Table input,
@@ -122,8 +122,8 @@ public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<
                                 final Table input,
                                 final Table result) {
         this.checkEquals(result.toString(),
-                transformer.apply(input).toString(),
-                () -> "Wrong result for " + transformer + " for params: " + input);
+            transformer.apply(input).toString(),
+            () -> "Wrong result for " + transformer + " for params: " + input);
     }
 
     @Test
@@ -134,8 +134,8 @@ public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<
     @Override
     public TableTransformerUnaryOperator createFunction() {
         return this.createFunction0(TextPretty.columnConfig().minWidth(6).maxWidth(6).leftAlign(),
-                TextPretty.columnConfig().minWidth(8).maxWidth(8).rightAlign(),
-                TextPretty.columnConfig().minWidth(10).maxWidth(10).characterAlign(CharPredicates.is('.'), 5));
+            TextPretty.columnConfig().minWidth(8).maxWidth(8).rightAlign(),
+            TextPretty.columnConfig().minWidth(10).maxWidth(10).characterAlign(CharPredicates.is('.'), 5));
     }
 
     private TableTransformerUnaryOperator createFunction0(final ColumnConfig... columns) {

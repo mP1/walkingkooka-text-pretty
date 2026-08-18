@@ -51,7 +51,7 @@ public abstract class Table implements TreePrintable {
                 copy = listRow.copy();
             } else {
                 copy = TableNotEmptyListRow.with(
-                        TableNotEmptyList.computeCapacity(rowText.size())
+                    TableNotEmptyList.computeCapacity(rowText.size())
                 );
                 copy.copy(rowText);
             }
@@ -85,8 +85,8 @@ public abstract class Table implements TreePrintable {
     final public CharSequence cell(final int column,
                                    final int row) {
         return this.cell0(
-                column,
-                row
+            column,
+            row
         );
     }
 
@@ -105,9 +105,9 @@ public abstract class Table implements TreePrintable {
         checkRow(row);
 
         return this.setCell0(
-                column,
-                row,
-                text
+            column,
+            row,
+            text
         );
     }
 
@@ -132,24 +132,24 @@ public abstract class Table implements TreePrintable {
         checkWindowText(windowText);
 
         return windowText.isEmpty() ?
-                0 == startColumn && 0 == startRow ?
-                        this :
-                        this.setRowsEmpty(
-                                startColumn,
-                                startRow
-                        ) :
-                this.setRowsNotEmpty(
-                        startColumn,
-                        startRow,
-                        windowText
-                );
+            0 == startColumn && 0 == startRow ?
+                this :
+                this.setRowsEmpty(
+                    startColumn,
+                    startRow
+                ) :
+            this.setRowsNotEmpty(
+                startColumn,
+                startRow,
+                windowText
+            );
     }
 
     private Table setRowsEmpty(final int startColumn,
                                final int startRow) {
         return this.setSize(
-                startColumn,
-                startRow
+            startColumn,
+            startRow
         );
     }
 
@@ -158,7 +158,7 @@ public abstract class Table implements TreePrintable {
                                   final List<List<CharSequence>> windowText) {
         final TableNotEmptyListRows rows = this.rows();
         final TableNotEmptyListRows newRows = TableNotEmptyListRows.with(
-                rows.elements.length
+            rows.elements.length
         );
 
         final int height = this.height();
@@ -172,12 +172,12 @@ public abstract class Table implements TreePrintable {
 
             if (row < height) {
                 rowText = rows.get(row)
-                        .copy();
+                    .copy();
             }
 
             newRows.setAuto(
-                    row,
-                    rowText
+                row,
+                rowText
             );
 
             row++;
@@ -196,8 +196,8 @@ public abstract class Table implements TreePrintable {
 
                 while (column < startColumn) {
                     newTableRow.setAuto(
-                            column,
-                            oldTableRow.get(column)
+                        column,
+                        oldTableRow.get(column)
                     );
                     column++;
                 }
@@ -209,8 +209,8 @@ public abstract class Table implements TreePrintable {
             if (null != rowText) {
                 for (final CharSequence text : rowText) {
                     newTableRow.setAuto(
-                            column,
-                            text
+                        column,
+                        text
                     );
                     column++;
                 }
@@ -222,21 +222,21 @@ public abstract class Table implements TreePrintable {
 
                 while (column < endOfRow) {
                     newTableRow.setAuto(
-                            column,
-                            oldTableRow.get(column)
+                        column,
+                        oldTableRow.get(column)
                     );
                     column++;
                 }
             }
 
             newWidth = Math.max(
-                    newWidth,
-                    newTableRow.size
+                newWidth,
+                newTableRow.size
             );
 
             newRows.setAuto(
-                    row,
-                    newTableRow
+                row,
+                newTableRow
             );
 
             row++;
@@ -245,9 +245,9 @@ public abstract class Table implements TreePrintable {
         // copy rows after...
         while (row < height) {
             newRows.setAuto(
-                    row,
-                    rows.get(row)
-                            .copy()
+                row,
+                rows.get(row)
+                    .copy()
             );
 
             row++;
@@ -259,8 +259,8 @@ public abstract class Table implements TreePrintable {
         } else {
             newRows.setWidth(newWidth);
             table = TableNotEmpty.with(
-                    newRows,
-                    newWidth
+                newRows,
+                newWidth
             );
         }
 
@@ -297,8 +297,8 @@ public abstract class Table implements TreePrintable {
                         rowWindowText.set(row, rowText);
 
                         rowText.set(
-                                column,
-                                cellText
+                            column,
+                            cellText
                         );
                     }
                     row++;
@@ -309,16 +309,16 @@ public abstract class Table implements TreePrintable {
         }
 
         return this.setRows(
-                startColumn,
-                startRow,
-                rowWindowText
+            startColumn,
+            startRow,
+            rowWindowText
         );
     }
 
     private static void checkWindowText(final List<List<CharSequence>> windowText) {
         Objects.requireNonNull(
-                windowText,
-                "windowText"
+            windowText,
+            "windowText"
         );
     }
 
@@ -349,16 +349,16 @@ public abstract class Table implements TreePrintable {
         checkText(text);
 
         return this.setColumn0(
-                column,
-                Lists.immutable(text)
+            column,
+            Lists.immutable(text)
         );
     }
 
     private Table setColumn0(final int column,
                              final List<CharSequence> text) {
         return text.isEmpty() && column >= this.width() ?
-                this :
-                this.setColumn1(column, text);
+            this :
+            this.setColumn1(column, text);
     }
 
     abstract Table setColumn1(final int column, final List<CharSequence> text);
@@ -382,8 +382,8 @@ public abstract class Table implements TreePrintable {
      */
     public final Table setWidth(final int width) {
         return this.setSize(
-                width,
-                this.height()
+            width,
+            this.height()
         );
     }
 
@@ -395,11 +395,11 @@ public abstract class Table implements TreePrintable {
         checkHeight(height);
 
         return 0 == width && 0 == height ?
-                Table.empty() :
-                this.setSizeNotEmpty(
-                        width,
-                        height
-                );
+            Table.empty() :
+            this.setSizeNotEmpty(
+                width,
+                height
+            );
     }
 
     private Table setSizeNotEmpty(final int width,
@@ -414,7 +414,7 @@ public abstract class Table implements TreePrintable {
             table = this;
         } else {
             final TableNotEmptyListRows rows = this.rows()
-                    .copy();
+                .copy();
 
             int newWidth = width;
 
@@ -433,8 +433,8 @@ public abstract class Table implements TreePrintable {
             }
 
             table = TableNotEmpty.with(
-                    rows,
-                    width
+                rows,
+                width
             );
         }
 
@@ -460,7 +460,7 @@ public abstract class Table implements TreePrintable {
      */
     public final List<CharSequence> row(final int row) {
         return this.rows()
-                .get(row);
+            .get(row);
     }
 
     /**
@@ -472,32 +472,32 @@ public abstract class Table implements TreePrintable {
         checkText(text);
 
         return this.setRow0(
-                row,
-                copyRowText(text)
+            row,
+            copyRowText(text)
         );
     }
 
     Table setRow0(final int row,
                   final TableNotEmptyListRow rowText) {
         return row >= height() ?
-                this.addRow(
-                        row,
-                        rowText
-                ) :
-                this.replaceRow(
-                        row,
-                        rowText
-                );
+            this.addRow(
+                row,
+                rowText
+            ) :
+            this.replaceRow(
+                row,
+                rowText
+            );
     }
 
     private Table addRow(final int row,
                          final TableNotEmptyListRow rowText) {
         return null == rowText ?
-                this :
-                this.addRow0(
-                        row,
-                        rowText
-                );
+            this :
+            this.addRow0(
+                row,
+                rowText
+            );
     }
 
     abstract Table addRow0(final int row,
@@ -524,8 +524,8 @@ public abstract class Table implements TreePrintable {
      */
     public final Table setHeight(final int height) {
         return this.setSize(
-                this.width(),
-                height
+            this.width(),
+            height
         );
     }
 
@@ -585,7 +585,7 @@ public abstract class Table implements TreePrintable {
                 {
                     for (final CharSequence text : rowText) {
                         printer.println(
-                                CharSequences.quoteAndEscape(text)
+                            CharSequences.quoteAndEscape(text)
                         );
                     }
                 }

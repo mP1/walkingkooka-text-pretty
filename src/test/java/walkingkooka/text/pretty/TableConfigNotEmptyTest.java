@@ -30,9 +30,9 @@ public final class TableConfigNotEmptyTest extends TableConfigTestCase<TableConf
         final ColumnConfig first = this.columns().get(0);
         final ColumnConfig second = ColumnConfig.empty().maxWidth(222).rightAlign();
         this.addColumnAndCheck(this.createTableConfig(),
-                second,
-                first,
-                second);
+            second,
+            first,
+            second);
     }
 
     // Function.........................................................................................................
@@ -40,57 +40,57 @@ public final class TableConfigNotEmptyTest extends TableConfigTestCase<TableConf
     @Test
     public void testApplyNotEmptyTable() {
         final Table table = Table.empty()
-                .setCell(0, 1, "cell 0-1");
+            .setCell(0, 1, "cell 0-1");
         final Table expected = Table.empty()
-                .setCell(0, 1, "    cell 0-1");
+            .setCell(0, 1, "    cell 0-1");
         this.applyAndCheck2(table, expected);
     }
 
     @Test
     public void testApplyNotEmptyTable2() {
         final Table table = Table.empty()
-                .setCell(0, 1, "cell 0-1")
-                .setCell(1, 2, "cell 1-2")
-                .setCell(2, 3, "cell 2-3");
+            .setCell(0, 1, "cell 0-1")
+            .setCell(1, 2, "cell 1-2")
+            .setCell(2, 3, "cell 2-3");
         final Table expected = Table.empty()
-                .setCell(0, 1, "    cell 0-1")
-                .setCell(1, 2, "cell 1-2")
-                .setCell(2, 3, "cell 2-3");
+            .setCell(0, 1, "    cell 0-1")
+            .setCell(1, 2, "cell 1-2")
+            .setCell(2, 3, "cell 2-3");
         this.applyAndCheck2(table, expected);
     }
 
     @Test
     public void testApplyNotEmptyTable3() {
         final TableConfigNotEmpty config = TableConfigNotEmpty.with(Lists.of(ColumnConfig.empty().maxWidth(12).minWidth(12).rightAlign(),
-                ColumnConfig.empty().maxWidth(10).minWidth(10).centerAlign()));
+            ColumnConfig.empty().maxWidth(10).minWidth(10).centerAlign()));
 
         final Table table = Table.empty()
-                .setCell(0, 1, "cell 0-1")
-                .setCell(1, 2, "cell 1-2")
-                .setCell(2, 3, "cell 2-3");
+            .setCell(0, 1, "cell 0-1")
+            .setCell(1, 2, "cell 1-2")
+            .setCell(2, 3, "cell 2-3");
         final Table expected = Table.empty()
-                .setCell(0, 1, "    cell 0-1")
-                .setCell(1, 2, " cell 1-2 ")
-                .setCell(2, 3, "cell 2-3");
+            .setCell(0, 1, "    cell 0-1")
+            .setCell(1, 2, " cell 1-2 ")
+            .setCell(2, 3, "cell 2-3");
         this.applyAndCheck2(
-                config,
-                table,
-                expected);
+            config,
+            table,
+            expected);
     }
 
     @Test
     public void testApplyExtraColumns() {
         final TableConfigNotEmpty config = TableConfigNotEmpty.with(Lists.of(ColumnConfig.empty().maxWidth(12).minWidth(12).rightAlign(),
-                ColumnConfig.empty().maxWidth(10).minWidth(10).centerAlign()));
+            ColumnConfig.empty().maxWidth(10).minWidth(10).centerAlign()));
 
         final Table table = Table.empty()
-                .setCell(0, 1, "cell 0-1");
+            .setCell(0, 1, "cell 0-1");
         final Table expected = Table.empty()
-                .setCell(0, 1, "    cell 0-1");
+            .setCell(0, 1, "    cell 0-1");
         this.applyAndCheck2(
-                config,
-                table,
-                expected);
+            config,
+            table,
+            expected);
     }
 
     // ToString.........................................................................................................
@@ -107,9 +107,9 @@ public final class TableConfigNotEmptyTest extends TableConfigTestCase<TableConf
 
     private List<ColumnConfig> columns() {
         return Lists.of(ColumnConfig.empty()
-                .maxWidth(12)
-                .minWidth(12)
-                .rightAlign());
+            .maxWidth(12)
+            .minWidth(12)
+            .rightAlign());
     }
 
     private void applyAndCheck2(final Table input,

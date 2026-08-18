@@ -38,96 +38,96 @@ public final class TableTest implements ClassTesting2<Table> {
     @Test
     public void testCopyRowTextNulls() {
         this.copyRowTextAndCheck(
-                list(NULL),
-                list(MISSING)
+            list(NULL),
+            list(MISSING)
         );
     }
 
     @Test
     public void testCopyRowTextEmpty() {
         this.copyRowTextAndCheck(
-                list(""),
-                list(MISSING)
+            list(""),
+            list(MISSING)
         );
     }
 
     @Test
     public void testCopyRowTextNulls2() {
         this.copyRowTextAndCheck(
-                list(null, null),
-                list(MISSING, MISSING)
+            list(null, null),
+            list(MISSING, MISSING)
         );
     }
 
     @Test
     public void testCopyRowTextEmpty2() {
         this.copyRowTextAndCheck(
-                list("", ""),
-                list(MISSING, MISSING)
+            list("", ""),
+            list(MISSING, MISSING)
         );
     }
 
     @Test
     public void testCopyRowTextNullAndEmptyString() {
         this.copyRowTextAndCheck(
-                list("", null, ""),
-                list(MISSING, MISSING, MISSING)
+            list("", null, ""),
+            list(MISSING, MISSING, MISSING)
         );
     }
 
     @Test
     public void testCopyRowText() {
         this.copyRowTextAndCheck(
-                list("A", "B", "C"),
-                list("A", "B", "C")
+            list("A", "B", "C"),
+            list("A", "B", "C")
         );
     }
 
     @Test
     public void testCopyRowTextIncludesNull() {
         this.copyRowTextAndCheck(
-                list(MISSING, "B", "C"),
-                list(MISSING, "B", "C")
+            list(MISSING, "B", "C"),
+            list(MISSING, "B", "C")
         );
     }
 
     @Test
     public void testCopyRowTextIncludesEmpty() {
         this.copyRowTextAndCheck(
-                list("", "B", "C"),
-                list(MISSING, "B", "C")
+            list("", "B", "C"),
+            list(MISSING, "B", "C")
         );
     }
 
     @Test
     public void testCopyRowTextTrimmedNull() {
         this.copyRowTextAndCheck(
-                list("A", "B", "C", MISSING),
-                list("A", "B", "C", MISSING)
+            list("A", "B", "C", MISSING),
+            list("A", "B", "C", MISSING)
         );
     }
 
     @Test
     public void testCopyRowTextTrimmedEmpty() {
         this.copyRowTextAndCheck(
-                list("A", "B", "C", ""),
-                list("A", "B", "C", MISSING)
+            list("A", "B", "C", ""),
+            list("A", "B", "C", MISSING)
         );
     }
 
     @Test
     public void testCopyRowTextTrimmedNull2() {
         this.copyRowTextAndCheck(
-                list("A", "B", "C", MISSING, MISSING),
-                list("A", "B", "C", MISSING, MISSING)
+            list("A", "B", "C", MISSING, MISSING),
+            list("A", "B", "C", MISSING, MISSING)
         );
     }
 
     @Test
     public void testCopyRowTextTrimmedEmpty2() {
         this.copyRowTextAndCheck(
-                list("A", "B", "C", "", ""),
-                list("A", "B", "C", MISSING, MISSING)
+            list("A", "B", "C", "", ""),
+            list("A", "B", "C", MISSING, MISSING)
         );
     }
 
@@ -142,9 +142,9 @@ public final class TableTest implements ClassTesting2<Table> {
         copied.setWidth(rowText.size());
 
         this.checkEquals(
-                expected,
-                copied,
-                () -> "rowText " + rowText
+            expected,
+            copied,
+            () -> "rowText " + rowText
         );
     }
 
@@ -187,7 +187,7 @@ public final class TableTest implements ClassTesting2<Table> {
         // - y -
         // - z -
         final Table table2 = table.setColumn(1, Lists.of("x", "y", "z"))
-                .setColumn(0, Lists.of("a"));
+            .setColumn(0, Lists.of("a"));
         this.columnAndCheck(table2, 1, "x", "y", "z");
         this.check(table2);
 
@@ -196,11 +196,11 @@ public final class TableTest implements ClassTesting2<Table> {
         // - - -
         final Table table3 = table2.setColumn(1, Lists.of("x"));
         this.columnAndCheck(
-                table3,
-                1,
-                "x",
-                MISSING,
-                MISSING
+            table3,
+            1,
+            "x",
+            MISSING,
+            MISSING
         );
         this.check(table3);
     }
@@ -211,9 +211,9 @@ public final class TableTest implements ClassTesting2<Table> {
         // - y -
         // - z -
         assertSame(
-                Table.empty(),
-                Table.empty()
-                        .setColumn(1, Lists.empty())
+            Table.empty(),
+            Table.empty()
+                .setColumn(1, Lists.empty())
         );
     }
 
@@ -223,7 +223,7 @@ public final class TableTest implements ClassTesting2<Table> {
         // - y -
         // - z -
         final Table table = Table.empty()
-                .setColumn(1, Lists.of("x", "y", "z"));
+            .setColumn(1, Lists.of("x", "y", "z"));
         this.check(table);
     }
 
@@ -233,13 +233,13 @@ public final class TableTest implements ClassTesting2<Table> {
         // - y -
         // - z -
         final Table table = Table.empty()
-                .setColumn(
-                        1,
-                        Lists.of("x", "y", "z")
-                ).setColumn(
-                        2,
-                        Lists.of("a")
-                );
+            .setColumn(
+                1,
+                Lists.of("x", "y", "z")
+            ).setColumn(
+                2,
+                Lists.of("a")
+            );
         this.check(table);
     }
 
@@ -282,11 +282,11 @@ public final class TableTest implements ClassTesting2<Table> {
         // x y z
         // - - -
         final Table table2 = table.setRow(
-                1,
-                Lists.of("x", "y", "z")
+            1,
+            Lists.of("x", "y", "z")
         ).setRow(
-                0,
-                Lists.of("a")
+            0,
+            Lists.of("a")
         );
         this.rowAndCheck(table2, 1, "x", "y", "z");
         this.check(table2);
@@ -296,9 +296,9 @@ public final class TableTest implements ClassTesting2<Table> {
         // - - -
         final Table table3 = table2.setRow(1, Lists.of("x"));
         this.rowAndCheck(
-                table3,
-                1,
-                "x"
+            table3,
+            1,
+            "x"
         );
         this.check(table3);
     }
@@ -311,34 +311,34 @@ public final class TableTest implements ClassTesting2<Table> {
         // x
         // - - -
         final Table table2 = table.setRow(
-                1,
-                Lists.of("x")
+            1,
+            Lists.of("x")
         ).setRow(
-                2,
-                Lists.of("y")
+            2,
+            Lists.of("y")
         ).setRow(
-                4,
-                Lists.of("z")
+            4,
+            Lists.of("z")
         );
         this.rowAndCheck(
-                table2,
-                1,
-                "x"
+            table2,
+            1,
+            "x"
         );
         this.rowAndCheck(
-                table2,
-                2,
-                "y"
+            table2,
+            2,
+            "y"
         );
         this.rowAndCheck(
-                table2,
-                3,
-                MISSING
+            table2,
+            3,
+            MISSING
         );
         this.rowAndCheck(
-                table2,
-                4,
-                "z"
+            table2,
+            4,
+            "z"
         );
     }
 
@@ -350,21 +350,21 @@ public final class TableTest implements ClassTesting2<Table> {
         // x
         // - - -
         final Table table2 = table.setRow(
-                1,
-                Lists.of("x", "y", "z", "a")
+            1,
+            Lists.of("x", "y", "z", "a")
         ).setRow(
-                2,
-                Lists.of("m", "n", "o")
+            2,
+            Lists.of("m", "n", "o")
         );
         this.rowAndCheck(
-                table2,
-                1,
-                "x", "y", "z", "a"
+            table2,
+            1,
+            "x", "y", "z", "a"
         );
         this.rowAndCheck(
-                table2,
-                2,
-                "m", "n", "o", MISSING
+            table2,
+            2,
+            "m", "n", "o", MISSING
         );
     }
 
@@ -374,7 +374,7 @@ public final class TableTest implements ClassTesting2<Table> {
         // x y z
         // - - -
         final Table table = Table.empty()
-                .setRow(1, Lists.of("x", "y", "z"));
+            .setRow(1, Lists.of("x", "y", "z"));
         this.check(table);
     }
 
@@ -384,8 +384,8 @@ public final class TableTest implements ClassTesting2<Table> {
         // a - -
         // - - -
         final Table table = Table.empty()
-                .setRow(1, Lists.of("x", "y", "z"))
-                .setRow(2, Lists.of("a"));
+            .setRow(1, Lists.of("x", "y", "z"))
+            .setRow(2, Lists.of("a"));
         this.check(table);
     }
 
@@ -397,13 +397,13 @@ public final class TableTest implements ClassTesting2<Table> {
         final List<CharSequence> column2 = Lists.of("c2a", "c2b", "c2z");
 
         final Table table = Table.empty()
-                .setColumn(1, column1)
-                .setColumn(2, column2);
+            .setColumn(1, column1)
+            .setColumn(2, column2);
 
         this.checkEquals(table,
-                Lists.of(column1, column2)
-                        .stream()
-                        .collect(Table.empty().collectColumn(1)));
+            Lists.of(column1, column2)
+                .stream()
+                .collect(Table.empty().collectColumn(1)));
     }
 
     @Test
@@ -412,13 +412,13 @@ public final class TableTest implements ClassTesting2<Table> {
         final List<CharSequence> row2 = Lists.of("q", "r", "s");
 
         final Table table = Table.empty()
-                .setRow(1, row1)
-                .setRow(2, row2);
+            .setRow(1, row1)
+            .setRow(2, row2);
 
         this.checkEquals(table,
-                Lists.of(row1, row2)
-                        .stream()
-                        .collect(Table.empty().collectRow(1)));
+            Lists.of(row1, row2)
+                .stream()
+                .collect(Table.empty().collectRow(1)));
     }
 
     // helpers..........................................................................................................
@@ -431,36 +431,36 @@ public final class TableTest implements ClassTesting2<Table> {
 
     void check(final TableNotEmpty table) {
         final int width = table.rows.stream()
-                .filter(Objects::nonNull)
-                .mapToInt(List::size)
-                .max()
-                .orElse(0);
+            .filter(Objects::nonNull)
+            .mapToInt(List::size)
+            .max()
+            .orElse(0);
 
         this.widthAndCheck(
-                table,
-                width
+            table,
+            width
         );
         this.heightAndCheck(
-                table,
-                table.rows.size()
+            table,
+            table.rows.size()
         );
     }
 
     void widthAndCheck(final Table table,
                        final int expected) {
         this.checkEquals(
-                expected,
-                table.width(),
-                () -> "width of " + table
+            expected,
+            table.width(),
+            () -> "width of " + table
         );
     }
 
     void heightAndCheck(final Table table,
                         final int expected) {
         this.checkEquals(
-                expected,
-                table.height(),
-                () -> "height of " + table
+            expected,
+            table.height(),
+            () -> "height of " + table
         );
     }
 
@@ -469,9 +469,9 @@ public final class TableTest implements ClassTesting2<Table> {
                                 final int column,
                                 final CharSequence... text) {
         this.checkEquals(
-                Lists.of(text),
-                table.column(column),
-                () -> "column " + column + " from " + table
+            Lists.of(text),
+            table.column(column),
+            () -> "column " + column + " from " + table
         );
     }
 
@@ -479,8 +479,8 @@ public final class TableTest implements ClassTesting2<Table> {
                              final int row,
                              final CharSequence... text) {
         this.checkEquals(Lists.of(text),
-                table.row(row),
-                () -> "row " + row + " from " + table);
+            table.row(row),
+            () -> "row " + row + " from " + table);
     }
 
     // ClassTesting2....................................................................................................

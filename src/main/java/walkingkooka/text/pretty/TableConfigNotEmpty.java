@@ -63,10 +63,10 @@ final class TableConfigNotEmpty extends TableConfig {
             }
 
             result = result.setColumn(
-                    columnCounter,
-                    column.apply(
-                            result.column(columnCounter)
-                    )
+                columnCounter,
+                column.apply(
+                    result.column(columnCounter)
+                )
             );
             columnCounter++;
         }

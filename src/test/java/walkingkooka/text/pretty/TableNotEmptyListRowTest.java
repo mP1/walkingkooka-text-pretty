@@ -24,7 +24,7 @@ import walkingkooka.collect.list.Lists;
 import java.util.List;
 
 public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<TableNotEmptyListRow, CharSequence> implements
-        IteratorTesting {
+    IteratorTesting {
 
     @Test
     public void testGet() {
@@ -33,9 +33,9 @@ public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<Ta
         list.setWidth(1);
 
         this.getAndCheck(
-                list,
-                0,
-                TableNotEmptyListRow.MISSING
+            list,
+            0,
+            TableNotEmptyListRow.MISSING
         );
     }
 
@@ -49,9 +49,9 @@ public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<Ta
         list.setWidth(1);
 
         this.getAndCheck(
-                list,
-                0,
-                a
+            list,
+            0,
+            a
         );
     }
 
@@ -68,15 +68,15 @@ public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<Ta
         list.setWidth(2);
 
         this.getAndCheck(
-                list,
-                0,
-                a
+            list,
+            0,
+            a
         );
 
         this.getAndCheck(
-                list,
-                1,
-                b
+            list,
+            1,
+            b
         );
     }
 
@@ -91,15 +91,15 @@ public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<Ta
 
         for (int i = 0; i < 10; i++) {
             this.getAndCheck(
-                    list,
-                    i,
-                    "column-" + i
+                list,
+                i,
+                "column-" + i
             );
         }
 
         this.sizeAndCheck(
-                list,
-                10
+            list,
+            10
         );
     }
 
@@ -112,9 +112,9 @@ public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<Ta
         list.setWidth(1);
 
         this.getAndCheck(
-                list,
-                0,
-                TableNotEmptyListRow.MISSING
+            list,
+            0,
+            TableNotEmptyListRow.MISSING
         );
     }
 
@@ -130,9 +130,9 @@ public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<Ta
 
         for (int i = 0; i < 10; i++) {
             this.getAndCheck(
-                    list,
-                    i,
-                    TableNotEmptyListRow.MISSING
+                list,
+                i,
+                TableNotEmptyListRow.MISSING
             );
         }
     }
@@ -149,9 +149,9 @@ public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<Ta
 
         for (int i = 0; i < 10; i++) {
             this.getAndCheck(
-                    list,
-                    i,
-                    TableNotEmptyListRow.MISSING
+                list,
+                i,
+                TableNotEmptyListRow.MISSING
             );
         }
     }
@@ -170,8 +170,8 @@ public final class TableNotEmptyListRowTest extends TableNotEmptyListTestCase<Ta
         row.setWidth(10);
 
         this.iterateAndCheck(
-                row.iterator(),
-                list.toArray(new CharSequence[0])
+            row.iterator(),
+            list.toArray(new CharSequence[0])
         );
     }
 

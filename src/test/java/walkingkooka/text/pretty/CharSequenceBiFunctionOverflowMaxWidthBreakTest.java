@@ -48,8 +48,8 @@ public final class CharSequenceBiFunctionOverflowMaxWidthBreakTest extends CharS
                                 final int maxWidth,
                                 final String... expected) {
         this.checkEquals(MultiLineCharSequence.with(Lists.of(expected), LineEnding.NL).toString(),
-                this.createBiFunction().apply(text, maxWidth).toString(),
-                () -> "apply " + CharSequences.quoteAndEscape(text) + " " + maxWidth);
+            this.createBiFunction().apply(text, maxWidth).toString(),
+            () -> "apply " + CharSequences.quoteAndEscape(text) + " " + maxWidth);
     }
 
     @Override

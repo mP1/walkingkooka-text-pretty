@@ -23,9 +23,9 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.util.BiFunctionTesting;
 
 public abstract class CharSequenceBiFunctionTestCase<A extends CharSequenceBiFunction> extends TextPrettyTestCase<A>
-        implements BiFunctionTesting<A, CharSequence, Integer, CharSequence>,
-        ToStringTesting<A>,
-        TypeNameTesting<A> {
+    implements BiFunctionTesting<A, CharSequence, Integer, CharSequence>,
+    ToStringTesting<A>,
+    TypeNameTesting<A> {
 
     CharSequenceBiFunctionTestCase() {
         super();
@@ -41,12 +41,12 @@ public abstract class CharSequenceBiFunctionTestCase<A extends CharSequenceBiFun
                               final CharSequence expected) {
         final String actual = this.createBiFunction().apply(text, width).toString();
         this.checkEquals(expected.toString(),
-                actual,
-                () -> " apply " + CharSequences.quoteAndEscape(text) + " width " + width);
+            actual,
+            () -> " apply " + CharSequences.quoteAndEscape(text) + " width " + width);
 
         this.checkEquals(true,
-                actual.length() <= width,
-                () -> " apply " + CharSequences.quoteAndEscape(text) + " width " + width + " actual: " + actual.length() + "=" + CharSequences.quoteAndEscape(actual));
+            actual.length() <= width,
+            () -> " apply " + CharSequences.quoteAndEscape(text) + " width " + width + " actual: " + actual.length() + "=" + CharSequences.quoteAndEscape(actual));
     }
 
     // TypeNameTesting..................................................................................................

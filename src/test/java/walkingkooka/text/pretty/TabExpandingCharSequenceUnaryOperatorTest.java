@@ -28,8 +28,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class TabExpandingCharSequenceUnaryOperatorTest extends TextPrettyTestCase<TabExpandingCharSequenceUnaryOperator>
-        implements FunctionTesting<TabExpandingCharSequenceUnaryOperator, CharSequence, CharSequence>,
-        ToStringTesting<TabExpandingCharSequenceUnaryOperator> {
+    implements FunctionTesting<TabExpandingCharSequenceUnaryOperator, CharSequence, CharSequence>,
+    ToStringTesting<TabExpandingCharSequenceUnaryOperator> {
 
     @Test
     public void testWithNullTabStopsFails() {
@@ -98,15 +98,15 @@ public final class TabExpandingCharSequenceUnaryOperatorTest extends TextPrettyT
 
     private void applyAndCheckSame(final CharSequence chars) {
         assertSame(chars,
-                this.createFunction().apply(chars),
-                () -> " apply " + CharSequences.quoteAndEscape(chars));
+            this.createFunction().apply(chars),
+            () -> " apply " + CharSequences.quoteAndEscape(chars));
     }
 
     private void applyAndCheck2(final CharSequence chars,
                                 final CharSequence expected) {
         this.checkEquals(expected.toString(),
-                this.createFunction().apply(chars).toString(),
-                () -> " apply " + CharSequences.quoteAndEscape(chars) + " expected " + CharSequences.quoteAndEscape(expected));
+            this.createFunction().apply(chars).toString(),
+            () -> " apply " + CharSequences.quoteAndEscape(chars) + " expected " + CharSequences.quoteAndEscape(expected));
     }
 
     @Test

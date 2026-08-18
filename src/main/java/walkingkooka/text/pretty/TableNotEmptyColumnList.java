@@ -30,7 +30,7 @@ import java.util.Objects;
  * become the row coordinate to locate the cell.
  */
 final class TableNotEmptyColumnList extends AbstractList<CharSequence>
-        implements ImmutableListDefaults<ImmutableList<CharSequence>, CharSequence> {
+    implements ImmutableListDefaults<ImmutableList<CharSequence>, CharSequence> {
 
     static TableNotEmptyColumnList with(final int column,
                                         final TableNotEmpty table) {
@@ -47,8 +47,8 @@ final class TableNotEmptyColumnList extends AbstractList<CharSequence>
     @Override
     public CharSequence get(final int row) {
         return this.table.cell(
-                this.column,
-                row
+            this.column,
+            row
         );
     }
 

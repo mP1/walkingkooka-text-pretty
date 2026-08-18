@@ -87,8 +87,8 @@ final class TableEmpty extends Table {
     Table addRow0(final int row,
                   final TableNotEmptyListRow rowText) {
         return null == rowText ?
-                this :
-                TableNotEmpty.withRow(row, rowText);
+            this :
+            TableNotEmpty.withRow(row, rowText);
     }
 
     @Override

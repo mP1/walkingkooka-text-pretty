@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SuppressWarnings("unchecked")
 public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, T> extends TableTestCase<L>
-        implements ImmutableListTesting<L, T> {
+    implements ImmutableListTesting<L, T> {
 
     TableNotEmptyListTestCase() {
         super();
@@ -40,27 +40,27 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
     public final void testImmutableList() {
         final L list = this.createList();
         assertSame(
-                list,
-                Lists.immutable(list)
+            list,
+            Lists.immutable(list)
         );
     }
 
     @Test
     public final void testConcatNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createList().concat(null)
+            NullPointerException.class,
+            () -> this.createList().concat(null)
         );
     }
 
     @Test
     public final void testReplaceNullElementFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createList().replace(
-                        0,
-                        null
-                )
+            NullPointerException.class,
+            () -> this.createList().replace(
+                0,
+                null
+            )
         );
     }
 
@@ -82,33 +82,33 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
     @Test
     public final void testSetAutoWithNull() {
         this.setAutoAndCheck(
-                this.createList(),
-                0,
-                null,
-                TableNotEmptyList.INITIAL_CAPACITY,
-                1
+            this.createList(),
+            0,
+            null,
+            TableNotEmptyList.INITIAL_CAPACITY,
+            1
         );
     }
 
     @Test
     public final void testSetAutoWithNull2() {
         this.setAutoAndCheck(
-                this.createList(),
-                1,
-                null,
-                TableNotEmptyList.INITIAL_CAPACITY,
-                2
+            this.createList(),
+            1,
+            null,
+            TableNotEmptyList.INITIAL_CAPACITY,
+            2
         );
     }
 
     @Test
     public final void testSetAutoWithNull3() {
         this.setAutoAndCheck(
-                this.createList(),
-                199,
-                null,
-                TableNotEmptyList.INITIAL_CAPACITY,
-                200 // size
+            this.createList(),
+            199,
+            null,
+            TableNotEmptyList.INITIAL_CAPACITY,
+            200 // size
         );
     }
 
@@ -118,12 +118,12 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
         final T element = this.element(0);
 
         this.setAutoAndCheck(
-                list,
-                0,
-                element,
-                TableNotEmptyList.INITIAL_CAPACITY,
-                1,
-                element // 0
+            list,
+            0,
+            element,
+            TableNotEmptyList.INITIAL_CAPACITY,
+            1,
+            element // 0
         );
     }
 
@@ -133,14 +133,14 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
         final T element = this.element(2);
 
         this.setAutoAndCheck(
-                list,
-                2,
-                element,
-                TableNotEmptyList.INITIAL_CAPACITY,
-                3,
-                null, // 0
-                null, // 1
-                element // 2
+            list,
+            2,
+            element,
+            TableNotEmptyList.INITIAL_CAPACITY,
+            3,
+            null, // 0
+            null, // 1
+            element // 2
         );
     }
 
@@ -150,17 +150,17 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
         final T element = this.element(5);
 
         this.setAutoAndCheck(
-                list,
-                5,
-                element,
-                6, // capacity
-                6, // size
-                null, // 0
-                null, // 1
-                null, // 2
-                null, // 3
-                null, // 4
-                element // 5
+            list,
+            5,
+            element,
+            6, // capacity
+            6, // size
+            null, // 0
+            null, // 1
+            null, // 2
+            null, // 3
+            null, // 4
+            element // 5
         );
     }
 
@@ -170,18 +170,18 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
         final T element = this.element(6);
 
         this.setAutoAndCheck(
-                list,
-                6,
-                element,
-                9, // capacity
-                7, // size
-                null, // 0
-                null, // 1
-                null, // 2
-                null, // 3
-                null, // 4
-                null, // 5
-                element // 6
+            list,
+            6,
+            element,
+            9, // capacity
+            7, // size
+            null, // 0
+            null, // 1
+            null, // 2
+            null, // 3
+            null, // 4
+            null, // 5
+            element // 6
         );
     }
 
@@ -191,21 +191,21 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
         final T element = this.element(9);
 
         this.setAutoAndCheck(
-                list,
-                9,
-                element,
-                12, // capacity
-                10, // size
-                null, // 0
-                null, // 1
-                null, // 2
-                null, // 3
-                null, // 4
-                null, // 5
-                null, // 6
-                null, // 7
-                null, // 8
-                element // 9
+            list,
+            9,
+            element,
+            12, // capacity
+            10, // size
+            null, // 0
+            null, // 1
+            null, // 2
+            null, // 3
+            null, // 4
+            null, // 5
+            null, // 6
+            null, // 7
+            null, // 8
+            element // 9
         );
     }
 
@@ -215,23 +215,23 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
         final T element = this.element(11);
 
         this.setAutoAndCheck(
-                list,
-                11,
-                element,
-                12, // capacity
-                12, // size
-                null, // 0
-                null, // 1
-                null, // 2
-                null, // 3
-                null, // 4
-                null, // 5
-                null, // 6
-                null, // 7
-                null, // 8
-                null, // 9
-                null, // 10
-                element // 11
+            list,
+            11,
+            element,
+            12, // capacity
+            12, // size
+            null, // 0
+            null, // 1
+            null, // 2
+            null, // 3
+            null, // 4
+            null, // 5
+            null, // 6
+            null, // 7
+            null, // 8
+            null, // 9
+            null, // 10
+            element // 11
         );
     }
 
@@ -245,9 +245,9 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
         list.setAuto(0, null);
 
         this.check(
-                list,
-                3, // capacity
-                1 // size
+            list,
+            3, // capacity
+            1 // size
         );
     }
 
@@ -264,10 +264,10 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
         list.setAuto(1, null);
 
         this.check(
-                list,
-                3, // capacity
-                2, // size
-                element0
+            list,
+            3, // capacity
+            2, // size
+            element0
         );
     }
 
@@ -287,11 +287,11 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
         list.setAuto(2, null);
 
         this.check(
-                list,
-                3, // capacity
-                3, // size
-                element0,
-                element1
+            list,
+            3, // capacity
+            3, // size
+            element0,
+            element1
         );
     }
 
@@ -308,11 +308,11 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
         list.setAuto(0, null);
 
         this.check(
-                list,
-                3, // capacity
-                2, // size
-                null,
-                element1
+            list,
+            3, // capacity
+            2, // size
+            null,
+            element1
         );
     }
 
@@ -332,12 +332,12 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
         list.setAuto(0, null);
 
         this.check(
-                list,
-                3, // capacity
-                3, // size
-                null,
-                element1,
-                element2
+            list,
+            3, // capacity
+            3, // size
+            null,
+            element1,
+            element2
         );
     }
 
@@ -360,12 +360,12 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
         list.setAuto(3, null);
 
         this.check(
-                list,
-                6, //capacity
-                4, // size
-                element0,
-                element1,
-                element2
+            list,
+            6, //capacity
+            4, // size
+            element0,
+            element1,
+            element2
         );
     }
 
@@ -391,13 +391,13 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
         list.setAuto(4, null);
 
         this.check(
-                list,
-                6, // capacity
-                5, // size
-                element0,
-                element1,
-                element2,
-                element3
+            list,
+            6, // capacity
+            5, // size
+            element0,
+            element1,
+            element2,
+            element3
         );
     }
 
@@ -414,9 +414,9 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
         }
 
         this.check(
-                list,
-                12, // capacity
-                10 // size
+            list,
+            12, // capacity
+            10 // size
         );
     }
 
@@ -427,15 +427,15 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
                                final int size,
                                final T... elements) {
         list.setAuto(
-                index,
-                element
+            index,
+            element
         );
 
         this.check(
-                list,
-                capacity,
-                size,
-                elements
+            list,
+            capacity,
+            size,
+            elements
         );
     }
 
@@ -444,40 +444,40 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
                      final int size,
                      final T... elements) {
         this.checkEquals(
-                elements.length,
-                list.elementCount,
-                () -> "elementCount " + Arrays.asList(list.elements)
+            elements.length,
+            list.elementCount,
+            () -> "elementCount " + Arrays.asList(list.elements)
         );
 
         this.checkEquals(
-                this.list(elements),
-                this.list(list.elements).subList(0, elements.length),
-                "elements"
+            this.list(elements),
+            this.list(list.elements).subList(0, elements.length),
+            "elements"
         );
 
         this.checkEquals(
-                Collections.nCopies(
-                        list.elements.length - elements.length,
-                        null
+            Collections.nCopies(
+                list.elements.length - elements.length,
+                null
+            ),
+            list(list.elements)
+                .subList(
+                    elements.length,
+                    list.elements.length
                 ),
-                list(list.elements)
-                        .subList(
-                                elements.length,
-                                list.elements.length
-                        ),
-                () -> "elements extra elements must be null"
+            () -> "elements extra elements must be null"
         );
 
         this.checkEquals(
-                capacity,
-                list.elements.length,
-                () -> "capacity " + Arrays.asList(list.elements)
+            capacity,
+            list.elements.length,
+            () -> "capacity " + Arrays.asList(list.elements)
         );
 
         this.checkEquals(
-                size,
-                list.size,
-                () -> "size " + Arrays.asList(list.elements)
+            size,
+            list.size,
+            () -> "size " + Arrays.asList(list.elements)
         );
     }
 
@@ -492,7 +492,7 @@ public abstract class TableNotEmptyListTestCase<L extends TableNotEmptyList<T>, 
     @Override
     public final String typeNamePrefix() {
         return TableNotEmpty.class.getSimpleName() +
-                List.class.getSimpleName();
+            List.class.getSimpleName();
     }
 
     @Override

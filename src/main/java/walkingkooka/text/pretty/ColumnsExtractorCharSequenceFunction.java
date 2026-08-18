@@ -51,8 +51,8 @@ final class ColumnsExtractorCharSequenceFunction<T> implements Function<T, List<
     @Override
     public List<CharSequence> apply(final T value) {
         return Lists.immutable(this.transformers.stream()
-                .map(t -> t.apply(value))
-                .collect(Collectors.toList()));
+            .map(t -> t.apply(value))
+            .collect(Collectors.toList()));
     }
 
     private final List<Function<T, CharSequence>> transformers;

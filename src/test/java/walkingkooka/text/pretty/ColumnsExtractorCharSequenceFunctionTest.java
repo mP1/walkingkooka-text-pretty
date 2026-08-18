@@ -30,10 +30,10 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ColumnsExtractorCharSequenceFunctionTest extends TextPrettyTestCase<ColumnsExtractorCharSequenceFunction<BigInteger>>
-        implements FunctionTesting<ColumnsExtractorCharSequenceFunction<BigInteger>,
-        BigInteger,
-        List<CharSequence>>,
-        ToStringTesting<ColumnsExtractorCharSequenceFunction<BigInteger>> {
+    implements FunctionTesting<ColumnsExtractorCharSequenceFunction<BigInteger>,
+    BigInteger,
+    List<CharSequence>>,
+    ToStringTesting<ColumnsExtractorCharSequenceFunction<BigInteger>> {
 
     @Test
     public void testWithNullTransformersFails() {
@@ -80,10 +80,10 @@ public final class ColumnsExtractorCharSequenceFunctionTest extends TextPrettyTe
     private String sign(final BigInteger value) {
         final int signum = value.signum();
         return 0 == signum ?
-                "zero" :
-                signum > 0 ?
-                        "plus" :
-                        "minus";
+            "zero" :
+            signum > 0 ?
+                "plus" :
+                "minus";
     }
 
     private String integer(final BigInteger value) {

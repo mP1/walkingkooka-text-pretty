@@ -25,8 +25,8 @@ import walkingkooka.util.FunctionTesting;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class TableConfigTestCase<T extends TableConfig> extends TextPrettyTestCase<T>
-        implements FunctionTesting<T, Table, Table>,
-        ToStringTesting<T> {
+    implements FunctionTesting<T, Table, Table>,
+    ToStringTesting<T> {
 
     TableConfigTestCase() {
         super();

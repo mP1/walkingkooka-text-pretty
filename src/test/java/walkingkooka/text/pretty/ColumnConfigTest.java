@@ -36,9 +36,9 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, List<CharSequence>, List<CharSequence>>,
-        ClassTesting<ColumnConfig>,
-        HashCodeEqualsDefinedTesting2<ColumnConfig>,
-        ToStringTesting<ColumnConfig> {
+    ClassTesting<ColumnConfig>,
+    HashCodeEqualsDefinedTesting2<ColumnConfig>,
+    ToStringTesting<ColumnConfig> {
 
     private final static CharPredicate CHARACTER = CharPredicates.is('.');
     private final static int CHARACTER_COLUMN = 5;
@@ -59,8 +59,8 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
         final int width = 123;
 
         this.check(ColumnConfig.empty()
-                        .maxWidth(width),
-                123);
+                .maxWidth(width),
+            123);
     }
 
     @Test
@@ -68,7 +68,7 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
         final int width = 123;
 
         final ColumnConfig column = ColumnConfig.empty()
-                .maxWidth(width);
+            .maxWidth(width);
         assertSame(column, column.maxWidth(width));
     }
 
@@ -76,11 +76,11 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     @Test
     public void testCharacterAlign() {
         this.check(
-                ColumnConfig.empty()
-                        .maxWidth(80)
-                        .characterAlign(CHARACTER, CHARACTER_COLUMN),
-                80,
-                TextPretty.character(CHARACTER, CHARACTER_COLUMN)
+            ColumnConfig.empty()
+                .maxWidth(80)
+                .characterAlign(CHARACTER, CHARACTER_COLUMN),
+            80,
+            TextPretty.character(CHARACTER, CHARACTER_COLUMN)
         );
     }
 
@@ -88,11 +88,11 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     @Test
     public void testCenterAlign() {
         this.check(
-                ColumnConfig.empty()
-                        .maxWidth(80)
-                        .centerAlign(),
-                80,
-                TextPretty.centerAlignment()
+            ColumnConfig.empty()
+                .maxWidth(80)
+                .centerAlign(),
+            80,
+            TextPretty.centerAlignment()
         );
     }
 
@@ -100,11 +100,11 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     @Test
     public void testLeftAlign() {
         this.check(
-                ColumnConfig.empty()
-                        .maxWidth(81)
-                        .leftAlign(),
-                81,
-                TextPretty.leftAlignment()
+            ColumnConfig.empty()
+                .maxWidth(81)
+                .leftAlign(),
+            81,
+            TextPretty.leftAlignment()
         );
     }
 
@@ -112,11 +112,11 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     @Test
     public void testRightAlign() {
         this.check(
-                ColumnConfig.empty()
-                        .maxWidth(82)
-                        .rightAlign(),
-                82,
-                TextPretty.rightAlignment()
+            ColumnConfig.empty()
+                .maxWidth(82)
+                .rightAlign(),
+            82,
+            TextPretty.rightAlignment()
         );
     }
 
@@ -124,9 +124,9 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     @Test
     public void testTrimLeft() {
         this.check(
-                ColumnConfig.empty()
-                        .trimLeft(),
-                TextPretty.trimLeft()
+            ColumnConfig.empty()
+                .trimLeft(),
+            TextPretty.trimLeft()
         );
     }
 
@@ -134,9 +134,9 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     @Test
     public void testTrimLeftRight() {
         this.check(
-                ColumnConfig.empty()
-                        .trimLeftRight(),
-                TextPretty.trimLeftRight()
+            ColumnConfig.empty()
+                .trimLeftRight(),
+            TextPretty.trimLeftRight()
         );
     }
 
@@ -144,9 +144,9 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     @Test
     public void testTrimRight() {
         this.check(
-                ColumnConfig.empty()
-                        .trimRight(),
-                TextPretty.trimRight()
+            ColumnConfig.empty()
+                .trimRight(),
+            TextPretty.trimRight()
         );
     }
 
@@ -154,11 +154,11 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     @Test
     public void testTruncate() {
         this.check(
-                ColumnConfig.empty()
-                        .maxWidth(83)
-                        .truncate(),
-                83,
-                TextPretty.truncate()
+            ColumnConfig.empty()
+                .maxWidth(83)
+                .truncate(),
+            83,
+            TextPretty.truncate()
         );
     }
 
@@ -166,12 +166,12 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     @Test
     public void testLeftAlignLeftAlignReplacedAlign() {
         this.check(
-                ColumnConfig.empty()
-                        .maxWidth(84)
-                        .leftAlign()
-                        .leftAlign(),
-                84,
-                TextPretty.leftAlignment()
+            ColumnConfig.empty()
+                .maxWidth(84)
+                .leftAlign()
+                .leftAlign(),
+            84,
+            TextPretty.leftAlignment()
         );
     }
 
@@ -179,12 +179,12 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     @Test
     public void testLeftAlignRightAlignReplacedAlign() {
         this.check(
-                ColumnConfig.empty()
-                        .maxWidth(85)
-                        .leftAlign()
-                        .rightAlign(),
-                85,
-                TextPretty.rightAlignment()
+            ColumnConfig.empty()
+                .maxWidth(85)
+                .leftAlign()
+                .rightAlign(),
+            85,
+            TextPretty.rightAlignment()
         );
     }
 
@@ -192,12 +192,12 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     @Test
     public void testCenterAlignRightAlignReplacedAlign() {
         this.check(
-                ColumnConfig.empty()
-                        .maxWidth(90)
-                        .centerAlign()
-                        .rightAlign(),
-                90,
-                TextPretty.rightAlignment()
+            ColumnConfig.empty()
+                .maxWidth(90)
+                .centerAlign()
+                .rightAlign(),
+            90,
+            TextPretty.rightAlignment()
         );
     }
 
@@ -205,12 +205,12 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     @Test
     public void testCenterAlignCharacterAlign() {
         this.check(
-                ColumnConfig.empty()
-                        .maxWidth(90)
-                        .centerAlign()
-                        .characterAlign(CHARACTER, CHARACTER_COLUMN),
-                90,
-                TextPretty.character(CHARACTER, CHARACTER_COLUMN)
+            ColumnConfig.empty()
+                .maxWidth(90)
+                .centerAlign()
+                .characterAlign(CHARACTER, CHARACTER_COLUMN),
+            90,
+            TextPretty.character(CHARACTER, CHARACTER_COLUMN)
         );
     }
 
@@ -218,12 +218,12 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     @Test
     public void testCharacterAlignCharacterAlign() {
         this.check(
-                ColumnConfig.empty()
-                        .maxWidth(90)
-                        .characterAlign(CHARACTER, CHARACTER_COLUMN - 1)
-                        .characterAlign(CHARACTER, CHARACTER_COLUMN),
-                90,
-                TextPretty.character(CHARACTER, CHARACTER_COLUMN)
+            ColumnConfig.empty()
+                .maxWidth(90)
+                .characterAlign(CHARACTER, CHARACTER_COLUMN - 1)
+                .characterAlign(CHARACTER, CHARACTER_COLUMN),
+            90,
+            TextPretty.character(CHARACTER, CHARACTER_COLUMN)
         );
     }
 
@@ -233,12 +233,12 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
         final int width = 120;
 
         this.check(
-                ColumnConfig.empty()
-                        .maxWidth(80)
-                        .leftAlign()
-                        .maxWidth(width),
-                width,
-                TextPretty.leftAlignment()
+            ColumnConfig.empty()
+                .maxWidth(80)
+                .leftAlign()
+                .maxWidth(width),
+            width,
+            TextPretty.leftAlignment()
         );
     }
 
@@ -248,13 +248,13 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
         final int width = 132;
 
         this.check(
-                ColumnConfig.empty()
-                        .maxWidth(80)
-                        .rightAlign()
-                        .maxWidth(width)
-                        .centerAlign(),
-                width,
-                TextPretty.centerAlignment()
+            ColumnConfig.empty()
+                .maxWidth(80)
+                .rightAlign()
+                .maxWidth(width)
+                .centerAlign(),
+            width,
+            TextPretty.centerAlignment()
         );
     }
 
@@ -264,13 +264,13 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
         final int width = 132;
 
         this.check(
-                ColumnConfig.empty()
-                        .maxWidth(width)
-                        .trimLeft()
-                        .trimRight()
-                        .centerAlign(),
-                width,
-                TextPretty.trimRight(), TextPretty.centerAlignment()
+            ColumnConfig.empty()
+                .maxWidth(width)
+                .trimLeft()
+                .trimRight()
+                .centerAlign(),
+            width,
+            TextPretty.trimRight(), TextPretty.centerAlignment()
         );
     }
 
@@ -279,12 +279,12 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
         final int width = 132;
 
         this.check(ColumnConfig.empty()
-                        .maxWidth(width)
-                        .trimLeftRight()
-                        .trimLeft()
-                        .centerAlign(),
-                width,
-                TextPretty.trimLeft(), TextPretty.centerAlignment());
+                .maxWidth(width)
+                .trimLeftRight()
+                .trimLeft()
+                .centerAlign(),
+            width,
+            TextPretty.trimLeft(), TextPretty.centerAlignment());
     }
 
     @SafeVarargs
@@ -298,8 +298,8 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
                        final int maxWidth,
                        final BiFunction<CharSequence, Integer, CharSequence>... functions) {
         this.checkEquals(Lists.of(functions),
-                column.functions,
-                () -> "functions: " + column);
+            column.functions,
+            () -> "functions: " + column);
         this.checkEquals(maxWidth, column.maxWidth, "maxWidth");
     }
 
@@ -310,8 +310,8 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
         final List<CharSequence> lines = Lists.of("line1", "line2");
 
         this.apply2(ColumnConfig.empty(),
-                lines,
-                lines);
+            lines,
+            lines);
     }
 
     @Test
@@ -319,175 +319,175 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
         final List<CharSequence> lines = Lists.of("line1", "line2");
 
         this.apply2(ColumnConfig.empty().minWidth(7),
-                lines,
-                lines);
+            lines,
+            lines);
     }
 
     @Test
     public void testLeftAlignApply() {
         this.apply2(ColumnConfig.empty()
-                        .maxWidth(10)
-                        .leftAlign(),
-                Lists.of("line 1"),
-                Lists.of("line 1"));
+                .maxWidth(10)
+                .leftAlign(),
+            Lists.of("line 1"),
+            Lists.of("line 1"));
     }
 
     @Test
     public void testLeftAlignApply2() {
         this.apply2(ColumnConfig.empty()
-                        .maxWidth(10)
-                        .minWidth(10)
-                        .leftAlign(),
-                Lists.of("line 1", "  line 2"),
-                Lists.of("line 1    ", "  line 2  "));
+                .maxWidth(10)
+                .minWidth(10)
+                .leftAlign(),
+            Lists.of("line 1", "  line 2"),
+            Lists.of("line 1    ", "  line 2  "));
     }
 
     @Test
     public void testCharacterAlignApply() {
         this.apply2(ColumnConfig.empty()
-                        .minWidth(10)
-                        .maxWidth(80)
-                        .characterAlign(CHARACTER, CHARACTER_COLUMN),
-                Lists.of("1.23", "12.34", "ignored"),
-                Lists.of("    1.23", "   12.34", "ignored"));
+                .minWidth(10)
+                .maxWidth(80)
+                .characterAlign(CHARACTER, CHARACTER_COLUMN),
+            Lists.of("1.23", "12.34", "ignored"),
+            Lists.of("    1.23", "   12.34", "ignored"));
     }
 
     @Test
     public void testRightAlignApply() {
         this.apply2(ColumnConfig.empty()
-                        .minWidth(10)
-                        .maxWidth(10)
-                        .rightAlign(),
-                Lists.of("line1", "line 2"),
-                Lists.of("     line1", "    line 2"));
+                .minWidth(10)
+                .maxWidth(10)
+                .rightAlign(),
+            Lists.of("line1", "line 2"),
+            Lists.of("     line1", "    line 2"));
     }
 
     @Test
     public void testTrimLeftRightLeftAlignApply() {
         this.apply2(ColumnConfig.empty()
-                        .minWidth(20)
-                        .maxWidth(20)
-                        .trimLeftRight()
-                        .leftAlign(),
-                Lists.of("  line1  ", "  line 2  "),
-                Lists.of("line1               ", "line 2              "));
+                .minWidth(20)
+                .maxWidth(20)
+                .trimLeftRight()
+                .leftAlign(),
+            Lists.of("  line1  ", "  line 2  "),
+            Lists.of("line1               ", "line 2              "));
     }
 
     @Test
     public void testTrimLeftApply() {
         this.apply2(ColumnConfig.empty()
-                        .trimLeft(),
-                Lists.of("  line1  ", "  line 2  "),
-                Lists.of("line1  ", "line 2  "));
+                .trimLeft(),
+            Lists.of("  line1  ", "  line 2  "),
+            Lists.of("line1  ", "line 2  "));
     }
 
     @Test
     public void testTrimRightApply() {
         this.apply2(ColumnConfig.empty()
-                        .trimRight(),
-                Lists.of("  line1  ", "  line 2  "),
-                Lists.of("  line1", "  line 2"));
+                .trimRight(),
+            Lists.of("  line1  ", "  line 2  "),
+            Lists.of("  line1", "  line 2"));
     }
 
     @Test
     public void testMaxWidthTruncateCenterApply() {
         this.apply2(ColumnConfig.empty()
-                        .maxWidth(10)
-                        .truncate()
-                        .centerAlign(),
-                Lists.of("line1", "line2=====///"),
-                Lists.of("  line1   ", "line2====="));
+                .maxWidth(10)
+                .truncate()
+                .centerAlign(),
+            Lists.of("line1", "line2=====///"),
+            Lists.of("  line1   ", "line2====="));
     }
 
     @Test
     public void testMaxWidthMaxWidthOverflowMaxWidthBreakLeftAlign() {
         this.apply2(ColumnConfig.empty()
-                        .maxWidth(10)
-                        .minWidth(10)
-                        .overflowMaxWidthBreak()
-                        .leftAlign(),
-                Lists.of("line1", "line2"),
-                Lists.of("line1     ", "line2     "));
+                .maxWidth(10)
+                .minWidth(10)
+                .overflowMaxWidthBreak()
+                .leftAlign(),
+            Lists.of("line1", "line2"),
+            Lists.of("line1     ", "line2     "));
     }
 
     @Test
     public void testMinWidthMaxWidthOverflowMaxWidthBreakRightAlignLinesBroken() {
         this.apply2(ColumnConfig.empty()
-                        .maxWidth(10)
-                        .minWidth(10)
-                        .overflowMaxWidthBreak()
-                        .rightAlign(),
-                Lists.of("line1=====line2=====line3"),
-                Lists.of("line1=====\nline2=====\n     line3\n"));
+                .maxWidth(10)
+                .minWidth(10)
+                .overflowMaxWidthBreak()
+                .rightAlign(),
+            Lists.of("line1=====line2=====line3"),
+            Lists.of("line1=====\nline2=====\n     line3\n"));
     }
 
     @Test
     public void testMinWidthMaxWidthOverflowMaxWidthBreakRightAlignLinesBroken2() {
         this.apply2(ColumnConfig.empty()
-                        .maxWidth(8)
-                        .minWidth(8)
-                        .overflowMaxWidthBreak()
-                        .rightAlign(),
-                Lists.of("line1", "line2===line3===line4", "line5"),
-                Lists.of("   line1", "line2===\nline3===\n   line4\n", "   line5"));
+                .maxWidth(8)
+                .minWidth(8)
+                .overflowMaxWidthBreak()
+                .rightAlign(),
+            Lists.of("line1", "line2===line3===line4", "line5"),
+            Lists.of("   line1", "line2===\nline3===\n   line4\n", "   line5"));
     }
 
     @Test
     public void testMinWidthMaxWidthOverflowMaxWidthBreakRightAlignLinesBroken3() {
         this.apply2(ColumnConfig.empty()
-                        .minWidth(8)
-                        .maxWidth(8)
-                        .overflowMaxWidthBreak()
-                        .rightAlign(),
-                Lists.of("line1", "line2===line3===line4", "", "line6"),
-                Lists.of("   line1", "line2===\nline3===\n   line4\n", "", "   line6"));
+                .minWidth(8)
+                .maxWidth(8)
+                .overflowMaxWidthBreak()
+                .rightAlign(),
+            Lists.of("line1", "line2===line3===line4", "", "line6"),
+            Lists.of("   line1", "line2===\nline3===\n   line4\n", "", "   line6"));
     }
 
     @Test
     public void testMinWidthMaxWidthOverflowWordBreakRightAlign() {
         this.apply2(ColumnConfig.empty()
-                        .minWidth(8)
-                        .maxWidth(8)
-                        .overflowWordBreak()
-                        .rightAlign(),
-                Lists.of("line1", "line2", "line3"),
-                Lists.of("   line1", "   line2", "   line3"));
+                .minWidth(8)
+                .maxWidth(8)
+                .overflowWordBreak()
+                .rightAlign(),
+            Lists.of("line1", "line2", "line3"),
+            Lists.of("   line1", "   line2", "   line3"));
     }
 
     @Test
     public void testMinWidthMaxWidthOverflowWordBreakRightAlign2() {
         this.apply2(ColumnConfig.empty()
-                        .minWidth(8)
-                        .maxWidth(8)
-                        .overflowWordBreak()
-                        .rightAlign(),
-                Lists.of("line1", "", "line3"),
-                Lists.of("   line1", "", "   line3"));
+                .minWidth(8)
+                .maxWidth(8)
+                .overflowWordBreak()
+                .rightAlign(),
+            Lists.of("line1", "", "line3"),
+            Lists.of("   line1", "", "   line3"));
     }
 
     @Test
     public void testMinMaxWidthOverflowWordBreakRightAlign3() {
         this.apply2(ColumnConfig.empty()
-                        .maxWidth(8)
-                        .overflowWordBreak()
-                        .rightAlign(),
-                Lists.of("line1", "line2 line3", "line4"),
-                Lists.of("   line1", "   line2\n   line3\n", "   line4"));
+                .maxWidth(8)
+                .overflowWordBreak()
+                .rightAlign(),
+            Lists.of("line1", "line2 line3", "line4"),
+            Lists.of("   line1", "   line2\n   line3\n", "   line4"));
     }
 
     private void apply2(final ColumnConfig column,
                         final List<CharSequence> before,
                         final List<CharSequence> expected) {
         this.checkEquals(strings(expected),
-                strings(column.apply(before)),
-                () -> column + " " + before);
+            strings(column.apply(before)),
+            () -> column + " " + before);
     }
 
     private List<CharSequence> strings(final List<? super CharSequence> lines) {
         return lines.stream()
-                .map(Object::toString)
-                .map(CharSequences::quoteAndEscape)
-                .collect(Collectors.toList());
+            .map(Object::toString)
+            .map(CharSequences::quoteAndEscape)
+            .collect(Collectors.toList());
     }
 
     // equals...........................................................................................................
@@ -513,44 +513,44 @@ public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, Lis
     @Test
     public void testToStringMaxWidthLeft() {
         this.toStringAndCheck(ColumnConfig.empty()
-                        .maxWidth(80)
-                        .leftAlign(),
-                "width<=80 Left");
+                .maxWidth(80)
+                .leftAlign(),
+            "width<=80 Left");
     }
 
     @Test
     public void testToStringMaxWidthTruncateRight() {
         this.toStringAndCheck(ColumnConfig.empty()
-                        .maxWidth(90)
-                        .truncate()
-                        .rightAlign(),
-                "width<=90 OverflowTruncate Right");
+                .maxWidth(90)
+                .truncate()
+                .rightAlign(),
+            "width<=90 OverflowTruncate Right");
     }
 
     @Test
     public void testToStringMaxWidthMinWidthLeft() {
         this.toStringAndCheck(ColumnConfig.empty()
-                        .maxWidth(80)
-                        .minWidth(12)
-                        .leftAlign(),
-                "12<=width<=80 Left");
+                .maxWidth(80)
+                .minWidth(12)
+                .leftAlign(),
+            "12<=width<=80 Left");
     }
 
     @Test
     public void testToStringMaxWidthMinWidthSameLeft() {
         this.toStringAndCheck(ColumnConfig.empty()
-                        .maxWidth(12)
-                        .minWidth(12)
-                        .leftAlign(),
-                "width=12 Left");
+                .maxWidth(12)
+                .minWidth(12)
+                .leftAlign(),
+            "width=12 Left");
     }
 
     @Test
     public void testToStringMinWidthLeft() {
         this.toStringAndCheck(ColumnConfig.empty()
-                        .minWidth(80)
-                        .leftAlign(),
-                "80<=width Left");
+                .minWidth(80)
+                .leftAlign(),
+            "80<=width Left");
     }
 
     // disabled.........................................................................................................

@@ -36,7 +36,7 @@ public abstract class TableCollectorTestCase2<C extends TableCollector> extends 
     @Test
     public final void testInvalidStartFails() {
         assertThrows(IllegalArgumentException.class,
-                () -> this.createCollector(Table.empty(), -1));
+            () -> this.createCollector(Table.empty(), -1));
     }
 
     // Collector.........................................................................................................
@@ -44,11 +44,11 @@ public abstract class TableCollectorTestCase2<C extends TableCollector> extends 
     @Test
     public final void testParallelStreamFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> Arrays.<List<CharSequence>>asList(Lists.of("a"), Lists.of("b"))
-                        .stream()
-                        .parallel()
-                        .collect(this.createCollector(Table.empty(), 0))
+            UnsupportedOperationException.class,
+            () -> Arrays.<List<CharSequence>>asList(Lists.of("a"), Lists.of("b"))
+                .stream()
+                .parallel()
+                .collect(this.createCollector(Table.empty(), 0))
         );
     }
 
@@ -70,8 +70,8 @@ public abstract class TableCollectorTestCase2<C extends TableCollector> extends 
     private void collectNothingAndCheck(final Table table,
                                         final int start) {
         assertSame(table, Lists.<List<CharSequence>>empty()
-                .stream()
-                .collect(this.createCollector(table, start)));
+            .stream()
+            .collect(this.createCollector(table, start)));
     }
 
     // toString.........................................................................................................
@@ -92,9 +92,9 @@ public abstract class TableCollectorTestCase2<C extends TableCollector> extends 
                                             final int start,
                                             final List<CharSequence>... data) {
         this.checkEquals(this.add(table, start, data),
-                Lists.of(data)
-                        .stream()
-                        .collect(this.createCollector(table, start)));
+            Lists.of(data)
+                .stream()
+                .collect(this.createCollector(table, start)));
     }
 
     @SuppressWarnings("unchecked")

@@ -113,14 +113,14 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
                     this.elementCount = newElementCount + 1;
                 } else {
                     this.size = Math.max(
-                            size,
-                            index + 1
+                        size,
+                        index + 1
                     );
                 }
             } else {
                 this.size = Math.max(
-                        size,
-                        index + 1
+                    size,
+                    index + 1
                 );
             }
         } else {
@@ -128,23 +128,23 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
                 elements[index] = element;
 
                 this.elementCount = Math.max(
-                        elementCount,
-                        index + 1
+                    elementCount,
+                    index + 1
                 );
 
                 this.size = Math.max(
-                        size,
-                        index + 1
+                    size,
+                    index + 1
                 );
             } else {
                 // auto expand...
                 final Object[] newElements = new Object[computeCapacity(index)];
                 System.arraycopy(
-                        elements,
-                        0,
-                        newElements,
-                        0,
-                        elementCount
+                    elements,
+                    0,
+                    newElements,
+                    0,
+                    elementCount
                 );
                 newElements[index] = element;
 
@@ -179,20 +179,20 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
     @Override
     public final int hashCode() {
         return Objects.hash(
-                this.elements
+            this.elements
         );
     }
 
     @Override
     public final boolean equals(final Object other) {
         return this == other ||
-                other instanceof TableNotEmptyListRow ?
-                this.equalsTableNotEmptyListRow((TableNotEmptyListRow) other) :
-                other instanceof TableNotEmptyListRows ?
-                        this.equalsTableNotEmptyListRows((TableNotEmptyListRows) other) :
-                        other instanceof List ?
-                                this.equalsList((List<?>) other) :
-                                false;
+            other instanceof TableNotEmptyListRow ?
+            this.equalsTableNotEmptyListRow((TableNotEmptyListRow) other) :
+            other instanceof TableNotEmptyListRows ?
+                this.equalsTableNotEmptyListRows((TableNotEmptyListRows) other) :
+                other instanceof List ?
+                    this.equalsList((List<?>) other) :
+                    false;
     }
 
     final boolean equalsTableNotEmptyList(final TableNotEmptyList<?> other) {
@@ -206,8 +206,8 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
 
             for (int i = 0; i < count; i++) {
                 equals = Objects.equals(
-                        elements[i],
-                        otherElements[i]
+                    elements[i],
+                    otherElements[i]
                 );
                 if (!equals) {
                     break;
@@ -231,7 +231,7 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
     }
 
     // ImmutableListDefaults............................................................................................
-    
+
     /**
      * Not possible to set new elements because the updated {@link Table} is not returned.
      */
@@ -246,9 +246,9 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
     public final Optional<T> firstOrEmpty() {
         final Iterator<T> iterator = this.iterator();
         return Optional.ofNullable(
-          iterator.hasNext() ?
-            iterator.next() :
-            null
+            iterator.hasNext() ?
+                iterator.next() :
+                null
         );
     }
 }
