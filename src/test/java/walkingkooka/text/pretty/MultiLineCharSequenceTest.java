@@ -283,12 +283,20 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
 
     @Test
     public void testEmpty() {
-        this.checkLength(MultiLineCharSequence.with(Lists.empty(), EOL), 0);
+        this.lengthAndCheck(
+                MultiLineCharSequence.with(
+                        Lists.empty(),
+                        EOL
+                ),
+                0
+        );
     }
 
     @Test
     public void testLength() {
-        this.checkLength(TOSTRING.length());
+        this.lengthAndCheck(
+                TOSTRING.length()
+        );
     }
 
     // line.............................................................................................................
