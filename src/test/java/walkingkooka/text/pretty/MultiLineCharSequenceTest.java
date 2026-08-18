@@ -176,72 +176,72 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
     @Test
     public void testAtFirstLineBegin() {
         final int index = 0;
-        this.checkCharAt(index, LINE1.charAt(index));
+        this.charAtAndCheck(index, LINE1.charAt(index));
     }
 
     @Test
     public void testAtFirstLineMiddle() {
         final int index = 1;
-        this.checkCharAt(index, LINE1.charAt(index));
+        this.charAtAndCheck(index, LINE1.charAt(index));
     }
 
     @Test
     public void testAtFirstLineEnd() {
         final int index = LINE1.length() - 1;
-        this.checkCharAt(index, LINE1.charAt(index));
+        this.charAtAndCheck(index, LINE1.charAt(index));
     }
 
     @Test
     public void testAtFirstLineEnding() {
         final int index = 0;
-        this.checkCharAt(LINE1.length() + index, EOL.charAt(index));
+        this.charAtAndCheck(LINE1.length() + index, EOL.charAt(index));
     }
 
     @Test
     public void testAtSecondLineBegin() {
         final int index = 1;
-        this.checkCharAt((LINE1 + EOL).length() + index, LINE2.charAt(index));
+        this.charAtAndCheck((LINE1 + EOL).length() + index, LINE2.charAt(index));
     }
 
     @Test
     public void testAtSecondLineMiddle() {
         final int index = 1;
-        this.checkCharAt((LINE1 + EOL).length() + index, LINE2.charAt(index));
+        this.charAtAndCheck((LINE1 + EOL).length() + index, LINE2.charAt(index));
     }
 
     @Test
     public void testAtSecondLineEnd() {
         final int index = LINE2.length() - 1;
-        this.checkCharAt((LINE1 + EOL).length() + index, LINE2.charAt(index));
+        this.charAtAndCheck((LINE1 + EOL).length() + index, LINE2.charAt(index));
     }
 
     @Test
     public void testAtSecondLineEnding() {
-        this.checkCharAt((LINE1 + EOL + LINE2).length(), EOL.charAt(0));
+        this.charAtAndCheck((LINE1 + EOL + LINE2).length(), EOL.charAt(0));
     }
 
     @Test
     public void testAtThirdLineBegin() {
         final int index = 0;
-        this.checkCharAt((LINE1 + EOL + LINE2 + EOL).length() + index, LINE3.charAt(index));
+        this.charAtAndCheck((LINE1 + EOL + LINE2 + EOL).length() + index, LINE3.charAt(index));
     }
 
     @Test
     public void testAtThirdLineMiddle() {
         final int index = 1;
-        this.checkCharAt((LINE1 + EOL + LINE2 + EOL).length() + index, LINE3.charAt(index));
+        this.charAtAndCheck((LINE1 + EOL + LINE2 + EOL).length() + index, LINE3.charAt(index));
     }
 
     @Test
     public void testAtThirdLineEnd() {
         final int index = LINE3.length() - 1;
-        this.checkCharAt((LINE1 + EOL + LINE2 + EOL).length() + index, LINE3.charAt(index));
+        this.charAtAndCheck((LINE1 + EOL + LINE2 + EOL).length() + index, LINE3.charAt(index));
     }
 
     @Test
     public void testAtThirdLineEnding() {
         final int index = 0;
-        this.checkCharAt((LINE1 + EOL + LINE2 + EOL + LINE3).length() + index, EOL.charAt(index));
+        this.charAtAndCheck((LINE1 + EOL + LINE2 + EOL + LINE3).length() + index, EOL.charAt(index));
     }
 
     @Test
@@ -249,7 +249,7 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
         final int index = 1;
         final LineEnding lineEnding = LineEnding.CRNL;
 
-        this.checkCharAt(MultiLineCharSequence.with(Lists.of(LINE1, LINE2, LINE3), lineEnding),
+        this.charAtAndCheck(MultiLineCharSequence.with(Lists.of(LINE1, LINE2, LINE3), lineEnding),
                 (LINE1 + lineEnding + LINE2 + lineEnding + LINE3).length() + index,
                 lineEnding.charAt(index));
     }
@@ -257,7 +257,7 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
     @Test
     public void testAtAfterEmptyLine() {
         final int index = 0;
-        this.checkCharAt(MultiLineCharSequence.with(Lists.of("", LINE2, LINE3), EOL),
+        this.charAtAndCheck(MultiLineCharSequence.with(Lists.of("", LINE2, LINE3), EOL),
                 index,
                 EOL.charAt(index));
     }
