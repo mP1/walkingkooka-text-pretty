@@ -76,8 +76,8 @@ final class TableNotEmptyListRow extends TableNotEmptyList<CharSequence> {
         }
 
         this.size = Math.min(
-                this.size,
-                width
+            this.size,
+            width
         );
     }
 
@@ -92,11 +92,11 @@ final class TableNotEmptyListRow extends TableNotEmptyList<CharSequence> {
         final Object[] elementsCopy = new Object[elements.length];
 
         System.arraycopy(
-                elements,
-                0,
-                elementsCopy,
-                0,
-                elementCount
+            elements,
+            0,
+            elementsCopy,
+            0,
+            elementCount
         );
 
         final TableNotEmptyListRow copy = new TableNotEmptyListRow(elementsCopy);
@@ -111,8 +111,8 @@ final class TableNotEmptyListRow extends TableNotEmptyList<CharSequence> {
 
         for (final CharSequence text : rowText) {
             this.setAuto(
-                    i,
-                    text
+                i,
+                text
             );
             i++;
         }

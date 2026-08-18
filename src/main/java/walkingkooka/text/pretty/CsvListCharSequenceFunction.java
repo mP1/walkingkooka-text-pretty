@@ -43,8 +43,8 @@ final class CsvListCharSequenceFunction implements Function<CharSequence, List<C
         Objects.requireNonNull(text, "text");
 
         return 0 == text.length() ?
-                Lists.empty() :
-                applyNonEmpty(text);
+            Lists.empty() :
+            applyNonEmpty(text);
     }
 
     private List<CharSequence> applyNonEmpty(final CharSequence text) {

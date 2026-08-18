@@ -64,9 +64,9 @@ final class RowColumnsToLineCharSequenceFunction implements Function<List<CharSe
 
         // join line by line from each column..........
         final int maxRows = columnToLines.stream()
-                .mapToInt(MultiLineCharSequence::lineCount)
-                .max()
-                .orElse(0);
+            .mapToInt(MultiLineCharSequence::lineCount)
+            .max()
+            .orElse(0);
 
         final int columnCount = columnToLines.size();
         final int lastColumn = columnCount - 1;
@@ -80,13 +80,13 @@ final class RowColumnsToLineCharSequenceFunction implements Function<List<CharSe
             for (int c = 0; c < columnCount; c++) {
                 final MultiLineCharSequence rows = columnToLines.get(c);
                 final CharSequence columnText = r < rows.lineCount() ?
-                        rows.line(r) :
-                        "";
+                    rows.line(r) :
+                    "";
                 // only add padding to columns that are not the last.
                 if (c < lastColumn) {
                     final CharSequence padded = CharSequences.padRight(columnText,
-                            rows.maxWidth(),
-                            ' ');
+                        rows.maxWidth(),
+                        ' ');
                     text.append(padded);
                     text.append(this.pad(c));
                 } else {
@@ -95,7 +95,7 @@ final class RowColumnsToLineCharSequenceFunction implements Function<List<CharSe
             }
 
             all.append(CharSequences.trimRight(text))
-                    .append(this.lineEnding);
+                .append(this.lineEnding);
         }
 
         return ImmutableCharSequence.with(all);

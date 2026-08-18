@@ -41,12 +41,12 @@ final class ColumnConfigRequest {
         final int maxWidth = this.config.maxWidth;
 
         this.width = minWidth == maxWidth ?
-                minWidth :
-                Math.max(minWidth, Math.min(maxWidth, rows.stream().mapToInt(CharSequence::length).max().orElse(0)));
+            minWidth :
+            Math.max(minWidth, Math.min(maxWidth, rows.stream().mapToInt(CharSequence::length).max().orElse(0)));
 
         return rows.stream()
-                .map(this::applyColumn)
-                .collect(Collectors.toList());
+            .map(this::applyColumn)
+            .collect(Collectors.toList());
     }
 
     private int width = 0;

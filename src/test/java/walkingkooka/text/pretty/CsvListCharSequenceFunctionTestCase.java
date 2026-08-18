@@ -20,7 +20,7 @@ package walkingkooka.text.pretty;
 import walkingkooka.reflect.ClassTesting2;
 
 public abstract class CsvListCharSequenceFunctionTestCase<T> extends TextPrettyTestCase<T>
-        implements ClassTesting2<T> {
+    implements ClassTesting2<T> {
 
     CsvListCharSequenceFunctionTestCase() {
         super();

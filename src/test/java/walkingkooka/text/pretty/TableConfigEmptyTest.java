@@ -26,8 +26,8 @@ public final class TableConfigEmptyTest extends TableConfigTestCase<TableConfigE
     public void testAdd() {
         final ColumnConfig column = ColumnConfig.empty().maxWidth(12).rightAlign();
         this.addColumnAndCheck(TableConfig.empty(),
-                column,
-                column);
+            column,
+            column);
     }
 
     // Function.........................................................................................................

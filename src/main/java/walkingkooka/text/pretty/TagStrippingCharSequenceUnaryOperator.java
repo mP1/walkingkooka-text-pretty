@@ -42,8 +42,8 @@ final class TagStrippingCharSequenceUnaryOperator implements UnaryOperator<CharS
         Objects.requireNonNull(chars, "chars");
 
         return chars.length() == 0 ?
-                chars :
-                nonEmpty(chars);
+            chars :
+            nonEmpty(chars);
     }
 
     private CharSequence nonEmpty(final CharSequence chars) {

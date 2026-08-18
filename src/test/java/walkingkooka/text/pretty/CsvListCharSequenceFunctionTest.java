@@ -27,9 +27,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class CsvListCharSequenceFunctionTest extends CsvListCharSequenceFunctionTestCase<CsvListCharSequenceFunction> implements FunctionTesting<CsvListCharSequenceFunction,
-        CharSequence,
-        List<CharSequence>>,
-        ToStringTesting<CsvListCharSequenceFunction> {
+    CharSequence,
+    List<CharSequence>>,
+    ToStringTesting<CsvListCharSequenceFunction> {
 
     // Function.........................................................................................................
 
@@ -141,36 +141,36 @@ public final class CsvListCharSequenceFunctionTest extends CsvListCharSequenceFu
     @Test
     public void testMixed() {
         this.applyAndCheck2("\"ab\";cd;\"ef\";g",
-                "ab", "cd", "ef", "g");
+            "ab", "cd", "ef", "g");
     }
 
     @Test
     public void testMixed2() {
         this.applyAndCheck2(CsvListCharSequenceFunction.with(','),
-                "\"ab\",cd,\"ef\",g",
-                "ab", "cd", "ef", "g");
+            "\"ab\",cd,\"ef\",g",
+            "ab", "cd", "ef", "g");
     }
 
     @Test
     public void testMixed3() {
         this.applyAndCheck2(CsvListCharSequenceFunction.with(','),
-                "\"ab\",cd,\"ef\",g,,hijklm",
-                "ab", "cd", "ef", "g", "", "hijklm");
+            "\"ab\",cd,\"ef\",g,,hijklm",
+            "ab", "cd", "ef", "g", "", "hijklm");
     }
 
     private void applyAndCheck2(final CharSequence input,
                                 final CharSequence... expected) {
         this.applyAndCheck2(this.createFunction(),
-                input,
-                expected);
+            input,
+            expected);
     }
 
     private void applyAndCheck2(final CsvListCharSequenceFunction function,
                                 final CharSequence input,
                                 final CharSequence... expected) {
         this.applyAndCheck(function,
-                input,
-                Lists.of(expected));
+            input,
+            Lists.of(expected));
     }
 
     // Object...........................................................................................................

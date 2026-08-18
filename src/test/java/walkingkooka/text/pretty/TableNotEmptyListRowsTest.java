@@ -24,9 +24,9 @@ public final class TableNotEmptyListRowsTest extends TableNotEmptyListTestCase<T
     @Test
     public void testEmpty() {
         this.check(
-                TableNotEmptyListRows.empty(),
-                TableNotEmptyList.INITIAL_CAPACITY,
-                0
+            TableNotEmptyListRows.empty(),
+            TableNotEmptyList.INITIAL_CAPACITY,
+            0
         );
     }
 
@@ -38,9 +38,9 @@ public final class TableNotEmptyListRowsTest extends TableNotEmptyListTestCase<T
         rows.setAuto(0, row);
 
         this.check(
-                rows,
-                TableNotEmptyList.INITIAL_CAPACITY,
-                1
+            rows,
+            TableNotEmptyList.INITIAL_CAPACITY,
+            1
         );
     }
 
@@ -53,10 +53,10 @@ public final class TableNotEmptyListRowsTest extends TableNotEmptyListTestCase<T
         rows.setAuto(0, row);
 
         this.check(
-                rows,
-                TableNotEmptyList.INITIAL_CAPACITY,
-                1,
-                row
+            rows,
+            TableNotEmptyList.INITIAL_CAPACITY,
+            1,
+            row
         );
     }
 
@@ -73,11 +73,11 @@ public final class TableNotEmptyListRowsTest extends TableNotEmptyListTestCase<T
         rows.setAuto(1, row1);
 
         this.check(
-                rows,
-                TableNotEmptyList.INITIAL_CAPACITY,
-                2,
-                row0,
-                row1
+            rows,
+            TableNotEmptyList.INITIAL_CAPACITY,
+            2,
+            row0,
+            row1
         );
     }
 
@@ -93,11 +93,11 @@ public final class TableNotEmptyListRowsTest extends TableNotEmptyListTestCase<T
         rows.setAuto(1, row1);
 
         this.check(
-                rows,
-                TableNotEmptyList.INITIAL_CAPACITY,
-                2,
-                row0,
-                row1
+            rows,
+            TableNotEmptyList.INITIAL_CAPACITY,
+            2,
+            row0,
+            row1
         );
     }
 
@@ -113,10 +113,10 @@ public final class TableNotEmptyListRowsTest extends TableNotEmptyListTestCase<T
         rows.setAuto(1, row1);
 
         this.check(
-                rows,
-                TableNotEmptyList.INITIAL_CAPACITY,
-                2,
-                row0
+            rows,
+            TableNotEmptyList.INITIAL_CAPACITY,
+            2,
+            row0
         );
     }
 
@@ -151,8 +151,8 @@ public final class TableNotEmptyListRowsTest extends TableNotEmptyListTestCase<T
         rows.setAuto(1, row1);
 
         this.firstOrEmptyAndCheck(
-             rows,
-             row0
+            rows,
+            row0
         );
     }
 

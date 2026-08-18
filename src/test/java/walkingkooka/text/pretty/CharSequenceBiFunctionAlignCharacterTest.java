@@ -25,7 +25,7 @@ import walkingkooka.predicate.character.CharPredicates;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CharSequenceBiFunctionAlignCharacterTest extends CharSequenceBiFunctionAlignTestCase<CharSequenceBiFunctionAlignCharacter>
-        implements HashCodeEqualsDefinedTesting2<CharSequenceBiFunctionAlignCharacter> {
+    implements HashCodeEqualsDefinedTesting2<CharSequenceBiFunctionAlignCharacter> {
 
     private final static int COLUMN = 5;
 

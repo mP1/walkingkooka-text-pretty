@@ -38,8 +38,8 @@ final class MultiLineCharSequence implements CharSequence {
         Objects.requireNonNull(lineEnding, "lineEnding");
 
         return text instanceof MultiLineCharSequence ?
-                ((MultiLineCharSequence) text).setLineEnding(lineEnding) :
-                parseCharSequence(text, lineEnding);
+            ((MultiLineCharSequence) text).setLineEnding(lineEnding) :
+            parseCharSequence(text, lineEnding);
     }
 
     private static MultiLineCharSequence parseCharSequence(final CharSequence text,
@@ -103,7 +103,7 @@ final class MultiLineCharSequence implements CharSequence {
         }
 
         return new MultiLineCharSequence(Lists.immutable(lines),
-                lineEnding);
+            lineEnding);
     }
 
     private MultiLineCharSequence(final List<CharSequence> lines,
@@ -115,8 +115,8 @@ final class MultiLineCharSequence implements CharSequence {
 
     private MultiLineCharSequence setLineEnding(final LineEnding lineEnding) {
         return this.lineEnding.equals(lineEnding) ?
-                this :
-                new MultiLineCharSequence(this.lines, lineEnding);
+            this :
+            new MultiLineCharSequence(this.lines, lineEnding);
     }
 
     private final LineEnding lineEnding;
@@ -127,9 +127,9 @@ final class MultiLineCharSequence implements CharSequence {
     int maxWidth() {
         if (-1 == this.maxWidth) {
             this.maxWidth = this.lines.stream()
-                    .mapToInt(CharSequence::length)
-                    .max()
-                    .orElse(0);
+                .mapToInt(CharSequence::length)
+                .max()
+                .orElse(0);
         }
         return this.maxWidth;
     }
@@ -165,8 +165,8 @@ final class MultiLineCharSequence implements CharSequence {
         replaced.addAll(previous.subList(1 + lineNumber, previous.size()));
 
         return previous.equals(replaced) ?
-                this :
-                new MultiLineCharSequence(replaced, this.lineEnding);
+            this :
+            new MultiLineCharSequence(replaced, this.lineEnding);
     }
 
     private void checkLineNumber(final int lineNumber) {
@@ -189,9 +189,9 @@ final class MultiLineCharSequence implements CharSequence {
             final List<CharSequence> lines = this.lines;
 
             this.length = lines.size() * this.lineEnding.length() +
-                    lines.stream()
-                            .mapToInt(CharSequence::length)
-                            .sum();
+                lines.stream()
+                    .mapToInt(CharSequence::length)
+                    .sum();
         }
         return this.length;
     }
@@ -246,10 +246,10 @@ final class MultiLineCharSequence implements CharSequence {
         }
 
         return start == end ?
-                "" :
-                0 == start && length == end ?
-                        this :
-                        subSequence0(start, end);
+            "" :
+            0 == start && length == end ?
+                this :
+                subSequence0(start, end);
     }
 
     private CharSequence subSequence0(final int start,
@@ -276,8 +276,8 @@ final class MultiLineCharSequence implements CharSequence {
         }
 
         return null == sub ?
-                this.toString().substring(start, end) :
-                sub;
+            this.toString().substring(start, end) :
+            sub;
     }
 
     // Object ..........................................................................................................
@@ -307,7 +307,7 @@ final class MultiLineCharSequence implements CharSequence {
     public String toString() {
         if (null == this.toString) {
             this.toString = String.join(this.lineEnding, this.lines)
-                    .concat(this.lineEnding.toString());
+                .concat(this.lineEnding.toString());
         }
         return this.toString;
     }

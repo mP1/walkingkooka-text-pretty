@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class TableNotEmptyColumnListTest extends TableTestCase2<TableNotEmptyColumnList>
-        implements ListTesting2<TableNotEmptyColumnList, CharSequence> {
+    implements ListTesting2<TableNotEmptyColumnList, CharSequence> {
 
     private final static int COLUMN = 1;
 
@@ -35,61 +35,61 @@ public final class TableNotEmptyColumnListTest extends TableTestCase2<TableNotEm
     public void testImmutableList() {
         final TableNotEmptyColumnList list = this.createList();
         assertSame(
-                list,
-                Lists.immutable(list)
+            list,
+            Lists.immutable(list)
         );
     }
 
     @Test
     public void testConcatNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createList().concat(null)
+            NullPointerException.class,
+            () -> this.createList().concat(null)
         );
     }
 
     @Test
     public void testReplaceNullElementFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createList().replace(
-                        0,
-                        null
-                )
+            NullPointerException.class,
+            () -> this.createList().replace(
+                0,
+                null
+            )
         );
     }
 
     @Test
     public void testGet() {
         this.getAndCheck(
-                this.createList(),
-                0,
-                R0C1
+            this.createList(),
+            0,
+            R0C1
         );
     }
 
     @Test
     public void testGet2() {
         this.getAndCheck(
-                this.createList(),
-                2,
-                R2C1
+            this.createList(),
+            2,
+            R2C1
         );
     }
 
     @Test
     public void testSize() {
         this.sizeAndCheck(
-                this.createList(),
-                3
+            this.createList(),
+            3
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createList(),
-                Lists.of(R0C1, R1C1, R2C1).toString()
+            this.createList(),
+            Lists.of(R0C1, R1C1, R2C1).toString()
         );
     }
 
@@ -103,27 +103,27 @@ public final class TableNotEmptyColumnListTest extends TableTestCase2<TableNotEm
         final List<List<CharSequence>> rows = Lists.array();
 
         rows.add(
-                Lists.of(
-                        R0C0,
-                        R0C1,
-                        R0C2
-                )
+            Lists.of(
+                R0C0,
+                R0C1,
+                R0C2
+            )
         );
 
         rows.add(
-                Lists.of(
-                        R1C0,
-                        R1C1,
-                        R1C2
-                )
+            Lists.of(
+                R1C0,
+                R1C1,
+                R1C2
+            )
         );
 
         rows.add(
-                Lists.of(
-                        R2C0,
-                        R2C1,
-                        R2C2
-                )
+            Lists.of(
+                R2C0,
+                R2C1,
+                R2C2
+            )
         );
 
         final TableNotEmptyListRows tableRows = TableNotEmptyListRows.empty();
@@ -135,15 +135,15 @@ public final class TableNotEmptyColumnListTest extends TableTestCase2<TableNotEm
             int c = 0;
             for (final CharSequence text : row) {
                 tableRow.setAuto(
-                        c,
-                        text
+                    c,
+                    text
                 );
                 c++;
             }
 
             tableRows.setAuto(
-                    r,
-                    tableRow
+                r,
+                tableRow
             );
 
             r++;
@@ -153,11 +153,11 @@ public final class TableNotEmptyColumnListTest extends TableTestCase2<TableNotEm
         tableRows.setWidth(width);
 
         return TableNotEmptyColumnList.with(
-                COLUMN,
-                TableNotEmpty.with(
-                        tableRows,
-                        width
-                )
+            COLUMN,
+            TableNotEmpty.with(
+                tableRows,
+                width
+            )
         );
     }
 

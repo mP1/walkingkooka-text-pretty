@@ -62,8 +62,8 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
             throw new IllegalArgumentException("MinWidth " + minWidth + " > maxWidth " + maxWidth);
         }
         return this.minWidth == minWidth ?
-                this :
-                new ColumnConfig(minWidth, maxWidth, this.functions);
+            this :
+            new ColumnConfig(minWidth, maxWidth, this.functions);
     }
 
     final int minWidth;
@@ -81,8 +81,8 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
             throw new IllegalArgumentException("Invalid maxWidth " + maxWidth + " < " + minWidth);
         }
         return this.maxWidth == maxWidth ?
-                this :
-                new ColumnConfig(minWidth, maxWidth, this.functions);
+            this :
+            new ColumnConfig(minWidth, maxWidth, this.functions);
     }
 
     final int maxWidth;
@@ -231,8 +231,8 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
 
     private boolean equals0(final ColumnConfig other) {
         return this.minWidth == other.minWidth &&
-                this.maxWidth == other.maxWidth &&
-                this.functions.equals(other.functions);
+            this.maxWidth == other.maxWidth &&
+            this.functions.equals(other.functions);
     }
 
     // toString.........................................................................................................
@@ -262,10 +262,10 @@ public final class ColumnConfig implements UnaryOperator<List<CharSequence>> {
         }
 
         return ToStringBuilder.empty()
-                .disable(ToStringBuilderOption.QUOTE)
-                .value(width)
-                .valueSeparator(" ")
-                .value(this.functions)
-                .build();
+            .disable(ToStringBuilderOption.QUOTE)
+            .value(width)
+            .valueSeparator(" ")
+            .value(this.functions)
+            .build();
     }
 }

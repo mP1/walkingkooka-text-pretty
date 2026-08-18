@@ -73,8 +73,8 @@ final class CharSequenceBiFunctionAlignCharacter extends CharSequenceBiFunctionA
                     }
 
                     aligned = CharSequences.concat(
-                            CharSequences.repeating(' ', leftPadding),
-                            text);
+                        CharSequences.repeating(' ', leftPadding),
+                        text);
                 }
                 break;
             }
@@ -104,7 +104,7 @@ final class CharSequenceBiFunctionAlignCharacter extends CharSequenceBiFunctionA
 
     private boolean equals0(final CharSequenceBiFunctionAlignCharacter other) {
         return this.chars.equals(other.chars) &&
-                this.column == other.column;
+            this.column == other.column;
     }
 
     @Override

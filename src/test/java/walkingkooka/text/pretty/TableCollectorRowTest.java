@@ -28,9 +28,9 @@ public final class TableCollectorRowTest extends TableCollectorTestCase2<TableCo
     @Test
     public void testEmptyTableAddRow() {
         this.collectAndCheck(
-                Table.empty(),
-                0,
-                Lists.of("row0-a", "row0-b")
+            Table.empty(),
+            0,
+            Lists.of("row0-a", "row0-b")
         );
     }
 
@@ -38,10 +38,10 @@ public final class TableCollectorRowTest extends TableCollectorTestCase2<TableCo
     @Test
     public void testEmptyTableAddRows() {
         this.collectAndCheck(
-                Table.empty(),
-                0,
-                Lists.of("row0-a", "row0-b"),
-                Lists.of("row1-a", "row1-b")
+            Table.empty(),
+            0,
+            Lists.of("row0-a", "row0-b"),
+            Lists.of("row1-a", "row1-b")
         );
     }
 
@@ -49,10 +49,10 @@ public final class TableCollectorRowTest extends TableCollectorTestCase2<TableCo
     @Test
     public void testNotEmptyTableAddRows() {
         this.collectAndCheck(
-                Table.empty().setCell(2, 2, "cell-2-2"),
-                0,
-                Lists.of("row0-a", "row0-b"),
-                Lists.of("row1-a", "row1-b")
+            Table.empty().setCell(2, 2, "cell-2-2"),
+            0,
+            Lists.of("row0-a", "row0-b"),
+            Lists.of("row1-a", "row1-b")
         );
     }
 

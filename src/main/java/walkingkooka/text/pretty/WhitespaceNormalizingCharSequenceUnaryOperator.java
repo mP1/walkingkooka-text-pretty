@@ -40,8 +40,8 @@ final class WhitespaceNormalizingCharSequenceUnaryOperator implements UnaryOpera
         Objects.requireNonNull(chars, "chars");
 
         return chars.length() == 0 ?
-                chars :
-                clean(chars);
+            chars :
+            clean(chars);
     }
 
     private CharSequence clean(final CharSequence chars) {

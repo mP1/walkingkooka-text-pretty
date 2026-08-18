@@ -23,7 +23,7 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
 public final class ColumnConfigRequestTest implements ClassTesting<ColumnConfigRequest>,
-        ToStringTesting<ColumnConfigRequest> {
+    ToStringTesting<ColumnConfigRequest> {
 
     @Test
     public void testToString() {

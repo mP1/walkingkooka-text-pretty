@@ -46,10 +46,10 @@ final class CharSequenceBiFunctionAlignCenter extends CharSequenceBiFunctionAlig
         final int right = width - (beforeTextWidth + left);
 
         return CharSequences.concat(
-                CharSequences.repeating(' ', left),
-                CharSequences.concat(
-                        text,
-                        CharSequences.repeating(' ', right)));
+            CharSequences.repeating(' ', left),
+            CharSequences.concat(
+                text,
+                CharSequences.repeating(' ', right)));
     }
 
     @Override

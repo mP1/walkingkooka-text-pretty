@@ -48,8 +48,8 @@ final class ImmutableCharSequence implements CharSequence {
     @Override
     public CharSequence subSequence(final int start, final int end) {
         return 0 == start && this.length() == end ?
-                this :
-                new ImmutableCharSequence(this.chars.subSequence(start, end));
+            this :
+            new ImmutableCharSequence(this.chars.subSequence(start, end));
     }
 
     private final CharSequence chars;
@@ -63,12 +63,12 @@ final class ImmutableCharSequence implements CharSequence {
 
     public boolean equals(final Object other) {
         return this == other ||
-                (other instanceof CharSequence &&
-                        CASE_SENSITIVITY.equals(
-                                this.chars,
-                                (CharSequence) other
-                        )
-                );
+            (other instanceof CharSequence &&
+                CASE_SENSITIVITY.equals(
+                    this.chars,
+                    (CharSequence) other
+                )
+            );
 
     }
 

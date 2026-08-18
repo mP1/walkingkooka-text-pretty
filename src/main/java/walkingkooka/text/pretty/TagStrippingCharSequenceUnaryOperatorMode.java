@@ -37,8 +37,8 @@ enum TagStrippingCharSequenceUnaryOperatorMode {
         TagStrippingCharSequenceUnaryOperatorMode handle(final char c,
                                                          final StringBuilder buffer) {
             return c == '<' ?
-                    TAG_NAME_COMMENT_ETC :
-                    TEXT;
+                TAG_NAME_COMMENT_ETC :
+                TEXT;
         }
     },
     //
@@ -53,8 +53,8 @@ enum TagStrippingCharSequenceUnaryOperatorMode {
         TagStrippingCharSequenceUnaryOperatorMode handle(final char c,
                                                          final StringBuilder buffer) {
             return c == '<' ?
-                    TAG_NAME_COMMENT_ETC :
-                    this;
+                TAG_NAME_COMMENT_ETC :
+                this;
         }
     },
     //
@@ -63,11 +63,11 @@ enum TagStrippingCharSequenceUnaryOperatorMode {
         TagStrippingCharSequenceUnaryOperatorMode handle(final char c,
                                                          final StringBuilder buffer) {
             return (c == 'B') || (c == 'b') ? BOLD //
-                    : (c == 'I') || (c == 'i') ? ITALICS //
-                    : (c == 'U') || (c == 'u') ? UNDERLINE //
-                    : c == '!' ? COMMENT //
-                    : c == '/' ? TAG_NAME_COMMENT_ETC //
-                    : TAG_NAME;
+                : (c == 'I') || (c == 'i') ? ITALICS //
+                : (c == 'U') || (c == 'u') ? UNDERLINE //
+                : c == '!' ? COMMENT //
+                : c == '/' ? TAG_NAME_COMMENT_ETC //
+                : TAG_NAME;
         }
     },
     //
@@ -100,12 +100,12 @@ enum TagStrippingCharSequenceUnaryOperatorMode {
         TagStrippingCharSequenceUnaryOperatorMode handle(final char c,
                                                          final StringBuilder buffer) {
             return c == '>' ?
-                    INSERT_SPACE_BEFORE_TEXT :
-                    c == '/' ?
-                            GREATER_THAN :
-                            Character.isWhitespace(c) ?
-                                    INSIDE_TAG :
-                                    TAG_NAME;
+                INSERT_SPACE_BEFORE_TEXT :
+                c == '/' ?
+                    GREATER_THAN :
+                    Character.isWhitespace(c) ?
+                        INSIDE_TAG :
+                        TAG_NAME;
         }
     },
     //
@@ -114,12 +114,12 @@ enum TagStrippingCharSequenceUnaryOperatorMode {
         TagStrippingCharSequenceUnaryOperatorMode handle(final char c,
                                                          final StringBuilder buffer) {
             return c == '>' ?
-                    INSERT_SPACE_BEFORE_TEXT :
-                    c == '\'' ?
-                            INSIDE_SINGLE_QUOTES :
-                            c == '"' ?
-                                    DOUBLE_QUOTES :
-                                    this;
+                INSERT_SPACE_BEFORE_TEXT :
+                c == '\'' ?
+                    INSIDE_SINGLE_QUOTES :
+                    c == '"' ?
+                        DOUBLE_QUOTES :
+                        this;
         }
     },
     //
@@ -128,10 +128,10 @@ enum TagStrippingCharSequenceUnaryOperatorMode {
         TagStrippingCharSequenceUnaryOperatorMode handle(final char c,
                                                          final StringBuilder buffer) {
             return c == '\'' ?
-                    INSIDE_TAG :
-                    c == '\\' ?
-                            ESCAPING_INSIDE_SINGLE_QUOTES :
-                            this;
+                INSIDE_TAG :
+                c == '\\' ?
+                    ESCAPING_INSIDE_SINGLE_QUOTES :
+                    this;
         }
     },
     //
@@ -148,10 +148,10 @@ enum TagStrippingCharSequenceUnaryOperatorMode {
         TagStrippingCharSequenceUnaryOperatorMode handle(final char c,
                                                          final StringBuilder buffer) {
             return c == '"' ?
-                    INSIDE_TAG :
-                    c == '\\' ?
-                            ESCAPING_INSIDE_DOUBLE_QUOTES :
-                            this;
+                INSIDE_TAG :
+                c == '\\' ?
+                    ESCAPING_INSIDE_DOUBLE_QUOTES :
+                    this;
         }
     },
     //
@@ -168,8 +168,8 @@ enum TagStrippingCharSequenceUnaryOperatorMode {
         TagStrippingCharSequenceUnaryOperatorMode handle(final char c,
                                                          final StringBuilder buffer) {
             return c == '-' ?
-                    COMMENT_DASH :
-                    INSIDE_TAG;
+                COMMENT_DASH :
+                INSIDE_TAG;
         }
     },
     //
@@ -178,8 +178,8 @@ enum TagStrippingCharSequenceUnaryOperatorMode {
         TagStrippingCharSequenceUnaryOperatorMode handle(final char c,
                                                          final StringBuilder buffer) {
             return c == '-' ?
-                    INSIDE_COMMENT :
-                    INSIDE_TAG;
+                INSIDE_COMMENT :
+                INSIDE_TAG;
         }
     },
     //
@@ -188,8 +188,8 @@ enum TagStrippingCharSequenceUnaryOperatorMode {
         TagStrippingCharSequenceUnaryOperatorMode handle(final char c,
                                                          final StringBuilder buffer) {
             return c == '-' ?
-                    END_COMMENT_DASH_DASH :
-                    this;
+                END_COMMENT_DASH_DASH :
+                this;
         }
     },
     //
@@ -198,8 +198,8 @@ enum TagStrippingCharSequenceUnaryOperatorMode {
         TagStrippingCharSequenceUnaryOperatorMode handle(final char c,
                                                          final StringBuilder buffer) {
             return c == '-' ?
-                    GREATER_THAN :
-                    INSIDE_COMMENT;
+                GREATER_THAN :
+                INSIDE_COMMENT;
         }
     },
     //
@@ -208,8 +208,8 @@ enum TagStrippingCharSequenceUnaryOperatorMode {
         TagStrippingCharSequenceUnaryOperatorMode handle(final char c,
                                                          final StringBuilder buffer) {
             return c == '>' ?
-                    INSERT_SPACE_BEFORE_TEXT :
-                    INSIDE_COMMENT;
+                INSERT_SPACE_BEFORE_TEXT :
+                INSIDE_COMMENT;
         }
     };
 

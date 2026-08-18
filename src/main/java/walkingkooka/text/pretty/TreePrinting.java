@@ -69,8 +69,8 @@ public interface TreePrinting<P extends Path<P, N> & Comparable<P>, N extends Pa
     default String toPath(final List<? extends Name> names,
                           final PathSeparator separator) {
         return names.stream()
-                .filter(n -> false == n.value().isEmpty())
-                .map(Name::toString)
-                .collect(Collectors.joining(separator.string()));
+            .filter(n -> false == n.value().isEmpty())
+            .map(Name::toString)
+            .collect(Collectors.joining(separator.string()));
     }
 }

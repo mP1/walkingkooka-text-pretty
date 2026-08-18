@@ -25,79 +25,79 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
     @Test
     public void testWidth() {
         this.widthAndCheck(
-                this.createObject(),
-                0
+            this.createObject(),
+            0
         );
     }
 
     @Test
     public void testSetCell() {
         this.check(
-                this.setCellAndCheck(
-                        0,
-                        0,
-                        R0C0
-                ),
-                Lists.of(
-                        list(R0C0)
-                )
+            this.setCellAndCheck(
+                0,
+                0,
+                R0C0
+            ),
+            Lists.of(
+                list(R0C0)
+            )
         );
     }
 
     @Test
     public void testSetCell2() {
         this.check(
-                this.setCellAndCheck(
-                        2,
-                        0,
-                        R0C2
-                ),
-                Lists.of(
-                        list(MISSING, MISSING, R0C2)
-                )
+            this.setCellAndCheck(
+                2,
+                0,
+                R0C2
+            ),
+            Lists.of(
+                list(MISSING, MISSING, R0C2)
+            )
         );
     }
 
     @Test
     public void testSetCell3() {
         this.check(
-                this.setCellAndCheck(
-                        1,
-                        1,
-                        R1C1
-                ),
-                Lists.of(
-                        list(MISSING, MISSING), // row 0
-                        list(MISSING, R1C1)
-                )
+            this.setCellAndCheck(
+                1,
+                1,
+                R1C1
+            ),
+            Lists.of(
+                list(MISSING, MISSING), // row 0
+                list(MISSING, R1C1)
+            )
         );
     }
 
     @Test
     public void testSetColumn() {
         this.setColumnAndCheck(
-                0,
-                R0C0,
-                R1C0,
-                R2C0
+            0,
+            R0C0,
+            R1C0,
+            R2C0
         );
     }
 
     @Test
     public void testSetColumn2() {
         this.setColumnAndCheck(
-                1,
-                R0C1,
-                R1C1,
-                R2C1
+            1,
+            R0C1,
+            R1C1,
+            R2C1
         );
     }
 
     @Test
     public void testHeight() {
         this.heightAndCheck(
-                this.createObject(),
-                0
+            this.createObject(),
+            0
         );
     }
 
@@ -114,7 +114,7 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
     @Test
     public void testSetEmptyRow() {
         this.createAndSetRow(
-                1
+            1
         );
     }
 
@@ -123,142 +123,142 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
     @Test
     public void testSetRowsAtOrigin() {
         final Table expected = TableEmpty.INSTANCE.setRow(
-                0,
-                list(R0C0, R0C1, R0C2)
+            0,
+            list(R0C0, R0C1, R0C2)
         );
 
         this.checkEquals(
-                expected,
-                TableEmpty.INSTANCE.setRows(
-                        0,
-                        0,
-                        Lists.of(
-                                list(R0C0, R0C1, R0C2)
-                        )
+            expected,
+            TableEmpty.INSTANCE.setRows(
+                0,
+                0,
+                Lists.of(
+                    list(R0C0, R0C1, R0C2)
                 )
+            )
         );
     }
 
     @Test
     public void testSetRowsNonOriginEmpty() {
         final Table expected = TableEmpty.INSTANCE.setCell(
-                2,
-                2,
-                ""
+            2,
+            2,
+            ""
         );
 
         this.checkEquals(
-                expected,
-                TableEmpty.INSTANCE.setRows(
-                        3,
-                        3,
-                        Lists.empty()
-                )
+            expected,
+            TableEmpty.INSTANCE.setRows(
+                3,
+                3,
+                Lists.empty()
+            )
         );
     }
 
     @Test
     public void testSetRowsNonOrigin() {
         final Table expected = TableEmpty.INSTANCE.setRow(
-                2,
-                list(MISSING, MISSING, R0C0, R0C1, R0C2)
+            2,
+            list(MISSING, MISSING, R0C0, R0C1, R0C2)
         );
 
         this.checkEquals(
-                expected,
-                TableEmpty.INSTANCE.setRows(
-                        2,
-                        2,
-                        Lists.of(
-                                list(R0C0, R0C1, R0C2)
-                        )
+            expected,
+            TableEmpty.INSTANCE.setRows(
+                2,
+                2,
+                Lists.of(
+                    list(R0C0, R0C1, R0C2)
                 )
+            )
         );
     }
 
     @Test
     public void testSetRowsManyRows() {
         final Table expected = TableEmpty.INSTANCE.setRow(
-                1,
-                list(R1C0, R1C1, R1C2)
+            1,
+            list(R1C0, R1C1, R1C2)
         ).setRow(
-                2,
-                list(R2C0, R2C1, R2C2)
+            2,
+            list(R2C0, R2C1, R2C2)
         );
 
         this.checkEquals(
-                expected,
-                TableEmpty.INSTANCE.setRows(
-                        0,
-                        1,
-                        Lists.of(
-                                list(R1C0, R1C1, R1C2), // row1
-                                list(R2C0, R2C1, R2C2) // row2
-                        )
+            expected,
+            TableEmpty.INSTANCE.setRows(
+                0,
+                1,
+                Lists.of(
+                    list(R1C0, R1C1, R1C2), // row1
+                    list(R2C0, R2C1, R2C2) // row2
                 )
+            )
         );
     }
 
     @Test
     public void testSetRowsManyRows2() {
         final Table expected = TableEmpty.INSTANCE.setRow(
-                1,
-                list(R1C0)
+            1,
+            list(R1C0)
         ).setRow(
-                2,
-                list(R2C0, R2C1, R2C2)
+            2,
+            list(R2C0, R2C1, R2C2)
         );
 
         this.checkEquals(
-                expected,
-                TableEmpty.INSTANCE.setRows(
-                        0,
-                        1,
-                        Lists.of(
-                                list(R1C0), // row1
-                                list(R2C0, R2C1, R2C2) // row2
-                        )
+            expected,
+            TableEmpty.INSTANCE.setRows(
+                0,
+                1,
+                Lists.of(
+                    list(R1C0), // row1
+                    list(R2C0, R2C1, R2C2) // row2
                 )
+            )
         );
     }
 
     @Test
     public void testSetRowsIncludesFirstNullRow() {
         final Table expected = TableEmpty.INSTANCE.setRow(
-                2,
-                list(R2C0, R2C1, R2C2)
+            2,
+            list(R2C0, R2C1, R2C2)
         );
 
         this.checkEquals(
-                expected,
-                TableEmpty.INSTANCE.setRows(
-                        0,
-                        1,
-                        Lists.of(
-                                null, // row1
-                                list(R2C0, R2C1, R2C2) // row2
-                        )
+            expected,
+            TableEmpty.INSTANCE.setRows(
+                0,
+                1,
+                Lists.of(
+                    null, // row1
+                    list(R2C0, R2C1, R2C2) // row2
                 )
+            )
         );
     }
 
     @Test
     public void testSetRowsIncludesFirstEmptyRow() {
         final Table expected = TableEmpty.INSTANCE.setRow(
-                2,
-                list(R2C0, R2C1, R2C2)
+            2,
+            list(R2C0, R2C1, R2C2)
         );
 
         this.checkEquals(
-                expected,
-                TableEmpty.INSTANCE.setRows(
-                        0,
-                        1,
-                        Lists.of(
-                                list(), // row1
-                                list(R2C0, R2C1, R2C2) // row2
-                        )
+            expected,
+            TableEmpty.INSTANCE.setRows(
+                0,
+                1,
+                Lists.of(
+                    list(), // row1
+                    list(R2C0, R2C1, R2C2) // row2
                 )
+            )
         );
     }
 
@@ -267,10 +267,10 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
     @Test
     public void testSetHeightIncreaseFromEmpty() {
         this.setHeightAndCheck(
-                Table.empty(),
-                3,
-                Table.empty()
-                        .setRow(2, Lists.empty())
+            Table.empty(),
+            3,
+            Table.empty()
+                .setRow(2, Lists.empty())
         );
     }
 
@@ -279,32 +279,32 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
     @Test
     public void testSetWidthIncreaseFromEmpty() {
         this.setWidthAndCheck(
-                Table.empty(),
-                2,
-                TableNotEmpty.with(
-                        TableNotEmptyListRows.with(2),
-                        2
-                )
+            Table.empty(),
+            2,
+            TableNotEmpty.with(
+                TableNotEmptyListRows.with(2),
+                2
+            )
         );
     }
 
     @Test
     public void testSetWidthWithZero() {
         this.setWidthAndCheck(
-                this.createTable(),
-                0,
-                Table.empty()
+            this.createTable(),
+            0,
+            Table.empty()
         );
     }
 
     @Test
     public void testSetWidthThenSetHeight() {
         this.checkEquals(
-                Table.empty()
-                        .setWidth(3)
-                        .setHeight(4),
-                Table.empty()
-                        .setCell(2, 3, "")
+            Table.empty()
+                .setWidth(3)
+                .setHeight(4),
+            Table.empty()
+                .setCell(2, 3, "")
         );
     }
 
@@ -313,33 +313,33 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
     @Test
     public void testSetSizeIncreased() {
         this.setSizeAndCheck(
-                Table.empty(),
-                2,
-                3,
-                Table.empty()
-                        .setRow(
-                                3 - 1,
-                                list(
-                                        MISSING,
-                                        MISSING
-                                )
-                        )
+            Table.empty(),
+            2,
+            3,
+            Table.empty()
+                .setRow(
+                    3 - 1,
+                    list(
+                        MISSING,
+                        MISSING
+                    )
+                )
         );
     }
 
     @Test
     public void testSetSizeIncreased2() {
         this.setSizeAndCheck(
-                Table.empty(),
-                1,
-                2,
-                Table.empty()
-                        .setRow(
-                                2 - 1,
-                                list(
-                                        MISSING
-                                )
-                        )
+            Table.empty(),
+            1,
+            2,
+            Table.empty()
+                .setRow(
+                    2 - 1,
+                    list(
+                        MISSING
+                    )
+                )
         );
     }
 
@@ -348,56 +348,56 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
     @Test
     public void testSetColumnsAtOrigin() {
         final Table expected = TableEmpty.INSTANCE.setColumn(
-                0,
-                list(R0C0, R1C0, R2C0)
+            0,
+            list(R0C0, R1C0, R2C0)
         );
 
         this.checkEquals(
-                expected,
-                TableEmpty.INSTANCE.setColumns(
-                        0,
-                        0,
-                        Lists.of(
-                                list(R0C0, R1C0, R2C0)
-                        )
+            expected,
+            TableEmpty.INSTANCE.setColumns(
+                0,
+                0,
+                Lists.of(
+                    list(R0C0, R1C0, R2C0)
                 )
+            )
         );
     }
 
     @Test
     public void testSetColumnsNonOriginEmpty() {
         final Table expected = TableEmpty.INSTANCE.setCell(
-                2,
-                2,
-                ""
+            2,
+            2,
+            ""
         );
 
         this.checkEquals(
-                expected,
-                TableEmpty.INSTANCE.setColumns(
-                        3,
-                        3,
-                        Lists.empty()
-                )
+            expected,
+            TableEmpty.INSTANCE.setColumns(
+                3,
+                3,
+                Lists.empty()
+            )
         );
     }
 
     @Test
     public void testSetColumnsNonOrigin() {
         final Table expected = TableEmpty.INSTANCE.setColumn(
-                2,
-                list(MISSING, MISSING, "X", "Y", "Z")
+            2,
+            list(MISSING, MISSING, "X", "Y", "Z")
         );
 
         this.checkEquals(
-                expected,
-                TableEmpty.INSTANCE.setColumns(
-                        2,
-                        2,
-                        Lists.of(
-                                list("X", "Y", "Z")
-                        )
+            expected,
+            TableEmpty.INSTANCE.setColumns(
+                2,
+                2,
+                Lists.of(
+                    list("X", "Y", "Z")
                 )
+            )
         );
     }
 
@@ -406,8 +406,8 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                TableEmpty.INSTANCE,
-                Lists.empty().toString()
+            TableEmpty.INSTANCE,
+            Lists.empty().toString()
         );
     }
 
@@ -416,8 +416,8 @@ public final class TableEmptyTest extends TableTestCase3<TableEmpty> {
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                this.createTable(),
-                "Table\n"
+            this.createTable(),
+            "Table\n"
         );
     }
 

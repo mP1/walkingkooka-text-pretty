@@ -60,18 +60,18 @@ final class TableTransformerUnaryOperator implements UnaryOperator<Table> {
             }
 
             newColumns.add(
-                    column.apply(
-                            table.column(c)
-                    )
+                column.apply(
+                    table.column(c)
+                )
             );
 
             c++;
         }
 
         return table.setColumns(
-                0, // startColumn
-                0, // startRow
-                newColumns
+            0, // startColumn
+            0, // startRow
+            newColumns
         );
     }
 

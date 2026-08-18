@@ -39,16 +39,16 @@ abstract class CharSequenceBiFunction implements BiFunction<CharSequence, Intege
                                     final Integer width) {
         // an empty text is a special case, to avoid returning an empty line with a line ending.
         return text.length() == 0 ?
-                text :
-                handleNotEmpty(text, width);
+            text :
+            handleNotEmpty(text, width);
     }
 
     private CharSequence handleNotEmpty(final CharSequence text,
                                         final int width) {
         final MultiLineCharSequence multi = MultiLineCharSequence.parse(text, LineEnding.NL);
         return multi.lines.size() == 1 ?
-                this.handleLine(text, width) :
-                this.handleMultiLine(text, multi, width);
+            this.handleLine(text, width) :
+            this.handleMultiLine(text, multi, width);
     }
 
     /**
@@ -68,20 +68,20 @@ abstract class CharSequenceBiFunction implements BiFunction<CharSequence, Intege
 
         // if result is the same object return the original different then it must have changes
         return result == text ?
-                text :
-                result;
+            text :
+            result;
     }
 
     private CharSequence handleLine(final CharSequence text,
                                     final int width) {
         final int length = text.length();
         return 0 == length ?
-                this.empty(width) :
-                length <= width ?
-                        length == width ?
-                                this.full(text, width) :
-                                this.notEmpty(text, width) :
-                        this.overflowed(text, width);
+            this.empty(width) :
+            length <= width ?
+                length == width ?
+                    this.full(text, width) :
+                    this.notEmpty(text, width) :
+                this.overflowed(text, width);
     }
 
     /**

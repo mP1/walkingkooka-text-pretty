@@ -36,13 +36,13 @@ final class TableNotEmpty extends Table {
                                   final CharSequence text) {
         final TableNotEmptyListRow rowText = TableNotEmptyListRow.with(column + 1);
         rowText.setAuto(
-                column,
-                text
+            column,
+            text
         );
 
         return withRow(
-                row,
-                rowText
+            row,
+            rowText
         );
     }
 
@@ -60,13 +60,13 @@ final class TableNotEmpty extends Table {
             if (isNotEmpty(text)) {
                 final TableNotEmptyListRow rowText = TableNotEmptyListRow.with(width);
                 rowText.setAuto(
-                        column,
-                        text
+                    column,
+                    text
                 );
 
                 rows.setAuto(
-                        row,
-                        rowText
+                    row,
+                    rowText
                 );
             }
 
@@ -76,8 +76,8 @@ final class TableNotEmpty extends Table {
         rows.setWidth(width);
 
         return with(
-                rows,
-                width
+            rows,
+            width
         );
     }
 
@@ -91,8 +91,8 @@ final class TableNotEmpty extends Table {
         rowText.setWidth(width);
 
         return with(
-                rows,
-                width
+            rows,
+            width
         );
     }
 
@@ -129,7 +129,7 @@ final class TableNotEmpty extends Table {
     CharSequence cell0(final int column,
                        final int row) {
         return this.rows.get(row)
-                .get(column);
+            .get(column);
     }
 
     // setCell..........................................................................................................
@@ -146,22 +146,22 @@ final class TableNotEmpty extends Table {
         if (column > -width) {
             if (row >= height) {
                 after = this.addRow(
-                        column,
-                        row,
-                        text
+                    column,
+                    row,
+                    text
                 );
             } else {
                 after = this.addCell(
-                        column,
-                        row,
-                        text
+                    column,
+                    row,
+                    text
                 );
             }
         } else {
             after = this.replaceCell(
-                    column,
-                    row,
-                    text
+                column,
+                row,
+                text
             );
         }
 
@@ -172,13 +172,13 @@ final class TableNotEmpty extends Table {
                          final int row,
                          final CharSequence text) {
         final TableNotEmptyListRow rowText = TableNotEmptyListRow.with(
-                TableNotEmptyList.computeCapacity(column)
+            TableNotEmptyList.computeCapacity(column)
         );
         rowText.setAuto(column, text);
 
         return this.addRow0(
-                row,
-                rowText
+            row,
+            rowText
         );
     }
 
@@ -192,9 +192,9 @@ final class TableNotEmpty extends Table {
             after = this;
         } else {
             after = this.addCell(
-                    column,
-                    row,
-                    text
+                column,
+                row,
+                text
             );
         }
 
@@ -205,16 +205,16 @@ final class TableNotEmpty extends Table {
                           final int row,
                           final CharSequence text) {
         TableNotEmptyListRow rowText = this.rows.get(row)
-                .copy();
+            .copy();
 
         rowText.setAuto(
-                column,
-                text
+            column,
+            text
         );
 
         return this.setRow0(
-                row,
-                0 == rowText.elementCount ? null : rowText
+            row,
+            0 == rowText.elementCount ? null : rowText
         );
     }
 
@@ -223,8 +223,8 @@ final class TableNotEmpty extends Table {
     @Override
     List<CharSequence> column0(final int column) {
         return TableNotEmptyColumnList.with(
-                column,
-                this
+            column,
+            this
         );
     }
 
@@ -234,19 +234,19 @@ final class TableNotEmpty extends Table {
         Table after = this;
 
         final int height = Math.max(
-                this.height(),
-                columnText.size()
+            this.height(),
+            columnText.size()
         );
         final int columnTextCount = columnText.size();
 
         // TODO implement a bulk update form.
         for (int row = 0; row < height; row++) {
             after = after.setCell(
-                    column,
-                    row,
-                    row < columnTextCount ?
-                            columnText.get(row) :
-                            null
+                column,
+                row,
+                row < columnTextCount ?
+                    columnText.get(row) :
+                    null
             );
         }
 
@@ -268,8 +268,8 @@ final class TableNotEmpty extends Table {
                   final TableNotEmptyListRow rowText) {
         final TableNotEmptyListRows newRows = this.rows.copy();
         newRows.setAuto(
-                row,
-                rowText
+            row,
+            rowText
         );
 
         final int rowTextWidth = rowText.size;
@@ -282,8 +282,8 @@ final class TableNotEmpty extends Table {
         }
 
         return with(
-                newRows,
-                width
+            newRows,
+            width
         );
     }
 
@@ -326,8 +326,8 @@ final class TableNotEmpty extends Table {
                 }
 
                 after = new TableNotEmpty(
-                        newRows,
-                        width
+                    newRows,
+                    width
                 );
             }
         }
@@ -362,8 +362,8 @@ final class TableNotEmpty extends Table {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof Table &&
-                        this.equals0((Table) other);
+            other instanceof Table &&
+                this.equals0((Table) other);
     }
 
     private boolean equals0(final Table other) {

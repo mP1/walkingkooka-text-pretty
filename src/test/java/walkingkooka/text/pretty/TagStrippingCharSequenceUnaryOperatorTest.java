@@ -24,8 +24,8 @@ import walkingkooka.util.FunctionTesting;
 import java.util.function.UnaryOperator;
 
 public final class TagStrippingCharSequenceUnaryOperatorTest extends TextPrettyTestCase<TagStrippingCharSequenceUnaryOperator>
-        implements FunctionTesting<TagStrippingCharSequenceUnaryOperator, CharSequence, CharSequence>,
-        ToStringTesting<TagStrippingCharSequenceUnaryOperator> {
+    implements FunctionTesting<TagStrippingCharSequenceUnaryOperator, CharSequence, CharSequence>,
+    ToStringTesting<TagStrippingCharSequenceUnaryOperator> {
 
     @Test
     public void testEmptyString() {

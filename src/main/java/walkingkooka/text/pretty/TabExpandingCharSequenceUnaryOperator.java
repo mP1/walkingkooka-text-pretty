@@ -93,8 +93,8 @@ final class TabExpandingCharSequenceUnaryOperator implements UnaryOperator<CharS
         }
 
         return null != out ?
-                ImmutableCharSequence.with(out) :
-                chars;
+            ImmutableCharSequence.with(out) :
+            chars;
     }
 
 

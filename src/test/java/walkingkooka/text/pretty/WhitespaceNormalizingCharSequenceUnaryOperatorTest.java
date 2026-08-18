@@ -24,8 +24,8 @@ import walkingkooka.util.FunctionTesting;
 import java.util.function.UnaryOperator;
 
 public final class WhitespaceNormalizingCharSequenceUnaryOperatorTest extends TextPrettyTestCase<WhitespaceNormalizingCharSequenceUnaryOperator>
-        implements FunctionTesting<WhitespaceNormalizingCharSequenceUnaryOperator, CharSequence, CharSequence>,
-        ToStringTesting<WhitespaceNormalizingCharSequenceUnaryOperator> {
+    implements FunctionTesting<WhitespaceNormalizingCharSequenceUnaryOperator, CharSequence, CharSequence>,
+    ToStringTesting<WhitespaceNormalizingCharSequenceUnaryOperator> {
 
     @Test
     public void testEmptyString() {

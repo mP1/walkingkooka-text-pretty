@@ -51,35 +51,35 @@ public final class Sample {
     public void testColumnPrintSample() {
         // create three columns with different widths and alignments.
         final ColumnConfig states = TextPretty.columnConfig()
-                .minWidth(20)
-                .maxWidth(20)
-                .leftAlign();
+            .minWidth(20)
+            .maxWidth(20)
+            .leftAlign();
 
         final ColumnConfig population = TextPretty.columnConfig()
-                .minWidth(10)
-                .maxWidth(10)
-                .rightAlign();
+            .minWidth(10)
+            .maxWidth(10)
+            .rightAlign();
 
         final ColumnConfig money = TextPretty.columnConfig()
-                .minWidth(12)
-                .maxWidth(12)
-                .characterAlign(CharPredicates.is('.'), 7);
+            .minWidth(12)
+            .maxWidth(12)
+            .characterAlign(CharPredicates.is('.'), 7);
 
         // populate table with 3 columns.
         final TableConfig tableConfig = TextPretty.tableConfig()
-                .add(states)
-                .add(population)
-                .add(money);
+            .add(states)
+            .add(population)
+            .add(money);
 
         // create table with a single row from a csv line
         final Table table1 = TextPretty.table()
-                .setRow(0, TextPretty.csv(',').apply("\"New South Wales\",10000000,$12.00"));
+            .setRow(0, TextPretty.csv(',').apply("\"New South Wales\",10000000,$12.00"));
 
         // streaming a list of csv lines (different delimiters) and collect (aka add to table)
         final Table table123 = Lists.of(TextPretty.csv('/').apply("Queensland/4000000/$11.75"),
-                        TextPretty.csv(';').apply("Tasmania;500000;$9.0"))
-                .stream()
-                .collect(table1.collectRow(1));
+                TextPretty.csv(';').apply("Tasmania;500000;$9.0"))
+            .stream()
+            .collect(table1.collectRow(1));
 
         // format the table with cells using the columns.
         final Table formattedTable = tableConfig.apply(table123);
@@ -88,7 +88,7 @@ public final class Sample {
         try (final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.SPACES2)) {
             for (int i = 0; i < formattedTable.height(); i++) {
                 printer.print(TextPretty.rowColumnsToLine((column -> 2), LineEnding.SYSTEM)
-                        .apply(formattedTable.row(i)));
+                    .apply(formattedTable.row(i)));
             }
         }
     }
@@ -98,19 +98,19 @@ public final class Sample {
 
         // over simplified sample of this projects target directory.
         final Set<StringPath> paths = Sets.of(
-                        "/target/classes/java/walkingkooka/text/pretty/CharSequenceBiFunction.class",
-                        "/target/classes/java/walkingkooka/text/pretty/CharSequenceBiFunctionAlign.class", // some class files...
-                        "/target/maven-archiver/pom.properties",
-                        "/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst",
-                        "/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst",
-                        "/target/maven-status/maven-compiler-plugin/testCompile/default-compile/createdFiles.lst",
-                        "/target/maven-status/maven-compiler-plugin/testCompile/default-compile/inputFiles.lst",
-                        "/jacoco.exec",
-                        "/walkingkooka-text-pretty-1.0-SNAPSHOT.jar",
-                        "/walkingkooka-text-pretty-1.0-SNAPSHOT-sources.jar")
-                .stream()
-                .map(s -> StringPath.parse("/~/github/project" + s))
-                .collect(Collectors.toSet());
+                "/target/classes/java/walkingkooka/text/pretty/CharSequenceBiFunction.class",
+                "/target/classes/java/walkingkooka/text/pretty/CharSequenceBiFunctionAlign.class", // some class files...
+                "/target/maven-archiver/pom.properties",
+                "/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst",
+                "/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst",
+                "/target/maven-status/maven-compiler-plugin/testCompile/default-compile/createdFiles.lst",
+                "/target/maven-status/maven-compiler-plugin/testCompile/default-compile/inputFiles.lst",
+                "/jacoco.exec",
+                "/walkingkooka-text-pretty-1.0-SNAPSHOT.jar",
+                "/walkingkooka-text-pretty-1.0-SNAPSHOT-sources.jar")
+            .stream()
+            .map(s -> StringPath.parse("/~/github/project" + s))
+            .collect(Collectors.toSet());
 
         new TreePrinting<StringPath, StringName>() {
 
@@ -145,6 +145,6 @@ public final class Sample {
                 paths.forEach(p -> printer.print(p.name() + "\n"));
             }
         }.biConsumer()
-                .accept(paths, printer);
+            .accept(paths, printer);
     }
 }
