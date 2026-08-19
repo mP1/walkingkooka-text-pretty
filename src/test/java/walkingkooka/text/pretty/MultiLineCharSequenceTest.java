@@ -24,7 +24,6 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -42,133 +41,237 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
 
     private final static String DIFFERENT = "different";
 
+    private final static List<CharSequence> LINES = Lists.of(LINE1, LINE2, LINE3);
+
     // parse............................................................................................................
 
     @Test
     public void testParseNullTextFails() {
-        assertThrows(NullPointerException.class, () -> MultiLineCharSequence.parse(null, EOL));
+        assertThrows(
+            NullPointerException.class,
+            () -> MultiLineCharSequence.parse(
+                null,
+                EOL
+            )
+        );
     }
 
     @Test
     public void testParseNullLineEndingFails() {
-        assertThrows(NullPointerException.class, () -> MultiLineCharSequence.parse("abc", null));
+        assertThrows(
+            NullPointerException.class,
+            () -> MultiLineCharSequence.parse(
+                "abc",
+                null
+            )
+        );
     }
 
     @Test
     public void testParseMultiLineCharSequenceCr() {
-        this.parseAndCheck(this.createCharSequence(), LineEnding.CR);
+        this.parseAndCheck(
+            this.createCharSequence(),
+            LineEnding.CR
+        );
     }
 
     @Test
     public void testParseMultiLineCharSequenceCrNl() {
-        this.parseAndCheck(this.createCharSequence(), LineEnding.CRNL);
+        this.parseAndCheck(
+            this.createCharSequence(),
+            LineEnding.CRNL
+        );
     }
 
     @Test
     public void testParseMultiLineCharSequenceNl() {
-        this.parseAndCheck(this.createCharSequence(), LineEnding.NL);
+        this.parseAndCheck(
+            this.createCharSequence(),
+            LineEnding.NL
+        );
     }
 
     private void parseAndCheck(final MultiLineCharSequence chars,
                                final LineEnding eol) {
-        this.checkEquals(MultiLineCharSequence.with(chars.lines, eol),
+        this.checkEquals(
+            MultiLineCharSequence.with(chars.lines, eol),
             MultiLineCharSequence.parse(chars, eol),
-            () -> "parse " + CharSequences.quoteAndEscape(chars) + " lineEnding " + CharSequences.quoteAndEscape(eol));
+            () -> "parse " + CharSequences.quoteAndEscape(chars) + " lineEnding " + CharSequences.quoteAndEscape(eol)
+        );
     }
 
     @Test
     public void testParseEmpty() {
-        this.parseAndCheck("", LineEnding.CRNL);
+        this.parseAndCheck(
+            "",
+            LineEnding.CRNL
+        );
     }
 
     @Test
     public void testParseSingleLine() {
-        this.parseAndCheck("abc", LineEnding.CRNL, "abc");
+        this.parseAndCheck(
+            "abc",
+            LineEnding.CRNL,
+            "abc"
+        );
     }
 
     @Test
     public void testParseSingleLineCr() {
-        this.parseAndCheck("abc\r", LineEnding.CRNL, "abc");
+        this.parseAndCheck(
+            "abc\r",
+            LineEnding.CRNL,
+            "abc"
+        );
     }
 
     @Test
     public void testParseSingleLineCrNl() {
-        this.parseAndCheck("abc\r\n", LineEnding.CRNL, "abc");
+        this.parseAndCheck(
+            "abc\r\n",
+            LineEnding.CRNL,
+            "abc"
+        );
     }
 
     @Test
     public void testParseSingleLineNl() {
-        this.parseAndCheck("abc\n", LineEnding.CRNL, "abc");
+        this.parseAndCheck(
+            "abc\n",
+            LineEnding.CRNL,
+            "abc"
+        );
     }
 
     @Test
     public void testParseMultiLineCr() {
-        this.parseAndCheck("a1\rb2", LineEnding.CRNL, "a1", "b2");
+        this.parseAndCheck(
+            "a1\rb2",
+            LineEnding.CRNL,
+            "a1", "b2"
+        );
     }
 
     @Test
     public void testParseMultiLineCrNl() {
-        this.parseAndCheck("a1\r\nb2", LineEnding.CRNL, "a1", "b2");
+        this.parseAndCheck(
+            "a1\r\nb2",
+            LineEnding.CRNL,
+            "a1", "b2"
+        );
     }
 
     @Test
     public void testParseMultiLineNl() {
-        this.parseAndCheck("a1\nb2", LineEnding.CRNL, "a1", "b2");
+        this.parseAndCheck(
+            "a1\nb2",
+            LineEnding.CRNL,
+            "a1", "b2"
+        );
     }
 
     @Test
     public void testParseMultiLineIncludesEmpty() {
-        this.parseAndCheck("\nb2", LineEnding.CRNL, "", "b2");
+        this.parseAndCheck(
+            "\nb2",
+            LineEnding.CRNL,
+            "", "b2"
+        );
     }
 
     @Test
     public void testParseMultiLineIncludesEmpty2() {
-        this.parseAndCheck("a1\n\n", LineEnding.CRNL, "a1", "");
+        this.parseAndCheck(
+            "a1\n\n",
+            LineEnding.CRNL,
+            "a1", ""
+        );
     }
 
     @Test
     public void testParseMultiLine() {
-        this.parseAndCheck("a1\nb2\nc333", LineEnding.CRNL, "a1", "b2", "c333");
+        this.parseAndCheck(
+            "a1\nb2\nc333",
+            LineEnding.CRNL,
+            "a1", "b2", "c333"
+        );
     }
 
     @Test
     public void testParseMultiLine2() {
-        this.parseAndCheck("a1\nb2\nc333\rd4444", LineEnding.CRNL, "a1", "b2", "c333", "d4444");
+        this.parseAndCheck(
+            "a1\nb2\nc333\rd4444",
+            LineEnding.CRNL,
+            "a1", "b2", "c333", "d4444"
+        );
     }
 
     private void parseAndCheck(final CharSequence text,
                                final LineEnding lineEnding,
                                final CharSequence... lines) {
-        this.checkEquals(MultiLineCharSequence.with(Lists.of(lines), lineEnding),
+        this.checkEquals(
+            MultiLineCharSequence.with(Lists.of(lines), lineEnding),
             MultiLineCharSequence.parse(text, lineEnding),
-            () -> "parse " + CharSequences.quoteAndEscape(text) + " lineEnding: " + CharSequences.quoteAndEscape(lineEnding));
+            () -> "parse " + CharSequences.quoteAndEscape(text) + " lineEnding: " + CharSequences.quoteAndEscape(lineEnding)
+        );
     }
 
     // with.............................................................................................................
 
     @Test
     public void testWithNullLinesFails() {
-        assertThrows(NullPointerException.class, () -> MultiLineCharSequence.with(null, EOL));
+        assertThrows(
+            NullPointerException.class,
+            () -> MultiLineCharSequence.with(
+                null,
+                EOL
+            )
+        );
     }
 
     @Test
     public void testWithLineIncludesCrFails() {
-        assertThrows(IllegalArgumentException.class, () -> MultiLineCharSequence.with(Lists.of("line 1a", "line 1a\r"), EOL));
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> MultiLineCharSequence.with(
+                Lists.of("line 1a", "line 1a\r"),
+                EOL
+            )
+        );
     }
 
     @Test
     public void testWithLineIncludesCrNlFails() {
-        assertThrows(IllegalArgumentException.class, () -> MultiLineCharSequence.with(Lists.of("line 1a", "line 1a\r\n"), EOL));
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> MultiLineCharSequence.with(
+                Lists.of("line 1a", "line 1a\r\n"),
+                EOL
+            )
+        );
     }
 
     @Test
     public void testWithLineIncludesNlFails() {
-        assertThrows(IllegalArgumentException.class, () -> MultiLineCharSequence.with(Lists.of("line 1a", "line 2b\n"), EOL));
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> MultiLineCharSequence.with(
+                Lists.of("line 1a", "line 2b\n"),
+                EOL
+            )
+        );
     }
 
     @Test
     public void testWithNullLineEndingFails() {
-        assertThrows(NullPointerException.class, () -> MultiLineCharSequence.with(this.lines(), null));
+        assertThrows(
+            NullPointerException.class,
+            () -> MultiLineCharSequence.with(
+                LINES,
+                null
+            )
+        );
     }
 
     // charAt...........................................................................................................
@@ -176,18 +279,27 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
     @Test
     public void testCharAtFirstLineBegin() {
         final int index = 0;
-        this.charAtAndCheck(index, LINE1.charAt(index));
+
+        this.charAtAndCheck(
+            index,
+            LINE1.charAt(index)
+        );
     }
 
     @Test
     public void testCharAtFirstLineMiddle() {
         final int index = 1;
-        this.charAtAndCheck(index, LINE1.charAt(index));
+
+        this.charAtAndCheck(
+            index,
+            LINE1.charAt(index)
+        );
     }
 
     @Test
     public void testCharAtFirstLineEnd() {
         final int index = LINE1.length() - 1;
+
         this.charAtAndCheck(
             index,
             LINE1.charAt(index)
@@ -197,6 +309,7 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
     @Test
     public void testCharAtFirstLineEnding() {
         final int index = 0;
+
         this.charAtAndCheck(
             LINE1.length() + index,
             EOL.charAt(index)
@@ -206,6 +319,7 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
     @Test
     public void testCharAtSecondLineBegin() {
         final int index = 1;
+
         this.charAtAndCheck(
             (LINE1 + EOL).length() + index,
             LINE2.charAt(index)
@@ -215,6 +329,7 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
     @Test
     public void testCharAtSecondLineMiddle() {
         final int index = 1;
+
         this.charAtAndCheck(
             (LINE1 + EOL).length() + index,
             LINE2.charAt(index)
@@ -241,6 +356,7 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
     @Test
     public void testCharAtThirdLineBegin() {
         final int index = 0;
+
         this.charAtAndCheck(
             (LINE1 + EOL + LINE2 + EOL).length() + index,
             LINE3.charAt(index)
@@ -250,6 +366,7 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
     @Test
     public void testCharAtThirdLineMiddle() {
         final int index = 1;
+
         this.charAtAndCheck(
             (LINE1 + EOL + LINE2 + EOL).length() + index,
             LINE3.charAt(index)
@@ -259,6 +376,7 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
     @Test
     public void testCharAtThirdLineEnd() {
         final int index = LINE3.length() - 1;
+
         this.charAtAndCheck(
             (LINE1 + EOL + LINE2 + EOL).length() + index,
             LINE3.charAt(index)
@@ -268,6 +386,7 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
     @Test
     public void testCharAtThirdLineEnding() {
         final int index = 0;
+
         this.charAtAndCheck(
             (LINE1 + EOL + LINE2 + EOL + LINE3).length() + index,
             EOL.charAt(index)
@@ -303,23 +422,39 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
 
     @Test
     public void testMaxWidthEmpty() {
-        this.maxWidthAndCheck(MultiLineCharSequence.with(Lists.empty(), LineEnding.CRNL), 0);
+        this.maxWidthAndCheck(
+            MultiLineCharSequence.with(
+                Lists.empty(),
+                LineEnding.CRNL
+            ),
+            0
+        );
     }
 
     @Test
     public void testMaxWidth() {
-        this.maxWidthAndCheck(MultiLineCharSequence.with(Lists.of("", "bbb", "c"), LineEnding.CRNL), 3);
+        this.maxWidthAndCheck(
+            MultiLineCharSequence.with(
+                Lists.of("", "bbb", "c"),
+                LineEnding.CRNL
+            ),
+            3
+        );
     }
 
     private void maxWidthAndCheck(final MultiLineCharSequence chars,
                                   final int maxWidth) {
-        this.checkEquals(maxWidth, chars.maxWidth(), () -> chars + " maxWidth");
+        this.checkEquals(
+            maxWidth,
+            chars.maxWidth(),
+            () -> chars + " maxWidth"
+        );
     }
 
     // length...........................................................................................................
 
     @Test
-    public void testEmpty() {
+    public void testLengthWhenEmpty() {
         this.lengthAndCheck(
             MultiLineCharSequence.with(
                 Lists.empty(),
@@ -361,24 +496,46 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
     private void lineAndCheck(final MultiLineCharSequence chars,
                               final int lineNumber,
                               final CharSequence expected) {
-        this.checkEquals(expected.toString(), chars.line(lineNumber), () -> chars + " line " + lineNumber);
+        this.checkEquals(
+            expected.toString(),
+            chars.line(lineNumber),
+            () -> chars + " line " + lineNumber
+        );
     }
 
-    // setText.............................................................................................................
+    // setText..........................................................................................................
 
     @Test
     public void testSetTextNegativeLineNumberFails() {
-        assertThrows(IllegalArgumentException.class, () -> this.createCharSequence().setText(-1, DIFFERENT));
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createCharSequence()
+                .setText(-1, DIFFERENT)
+        );
     }
 
     @Test
     public void testSetTextInvalidLineNumberFails() {
-        assertThrows(IllegalArgumentException.class, () -> this.createCharSequence().setText(this.lines().size(), DIFFERENT));
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createCharSequence()
+                .setText(
+                    LINES.size(),
+                    DIFFERENT
+                )
+        );
     }
 
     @Test
     public void testSetTextWithNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createCharSequence().setText(0, null));
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createCharSequence()
+                .setText(
+                    0,
+                    null
+                )
+        );
     }
 
     @Test
@@ -411,9 +568,17 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
         this.setTextAndCheckSame(2, LINE3 + LineEnding.NL);
     }
 
-    private void setTextAndCheckSame(final int lineNumber, final String line) {
+    private void setTextAndCheckSame(final int lineNumber,
+                                     final String line) {
         final MultiLineCharSequence chars = this.createCharSequence();
-        assertSame(chars, chars.setText(lineNumber, line), () -> chars + " setText " + lineNumber + " line " + CharSequences.quoteIfChars(line));
+        assertSame(
+            chars,
+            chars.setText(
+                lineNumber,
+                line
+            ),
+            () -> chars + " setText " + lineNumber + " line " + CharSequences.quoteIfChars(line)
+        );
     }
 
     @Test
@@ -433,31 +598,51 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
 
     private void setTextDifferentAndCheck(final int lineNumber) {
         final List<CharSequence> expected = Lists.array();
-        expected.addAll(this.lines());
+        expected.addAll(LINES);
         expected.set(lineNumber, DIFFERENT);
 
-        this.setTextDifferentAndCheck(lineNumber, DIFFERENT, expected);
+        this.setTextDifferentAndCheck(
+            lineNumber,
+            DIFFERENT,
+            expected
+        );
     }
 
     @Test
     public void testSetTextMultiLineFirstLine() {
-        this.setTextDifferentAndCheck(0, "x\ry", "x", "y", LINE2, LINE3);
+        this.setTextDifferentAndCheck(
+            0,
+            "x\ry",
+            "x", "y", LINE2, LINE3
+        );
     }
 
     @Test
     public void testSetTextMultiLineMiddleLine() {
-        this.setTextDifferentAndCheck(1, "x\ry", LINE1, "x", "y", LINE3);
+        this.setTextDifferentAndCheck(
+            1,
+            "x\ry"
+            , LINE1, "x", "y", LINE3
+        );
     }
 
     @Test
     public void testSetTextMultiLineLastLine() {
-        this.setTextDifferentAndCheck(2, "x\ry", LINE1, LINE2, "x", "y");
+        this.setTextDifferentAndCheck(
+            2,
+            "x\ry",
+            LINE1, LINE2, "x", "y"
+        );
     }
 
     private void setTextDifferentAndCheck(final int lineNumber,
                                           final CharSequence line,
                                           final CharSequence... expected) {
-        this.setTextDifferentAndCheck(lineNumber, line, Lists.of(expected));
+        this.setTextDifferentAndCheck(
+            lineNumber,
+            line,
+            Lists.of(expected)
+        );
     }
 
     private void setTextDifferentAndCheck(final int lineNumber,
@@ -469,101 +654,128 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
         this.checkEquals(different, MultiLineCharSequence.with(expected, EOL));
     }
 
-    // subSequence.......................................................................................................
-
-    @Test
-    public void testSubSequenceEmpty() {
-        final MultiLineCharSequence chars = this.createCharSequence();
-        IntStream.range(0, chars.length())
-            .forEach(at -> this.subSequenceAndCheckSame(at, at, ""));
-    }
+    // subSequence......................................................................................................
 
     @Test
     public void testSubSequenceFirstLine() {
-        this.subSequenceAndCheckSame(0,
+        this.subSequenceAndCheckSame(
+            0,
             LINE1.length(),
-            LINE1);
+            LINE1
+        );
     }
 
     @Test
     public void testSubSequenceFirstEol() {
-        this.subSequenceAndCheckSame(LINE1,
+        this.subSequenceAndCheckSame(
+            LINE1,
             LINE1 + EOL,
-            EOL);
+            EOL
+        );
     }
 
     @Test
     public void testSubSequenceSecondLine() {
-        this.subSequenceAndCheckSame(LINE1 + EOL,
+        this.subSequenceAndCheckSame(
+            LINE1 + EOL,
             LINE1 + EOL + LINE2,
-            LINE2);
+            LINE2
+        );
     }
 
     @Test
     public void testSubSequenceSecondEol() {
-        this.subSequenceAndCheckSame(LINE1 + EOL + LINE2,
+        this.subSequenceAndCheckSame(
+            LINE1 + EOL + LINE2,
             LINE1 + EOL + LINE2 + EOL,
-            EOL);
+            EOL
+        );
     }
 
     @Test
     public void testSubSequenceLastLine() {
-        this.subSequenceAndCheckSame(LINE1 + EOL + LINE2 + EOL,
+        this.subSequenceAndCheckSame(
+            LINE1 + EOL + LINE2 + EOL,
             LINE1 + EOL + LINE2 + EOL + LINE3,
-            LINE3);
+            LINE3
+        );
     }
 
     @Test
     public void testSubSequenceLastEol() {
-        this.subSequenceAndCheckSame(LINE1 + EOL + LINE2 + EOL + LINE3,
+        this.subSequenceAndCheckSame(
+            LINE1 + EOL + LINE2 + EOL + LINE3,
             LINE1 + EOL + LINE2 + EOL + LINE3 + EOL,
-            EOL);
+            EOL
+        );
     }
 
     private void subSequenceAndCheckSame(final CharSequence start,
                                          final CharSequence end,
                                          final CharSequence expected) {
-        this.subSequenceAndCheckSame(start.length(),
+        this.subSequenceAndCheckSame(
+            start.length(),
             end.length(),
-            expected);
+            expected
+        );
     }
 
     private void subSequenceAndCheckSame(final int start,
                                          final int end,
                                          final CharSequence expected) {
-        this.subSequenceAndCheckSame(this.createCharSequence(),
+        this.subSequenceAndCheckSame(
+            this.createCharSequence(),
             start,
             end,
-            expected);
+            expected
+        );
     }
 
     private void subSequenceAndCheckSame(final MultiLineCharSequence chars,
                                          final int start,
                                          final int end,
                                          final CharSequence expected) {
-        assertSame(expected,
+        assertSame(
+            expected,
             chars.subSequence(start, end),
-            () -> CharSequences.quoteAndEscape(chars) + " subSequence " + start + "," + end);
+            () -> CharSequences.quoteAndEscape(chars) + " subSequence " + start + "," + end
+        );
     }
 
     @Test
     public void testSubSequence() {
-        this.checkEquals("1", this.createCharSequence().subSequence(0, 1));
+        this.subSequenceAndCheck(
+            0,
+            1,
+            "1"
+        );
     }
 
     @Test
     public void testSubSequence2() {
-        this.checkEquals("a", this.createCharSequence().subSequence(1, 2));
+        this.subSequenceAndCheck(
+            1,
+            2,
+            "a"
+        );
     }
 
     @Test
     public void testSubSequence3() {
-        this.checkEquals("a" + EOL, this.createCharSequence().subSequence(1, (LINE1 + EOL).length()));
+        this.subSequenceAndCheck(
+            1,
+            (LINE1 + EOL).length(),
+            "a" + EOL
+        );
     }
 
     @Test
     public void testSubSequence4() {
-        this.checkEquals("a" + EOL + "2", this.createCharSequence().subSequence(1, (LINE1 + EOL).length() + 1));
+        this.subSequenceAndCheck(
+            1,
+            (LINE1 + EOL).length() + 1,
+            "a" + EOL + "2"
+        );
     }
 
     @Test
@@ -573,38 +785,31 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
         for (int i = 0; i < chars.length() - 2; i++) {
             final int start = i;
             final int end = i + 2;
-            this.checkEquals(TOSTRING.substring(start, end), chars.subSequence(start, end));
+
+            this.subSequenceAndCheck(
+                chars,
+                start,
+                end,
+                TOSTRING.substring(start, end)
+            );
         }
+    }
+
+    @Override
+    public MultiLineCharSequence createCharSequence() {
+        return MultiLineCharSequence.with(LINES, EOL);
     }
 
     // equals...........................................................................................................
 
     @Test
-    public void testDifferentLines() {
+    public void testEqualsDifferentLines() {
         this.checkNotEquals(MultiLineCharSequence.with(Lists.of(LINE1, LINE2, LINE3, "different"), LineEnding.CR));
     }
 
     @Test
-    public void testDifferentLineEnding() {
-        this.checkNotEquals(MultiLineCharSequence.with(this.lines(), LineEnding.CR));
-    }
-
-    // toString...........................................................................................................
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createCharSequence(), TOSTRING);
-    }
-
-    // CharSequenceTesting..............................................................................................
-
-    @Override
-    public MultiLineCharSequence createCharSequence() {
-        return MultiLineCharSequence.with(this.lines(), EOL);
-    }
-
-    private List<CharSequence> lines() {
-        return Lists.of(LINE1, LINE2, LINE3);
+    public void testEqualsDifferentLineEnding() {
+        this.checkNotEquals(MultiLineCharSequence.with(LINES, LineEnding.CR));
     }
 
     @Override
@@ -612,7 +817,14 @@ public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLin
         return this.createCharSequence();
     }
 
-    // ClassTesting.....................................................................................................
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createCharSequence(), TOSTRING);
+    }
+
+    // Class............................................................................................................
 
     @Override
     public Class<MultiLineCharSequence> type() {
