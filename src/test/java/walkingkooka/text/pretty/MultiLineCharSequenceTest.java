@@ -19,7 +19,7 @@ package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.text.CharSequenceTesting;
+import walkingkooka.text.CharSequenceTesting2;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
 
@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MultiLineCharSequenceTest extends TextPrettyTestCase<MultiLineCharSequence>
-    implements CharSequenceTesting<MultiLineCharSequence> {
+    implements CharSequenceTesting2<MultiLineCharSequence> {
 
     private final static String LINE1 = "1a";
     private final static String LINE2 = "2bb";

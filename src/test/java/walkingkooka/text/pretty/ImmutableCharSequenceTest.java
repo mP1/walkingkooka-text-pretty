@@ -18,12 +18,12 @@
 package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.text.CharSequenceTesting;
+import walkingkooka.text.CharSequenceTesting2;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class ImmutableCharSequenceTest extends TextPrettyTestCase<ImmutableCharSequence>
-    implements CharSequenceTesting<ImmutableCharSequence> {
+    implements CharSequenceTesting2<ImmutableCharSequence> {
 
     private final static String TOSTRING = "abc123";
 
