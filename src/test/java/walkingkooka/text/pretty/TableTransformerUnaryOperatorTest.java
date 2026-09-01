@@ -21,14 +21,14 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.character.CharPredicates;
-import walkingkooka.util.FunctionTesting;
+import walkingkooka.util.FunctionTesting2;
 
 import java.util.function.UnaryOperator;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<TableTransformerUnaryOperator>
-    implements FunctionTesting<TableTransformerUnaryOperator, Table, Table>,
+    implements FunctionTesting2<TableTransformerUnaryOperator, Table, Table>,
     ToStringTesting<TableTransformerUnaryOperator> {
 
     @Test

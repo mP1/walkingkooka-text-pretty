@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.LineEnding;
-import walkingkooka.util.FunctionTesting;
+import walkingkooka.util.FunctionTesting2;
 
 import java.util.List;
 import java.util.function.IntUnaryOperator;
@@ -29,7 +29,7 @@ import java.util.function.IntUnaryOperator;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class RowColumnsToLineCharSequenceFunctionTest extends TextPrettyTestCase<RowColumnsToLineCharSequenceFunction>
-    implements FunctionTesting<RowColumnsToLineCharSequenceFunction, List<CharSequence>, CharSequence>,
+    implements FunctionTesting2<RowColumnsToLineCharSequenceFunction, List<CharSequence>, CharSequence>,
     ToStringTesting<RowColumnsToLineCharSequenceFunction> {
 
     private final static LineEnding LINE_ENDING = LineEnding.NL;

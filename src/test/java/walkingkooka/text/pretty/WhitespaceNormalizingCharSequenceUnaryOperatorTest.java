@@ -19,12 +19,12 @@ package walkingkooka.text.pretty;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
-import walkingkooka.util.FunctionTesting;
+import walkingkooka.util.FunctionTesting2;
 
 import java.util.function.UnaryOperator;
 
 public final class WhitespaceNormalizingCharSequenceUnaryOperatorTest extends TextPrettyTestCase<WhitespaceNormalizingCharSequenceUnaryOperator>
-    implements FunctionTesting<WhitespaceNormalizingCharSequenceUnaryOperator, CharSequence, CharSequence>,
+    implements FunctionTesting2<WhitespaceNormalizingCharSequenceUnaryOperator, CharSequence, CharSequence>,
     ToStringTesting<WhitespaceNormalizingCharSequenceUnaryOperator> {
 
     @Test
