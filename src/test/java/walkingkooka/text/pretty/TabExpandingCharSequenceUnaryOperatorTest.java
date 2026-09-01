@@ -20,7 +20,7 @@ package walkingkooka.text.pretty;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.text.CharSequences;
-import walkingkooka.util.FunctionTesting;
+import walkingkooka.util.FunctionTesting2;
 
 import java.util.function.UnaryOperator;
 
@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class TabExpandingCharSequenceUnaryOperatorTest extends TextPrettyTestCase<TabExpandingCharSequenceUnaryOperator>
-    implements FunctionTesting<TabExpandingCharSequenceUnaryOperator, CharSequence, CharSequence>,
+    implements FunctionTesting2<TabExpandingCharSequenceUnaryOperator, CharSequence, CharSequence>,
     ToStringTesting<TabExpandingCharSequenceUnaryOperator> {
 
     @Test

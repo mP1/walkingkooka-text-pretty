@@ -26,7 +26,7 @@ import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CharSequences;
-import walkingkooka.util.FunctionTesting;
+import walkingkooka.util.FunctionTesting2;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ColumnConfigTest implements FunctionTesting<ColumnConfig, List<CharSequence>, List<CharSequence>>,
+public final class ColumnConfigTest implements FunctionTesting2<ColumnConfig, List<CharSequence>, List<CharSequence>>,
     ClassTesting<ColumnConfig>,
     HashCodeEqualsDefinedTesting2<ColumnConfig>,
     ToStringTesting<ColumnConfig> {

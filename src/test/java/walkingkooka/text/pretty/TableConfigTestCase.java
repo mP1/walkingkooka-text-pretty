@@ -20,12 +20,12 @@ package walkingkooka.text.pretty;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.util.FunctionTesting;
+import walkingkooka.util.FunctionTesting2;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class TableConfigTestCase<T extends TableConfig> extends TextPrettyTestCase<T>
-    implements FunctionTesting<T, Table, Table>,
+    implements FunctionTesting2<T, Table, Table>,
     ToStringTesting<T> {
 
     TableConfigTestCase() {

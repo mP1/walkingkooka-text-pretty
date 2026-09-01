@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.util.FunctionTesting;
+import walkingkooka.util.FunctionTesting2;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -30,9 +30,9 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ColumnsExtractorCharSequenceFunctionTest extends TextPrettyTestCase<ColumnsExtractorCharSequenceFunction<BigInteger>>
-    implements FunctionTesting<ColumnsExtractorCharSequenceFunction<BigInteger>,
-    BigInteger,
-    List<CharSequence>>,
+    implements FunctionTesting2<ColumnsExtractorCharSequenceFunction<BigInteger>,
+        BigInteger,
+        List<CharSequence>>,
     ToStringTesting<ColumnsExtractorCharSequenceFunction<BigInteger>> {
 
     @Test

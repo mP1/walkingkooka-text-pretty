@@ -20,13 +20,13 @@ package walkingkooka.text.pretty;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.util.FunctionTesting;
+import walkingkooka.util.FunctionTesting2;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class CsvListCharSequenceFunctionTest extends CsvListCharSequenceFunctionTestCase<CsvListCharSequenceFunction> implements FunctionTesting<CsvListCharSequenceFunction,
+public final class CsvListCharSequenceFunctionTest extends CsvListCharSequenceFunctionTestCase<CsvListCharSequenceFunction> implements FunctionTesting2<CsvListCharSequenceFunction,
     CharSequence,
     List<CharSequence>>,
     ToStringTesting<CsvListCharSequenceFunction> {
