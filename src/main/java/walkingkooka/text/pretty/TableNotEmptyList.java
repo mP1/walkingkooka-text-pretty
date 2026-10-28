@@ -186,13 +186,15 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
     @Override
     public final boolean equals(final Object other) {
         return this == other ||
-            other instanceof TableNotEmptyListRow ?
-            this.equalsTableNotEmptyListRow((TableNotEmptyListRow) other) :
-            other instanceof TableNotEmptyListRows ?
-                this.equalsTableNotEmptyListRows((TableNotEmptyListRows) other) :
-                other instanceof List ?
-                    this.equalsList((List<?>) other) :
-                    false;
+            (
+                other instanceof TableNotEmptyListRow ?
+                    this.equalsTableNotEmptyListRow((TableNotEmptyListRow) other) :
+                    other instanceof TableNotEmptyListRows ?
+                        this.equalsTableNotEmptyListRows((TableNotEmptyListRows) other) :
+                        other instanceof List ?
+                            this.equalsList((List<?>) other) :
+                            false
+            );
     }
 
     final boolean equalsTableNotEmptyList(final TableNotEmptyList<?> other) {
