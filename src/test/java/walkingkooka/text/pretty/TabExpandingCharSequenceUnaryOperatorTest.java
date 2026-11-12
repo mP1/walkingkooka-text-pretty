@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class TabExpandingCharSequenceUnaryOperatorTest extends TextPrettyTestCase<TabExpandingCharSequenceUnaryOperator>
     implements FunctionTesting2<TabExpandingCharSequenceUnaryOperator, CharSequence, CharSequence>,
-    ToStringTesting<TabExpandingCharSequenceUnaryOperator> {
+    ToStringTesting {
 
     @Test
     public void testWithNullTabStopsFails() {

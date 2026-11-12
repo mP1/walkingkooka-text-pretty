@@ -22,7 +22,7 @@ import walkingkooka.ToStringTesting;
 
 public abstract class TableTestCase2<T> extends TableTestCase<T>
     implements HashCodeEqualsDefinedTesting2<T>,
-    ToStringTesting<T> {
+    ToStringTesting {
 
     final static CharSequence R0C0 = "r0c0";
     final static CharSequence R0C1 = "r0c1";

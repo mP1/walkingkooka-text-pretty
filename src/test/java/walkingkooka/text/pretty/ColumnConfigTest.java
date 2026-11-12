@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class ColumnConfigTest implements FunctionTesting2<ColumnConfig, List<CharSequence>, List<CharSequence>>,
     ClassTesting<ColumnConfig>,
     HashCodeEqualsDefinedTesting2<ColumnConfig>,
-    ToStringTesting<ColumnConfig> {
+    ToStringTesting {
 
     private final static CharPredicate CHARACTER = CharPredicates.is('.');
     private final static int CHARACTER_COLUMN = 5;

@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class TableTransformerUnaryOperatorTest extends TextPrettyTestCase<TableTransformerUnaryOperator>
     implements FunctionTesting2<TableTransformerUnaryOperator, Table, Table>,
-    ToStringTesting<TableTransformerUnaryOperator> {
+    ToStringTesting {
 
     @Test
     public void testWithNullColumnsFails() {

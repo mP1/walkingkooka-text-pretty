@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class TableConfigTestCase<T extends TableConfig> extends TextPrettyTestCase<T>
     implements FunctionTesting2<T, Table, Table>,
-    ToStringTesting<T> {
+    ToStringTesting {
 
     TableConfigTestCase() {
         super();

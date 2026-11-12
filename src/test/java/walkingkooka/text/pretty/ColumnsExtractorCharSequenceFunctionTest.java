@@ -33,7 +33,7 @@ public final class ColumnsExtractorCharSequenceFunctionTest extends TextPrettyTe
     implements FunctionTesting2<ColumnsExtractorCharSequenceFunction<BigInteger>,
         BigInteger,
         List<CharSequence>>,
-    ToStringTesting<ColumnsExtractorCharSequenceFunction<BigInteger>> {
+    ToStringTesting {
 
     @Test
     public void testWithNullTransformersFails() {
