@@ -27,7 +27,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class TableCollectorTestCase2<C extends TableCollector> extends TableCollectorTestCase<C> implements ToStringTesting<C> {
+public abstract class TableCollectorTestCase2<C extends TableCollector> extends TableCollectorTestCase<C>
+    implements ToStringTesting {
 
     TableCollectorTestCase2() {
         super();

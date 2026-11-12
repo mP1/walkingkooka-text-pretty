@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class CsvListCharSequenceFunctionTest extends CsvListCharSequenceFunctionTestCase<CsvListCharSequenceFunction> implements FunctionTesting2<CsvListCharSequenceFunction,
     CharSequence,
     List<CharSequence>>,
-    ToStringTesting<CsvListCharSequenceFunction> {
+    ToStringTesting {
 
     // Function.........................................................................................................
 

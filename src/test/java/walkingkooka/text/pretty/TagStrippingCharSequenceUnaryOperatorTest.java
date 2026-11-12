@@ -25,7 +25,7 @@ import java.util.function.UnaryOperator;
 
 public final class TagStrippingCharSequenceUnaryOperatorTest extends TextPrettyTestCase<TagStrippingCharSequenceUnaryOperator>
     implements FunctionTesting2<TagStrippingCharSequenceUnaryOperator, CharSequence, CharSequence>,
-    ToStringTesting<TagStrippingCharSequenceUnaryOperator> {
+    ToStringTesting {
 
     @Test
     public void testEmptyString() {

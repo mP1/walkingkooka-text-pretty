@@ -25,7 +25,7 @@ import java.util.function.UnaryOperator;
 
 public final class WhitespaceNormalizingCharSequenceUnaryOperatorTest extends TextPrettyTestCase<WhitespaceNormalizingCharSequenceUnaryOperator>
     implements FunctionTesting2<WhitespaceNormalizingCharSequenceUnaryOperator, CharSequence, CharSequence>,
-    ToStringTesting<WhitespaceNormalizingCharSequenceUnaryOperator> {
+    ToStringTesting {
 
     @Test
     public void testEmptyString() {

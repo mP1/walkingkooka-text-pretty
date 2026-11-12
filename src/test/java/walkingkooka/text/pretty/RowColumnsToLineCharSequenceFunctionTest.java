@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class RowColumnsToLineCharSequenceFunctionTest extends TextPrettyTestCase<RowColumnsToLineCharSequenceFunction>
     implements FunctionTesting2<RowColumnsToLineCharSequenceFunction, List<CharSequence>, CharSequence>,
-    ToStringTesting<RowColumnsToLineCharSequenceFunction> {
+    ToStringTesting {
 
     private final static LineEnding LINE_ENDING = LineEnding.NL;
 

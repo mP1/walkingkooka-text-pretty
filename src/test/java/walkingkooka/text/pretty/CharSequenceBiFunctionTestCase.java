@@ -24,7 +24,7 @@ import walkingkooka.util.BiFunctionTesting2;
 
 public abstract class CharSequenceBiFunctionTestCase<A extends CharSequenceBiFunction> extends TextPrettyTestCase<A>
     implements BiFunctionTesting2<A, CharSequence, Integer, CharSequence>,
-    ToStringTesting<A>,
+    ToStringTesting,
     TypeNameTesting<A> {
 
     CharSequenceBiFunctionTestCase() {
