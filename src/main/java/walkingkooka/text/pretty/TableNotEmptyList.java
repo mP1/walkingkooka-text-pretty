@@ -243,8 +243,8 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
     }
 
     @Override
-    public ImmutableList<T> subList(final int from,
-                                    final int to) {
+    public final ImmutableList<T> subList(final int from,
+                                          final int to) {
         return this.subListMaybeSame(
             from,
             to
