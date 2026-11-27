@@ -245,23 +245,10 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
     @Override
     public ImmutableList<T> subList(final int from,
                                     final int to) {
-        if (from < 0) {
-            throw new IndexOutOfBoundsException("Invalid from index " + from + " < 0");
-        }
-
-        if (to < from) {
-            throw new IndexOutOfBoundsException("Invalid to index " + to + " < " + from);
-        }
-
-        final int size = this.size();
-        if (to > size) {
-            throw new IndexOutOfBoundsException("Invalid to index " + to + " > " + size);
-        }
-
-        if (0 == from && size == to) {
-            return this;
-        }
-        throw new UnsupportedOperationException();
+        return this.subListMaybeSame(
+            from,
+            to
+        );
     }
 
     // CanFirstOrEmpty..................................................................................................
