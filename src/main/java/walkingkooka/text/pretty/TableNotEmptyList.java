@@ -88,8 +88,9 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
 
     // mutable TableNotEmpty only methods...............................................................................
 
-    @SuppressWarnings("unchecked") final void setAuto(final int index,
-                                                      final T element) {
+    @SuppressWarnings("unchecked") //
+    final void setAuto(final int index,
+                       final T element) {
         final Object[] elements = this.elements;
         final int elementCount = this.elementCount;
         final int size = this.size;
@@ -228,7 +229,8 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
         return super.equals(other);
     }
 
-    @GwtIncompatible final String toStringTest() {
+    @GwtIncompatible //
+    final String toStringTest() {
         return this.elementCount + "/" + this.size + " " + Arrays.toString(this.elements);
     }
 
