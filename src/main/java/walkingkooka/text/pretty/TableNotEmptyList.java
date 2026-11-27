@@ -82,7 +82,7 @@ abstract class TableNotEmptyList<T> extends AbstractList<T> implements Immutable
     abstract T missing();
 
     @Override
-    public boolean isEmpty() {
+    public final boolean isEmpty() {
         return false; // a TableNotEmpty width or height is never 0.
     }
 
